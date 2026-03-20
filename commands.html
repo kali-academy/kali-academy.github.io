@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قاعدة الأوامر - KaliAcademy | 500+ أمر Kali Linux</title>
+<meta name="description" content="قاعدة بيانات شاملة لأكثر من 500 أمر Kali Linux مصنفة بالفئات: شبكات، اختراق، جنائي، تشفير، ويب. بحث سريع ونسخ بنقرة واحدة.">
+<meta name="keywords" content="Kali Linux أوامر, أوامر الشبكة, Nmap, Metasploit, Hydra, Burp Suite, أوامر اختبار الاختراق بالعربي">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="قاعدة أوامر Kali Linux - 500+ أمر">
+<meta property="og:description" content="أكبر قاعدة بيانات أوامر Kali Linux باللغة العربية">
+<meta property="og:image" content="images/logo.png">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="canonical" href="commands.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhanced.css">
+<link rel="stylesheet" href="css/cyber-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="grid-bg">
+<script src="js/disclaimer.js"></script>
+<script src="js/social-bar.js"></script>
+<script src="js/site-init.js"></script>
+<style>
+/* ===== PAGE SPECIFIC STYLES ===== */
+.cmd-page-wrapper { max-width: 1500px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+/* HERO */
+.cmd-hero { padding: 3rem 2rem 2rem; text-align: center; background: linear-gradient(180deg, rgba(0,255,65,0.06) 0%, transparent 100%); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.cmd-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00ff41, #0ff, #00ff41, transparent); }
+
+/* SEARCH BOX */
+.search-box { position: relative; max-width: 750px; margin: 1.5rem auto; }
+.search-box input { width: 100%; padding: 15px 55px 15px 20px; background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 50px; color: var(--text-primary); font-size: 1rem; font-family: 'Cairo', sans-serif; outline: none; transition: all 0.3s; direction: rtl; }
+.search-box input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow), 0 0 30px rgba(0,255,65,0.1); }
+.search-box input::placeholder { color: var(--text-muted); }
+.search-box .search-icon-btn { position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #000; transition: all 0.3s; }
+.search-box .search-icon-btn:hover { transform: translateY(-50%) scale(1.1); box-shadow: 0 0 15px var(--primary-glow); }
+.search-count-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,255,65,0.12); border: 1px solid rgba(0,255,65,0.3); padding: 5px 14px; border-radius: 50px; font-family: 'Share Tech Mono', monospace; font-size: 0.82rem; color: var(--primary); margin-top: 0.8rem; }
+
+/* CATEGORY PILLS */
+.cat-strip { display: flex; gap: 8px; flex-wrap: wrap; padding: 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+.cat-btn { display: flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 50px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-muted); cursor: pointer; font-size: 0.82rem; font-weight: 600; transition: all 0.2s; font-family: 'Cairo', sans-serif; white-space: nowrap; }
+.cat-btn:hover { border-color: var(--primary); color: var(--primary); background: rgba(0,255,65,0.06); }
+.cat-btn.active { background: linear-gradient(135deg, rgba(0,255,65,0.2), rgba(0,255,255,0.1)); border-color: var(--primary); color: var(--primary); box-shadow: 0 0 10px var(--primary-glow); }
+.cat-btn .badge { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; background: rgba(0,255,65,0.15); padding: 1px 7px; border-radius: 10px; color: var(--secondary); }
+
+/* TOOLBAR */
+.cmd-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 1.2rem; }
+.cmd-toolbar-left { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+.level-btn { padding: 6px 14px; border-radius: 50px; border: 1px solid var(--border); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; font-family: 'Cairo', sans-serif; transition: all 0.2s; }
+.level-btn.active-beginner, .level-btn:hover[data-lv="beginner"] { background: rgba(0,255,65,0.15); border-color: #00ff41; color: #00ff41; }
+.level-btn.active-intermediate, .level-btn:hover[data-lv="intermediate"] { background: rgba(255,204,0,0.15); border-color: #ffcc00; color: #ffcc00; }
+.level-btn.active-advanced, .level-btn:hover[data-lv="advanced"] { background: rgba(255,0,128,0.15); border-color: #ff0080; color: #ff0080; }
+.level-btn.active-all, .level-btn:hover[data-lv="all"] { background: rgba(0,255,255,0.15); border-color: #0ff; color: #0ff; }
+.cmd-toolbar-right { display: flex; align-items: center; gap: 0.8rem; }
+.results-info { font-family: 'Share Tech Mono', monospace; font-size: 0.82rem; color: var(--text-muted); }
+.sort-select { background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 12px; border-radius: 8px; font-size: 0.82rem; outline: none; cursor: pointer; font-family: 'Cairo', sans-serif; }
+.sort-select:focus { border-color: var(--primary); }
+
+/* COMMANDS GRID */
+.cmds-grid { display: grid; gap: 0.7rem; }
+
+/* ===== COMMAND CARD ===== */
+.cmd-card { background: var(--bg-card); border: 1px solid rgba(0,255,65,0.12); border-radius: 14px; overflow: hidden; transition: border-color 0.25s, box-shadow 0.25s; }
+.cmd-card:hover { border-color: rgba(0,255,65,0.35); box-shadow: 0 4px 20px rgba(0,255,65,0.08); }
+.cmd-card.expanded { border-color: rgba(0,255,65,0.5); box-shadow: 0 0 0 1px rgba(0,255,65,0.2), 0 8px 30px rgba(0,255,65,0.1); }
+
+/* Card Header */
+.cmd-header { display: flex; align-items: center; gap: 0.8rem; padding: 1rem 1.3rem; cursor: pointer; user-select: none; transition: background 0.2s; }
+.cmd-header:hover { background: rgba(0,255,65,0.03); }
+.cmd-idx { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--text-muted); width: 44px; text-align: right; flex-shrink: 0; }
+.cmd-main-info { min-width: 200px; flex-shrink: 0; }
+.cmd-title { font-family: 'Share Tech Mono', monospace; font-size: 1rem; color: var(--primary); font-weight: 800; display: block; direction: ltr; letter-spacing: 0.5px; }
+.cmd-syntax-hint { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: rgba(0,255,255,0.5); display: block; margin-top: 2px; direction: ltr; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+.cmd-short-desc { flex: 1; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.5; padding: 0 0.5rem; }
+.cmd-meta-tags { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.tag { padding: 3px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px; }
+.tag-cat { background: rgba(0,255,255,0.08); color: #0ff; border: 1px solid rgba(0,255,255,0.2); }
+.tag-beginner { background: rgba(0,255,65,0.1); color: #00ff41; border: 1px solid rgba(0,255,65,0.25); }
+.tag-intermediate { background: rgba(255,204,0,0.1); color: #ffcc00; border: 1px solid rgba(255,204,0,0.25); }
+.tag-advanced { background: rgba(255,0,128,0.1); color: #ff0080; border: 1px solid rgba(255,0,128,0.25); }
+.expand-btn { width: 28px; height: 28px; background: rgba(0,255,65,0.08); border: 1px solid rgba(0,255,65,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.75rem; transition: all 0.25s; flex-shrink: 0; }
+.cmd-card.expanded .expand-btn { background: rgba(0,255,65,0.2); border-color: var(--primary); color: var(--primary); transform: rotate(180deg); }
+
+/* Card Body - Detailed View */
+.cmd-body { display: none; border-top: 1px solid rgba(0,255,65,0.1); background: rgba(0,0,0,0.35); }
+.cmd-card.expanded .cmd-body { display: block; }
+
+.cmd-body-inner { padding: 1.5rem; }
+
+/* Description */
+.cmd-desc-section { margin-bottom: 1.5rem; }
+.cmd-desc-text { color: var(--text-secondary); line-height: 1.9; font-size: 0.92rem; padding: 1rem; background: rgba(0,255,65,0.03); border-right: 3px solid var(--primary); border-radius: 0 8px 8px 0; }
+
+/* Syntax Box */
+.cmd-syntax-section { margin-bottom: 1.5rem; }
+.section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--primary); letter-spacing: 3px; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 6px; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,255,65,0.3), transparent); }
+.syntax-box { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,255,65,0.25); border-radius: 10px; padding: 1rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.syntax-code { font-family: 'Share Tech Mono', monospace; font-size: 0.92rem; color: #0ff; direction: ltr; flex: 1; word-break: break-all; }
+.copy-all-btn { padding: 5px 12px; background: rgba(0,255,65,0.12); border: 1px solid rgba(0,255,65,0.25); border-radius: 6px; color: var(--primary); cursor: pointer; font-size: 0.75rem; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+.copy-all-btn:hover { background: rgba(0,255,65,0.25); }
+
+/* Options */
+.cmd-options-section { margin-bottom: 1.5rem; }
+.options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.5rem; }
+.option-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(0,255,65,0.1); border-radius: 8px; padding: 0.7rem 1rem; display: flex; gap: 0.8rem; align-items: flex-start; }
+.option-flag { font-family: 'Share Tech Mono', monospace; font-size: 0.82rem; color: #ffcc00; direction: ltr; white-space: nowrap; min-width: 100px; flex-shrink: 0; }
+.option-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Examples */
+.cmd-examples-section { margin-bottom: 1.5rem; }
+.example-row { background: rgba(0,0,0,0.45); border: 1px solid rgba(0,255,65,0.12); border-radius: 10px; margin-bottom: 0.6rem; overflow: hidden; transition: border-color 0.2s; }
+.example-row:hover { border-color: rgba(0,255,65,0.3); }
+.example-code-line { display: flex; align-items: center; padding: 0.75rem 1rem; gap: 0.8rem; direction: ltr; }
+.ex-prompt { color: var(--primary); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; flex-shrink: 0; }
+.ex-cmd-text { font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: #e8ffe0; flex: 1; word-break: break-all; }
+.ex-copy-btn { padding: 4px 10px; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.2); border-radius: 5px; color: var(--primary); cursor: pointer; font-size: 0.72rem; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; display: flex; align-items: center; gap: 4px; }
+.ex-copy-btn:hover { background: rgba(0,255,65,0.25); box-shadow: 0 0 8px var(--primary-glow); }
+.ex-desc-line { padding: 0.5rem 1rem 0.7rem 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid rgba(0,255,65,0.08); direction: rtl; }
+.ex-desc-line::before { content: '▶ '; color: var(--secondary); font-size: 0.7rem; }
+
+/* Tips */
+.cmd-tips-section { background: rgba(255,204,0,0.05); border: 1px solid rgba(255,204,0,0.2); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1rem; }
+.cmd-tips-label { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: #ffcc00; font-weight: 700; margin-bottom: 0.5rem; font-family: 'Share Tech Mono', monospace; }
+.cmd-tips-text { font-size: 0.88rem; color: rgba(255,204,0,0.8); line-height: 1.7; }
+
+/* Related */
+.cmd-related-section { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.related-label { font-size: 0.8rem; color: var(--text-muted); font-family: 'Share Tech Mono', monospace; }
+.related-chip { padding: 3px 10px; background: rgba(0,255,255,0.08); border: 1px solid rgba(0,255,255,0.2); border-radius: 50px; font-size: 0.78rem; color: #0ff; cursor: pointer; transition: all 0.2s; font-family: 'Share Tech Mono', monospace; }
+.related-chip:hover { background: rgba(0,255,255,0.2); transform: scale(1.05); }
+
+/* NO RESULTS */
+.no-results { text-align: center; padding: 5rem 2rem; }
+.no-results .nr-icon { font-size: 4rem; display: block; margin-bottom: 1rem; opacity: 0.5; }
+.no-results h3 { color: var(--text-white); margin-bottom: 0.5rem; }
+.no-results p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* LOAD MORE */
+.load-more-wrap { text-align: center; padding: 2.5rem; }
+.load-more-btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 32px; background: rgba(0,255,65,0.1); border: 1px solid var(--primary); border-radius: 50px; color: var(--primary); cursor: pointer; font-size: 0.95rem; font-family: 'Cairo', sans-serif; font-weight: 600; transition: all 0.3s; }
+.load-more-btn:hover { background: rgba(0,255,65,0.2); box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); }
+
+/* STATS BAR */
+.stats-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.stat-pill { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 0.7rem 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+.stat-pill span:first-child { font-size: 1.2rem; }
+.stat-pill-num { font-family: 'Orbitron', monospace; font-size: 1.1rem; color: var(--primary); font-weight: 900; }
+.stat-pill-lbl { font-size: 0.75rem; color: var(--text-muted); display: block; }
+
+/* RESPONSIVE */
+@media(max-width: 768px) {
+  .cmd-header { flex-wrap: wrap; gap: 0.5rem; }
+  .cmd-short-desc { display: none; }
+  .cmd-meta-tags { gap: 4px; }
+  .options-grid { grid-template-columns: 1fr; }
+  .cmd-toolbar { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body class="grid-bg">
+<canvas id="matrix-canvas"></canvas>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="images/logo.png" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div>
+      <span class="logo-text">KALI ACADEMY</span>
+      <span class="logo-sub">COMMAND DATABASE</span>
+    </div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="commands.html" class="nav-link active"><i class="fas fa-terminal"></i> الأوامر</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
+    
+  </ul><div class="status-dot"></div><span id="hdr-count">...</span> CMD</div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</header>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link active"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
+  <a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  
+</div>
+<!-- HERO -->
+<div class="cmd-hero">
+  <div style="font-family:'Share Tech Mono',monospace; font-size:0.8rem; color:var(--primary); letter-spacing:3px; margin-bottom:0.8rem;">
+    <i class="fas fa-database"></i> COMMAND DATABASE
+  </div>
+  <h1 class="page-title">قاعدة بيانات الأوامر</h1>
+  <p style="color:var(--text-muted); font-size:1rem; max-width:700px; margin:0.5rem auto 1.5rem; line-height:1.8;">
+    أكبر مرجع عربي لأوامر كالي لينكس — كل أمر بشرح تفصيلي كامل، خيارات، أمثلة تطبيقية ونصائح احترافية
+  </p>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍  ابحث عن أمر، أداة، أو وصف... مثال: nmap scan">
+    <button class="search-icon-btn" onclick="document.getElementById('searchInput').focus()"><i class="fas fa-search"></i></button>
+  </div>
+  <div class="search-count-badge">
+    <i class="fas fa-bolt"></i>
+    <span id="totalBadge">0</span> أمر متاح للبحث
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="cmd-page-wrapper">
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-pill">
+      <span>⚡</span>
+      <div><span class="stat-pill-num" id="st-total">0</span><span class="stat-pill-lbl">إجمالي الأوامر</span></div>
+    </div>
+    <div class="stat-pill">
+      <span>👁️</span>
+      <div><span class="stat-pill-num" id="st-shown">0</span><span class="stat-pill-lbl">معروض</span></div>
+    </div>
+    <div class="stat-pill">
+      <span>🌿</span>
+      <div><span class="stat-pill-num" id="st-beg">0</span><span class="stat-pill-lbl">مبتدئ</span></div>
+    </div>
+    <div class="stat-pill">
+      <span>⚡</span>
+      <div><span class="stat-pill-num" id="st-int">0</span><span class="stat-pill-lbl">متوسط</span></div>
+    </div>
+    <div class="stat-pill">
+      <span>💀</span>
+      <div><span class="stat-pill-num" id="st-adv">0</span><span class="stat-pill-lbl">متقدم</span></div>
+    </div>
+  </div>
+
+  <!-- CATEGORY PILLS -->
+  <div class="cat-strip" id="catStrip"></div>
+
+  <!-- TOOLBAR -->
+  <div class="cmd-toolbar">
+    <div class="cmd-toolbar-left">
+      <span style="font-size:0.8rem; color:var(--text-muted);">المستوى:</span>
+      <button class="level-btn active-all" data-lv="all" onclick="setLevel('all',this)">🌐 الكل</button>
+      <button class="level-btn" data-lv="beginner" onclick="setLevel('beginner',this)">🌱 مبتدئ</button>
+      <button class="level-btn" data-lv="intermediate" onclick="setLevel('intermediate',this)">⚡ متوسط</button>
+      <button class="level-btn" data-lv="advanced" onclick="setLevel('advanced',this)">💀 متقدم</button>
+    </div>
+    <div class="cmd-toolbar-right">
+      <span class="results-info" id="resultsInfo">جاري التحميل...</span>
+      <select class="sort-select" onchange="renderPage()">
+        <option value="default">الترتيب الافتراضي</option>
+        <option value="name">الاسم A→Z</option>
+        <option value="level">المستوى</option>
+        <option value="cat">الفئة</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- COMMANDS LIST -->
+  <div id="cmdsList" class="cmds-grid"></div>
+
+  <!-- LOAD MORE -->
+  <div class="load-more-wrap" id="loadMoreWrap" style="display:none;">
+    <button class="load-more-btn" onclick="loadMoreCmds()">
+      <i class="fas fa-chevron-down"></i>
+      عرض المزيد
+      <span id="moreCount" style="font-family:'Share Tech Mono',monospace; font-size:0.8rem;"></span>
+    </button>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-bottom" style="max-width:1400px;margin:0 auto;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;color:var(--text-muted);">
+    ⚠️ للأغراض التعليمية والبحثية فقط — استخدم المعرفة بمسؤولية قانونية وأخلاقية | © 2026 Kali Academy |
+    <a href="disclaimer-owner.html" style="color:#ff9966;text-decoration:none;"> ⚖️ إخلاء المسؤولية</a>
+  </div>
+</footer>
+
+<!-- NOTIFICATION -->
+<div class="notification" id="notif"></div>
+
+<script src="js/matrix.js"></script>
+<script src="js/commands-db-part1.js"></script>
+<script src="js/commands-db-part2.js"></script>
+<script src="js/commands-db-part3.js"></script>
+<script src="js/commands-db-part4.js"></script>
+<script src="js/commands-db-part5.js"></script>
+<script src="js/commands-db-part6.js"></script>
+<script src="js/commands-db-part7.js"></script>
+<script src="js/commands-db-part8.js"></script>
+<script src="js/commands-db-part9.js"></script>
+<script src="js/commands-db-part10.js"></script>
+<script src="js/commands-db-part11.js"></script>
+<script src="js/commands-db-part12.js"></script>
+<script src="js/commands-db-part13.js"></script>
+<script src="js/commands-data.js"></script>
+<script>
+// =============================================
+// COMMANDS PAGE FULL LOGIC
+// =============================================
+const ITEMS_PER_LOAD = 30;
+let allCmds = [];
+let filtered = [];
+let displayed = 0;
+let activeLevel = 'all';
+let activeCat = 'all';
+let searchQ = '';
+
+const CAT_META = {
+  linux:    { label: 'لينكس أساسي', icon: '🐧' },
+  network:  { label: 'الشبكات', icon: '🌐' },
+  exploit:  { label: 'الاستغلال', icon: '💥' },
+  web:      { label: 'أمان الويب', icon: '🕸️' },
+  password: { label: 'كلمات المرور', icon: '🔑' },
+  wireless: { label: 'لاسلكي', icon: '📡' },
+  forensics:{ label: 'الجنائي الرقمي', icon: '🔬' },
+  recon:    { label: 'الاستطلاع', icon: '👁️' },
+  crypto:   { label: 'التشفير', icon: '🔐' },
+  system:              { label: 'إدارة النظام',       icon: '⚙️' },
+  malware:             { label: 'تحليل البرمجيات',   icon: '🦠' },
+  password:            { label: 'كسر كلمات المرور',  icon: '🔑' },
+  exploitation:        { label: 'الاستغلال',          icon: '💥' },
+  'post-exploitation': { label: 'ما بعد الاختراق',   icon: '🎯' },
+  pivoting:            { label: 'التمحور والأنفاق',   icon: '🔀' },
+  privesc:             { label: 'رفع الصلاحيات',      icon: '⬆️' },
+  wireless:            { label: 'شبكات لاسلكية',      icon: '📡' },
+  webapp:              { label: 'تطبيقات الويب',      icon: '🌐' },
+  sniffing:            { label: 'تحليل الحزم',        icon: '🕵️' },
+  'social-engineering':{ label: 'هندسة اجتماعية',    icon: '🎭' },
+  forensics:           { label: 'التحقيق الرقمي',     icon: '🔬' },
+  'reverse-engineering':{ label: 'هندسة عكسية',      icon: '🔧' },
+  steganography:       { label: 'إخفاء المعلومات',    icon: '🖼️' },
+  antivirus:           { label: 'مكافحة الفيروسات',   icon: '🛡️' },
+  linux:               { label: 'Linux أوامر',        icon: '🐧' },
+  networking:          { label: 'الشبكات',             icon: '🌐' },
+  scripting:           { label: 'البرمجة والأتمتة',   icon: '📜' },
+  ctf:                 { label: 'CTF أدوات',           icon: '🏆' },
+  cryptography:        { label: 'التشفير',             icon: '🔐' },
+  encoding:            { label: 'التشفير والترميز',    icon: '⚡' },
+};
+const LVL_META = {
+  beginner:     { label: 'مبتدئ',  cls: 'tag-beginner' },
+  intermediate: { label: 'متوسط',  cls: 'tag-intermediate' },
+  advanced:     { label: 'متقدم',  cls: 'tag-advanced' },
+};
+
+// Merge all DBs
+function buildDB() {
+  const seen = new Set();
+  // Detailed ones first
+  [...(window.CMD_PART1||[]), ...(window.CMD_PART2||[]), ...(window.CMD_PART3||[]),
+   ...(window.CMD_PART4||[]), ...(window.CMD_PART5||[]), ...(window.CMD_PART6||[]),
+   ...(window.CMD_PART7||[]), ...(window.CMD_PART8||[]), ...(window.CMD_PART9||[]),
+   ...(window.CMD_PART10||[]), ...(window.CMD_PART11||[]), ...(window.CMD_PART12||[]), ...(window.CMD_PART13||[])].forEach(c => {
+    seen.add(c.name.toLowerCase());
+    allCmds.push({...c, _detailed: true});
+  });
+  // Fallback simple ones
+  (window.COMMANDS_DB||[]).forEach(c => {
+    if(!seen.has(c.name.toLowerCase())) {
+      seen.add(c.name.toLowerCase());
+      // Convert simple format
+      allCmds.push({
+        id: c.id + 10000,
+        name: c.name,
+        cat: c.cat,
+        level: c.level,
+        syntax: c.syntax,
+        short: c.short,
+        desc: c.desc,
+        options: [],
+        examples: (c.examples||[]).map(ex => ({cmd: ex, desc: ''})),
+        tips: '',
+        related: [],
+        _detailed: false,
+      });
+    }
+  });
+  console.log(`📊 Total unique commands in allCmds: ${allCmds.length}`);
+}
+
+// Build category pills
+function buildCatPills() {
+  const counts = {};
+  allCmds.forEach(c => { counts[c.cat] = (counts[c.cat]||0)+1; });
+  let html = `<button class="cat-btn active" onclick="setCat('all',this)">🌐 الكل <span class="badge">${allCmds.length}</span></button>`;
+  Object.entries(counts).sort((a,b)=>b[1]-a[1]).forEach(([cat,cnt]) => {
+    const m = CAT_META[cat]||{label:cat,icon:'📌'};
+    html += `<button class="cat-btn" onclick="setCat('${cat}',this)">${m.icon} ${m.label} <span class="badge">${cnt}</span></button>`;
+  });
+  document.getElementById('catStrip').innerHTML = html;
+}
+
+function updateStats() {
+  const beg = allCmds.filter(c=>c.level==='beginner').length;
+  const int = allCmds.filter(c=>c.level==='intermediate').length;
+  const adv = allCmds.filter(c=>c.level==='advanced').length;
+  document.getElementById('st-total').textContent = allCmds.length.toLocaleString();
+  document.getElementById('st-beg').textContent = beg;
+  document.getElementById('st-int').textContent = int;
+  document.getElementById('st-adv').textContent = adv;
+  document.getElementById('totalBadge').textContent = allCmds.length.toLocaleString();
+  document.getElementById('hdr-count').textContent = allCmds.length.toLocaleString();
+}
+
+function setCat(cat, el) {
+  activeCat = cat;
+  displayed = 0;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderPage();
+}
+function setLevel(lv, el) {
+  activeLevel = lv;
+  displayed = 0;
+  document.querySelectorAll('.level-btn').forEach(b=>{
+    b.className = b.className.replace(/active-\w+/g,'');
+  });
+  if(el) el.classList.add(`active-${lv}`);
+  renderPage();
+}
+
+function getFiltered() {
+  const q = searchQ.toLowerCase().trim();
+  const sortVal = document.querySelector('.sort-select')?.value||'default';
+  let res = allCmds.filter(c => {
+    const matchCat = activeCat==='all' || c.cat===activeCat;
+    const matchLv  = activeLevel==='all' || c.level===activeLevel;
+    const matchQ   = !q ||
+      c.name.toLowerCase().includes(q) ||
+      c.short.includes(q) ||
+      (c.desc||'').includes(q) ||
+      c.syntax.toLowerCase().includes(q) ||
+      (c.options||[]).some(o=>(o.desc||'').includes(q)) ||
+      (c.examples||[]).some(e=>(e.cmd||e||'').toLowerCase().includes(q));
+    return matchCat && matchLv && matchQ;
+  });
+  if(sortVal==='name') res.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(sortVal==='level') {
+    const o={beginner:0,intermediate:1,advanced:2};
+    res.sort((a,b)=>(o[a.level]||0)-(o[b.level]||0));
+  }
+  else if(sortVal==='cat') res.sort((a,b)=>a.cat.localeCompare(b.cat));
+  return res;
+}
+
+function renderPage() {
+  filtered = getFiltered();
+  displayed = 0;
+  document.getElementById('cmdsList').innerHTML = '';
+  appendCmds();
+}
+
+function appendCmds() {
+  const chunk = filtered.slice(displayed, displayed + ITEMS_PER_LOAD);
+  document.getElementById('st-shown').textContent = Math.min(displayed + chunk.length, filtered.length).toLocaleString();
+  
+  if(filtered.length === 0) {
+    document.getElementById('cmdsList').innerHTML = `
+      <div class="no-results">
+        <span class="nr-icon">🔍</span>
+        <h3>لا توجد نتائج</h3>
+        <p>جرب كلمات بحث مختلفة أو اختر فئة أخرى</p>
+      </div>`;
+    document.getElementById('loadMoreWrap').style.display = 'none';
+    document.getElementById('resultsInfo').innerHTML = 'لا توجد نتائج';
+    return;
+  }
+
+  document.getElementById('resultsInfo').innerHTML =
+    `<i class="fas fa-terminal" style="color:var(--primary);margin-left:4px;"></i>
+     عرض <strong style="color:var(--primary)">${Math.min(displayed+chunk.length,filtered.length)}</strong>
+     من <strong style="color:#0ff">${filtered.length.toLocaleString()}</strong>`;
+
+  const frag = document.createDocumentFragment();
+  chunk.forEach((cmd, idx) => {
+    const el = document.createElement('div');
+    el.innerHTML = buildCard(cmd, displayed + idx);
+    frag.appendChild(el.firstElementChild);
+  });
+  document.getElementById('cmdsList').appendChild(frag);
+  displayed += chunk.length;
+
+  const remaining = filtered.length - displayed;
+  if(remaining > 0) {
+    document.getElementById('loadMoreWrap').style.display = 'block';
+    document.getElementById('moreCount').textContent = `(${remaining.toLocaleString()} متبقي)`;
+  } else {
+    document.getElementById('loadMoreWrap').style.display = 'none';
+  }
+}
+
+function loadMoreCmds() {
+  appendCmds();
+  // scroll a bit
+  document.getElementById('loadMoreWrap').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function buildCard(cmd, idx) {
+  const catMeta = CAT_META[cmd.cat]||{label:cmd.cat,icon:'📌'};
+  const lvlMeta = LVL_META[cmd.level]||{label:cmd.level,cls:'tag-beginner'};
+  
+  // Options HTML
+  let optionsHtml = '';
+  if(cmd.options && cmd.options.length > 0) {
+    optionsHtml = `
+    <div class="cmd-options-section">
+      <div class="section-label"><i class="fas fa-sliders-h"></i> الخيارات والمعاملات</div>
+      <div class="options-grid">
+        ${cmd.options.map(o=>`
+          <div class="option-item">
+            <span class="option-flag">${esc(o.flag||o.cmd||'')}</span>
+            <span class="option-desc">${esc(o.desc||'')}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Examples HTML
+  let examplesHtml = '';
+  if(cmd.examples && cmd.examples.length > 0) {
+    examplesHtml = `
+    <div class="cmd-examples-section">
+      <div class="section-label"><i class="fas fa-code"></i> أمثلة تطبيقية</div>
+      ${cmd.examples.map(ex => {
+        const cmdText = typeof ex === 'string' ? ex : (ex.cmd||ex||'');
+        const descText = typeof ex === 'object' ? (ex.desc||'') : '';
+        return `
+        <div class="example-row">
+          <div class="example-code-line">
+            <span class="ex-prompt">┌──(root㉿kali)-[~]<br>└─$</span>
+            <span class="ex-cmd-text">${esc(cmdText)}</span>
+            <button class="ex-copy-btn" onclick="copyCmd('${escJ(cmdText)}');event.stopPropagation()">
+              <i class="fas fa-copy"></i> نسخ
+            </button>
+          </div>
+          ${descText ? `<div class="ex-desc-line">${esc(descText)}</div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // Tips HTML
+  let tipsHtml = '';
+  if(cmd.tips) {
+    tipsHtml = `
+    <div class="cmd-tips-section">
+      <div class="cmd-tips-label"><i class="fas fa-lightbulb"></i> نصيحة احترافية</div>
+      <div class="cmd-tips-text">${esc(cmd.tips)}</div>
+    </div>`;
+  }
+
+  // Related HTML
+  let relatedHtml = '';
+  if(cmd.related && cmd.related.length > 0) {
+    relatedHtml = `
+    <div class="cmd-related-section">
+      <span class="related-label">ذات صلة:</span>
+      ${cmd.related.map(r=>`<span class="related-chip" onclick="searchRelated('${escJ(r)}')">${esc(r)}</span>`).join('')}
+    </div>`;
+  }
+
+  return `
+  <div class="cmd-card" id="card-${cmd.id}">
+    <div class="cmd-header" onclick="toggleCard(${cmd.id})">
+      <span class="cmd-idx">#${String(idx+1).padStart(4,'0')}</span>
+      <div class="cmd-main-info">
+        <span class="cmd-title">${esc(cmd.name)}</span>
+        <span class="cmd-syntax-hint">${esc(cmd.syntax)}</span>
+      </div>
+      <span class="cmd-short-desc">${esc(cmd.short)}</span>
+      <div class="cmd-meta-tags">
+        <span class="tag tag-cat">${catMeta.icon} ${catMeta.label}</span>
+        <span class="tag ${lvlMeta.cls}">${lvlMeta.label}</span>
+      </div>
+      <div class="expand-btn"><i class="fas fa-chevron-down"></i></div>
+    </div>
+    <div class="cmd-body">
+      <div class="cmd-body-inner">
+        <!-- Description -->
+        <div class="cmd-desc-section">
+          <div class="section-label"><i class="fas fa-info-circle"></i> الوصف التفصيلي</div>
+          <div class="cmd-desc-text">${esc(cmd.desc||cmd.short)}</div>
+        </div>
+        <!-- Syntax -->
+        <div class="cmd-syntax-section">
+          <div class="section-label"><i class="fas fa-terminal"></i> الصياغة</div>
+          <div class="syntax-box">
+            <code class="syntax-code">${esc(cmd.syntax)}</code>
+            <button class="copy-all-btn" onclick="copyCmd('${escJ(cmd.syntax)}');event.stopPropagation()">
+              <i class="fas fa-copy"></i> نسخ
+            </button>
+          </div>
+        </div>
+        ${optionsHtml}
+        ${examplesHtml}
+        ${tipsHtml}
+        ${relatedHtml}
+      </div>
+    </div>
+  </div>`;
+}
+
+// Toggle card expand
+function toggleCard(id) {
+  const card = document.getElementById(`card-${id}`);
+  if(!card) return;
+  const wasOpen = card.classList.contains('expanded');
+  // Close all
+  document.querySelectorAll('.cmd-card.expanded').forEach(c => {
+    if(c !== card) c.classList.remove('expanded');
+  });
+  card.classList.toggle('expanded', !wasOpen);
+  if(!wasOpen) {
+    // Scroll into view if needed
+    setTimeout(() => {
+      const rect = card.getBoundingClientRect();
+      if(rect.top < 80) card.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 300);
+  }
+}
+
+// Copy command
+function copyCmd(text) {
+  navigator.clipboard.writeText(text).then(() => showNotif('✅ تم نسخ الأمر بنجاح!')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    showNotif('✅ تم النسخ!');
+  });
+}
+
+// Search related
+function searchRelated(term) {
+  document.getElementById('searchInput').value = term;
+  searchQ = term.toLowerCase();
+  displayed = 0;
+  renderPage();
+  window.scrollTo({top: document.querySelector('.cmd-page-wrapper').offsetTop - 80, behavior:'smooth'});
+}
+
+// Notification
+function showNotif(msg) {
+  const n = document.getElementById('notif');
+  n.textContent = msg; n.classList.add('show');
+  setTimeout(() => n.classList.remove('show'), 2500);
+}
+
+// Escape helpers
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escJ(s) { return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+// Search input
+document.getElementById('searchInput').addEventListener('input', function(){
+  searchQ = this.value.toLowerCase();
+  displayed = 0;
+  clearTimeout(this._t);
+  this._t = setTimeout(renderPage, 280);
+});
+
+// URL params
+const urlP = new URLSearchParams(window.location.search);
+const urlCat = urlP.get('cat');
+
+// INIT
+buildDB();
+buildCatPills();
+updateStats();
+
+if(urlCat) {
+  activeCat = urlCat;
+  setTimeout(() => {
+    const pill = [...document.querySelectorAll('.cat-btn')].find(b => b.getAttribute('onclick')?.includes(`'${urlCat}'`));
+    if(pill) { document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active')); pill.classList.add('active'); }
+  }, 100);
+}
+renderPage();
+
+// Hamburger
+document.querySelector('.hamburger')?.addEventListener('click', () => {
+  document.querySelector('.mobile-menu')?.classList.toggle('open');
+});
+</script>
+</body>
+</html>

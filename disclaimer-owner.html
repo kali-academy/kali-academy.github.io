@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إخلاء المسؤولية - KaliAcademy | سياسة الاستخدام المسؤول</title>
+<meta name="description" content="سياسة الاستخدام المسؤول وإخلاء المسؤولية لمنصة KaliAcademy.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhanced.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== DISCLAIMER PAGE STYLES ===== */
+.disc-wrapper {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+/* HERO */
+.disc-hero {
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,60,60,0.08) 0%, transparent 100%);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.disc-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #ff3c3c, #ff9900, #ff3c3c, transparent);
+}
+.disc-hero-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  display: block;
+  animation: pulse-warn 2s infinite;
+}
+@keyframes pulse-warn {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.08); opacity: 0.8; }
+}
+.disc-hero h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: 2.5rem;
+  color: #ff3c3c;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 30px rgba(255,60,60,0.5);
+}
+.disc-hero .subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  line-height: 1.8;
+}
+.disc-hero .last-updated {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+  border: 1px solid var(--border);
+}
+
+/* QUICK BADGES */
+.quick-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 2rem 2rem 0;
+  margin-bottom: 2rem;
+}
+.qbadge {
+  padding: 0.5rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.qbadge-red { background: rgba(255,60,60,0.15); color: #ff6060; border: 1px solid rgba(255,60,60,0.3); }
+.qbadge-green { background: rgba(0,255,65,0.1); color: #00ff41; border: 1px solid rgba(0,255,65,0.25); }
+.qbadge-yellow { background: rgba(255,200,0,0.1); color: #ffd700; border: 1px solid rgba(255,200,0,0.25); }
+.qbadge-blue { background: rgba(0,180,255,0.1); color: #00b4ff; border: 1px solid rgba(0,180,255,0.25); }
+
+/* SECTIONS */
+.disc-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.3s;
+}
+.disc-section:hover {
+  border-color: rgba(255,60,60,0.3);
+}
+.disc-section.green-border:hover { border-color: rgba(0,255,65,0.3); }
+.disc-section.blue-border:hover { border-color: rgba(0,180,255,0.3); }
+.disc-section.yellow-border:hover { border-color: rgba(255,200,0,0.3); }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.icon-red { background: rgba(255,60,60,0.15); }
+.icon-green { background: rgba(0,255,65,0.1); }
+.icon-blue { background: rgba(0,180,255,0.1); }
+.icon-yellow { background: rgba(255,200,0,0.1); }
+.icon-purple { background: rgba(180,100,255,0.1); }
+.section-title { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); }
+.section-title span { font-size: 0.8rem; color: var(--text-muted); display: block; font-weight: 400; margin-top: 2px; }
+
+/* CONTENT ITEMS */
+.disc-text {
+  color: var(--text-secondary);
+  line-height: 1.9;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+.disc-text:last-child { margin-bottom: 0; }
+
+.rule-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.rule-list li {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  font-size: 0.93rem;
+  line-height: 1.7;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+.rule-list li:last-child { border-bottom: none; }
+.rule-list li .ri {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+.ri-red { background: rgba(255,60,60,0.2); color: #ff6060; }
+.ri-green { background: rgba(0,255,65,0.15); color: #00ff41; }
+.ri-yellow { background: rgba(255,200,0,0.15); color: #ffd700; }
+.ri-blue { background: rgba(0,180,255,0.15); color: #00b4ff; }
+
+/* COMPARISON TABLE */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.compare-table th {
+  background: rgba(255,255,255,0.05);
+  padding: 0.75rem 1rem;
+  text-align: right;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border);
+}
+.compare-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+.tag-allowed { color: #00ff41; font-weight: 600; }
+.tag-forbidden { color: #ff4444; font-weight: 600; }
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  background: rgba(255,60,60,0.08);
+  border: 1px solid rgba(255,60,60,0.25);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1rem;
+  color: #ffaaaa;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.highlight-box.green {
+  background: rgba(0,255,65,0.06);
+  border-color: rgba(0,255,65,0.2);
+  color: #aaffcc;
+}
+.highlight-box.yellow {
+  background: rgba(255,200,0,0.07);
+  border-color: rgba(255,200,0,0.2);
+  color: #ffe066;
+}
+.highlight-box .hb-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+
+/* ETHICAL PLEDGE */
+.pledge-box {
+  background: linear-gradient(135deg, rgba(0,255,65,0.05), rgba(0,180,255,0.05));
+  border: 1px solid rgba(0,255,65,0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+.pledge-box h3 {
+  color: #00ff41;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-family: 'Orbitron', monospace;
+}
+.pledge-text {
+  color: var(--text-secondary);
+  line-height: 2;
+  font-size: 0.95rem;
+  max-width: 700px;
+  margin: 0 auto 1.5rem;
+}
+.pledge-sign {
+  display: inline-block;
+  padding: 0.75rem 2.5rem;
+  background: rgba(0,255,65,0.1);
+  border: 1px solid rgba(0,255,65,0.3);
+  border-radius: 30px;
+  color: #00ff41;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.pledge-sign:hover {
+  background: rgba(0,255,65,0.2);
+  box-shadow: 0 0 20px rgba(0,255,65,0.3);
+  transform: translateY(-2px);
+}
+.pledge-sign.signed {
+  background: rgba(0,255,65,0.2);
+  box-shadow: 0 0 20px rgba(0,255,65,0.3);
+}
+
+/* OWNER SECTION */
+.owner-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(0,180,255,0.25);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.owner-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00ff41, #00b4ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(0,255,65,0.3);
+}
+.owner-info { flex: 1; min-width: 200px; }
+.owner-info h3 { color: #00b4ff; font-size: 1.2rem; margin-bottom: 0.4rem; }
+.owner-info .owner-title { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.owner-info p { color: var(--text-secondary); line-height: 1.8; font-size: 0.93rem; }
+
+/* LEGAL NOTICE BAR */
+.legal-bar {
+  background: rgba(255,60,60,0.08);
+  border: 1px solid rgba(255,60,60,0.2);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.legal-bar .lb-icon { font-size: 1.5rem; flex-shrink: 0; }
+.legal-bar p { color: #ffaaaa; font-size: 0.88rem; line-height: 1.7; margin: 0; flex: 1; }
+
+/* NAV BREADCRUMB */
+.breadcrumb {
+  padding: 1rem 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.breadcrumb a { color: #00ff41; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* BACK TO TOP */
+.back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 50px;
+  height: 50px;
+  background: rgba(0,255,65,0.1);
+  border: 1px solid rgba(0,255,65,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #00ff41;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+  opacity: 0;
+  pointer-events: none;
+}
+.back-to-top.visible { opacity: 1; pointer-events: all; }
+.back-to-top:hover { background: rgba(0,255,65,0.2); transform: translateY(-3px); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .disc-hero h1 { font-size: 1.8rem; }
+  .disc-section { padding: 1.5rem; }
+  .owner-card { flex-direction: column; align-items: center; text-align: center; }
+  .compare-table { font-size: 0.82rem; }
+  .compare-table th, .compare-table td { padding: 0.5rem 0.75rem; }
+}
+</style>
+</head>
+<body class="grid-bg">
+<script src="js/disclaimer.js"></script>
+<script src="js/social-bar.js"></script>
+<script src="js/site-init.js"></script>
+
+<!-- CANVAS MATRIX -->
+<canvas id="matrix" style="position:fixed;top:0;left:0;z-index:0;opacity:0.03;pointer-events:none;"></canvas>
+
+<!-- HEADER NAV -->
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">
+      <img src="images/logo.png" alt="Kali Academy" style="width:44px;height:44px;object-fit:contain;vertical-align:middle;margin-left:8px;">
+      <span class="logo-kali">KALI</span>
+      <span class="logo-academy"> ACADEMY</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">الرئيسية</a>
+      <a href="commands.html">الأوامر</a>
+      <a href="tutorials.html">الدروس</a>
+      <a href="steps.html">خطوات التنفيذ</a>
+      <a href="tools.html">الأدوات</a>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="القائمة">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">الرئيسية</a>
+    <a href="commands.html">الأوامر</a>
+    <a href="tutorials.html">الدروس</a>
+    <a href="steps.html">خطوات التنفيذ</a>
+    <a href="tools.html">الأدوات</a>
+
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html"><i class="fas fa-home"></i> الرئيسية</a>
+  <i class="fas fa-chevron-left" style="font-size:0.7rem;"></i>
+  <span>إخلاء المسؤولية وسياسة الاستخدام</span>
+</div>
+
+<!-- HERO -->
+<div class="disc-hero">
+  <span class="disc-hero-icon">⚠️</span>
+  <h1>إخلاء المسؤولية</h1>
+  <p class="subtitle">
+    يُرجى قراءة هذه الوثيقة بعناية قبل استخدام أي محتوى أو أداة في هذه المنصة.
+    استخدامك للموقع يعني موافقتك الكاملة على كل البنود الواردة هنا.
+  </p>
+  <span class="last-updated">
+    <i class="fas fa-calendar-alt" style="margin-left:0.4rem;"></i>
+    آخر تحديث: مارس 2026
+  </span>
+</div>
+
+<!-- QUICK BADGES -->
+<div class="quick-badges">
+  <div class="qbadge qbadge-green"><i class="fas fa-check-circle"></i> للأغراض التعليمية</div>
+  <div class="qbadge qbadge-green"><i class="fas fa-graduation-cap"></i> البحث الأكاديمي</div>
+  <div class="qbadge qbadge-red"><i class="fas fa-ban"></i> ممنوع القرصنة غير المشروعة</div>
+  <div class="qbadge qbadge-yellow"><i class="fas fa-gavel"></i> المسؤولية على المستخدم</div>
+  <div class="qbadge qbadge-blue"><i class="fas fa-shield-alt"></i> الأمن الأخلاقي فقط</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="disc-wrapper">
+
+  <!-- 1. طبيعة المحتوى -->
+  <div class="disc-section">
+    <div class="section-header">
+      <div class="section-icon icon-blue"><i class="fas fa-info-circle"></i></div>
+      <div>
+        <div class="section-title">طبيعة المحتوى التعليمي
+          <span>ما هو الهدف من هذه المنصة؟</span>
+        </div>
+      </div>
+    </div>
+    <p class="disc-text">
+      <strong>Kali Academy</strong> منصة تعليمية متخصصة في مجال الأمن السيبراني واختبار الاختراق الأخلاقي.
+      جميع المحتويات المنشورة على هذا الموقع — بما تشمل الأوامر، الأدوات، الدروس، وخطوات التنفيذ —
+      مُصمّمة حصراً للأغراض التعليمية والأكاديمية.
+    </p>
+    <p class="disc-text">
+      الهدف من هذه المنصة هو تمكين المتخصصين والطلاب وعشاق الأمن السيبراني من فهم كيفية عمل
+      الأنظمة والشبكات وآليات الهجوم والدفاع، بما يُمكّنهم من بناء دفاعات أقوى وأنظمة أكثر أمناً.
+    </p>
+    <div class="highlight-box green">
+      <span class="hb-icon">💡</span>
+      <div>
+        كل المعلومات المنشورة هي معلومات عامة ومتاحة للعموم في الكتب الأكاديمية، وثائق رسمية، ومؤتمرات الأمن المعترف بها
+        مثل DEF CON وBlack Hat وأبحاث MIT وCERNIT وغيرها.
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. المسؤولية القانونية -->
+  <div class="disc-section">
+    <div class="section-header">
+      <div class="section-icon icon-red"><i class="fas fa-balance-scale"></i></div>
+      <div>
+        <div class="section-title">المسؤولية القانونية وإخلاء ذمة الموقع
+          <span>من يتحمل المسؤولية القانونية؟</span>
+        </div>
+      </div>
+    </div>
+    <p class="disc-text">
+      <strong style="color: #ff6060;">يتحمل المستخدم وحده المسؤولية القانونية الكاملة</strong> عن أي استخدام يقوم به للمعلومات والأدوات
+      المتاحة على هذه المنصة. لا يتحمل موقع Kali Academy ولا القائمون عليه أي مسؤولية قانونية أو أخلاقية
+      عن:
+    </p>
+    <ul class="rule-list">
+      <li>
+        <span class="ri ri-red"><i class="fas fa-times"></i></span>
+        الدخول غير المصرح به لأي نظام أو شبكة أو جهاز لا تملك إذناً صريحاً باختباره.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-times"></i></span>
+        استخدام أي أداة أو أمر أو تقنية مُدرجة في الموقع لأغراض إجرامية أو تخريبية.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-times"></i></span>
+        أي ضرر مادي أو معنوي ينتج عن إساءة استخدام المحتوى التعليمي لهذه المنصة.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-times"></i></span>
+        انتهاك قوانين الجرائم الإلكترونية المعمول بها في أي دولة أو منطقة قضائية.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-times"></i></span>
+        أي تداعيات قانونية تنشأ عن تطبيق التعليمات خارج إطار الأغراض التعليمية المرخّصة.
+      </li>
+    </ul>
+    <div class="highlight-box">
+      <span class="hb-icon">⚖️</span>
+      <div>
+        في معظم دول العالم العربي والغربي، يُعدّ الاختراق غير المصرح به جريمة جنائية يُعاقب عليها بالسجن وغرامات ضخمة.
+        في المملكة العربية السعودية يُطبَّق نظام مكافحة الجرائم المعلوماتية الصادر عام 1428هـ، وفي الإمارات قانون الجرائم
+        الإلكترونية رقم 34 لسنة 2021، وعلى مستوى الولايات المتحدة قانون CFAA. تحقّق دائماً من القوانين المحلية قبل التطبيق.
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. الاستخدام المشروع vs غير المشروع -->
+  <div class="disc-section green-border">
+    <div class="section-header">
+      <div class="section-icon icon-green"><i class="fas fa-exchange-alt"></i></div>
+      <div>
+        <div class="section-title">الاستخدام المسموح به مقابل المحظور
+          <span>ما الفرق بين الأمن الأخلاقي والقرصنة؟</span>
+        </div>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>الاستخدام</th>
+            <th>المشروع ✅</th>
+            <th>المحظور ❌</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>اختبار الأنظمة</td>
+            <td class="tag-allowed">أنظمتك الخاصة أو بإذن كتابي</td>
+            <td class="tag-forbidden">أي نظام بدون إذن صريح</td>
+          </tr>
+          <tr>
+            <td>فحص الشبكات</td>
+            <td class="tag-allowed">شبكتك المنزلية أو مختبر معزول</td>
+            <td class="tag-forbidden">شبكات الشركات أو الأفراد دون إذن</td>
+          </tr>
+          <tr>
+            <td>تعلم الأدوات</td>
+            <td class="tag-allowed">بيئات مخصصة مثل TryHackMe وHack The Box</td>
+            <td class="tag-forbidden">الأهداف الحية على الإنترنت</td>
+          </tr>
+          <tr>
+            <td>Bug Bounty</td>
+            <td class="tag-allowed">برامج Bug Bounty المعتمدة (HackerOne, Bugcrowd)</td>
+            <td class="tag-forbidden">الاختبار خارج نطاق البرنامج المعلن</td>
+          </tr>
+          <tr>
+            <td>Penetration Testing</td>
+            <td class="tag-allowed">بعقد رسمي وإذن كتابي موقّع</td>
+            <td class="tag-forbidden">بدون عقد أو إذن رسمي</td>
+          </tr>
+          <tr>
+            <td>الأبحاث الأكاديمية</td>
+            <td class="tag-allowed">بيئات محاكاة معزولة (VirtualBox, VMware)</td>
+            <td class="tag-forbidden">البنية التحتية الحقيقية</td>
+          </tr>
+          <tr>
+            <td>مشاركة المعرفة</td>
+            <td class="tag-allowed">تعليم المفاهيم والمنهجيات العامة</td>
+            <td class="tag-forbidden">مشاركة Exploits لأنظمة في الإنتاج</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 4. إرشادات الاستخدام الأخلاقي -->
+  <div class="disc-section blue-border">
+    <div class="section-header">
+      <div class="section-icon icon-blue"><i class="fas fa-compass"></i></div>
+      <div>
+        <div class="section-title">إرشادات الاستخدام الأخلاقي
+          <span>كيف تكون Ethical Hacker حقيقي؟</span>
+        </div>
+      </div>
+    </div>
+    <ul class="rule-list">
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>الحصول على إذن كتابي:</strong> قبل أي اختبار، احصل على إذن كتابي صريح من مالك النظام.
+        لا يكفي الإذن الشفهي في أي ظرف.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>تحديد نطاق الاختبار (Scope):</strong> حدّد بوضوح الأنظمة والشبكات المدرجة في الاختبار.
+        لا تتجاوز النطاق المتفق عليه تحت أي مسمى.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>استخدام بيئات تدريبية:</strong> تدرّب على منصات مثل TryHackMe وHack The Box وVulnHub
+        المصممة خصيصاً لهذا الغرض.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>الحفاظ على سرية البيانات:</strong> إذا اكتشفت بيانات حساسة أثناء الاختبار المشروع،
+        التزم بالسرية التامة وأبلغ العميل فوراً.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>التوثيق الكامل:</strong> وثّق كل خطوة من خطوات الاختبار للمساءلة القانونية وتقديم التقارير.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>الإفصاح المسؤول (Responsible Disclosure):</strong> عند اكتشاف ثغرة في أي نظام،
+        أخبر الجهة المعنية قبل الإفصاح العلني.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>احترام الخصوصية:</strong> لا تجمع أو تحتفظ بأي بيانات شخصية تُكتشف أثناء الاختبار
+        إلا لأغراض التوثيق المتفق عليها.
+      </li>
+      <li>
+        <span class="ri ri-yellow"><i class="fas fa-exclamation"></i></span>
+        <strong>الشهادات المعترف بها:</strong> للاحتراف في هذا المجال احرص على الحصول على شهادات
+        مثل CEH، OSCP، CISSP، CompTIA Security+ لإثبات كفاءتك بشكل قانوني ومعترف به.
+      </li>
+    </ul>
+  </div>
+
+  <!-- 5. قوانين الجرائم الإلكترونية -->
+  <div class="disc-section">
+    <div class="section-header">
+      <div class="section-icon icon-red"><i class="fas fa-gavel"></i></div>
+      <div>
+        <div class="section-title">نماذج من قوانين الجرائم الإلكترونية
+          <span>انتبه لقوانين بلدك قبل أي تطبيق</span>
+        </div>
+      </div>
+    </div>
+    <ul class="rule-list">
+      <li>
+        <span class="ri ri-red"><i class="fas fa-flag"></i></span>
+        <strong>المملكة العربية السعودية:</strong> نظام مكافحة الجرائم المعلوماتية 1428هـ — يُعاقب على الدخول غير المصرح
+        بالسجن حتى سنة وغرامة حتى 500,000 ريال للمرة الأولى، وتضاعف العقوبة عند التكرار.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-flag"></i></span>
+        <strong>الإمارات العربية المتحدة:</strong> قانون رقم 34 لسنة 2021 — يُعاقب الاختراق غير المصرح
+        بالسجن وغرامات تصل لملايين الدراهم.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-flag"></i></span>
+        <strong>مصر:</strong> قانون مكافحة جرائم تقنية المعلومات رقم 175 لسنة 2018 — يُجرّم الدخول غير المصرح
+        ويُعاقب عليه بالسجن والغرامة.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-flag"></i></span>
+        <strong>الولايات المتحدة:</strong> Computer Fraud and Abuse Act (CFAA) — يُعاقب على الاختراق
+        بالسجن حتى 10 سنوات أو أكثر بحسب الضرر.
+      </li>
+      <li>
+        <span class="ri ri-red"><i class="fas fa-flag"></i></span>
+        <strong>الاتحاد الأوروبي:</strong> توجيه NIS2 و Budapest Convention على الجريمة الإلكترونية.
+      </li>
+    </ul>
+    <div class="highlight-box yellow">
+      <span class="hb-icon">⚠️</span>
+      <div>
+        هذه أمثلة مختصرة وليست مشورة قانونية. استشر محامياً متخصصاً في القانون الرقمي في بلدك للحصول
+        على المعلومات القانونية الدقيقة الخاصة بموقعك الجغرافي.
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. عدم ضمان الدقة -->
+  <div class="disc-section yellow-border">
+    <div class="section-header">
+      <div class="section-icon icon-yellow"><i class="fas fa-exclamation-triangle"></i></div>
+      <div>
+        <div class="section-title">حدود دقة المحتوى والتحديثات
+          <span>ملاحظات حول صحة المعلومات</span>
+        </div>
+      </div>
+    </div>
+    <ul class="rule-list">
+      <li>
+        <span class="ri ri-yellow"><i class="fas fa-exclamation"></i></span>
+        الأوامر والمعلومات المنشورة صحيحة وقت كتابتها لكن مجال الأمن السيبراني يتطور بسرعة.
+        الأدوات قد تتغير، الأوامر قد تُستهلك، والثغرات تُصلح.
+      </li>
+      <li>
+        <span class="ri ri-yellow"><i class="fas fa-exclamation"></i></span>
+        لا يضمن موقع Kali Academy دقة 100% لجميع المعلومات في جميع الأوقات.
+        تحقّق دائماً من الوثائق الرسمية لكل أداة.
+      </li>
+      <li>
+        <span class="ri ri-yellow"><i class="fas fa-exclamation"></i></span>
+        بعض الأوامر تتطلب صلاحيات مرتفعة أو بيئة محددة. تأكد من فهم ما تفعله قبل التنفيذ.
+      </li>
+      <li>
+        <span class="ri ri-yellow"><i class="fas fa-exclamation"></i></span>
+        لا يُشكّل أي محتوى على هذا الموقع توجيهاً قانونياً أو مشورة مهنية متخصصة.
+      </li>
+    </ul>
+  </div>
+
+  <!-- 7. عن المنشئ -->
+  <div class="disc-section blue-border">
+    <div class="section-header">
+      <div class="section-icon icon-blue"><i class="fas fa-user-shield"></i></div>
+      <div>
+        <div class="section-title">عن منشئ المنصة
+          <span>من يقف وراء Kali Academy؟</span>
+        </div>
+      </div>
+    </div>
+    <div class="owner-card">
+      <div class="owner-avatar">👨‍💻</div>
+      <div class="owner-info">
+        <h3>Kali Academy Team</h3>
+        <p class="owner-title">Cybersecurity Educators &amp; Ethical Hacking Enthusiasts</p>
+        <p>
+          هذه المنصة من إنشاء متخصصين في مجال الأمن السيبراني يؤمنون بأن نشر المعرفة الأمنية بشكل مسؤول
+          هو السبيل الأمثل لبناء فضاء رقمي أكثر أماناً. نحن نؤمن بمبدأ الأمن الأخلاقي ونرفض بشكل قاطع
+          أي استخدام غير مشروع للمعرفة التقنية.
+        </p>
+        <p style="margin-top:0.75rem;">
+          <strong style="color:#00ff41;">رسالتنا:</strong> تمكين الجيل القادم من متخصصي الأمن السيبراني
+          بمعرفة حقيقية وأخلاقيات راسخة. نحن لا ندعم ولا نشجع أي نشاط إجرامي تحت أي ظرف.
+        </p>
+      </div>
+    </div>
+    <div class="legal-bar">
+      <span class="lb-icon">⚖️</span>
+      <p>
+        <strong>إشعار قانوني:</strong> موقع Kali Academy ومشغلوه لا يتحملون أي مسؤولية قانونية عن
+        الاستخدام غير المشروع للمحتوى. أي استخدام يتعارض مع القوانين المحلية أو الدولية يقع
+        بالكامل تحت مسؤولية المستخدم وحده. بالاستخدام المستمر للموقع تؤكد موافقتك على هذه الشروط.
+      </p>
+    </div>
+  </div>
+
+  <!-- 8. بيئات التدريب الموصى بها -->
+  <div class="disc-section green-border">
+    <div class="section-header">
+      <div class="section-icon icon-green"><i class="fas fa-flask"></i></div>
+      <div>
+        <div class="section-title">بيئات التدريب الآمنة والموصى بها
+          <span>تدرّب بأمان على هذه المنصات</span>
+        </div>
+      </div>
+    </div>
+    <p class="disc-text">
+      لتطبيق ما تتعلمه بشكل قانوني وآمن، نوصي بشدة باستخدام البيئات التالية:
+    </p>
+    <ul class="rule-list">
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong><a href="https://tryhackme.com" target="_blank" style="color:#00ff41;">TryHackMe.com</a></strong> —
+        منصة تعليمية تفاعلية بغرف معزولة مصممة للمبتدئين والمتقدمين. مثالية للبداية.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong><a href="https://hackthebox.com" target="_blank" style="color:#00ff41;">HackTheBox.com</a></strong> —
+        أجهزة افتراضية متنوعة الصعوبة للاختبار والتحدي. للمتقدمين.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong><a href="https://vulnhub.com" target="_blank" style="color:#00ff41;">VulnHub.com</a></strong> —
+        أجهزة افتراضية للتنزيل والتشغيل محلياً. مناسبة للتعلم بدون إنترنت.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong><a href="https://portswigger.net/web-security" target="_blank" style="color:#00ff41;">PortSwigger Web Security Academy</a></strong> —
+        مختبرات متخصصة في أمان تطبيقات الويب من صانعي Burp Suite. مجاني بالكامل.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong>VirtualBox / VMware</strong> — قم بإنشاء مختبرك المنزلي المعزول باستخدام أنظمة
+        تشغيل ضعيفة مقصوداً مثل Metasploitable وDVWA.
+      </li>
+      <li>
+        <span class="ri ri-green"><i class="fas fa-check"></i></span>
+        <strong><a href="https://app.hackthebox.com/challenges" target="_blank" style="color:#00ff41;">CTF Competitions</a></strong> —
+        مسابقات CTF (Capture The Flag) هي بيئات قانونية مثالية لتطبيق المهارات.
+      </li>
+    </ul>
+  </div>
+
+  <!-- 9. ميثاق المستخدم -->
+  <div class="pledge-box">
+    <h3>⚡ ميثاق المستخدم الأخلاقي</h3>
+    <p class="pledge-text">
+      بقراءتك لهذه الوثيقة وقبولك لبنودها، تقرّ بأنك ستستخدم المعرفة المكتسبة من هذه المنصة
+      <strong style="color:#00ff41;">للأغراض التعليمية والدفاعية والأخلاقية فقط</strong>،
+      وأنك لن تُسيء استخدام أي معلومة للإضرار بأي شخص أو مؤسسة أو بنية تحتية.
+      أنت توافق على احترام القوانين المحلية والدولية وتتحمل المسؤولية الكاملة عن أفعالك.
+    </p>
+    <button class="pledge-sign" id="pledgeBtn" onclick="signPledge(this)">
+      <i class="fas fa-handshake"></i>&nbsp; أوقّع على الميثاق الأخلاقي
+    </button>
+    <p id="pledgeConfirm" style="margin-top:1rem; color:#00ff41; display:none; font-weight:600;">
+      ✅ شكراً! لقد وقّعت على الميثاق الأخلاقي. نثق بك ونتمنى لك تعلماً مثمراً ومسؤولاً.
+    </p>
+  </div>
+
+  <!-- نبذة أخيرة -->
+  <div style="margin-top:2rem; padding: 1.5rem; border: 1px solid var(--border); border-radius: 12px; background: rgba(255,255,255,0.02);">
+    <p style="color:var(--text-muted); font-size:0.85rem; line-height:2; text-align:center; margin:0;">
+      © 2026 Kali Academy — جميع الحقوق محفوظة |
+      هذه المنصة للأغراض التعليمية فقط |
+      <a href="index.html" style="color:#00ff41;">العودة للرئيسية</a> |
+      <a href="disclaimer.html" style="color:#00ff41;">سياسة الاستخدام</a>
+      <br><br>
+      <em>المعرفة سلاح — استخدمها بحكمة ومسؤولية.</em>
+    </p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer-bar">
+  <div class="footer-inner">
+    <span>⚠️ للأغراض التعليمية والبحثية فقط — استخدم المعرفة بمسؤولية قانونية وأخلاقية</span>
+    <span>© 2026 Kali Academy</span>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<div class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <i class="fas fa-arrow-up"></i>
+</div>
+
+<script src="js/matrix.js"></script>
+<script>
+// Mobile menu
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileNav = document.getElementById('mobileNav');
+if (mobileMenuBtn && mobileNav) {
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileNav.classList.toggle('active');
+  });
+}
+
+// Back to top button
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('backToTop');
+  if (window.scrollY > 400) {
+    btn.classList.add('visible');
+  } else {
+    btn.classList.remove('visible');
+  }
+});
+
+// Sign pledge
+function signPledge(btn) {
+  btn.classList.add('signed');
+  btn.innerHTML = '<i class="fas fa-check-circle"></i>&nbsp; تم التوقيع ✅';
+  btn.disabled = true;
+  document.getElementById('pledgeConfirm').style.display = 'block';
+  localStorage.setItem('kali_pledge_signed', 'true');
+  
+  // Confetti effect
+  const colors = ['#00ff41', '#00b4ff', '#ffd700'];
+  for (let i = 0; i < 30; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      position: fixed;
+      width: 8px; height: 8px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      border-radius: 50%;
+      top: ${Math.random() * 100}vh;
+      left: ${Math.random() * 100}vw;
+      animation: fadeOut 1.5s forwards;
+      pointer-events: none;
+      z-index: 9999;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+}
+
+// Check if already signed
+if (localStorage.getItem('kali_pledge_signed') === 'true') {
+  const btn = document.getElementById('pledgeBtn');
+  if (btn) {
+    btn.classList.add('signed');
+    btn.innerHTML = '<i class="fas fa-check-circle"></i>&nbsp; تم التوقيع مسبقاً ✅';
+    btn.disabled = true;
+    document.getElementById('pledgeConfirm').style.display = 'block';
+  }
+}
+
+// Add fadeOut animation
+const style = document.createElement('style');
+style.textContent = '@keyframes fadeOut { 0% { opacity: 1; transform: scale(1) translateY(0); } 100% { opacity: 0; transform: scale(0) translateY(-100px); } }';
+document.head.appendChild(style);
+</script>
+</body>
+</html>

