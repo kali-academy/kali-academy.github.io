@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="images/logo.png">
-<link rel="canonical" href="https://kali-academy.github.io/">
+<link rel="canonical" href="index.html">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/enhanced.css">
 <link rel="stylesheet" href="css/cyber-theme.css">
@@ -22,97 +22,612 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="grid-bg">
+
 <canvas id="matrix-canvas"></canvas>
 
+<!-- DISCLAIMER - يُحمّل أولاً -->
 <script src="js/disclaimer.js"></script>
 <script src="js/social-bar.js"></script>
 <script src="js/site-init.js"></script>
 
+<!-- HEADER -->
 <header class="site-header">
-<a href="index.html" class="logo">
-<div class="logo-icon"><img src="images/logo.png" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
-<div>
-<span class="logo-text">KALI ACADEMY</span>
-<span class="logo-sub">CYBER SECURITY LEARNING</span>
-</div>
-</a>
-<ul class="nav-menu">
-<li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a></li>
-<li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
-<li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
-<li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
-<li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
-</ul>
-<div class="header-status">
-<div class="status-dot"></div>
-<span>SYSTEM ONLINE</span>
-</div>
-<div class="hamburger"><span></span><span></span><span></span></div>
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="images/logo.png" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div>
+      <span class="logo-text">KALI ACADEMY</span>
+      <span class="logo-sub">CYBER SECURITY LEARNING</span>
+    </div>
+  </a>
+  
+  <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
+
+  </ul>
+  
+  <div class="header-status">
+    <div class="status-dot"></div>
+    <span>SYSTEM ONLINE</span>
+  </div>
+  
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
 </header>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+
+<a href="disclaimer-owner.html" class="nav-link mobile-nav-link" style="color:#ff9966;"><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</a>
+</div>
+
+<!-- MAIN CONTENT -->
 <div class="main-wrapper">
 
-<section class="hero">
-<div class="hero-badge">
-<i class="fas fa-shield-alt"></i> KALI LINUX CYBERSECURITY ACADEMY
-</div>
-<h1 class="hero-title">
-<span class="title-line1">تعلّم الأمن السيبراني</span>
-<span class="title-line2">KALI LINUX</span>
-<span class="title-line3">من الصفر إلى الاحتراف</span>
-</h1>
-
-<p class="hero-desc">
-منصة تعليمية شاملة لتعلم نظام كالي لينكس والأمن السيبراني — تشمل أكثر من
-<strong style="color: var(--primary);">500+ أمر</strong> موثق،
-<strong style="color: var(--primary);">100 درس</strong> و
-<strong style="color: var(--primary);">100 أداة</strong>.
-</p>
-
-<div class="hero-buttons">
-<a href="commands.html" class="btn btn-primary">
-<i class="fas fa-terminal"></i> استكشف الأوامر
-</a>
-<a href="tutorials.html" class="btn btn-secondary">
-<i class="fas fa-play-circle"></i> ابدأ التعلم
-</a>
-<a href="steps.html" class="btn btn-accent">
-<i class="fas fa-list-ol"></i> خطوات التنفيذ
-</a>
-</div>
-</section>
-
-<!-- 🔥 ARTICLE CARD (الإضافة الوحيدة) -->
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">
+      <i class="fas fa-shield-alt"></i>
+      KALI LINUX CYBERSECURITY ACADEMY
+    </div>
+    
+    <h1 class="hero-title">
+      <span class="title-line1">تعلّم الأمن السيبراني</span>
+      <span class="title-line2">KALI LINUX</span>
+      <span class="title-line3">من الصفر إلى الاحتراف</span>
+    </h1>
+    
+    <p class="hero-desc">
+      منصة تعليمية شاملة لتعلم نظام كالي لينكس والأمن السيبراني — تشمل أكثر من <strong style="color: var(--primary);">500+ أمر</strong> موثق، <strong style="color: var(--primary);">100 درس</strong> و<strong style="color: var(--primary);">100 أداة</strong>، 
+      مع شروحات تفصيلية، خطوات تطبيقية، ودروس تفاعلية لكل المستويات.
+    </p>
+    
+    <div class="hero-buttons">
+      <a href="commands.html" class="btn btn-primary">
+        <i class="fas fa-terminal"></i>
+        استكشف الأوامر
+      </a>
+      <a href="tutorials.html" class="btn btn-secondary">
+        <i class="fas fa-play-circle"></i>
+        ابدأ التعلم
+      </a>
+      <a href="steps.html" class="btn btn-accent">
+        <i class="fas fa-list-ol"></i>
+        خطوات التنفيذ
+      </a>
+    </div>
+    
+    <!-- TERMINAL DEMO -->
+    <div class="terminal" style="max-width: 700px; margin: 3rem auto 0; animation: fadeInUp 0.8s ease 0.8s forwards; opacity: 0;">
+      <div class="terminal-header">
+        <div class="terminal-btn close"></div>
+        <div class="terminal-btn min"></div>
+        <div class="terminal-btn max"></div>
+        <span class="terminal-title">root@kali:~$</span>
+      </div>
+      <div class="terminal-body" id="demo-terminal">
+        <div class="terminal-line">
+          <span class="terminal-prompt">root@kali:~$</span>
+          <span class="terminal-cmd" id="typing-cmd"></span>
+          <span class="cursor" id="typing-cursor"></span>
+        </div>
+        <div id="terminal-output"></div>
+      </div>
+    </div>
+  </section>
+<!-- FEATURED ARTICLE CARD -->
 <section class="section" style="padding-top:0;">
-<div style="
-max-width:1000px;
-margin:40px auto;
-background:linear-gradient(145deg, rgba(0,255,65,0.05), rgba(0,0,0,0.7));
-border:1px solid rgba(0,255,65,0.25);
-border-radius:16px;
-padding:35px;
-box-shadow:0 0 30px rgba(0,255,65,0.15);
-text-align:center;
-">
-<span style="color:#00ff41;font-size:14px;letter-spacing:2px;font-family:'Share Tech Mono', monospace;">
-🔥 NEW GUIDE
-</span>
-<h2 style="margin:20px 0;font-family:'Orbitron', sans-serif;font-size:1.8rem;color:white;">
-🚀 تعلم Kali Linux للمبتدئين 2026 – الدليل الكامل
-</h2>
-<p style="color:#ccc;max-width:700px;margin:0 auto 25px;line-height:1.8;">
-شرح احترافي خطوة بخطوة لدخول عالم الأمن السيبراني باستخدام Kali Linux،
-يشمل التثبيت، أهم الأدوات، وخطة احتراف خلال 90 يوم.
-</p>
-<a href="learn-kali-linux-2026.html" style="
-display:inline-block;
-background:#00ff41;
-color:#000;
-padding:12px 28px;
-border-radius:8px;
-font-weight:bold;
-text-decoration:none;">
-📖 اقرأ الدليل الآن
-</a>
-</div>
+  <div style="
+    max-width:1100px;
+    margin:50px auto;
+    background:linear-gradient(135deg, rgba(0,255,65,0.08), rgba(0,0,0,0.8));
+    border:1px solid rgba(0,255,65,0.35);
+    border-radius:18px;
+    padding:45px;
+    box-shadow:0 0 40px rgba(0,255,65,0.2);
+    position:relative;
+    overflow:hidden;
+    text-align:center;
+  ">
+
+    <div style="
+      position:absolute;
+      top:-50px;
+      right:-50px;
+      width:200px;
+      height:200px;
+      background:radial-gradient(circle, rgba(0,255,65,0.2), transparent 70%);
+      transform:rotate(25deg);
+    "></div>
+
+    <span style="
+      display:inline-block;
+      color:#00ff41;
+      font-size:14px;
+      letter-spacing:3px;
+      font-family:'Share Tech Mono', monospace;
+      margin-bottom:15px;
+    ">
+      🔥 FEATURED GUIDE 2026
+    </span>
+
+    <h2 style="
+      font-family:'Orbitron', sans-serif;
+      font-size:2rem;
+      margin:15px 0;
+      color:#ffffff;
+    ">
+      🚀 تعلم Kali Linux من الصفر إلى الاحتراف
+    </h2>
+
+    <p style="
+      color:#ccc;
+      max-width:750px;
+      margin:0 auto 30px;
+      line-height:1.9;
+      font-size:1rem;
+    ">
+      دليل احترافي شامل لتعلم Kali Linux والأمن السيبراني خطوة بخطوة،
+      يشمل التثبيت، أهم الأوامر، أدوات الاختراق الأخلاقي،
+      وخطة احتراف عملية لمدة 90 يوم.
+    </p>
+
+    <a href="learn-kali-linux-2026.html" style="
+      display:inline-block;
+      padding:14px 35px;
+      background:linear-gradient(90deg,#00ff41,#00cc33);
+      color:#000;
+      font-weight:bold;
+      border-radius:10px;
+      text-decoration:none;
+      font-family:'Share Tech Mono', monospace;
+      transition:0.3s;
+      box-shadow:0 0 20px rgba(0,255,65,0.4);
+    "
+    onmouseover="this.style.boxShadow='0 0 30px rgba(0,255,65,0.8)'"
+    onmouseout="this.style.boxShadow='0 0 20px rgba(0,255,65,0.4)'">
+      📖 اقرأ الدليل الكامل الآن
+    </a>
+
+  </div>
 </section>
+  
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">💻</span>
+        <span class="stat-number" data-count="500" data-suffix="+">0</span>
+        <span class="stat-label">أمر موثق</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📚</span>
+        <span class="stat-number" data-count="100" data-suffix="">0</span>
+        <span class="stat-label">درس تعليمي</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🔧</span>
+        <span class="stat-number" data-count="100" data-suffix="">0</span>
+        <span class="stat-label">أداة مشروحة</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🎯</span>
+        <span class="stat-number" data-count="150" data-suffix="+">0</span>
+        <span class="stat-label">سيناريو تطبيقي</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">🏆</span>
+        <span class="stat-number" data-count="50" data-suffix="+">0</span>
+        <span class="stat-label">مسار تعليمي</span>
+      </div>
+    </div>
+  </section>
+
+
+  
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-tag">FEATURES</span>
+      <h2 class="section-title">لماذا <span class="highlight">Kali Academy</span>؟</h2>
+      <p class="section-desc">كل ما تحتاجه لتعلم الأمن السيبراني واختبار الاختراق في مكان واحد</p>
+    </div>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">قاعدة بيانات ضخمة للأوامر</h3>
+        <p class="feature-desc">أكثر من 500 أمر مصنف ومشروح بالتفصيل مع أمثلة تطبيقية وإمكانية البحث والفلترة حسب الفئة.</p>
+        <a href="commands.html" class="feature-link">استكشف الأوامر <i class="fas fa-arrow-left"></i></a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🎓</div>
+        <h3 class="feature-title">دروس تعليمية شاملة</h3>
+        <p class="feature-desc">شروحات مفصلة لكل أداة ومفهوم في كالي لينكس، من المبتدئ للمحترف، بأسلوب عربي واضح.</p>
+        <a href="tutorials.html" class="feature-link">عرض الدروس <i class="fas fa-arrow-left"></i></a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🗺️</div>
+        <h3 class="feature-title">خطوات تنفيذ مفصلة</h3>
+        <p class="feature-desc">دليل خطوة بخطوة لكل سيناريو — من التثبيت وضبط الشبكة حتى اختبارات الاختراق المتقدمة.</p>
+        <a href="steps.html" class="feature-link">عرض الخطوات <i class="fas fa-arrow-left"></i></a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🛠️</div>
+        <h3 class="feature-title">دليل الأدوات المتكامل</h3>
+        <p class="feature-desc">شرح شامل لأشهر أدوات الأمن السيبراني: Nmap, Metasploit, Burp Suite, Wireshark وغيرها — 100 أداة موثقة بشرح مفصل.</p>
+        <a href="tools.html" class="feature-link">عرض الأدوات <i class="fas fa-arrow-left"></i></a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3 class="feature-title">بحث ذكي وسريع</h3>
+        <p class="feature-desc">ابحث عن أي أمر أو أداة أو درس بسرعة فائقة مع إمكانية الفلترة حسب الفئة والمستوى.</p>
+        <a href="commands.html" class="feature-link">جرب البحث <i class="fas fa-arrow-left"></i></a>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3 class="feature-title">نسخ الأوامر بنقرة</h3>
+        <p class="feature-desc">انسخ أي أمر بنقرة واحدة وطبقه مباشرة في الطرفية. تصميم مُحسَّن للعمل الفعلي.</p>
+        <a href="commands.html" class="feature-link">جرب الآن <i class="fas fa-arrow-left"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section" style="padding-top: 0;">
+    <div class="section-header">
+      <span class="section-tag">CATEGORIES</span>
+      <h2 class="section-title">تصفح حسب <span class="highlight">الفئة</span></h2>
+    </div>
+    
+    <div class="categories-grid">
+      <a href="commands.html?cat=network" class="category-card">
+        <span class="category-icon">🌐</span>
+        <span class="category-name">شبكات</span>
+        <span class="category-count">420+ أمر</span>
+      </a>
+      <a href="commands.html?cat=pentest" class="category-card">
+        <span class="category-icon">🎯</span>
+        <span class="category-name">اختبار الاختراق</span>
+        <span class="category-count">380+ أمر</span>
+      </a>
+      <a href="commands.html?cat=forensics" class="category-card">
+        <span class="category-icon">🔬</span>
+        <span class="category-name">التحقيق الجنائي</span>
+        <span class="category-count">290+ أمر</span>
+      </a>
+      <a href="commands.html?cat=crypto" class="category-card">
+        <span class="category-icon">🔐</span>
+        <span class="category-name">التشفير</span>
+        <span class="category-count">250+ أمر</span>
+      </a>
+      <a href="commands.html?cat=web" class="category-card">
+        <span class="category-icon">🕸️</span>
+        <span class="category-name">اختبار الويب</span>
+        <span class="category-count">310+ أمر</span>
+      </a>
+      <a href="commands.html?cat=wireless" class="category-card">
+        <span class="category-icon">📡</span>
+        <span class="category-name">الشبكات اللاسلكية</span>
+        <span class="category-count">180+ أمر</span>
+      </a>
+      <a href="commands.html?cat=exploit" class="category-card">
+        <span class="category-icon">💥</span>
+        <span class="category-name">الاستغلال</span>
+        <span class="category-count">200+ أمر</span>
+      </a>
+      <a href="commands.html?cat=recon" class="category-card">
+        <span class="category-icon">👁️</span>
+        <span class="category-name">الاستطلاع</span>
+        <span class="category-count">220+ أمر</span>
+      </a>
+      <a href="commands.html?cat=password" class="category-card">
+        <span class="category-icon">🔑</span>
+        <span class="category-name">كسر كلمات المرور</span>
+        <span class="category-count">160+ أمر</span>
+      </a>
+      <a href="commands.html?cat=malware" class="category-card">
+        <span class="category-icon">🦠</span>
+        <span class="category-name">تحليل البرمجيات</span>
+        <span class="category-count">190+ أمر</span>
+      </a>
+      <a href="commands.html?cat=linux" class="category-card">
+        <span class="category-icon">🐧</span>
+        <span class="category-name">لينكس الأساسي</span>
+        <span class="category-count">350+ أمر</span>
+      </a>
+      <a href="commands.html?cat=system" class="category-card">
+        <span class="category-icon">⚙️</span>
+        <span class="category-name">إدارة النظام</span>
+        <span class="category-count">280+ أمر</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section class="section" style="padding-top: 0;">
+    <div class="section-header">
+      <span class="section-tag">QUICK START</span>
+      <h2 class="section-title">ابدأ <span class="highlight">رحلتك</span> الآن</h2>
+      <p class="section-desc">اختر مستواك وابدأ التعلم من الصفر حتى الاحتراف</p>
+    </div>
+    
+    <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+      <div class="feature-card" style="border-top: 3px solid var(--primary); cursor: pointer;" onclick="location.href='tutorials.html?level=beginner'">
+        <div class="feature-icon" style="background: rgba(0,255,65,0.2);">🌱</div>
+        <h3 class="feature-title">مبتدئ</h3>
+        <p class="feature-desc">لم تجرب لينكس من قبل؟ ابدأ من هنا — تثبيت كالي، أوامر الأساسية، التنقل في الملفات.</p>
+        <div class="progress-bar" style="margin-top: 1rem;">
+          <div class="progress-fill" style="width: 100%;"></div>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--primary); font-family: 'Share Tech Mono';">50 درس متاح</span>
+      </div>
+      
+      <div class="feature-card" style="border-top: 3px solid var(--warning); cursor: pointer;" onclick="location.href='tutorials.html?level=intermediate'">
+        <div class="feature-icon" style="background: rgba(255,204,0,0.2);">⚡</div>
+        <h3 class="feature-title">متوسط</h3>
+        <p class="feature-desc">تعرف على لينكس؟ تعلم Nmap, Metasploit, Burp Suite وأساسيات اختبار الاختراق.</p>
+        <div class="progress-bar" style="margin-top: 1rem;">
+          <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--warning), #ff8800);"></div>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--warning); font-family: 'Share Tech Mono';">80 درس متاح</span>
+      </div>
+      
+      <div class="feature-card" style="border-top: 3px solid var(--accent); cursor: pointer;" onclick="location.href='tutorials.html?level=advanced'">
+        <div class="feature-icon" style="background: rgba(255,0,128,0.2);">💀</div>
+        <h3 class="feature-title">متقدم</h3>
+        <p class="feature-desc">للمحترفين — تطوير Exploits, تحليل البرمجيات الخبيثة, Bug Bounty, Red Team Operations.</p>
+        <div class="progress-bar" style="margin-top: 1rem;">
+          <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--accent), #cc0066);"></div>
+        </div>
+        <span style="font-size: 0.8rem; color: var(--accent); font-family: 'Share Tech Mono';">70 درس متاح</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED TUTORIALS -->
+  <section class="section" style="padding-top: 0;">
+    <div class="section-header">
+      <span class="section-tag">FEATURED</span>
+      <h2 class="section-title">أبرز <span class="highlight">الدروس</span></h2>
+    </div>
+    
+    <div class="tutorial-grid">
+      <div class="tutorial-card" onclick="location.href='tutorials.html#nmap'">
+        <div class="tutorial-thumb" style="background: linear-gradient(135deg, #041628, rgba(0,255,65,0.15));">
+          <span>🗺️</span>
+          <span class="tutorial-level level-beginner">مبتدئ</span>
+        </div>
+        <div class="tutorial-info">
+          <span class="tutorial-category">NETWORK SCANNING</span>
+          <h3 class="tutorial-title">Nmap - فن مسح الشبكات</h3>
+          <p class="tutorial-desc">تعلم كيف تستخدم Nmap لاكتشاف الأجهزة، المنافذ المفتوحة، وإصدارات الخدمات على الشبكة.</p>
+          <div class="tutorial-meta">
+            <span><i class="fas fa-clock"></i> 45 دقيقة</span>
+            <span><i class="fas fa-terminal"></i> 120 أمر</span>
+            <span class="badge badge-success">مجاني</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tutorial-card" onclick="location.href='tutorials.html#metasploit'">
+        <div class="tutorial-thumb" style="background: linear-gradient(135deg, #041628, rgba(255,0,128,0.15));">
+          <span>💥</span>
+          <span class="tutorial-level level-intermediate">متوسط</span>
+        </div>
+        <div class="tutorial-info">
+          <span class="tutorial-category">EXPLOITATION</span>
+          <h3 class="tutorial-title">Metasploit Framework - الدليل الشامل</h3>
+          <p class="tutorial-desc">من البداية حتى الاحتراف — استخدام Metasploit للبحث عن الثغرات وتطبيق الاستغلال.</p>
+          <div class="tutorial-meta">
+            <span><i class="fas fa-clock"></i> 90 دقيقة</span>
+            <span><i class="fas fa-terminal"></i> 200 أمر</span>
+            <span class="badge badge-warning">متوسط</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tutorial-card" onclick="location.href='tutorials.html#burpsuite'">
+        <div class="tutorial-thumb" style="background: linear-gradient(135deg, #041628, rgba(0,255,255,0.15));">
+          <span>🕸️</span>
+          <span class="tutorial-level level-intermediate">متوسط</span>
+        </div>
+        <div class="tutorial-info">
+          <span class="tutorial-category">WEB SECURITY</span>
+          <h3 class="tutorial-title">Burp Suite - اختبار أمان تطبيقات الويب</h3>
+          <p class="tutorial-desc">تعلم اعتراض الطلبات، اكتشاف XSS, SQLi وثغرات OWASP Top 10 باستخدام Burp Suite.</p>
+          <div class="tutorial-meta">
+            <span><i class="fas fa-clock"></i> 60 دقيقة</span>
+            <span><i class="fas fa-terminal"></i> 80 أمر</span>
+            <span class="badge badge-warning">متوسط</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+      <a href="tutorials.html" class="btn btn-secondary">
+        <i class="fas fa-book-open"></i>
+        عرض جميع الدروس
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">🐉 KALI ACADEMY</div>
+      <p class="footer-tagline">منصتك الشاملة لتعلم الأمن السيبراني واختبار الاختراق باستخدام كالي لينكس.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">روابط سريعة</div>
+      <ul class="footer-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="commands.html">قاعدة الأوامر</a></li>
+        <li><a href="tutorials.html">الدروس</a></li>
+        <li><a href="steps.html">خطوات التنفيذ</a></li>
+        <li><a href="tools.html">الأدوات</a></li>
+        <li><a href="disclaimer-owner.html" style="color:#ff6060;">⚠️ إخلاء المسؤولية</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">الفئات</div>
+      <ul class="footer-links">
+        <li><a href="commands.html?cat=network">الشبكات</a></li>
+        <li><a href="commands.html?cat=web">أمان الويب</a></li>
+        <li><a href="commands.html?cat=pentest">اختبار الاختراق</a></li>
+        <li><a href="commands.html?cat=forensics">التحقيق الجنائي</a></li>
+        <li><a href="commands.html?cat=wireless">الشبكات اللاسلكية</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">المستويات</div>
+      <ul class="footer-links">
+        <li><a href="tutorials.html?level=beginner">المبتدئين</a></li>
+        <li><a href="tutorials.html?level=intermediate">المتوسطين</a></li>
+        <li><a href="tutorials.html?level=advanced">المتقدمين</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>⚠️ هذا الموقع للأغراض التعليمية فقط. استخدم المعرفة بمسؤولية وبطريقة قانونية وأخلاقية.</span>
+    <br><br>
+    <span>© 2026 Kali Academy — تعلم الأمن السيبراني بطريقة احترافية</span>
+  </div>
+</footer>
+
+<!-- Load all command databases for real counts -->
+<script src="js/commands-db-part1.js"></script>
+<script src="js/commands-db-part2.js"></script>
+<script src="js/commands-db-part3.js"></script>
+<script src="js/commands-db-part4.js"></script>
+<script src="js/commands-db-part5.js"></script>
+<script src="js/commands-db-part6.js"></script>
+<script src="js/commands-db-part7.js"></script>
+<script src="js/commands-db-part8.js"></script>
+<script src="js/commands-db-part9.js"></script>
+<script src="js/commands-db-part10.js"></script>
+<script src="js/commands-db-part11.js"></script>
+<script src="js/commands-db-part12.js"></script>
+<script src="js/commands-db-part13.js"></script>
+<script src="js/commands-data.js"></script>
+<script src="js/tutorials-extra.js"></script>
+<script src="js/tutorials-extra2.js"></script>
+<script src="js/tutorials-part2.js"></script>
+<script src="js/matrix.js"></script>
+<script src="js/main.js"></script>
+<script>
+// ── حساب الأرقام الحقيقية ──
+function calcRealStats() {
+  // حساب الأوامر الفعلية
+  const seen = new Set();
+  let totalCmds = 0;
+  [
+    ...(window.CMD_PART1||[]), ...(window.CMD_PART2||[]), ...(window.CMD_PART3||[]),
+    ...(window.CMD_PART4||[]), ...(window.CMD_PART5||[]), ...(window.CMD_PART6||[]),
+    ...(window.CMD_PART7||[]), ...(window.CMD_PART8||[]), ...(window.CMD_PART9||[]),
+    ...(window.CMD_PART10||[]), ...(window.CMD_PART11||[]), ...(window.CMD_PART12||[]),
+    ...(window.CMD_PART13||[])
+  ].forEach(c => { seen.add(c.name.toLowerCase()); });
+  (window.COMMANDS_DB||[]).forEach(c => {
+    if (!seen.has(c.name.toLowerCase())) seen.add(c.name.toLowerCase());
+  });
+  totalCmds = seen.size;
+
+  // حساب الدروس الفعلية
+  const allLessons = [
+    ...(window.TUTORIALS_EXTRA||[]),
+    ...(window.TUTORIALS_EXTRA2||[]),
+    ...(window.TUTORIALS_PART2||[])
+  ];
+  const totalLessons = allLessons.length + 10; // +10 للدروس الأساسية في tutorials.html
+
+  // حساب الأدوات من tools.html (نقدر تقريبياً من الـ commands database)
+  const toolsCount = 100; // ثابت - 100 أداة موثقة
+
+  // تحديث stat-number بالأرقام الحقيقية
+  const statNums = document.querySelectorAll('.stat-number[data-count]');
+  if (statNums[0]) { statNums[0].setAttribute('data-count', Math.max(500, totalCmds)); statNums[0].setAttribute('data-suffix', '+'); }
+  if (statNums[1]) { statNums[1].setAttribute('data-count', totalLessons); }
+  if (statNums[2]) { statNums[2].setAttribute('data-count', toolsCount); }
+
+  // تحديث النص في hero-desc
+  const heroDesc = document.querySelector('.hero-desc strong');
+  if (heroDesc) heroDesc.textContent = Math.max(500, totalCmds) + '+';
+}
+
+// استدعاء بعد تحميل الصفحة
+window.addEventListener('load', calcRealStats);
+
+// Terminal typing demo
+const commands = [
+  { cmd: 'nmap -sV -p 1-65535 192.168.1.0/24', delay: 800, output: 'Scanning 256 hosts... [████████████] 100%\n<span style="color:var(--primary)">Nmap scan report for 192.168.1.1\nPORT    STATE  SERVICE  VERSION\n22/tcp  open   ssh      OpenSSH 8.4\n80/tcp  open   http     Apache 2.4.51\n443/tcp open   ssl/http Apache 2.4.51</span>' },
+  { cmd: 'nikto -h http://target.example.com', delay: 1000, output: '<span style="color:var(--warning)">+ Server: Apache/2.4.51\n+ XSS: /search.php?q=[XSS_PAYLOAD]\n+ SQL: /login.php?user=admin--</span>' },
+  { cmd: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.50', delay: 800, output: '<span style="color:var(--primary)">[22][ssh] host: 192.168.1.50  login: admin  password: password123</span>' },
+];
+
+let cmdIndex = 0;
+let charIndex = 0;
+let typingTimer;
+
+function runTerminalDemo() {
+  const cmdEl = document.getElementById('typing-cmd');
+  const outputEl = document.getElementById('terminal-output');
+  const cursorEl = document.getElementById('typing-cursor');
+  if (!cmdEl) return;
+  
+  const current = commands[cmdIndex % commands.length];
+  const cmd = current.cmd;
+  
+  charIndex = 0;
+  cmdEl.textContent = '';
+  
+  function typeChar() {
+    if (charIndex < cmd.length) {
+      cmdEl.textContent += cmd[charIndex];
+      charIndex++;
+      typingTimer = setTimeout(typeChar, 50 + Math.random() * 30);
+    } else {
+      cursorEl.style.display = 'none';
+      setTimeout(() => {
+        const line = document.createElement('div');
+        line.innerHTML = `<div class="terminal-line" style="margin-top:4px;"><span class="terminal-output">${current.output}</span></div>`;
+        outputEl.appendChild(line);
+        if (outputEl.children.length > 3) {
+          outputEl.removeChild(outputEl.children[0]);
+        }
+        cmdIndex++;
+        setTimeout(() => {
+          cmdEl.textContent = '';
+          cursorEl.style.display = '';
+          charIndex = 0;
+          runTerminalDemo();
+        }, current.delay);
+      }, 500);
+    }
+  }
+  
+  typeChar();
+}
+
+setTimeout(runTerminalDemo, 1500);
+</script>
+</body>
+</html>
