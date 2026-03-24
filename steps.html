@@ -94,6 +94,34 @@
   padding: 5px 12px;
 }
 .scenario-filter-btn.active { background: linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,255,65,0.08)); border-color: rgba(0,200,255,0.5); color: #0cf; box-shadow: 0 0 15px rgba(0,200,255,0.15); }
+
+.hero-quick-actions { display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:1rem; }
+.hero-share-btn, .scenario-share-btn {
+  display:inline-flex; align-items:center; gap:6px; background:rgba(0,200,255,0.1);
+  border:1px solid rgba(0,200,255,0.35); color:#0cf; padding:6px 14px; border-radius:8px;
+  font-family:'Cairo',sans-serif; font-size:0.82rem; cursor:pointer; transition:all .2s;
+}
+.hero-share-btn:hover, .scenario-share-btn:hover { background:rgba(0,200,255,0.22); }
+
+@media (max-width: 768px) {
+  .steps-wrapper { padding: 0 0.8rem 2rem; }
+  .steps-hero { padding: 2rem 0.8rem 1.6rem; }
+  .scenarios-grid { grid-template-columns: 1fr; gap: 0.9rem; }
+  .scenario-header { padding: 1rem; }
+  .scenario-meta { padding: 0 1rem 0.7rem; }
+  .steps-modal { margin-top: 0.2rem; border-radius: 14px; }
+  .steps-modal-hdr { padding: 0.8rem 0.9rem; align-items: flex-start; }
+  .steps-modal-hdr h2 { font-size: 0.9rem; }
+  .steps-modal-body { padding: 1rem 0.9rem; }
+  .step-cmd-block { flex-direction: column; align-items: flex-start; }
+  .step-copy-btn { width: 100%; justify-content: center; }
+  .hero-share-btn, .scenario-share-btn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 520px) {
+  .steps-hero div[style*="gap:8px"] { overflow-x: auto; flex-wrap: nowrap !important; justify-content: flex-start !important; padding-bottom: 6px; }
+  .steps-hero div[style*="gap:6px"] { overflow-x: auto; flex-wrap: nowrap !important; justify-content: flex-start !important; padding-bottom: 6px; }
+}
 </style>
 </head>
 <body class="grid-bg">
@@ -137,9 +165,19 @@
       <button class="scenario-filter-btn" data-diff="medium" onclick="filterScenarios('medium',this)">🟡 متوسط</button>
       <button class="scenario-filter-btn" data-diff="hard" onclick="filterScenarios('hard',this)">🔴 صعب</button>
     </div>
-    <a href="tutorials.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:1rem;background:rgba(0,255,65,0.08);border:1px solid rgba(0,255,65,0.2);color:#00ff41;padding:6px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;text-decoration:none;">
-      <i class="fas fa-book-open"></i> الدروس التعليمية ← لكل درس خطوات تنفيذ
-    </a>
+    <div class="hero-quick-actions">
+      <a href="tutorials.html" style="display:inline-flex;align-items:center;gap:6px;margin-top:1rem;background:rgba(0,255,65,0.08);border:1px solid rgba(0,255,65,0.2);color:#00ff41;padding:6px 16px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.82rem;text-decoration:none;">
+        <i class="fas fa-book-open"></i> الدروس التعليمية ← لكل درس خطوات تنفيذ
+      </a>
+      <button
+        type="button"
+        class="hero-share-btn"
+        onclick="shareStepsPage()"
+      >
+        <i class="fas fa-share-alt"></i>
+        مشاركة صفحة الخطوات
+      </button>
+    </div>
     
     <!-- فلاتر النوع -->
     <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:0.8rem;">
@@ -161,7 +199,17 @@
 <div class="steps-modal-overlay" id="stepsModal" style="display:none;" onclick="closeStepsModal(event)">
   <div class="steps-modal" id="stepsModalInner">
     <div class="steps-modal-hdr">
-      <h2 id="stepsModalTitle">عنوان السيناريو</h2>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <h2 id="stepsModalTitle">عنوان السيناريو</h2>
+        <button
+          type="button"
+          class="scenario-share-btn"
+          onclick="shareScenario()"
+        >
+          <i class="fas fa-share-alt"></i>
+          مشاركة السيناريو
+        </button>
+      </div>
       <button class="steps-modal-close" onclick="closeStepsModalDirect()">✕</button>
     </div>
     <div class="steps-modal-body" id="stepsModalBody"></div>
@@ -1204,6 +1252,7 @@ const SCENARIOS = [
 let doneSteps = {};
 let activeScenarioDiff = 'all';
 let activeScenarioType = 'all';
+let currentOpenedScenario = null;
 
 // دمج السيناريوهات مع خطوات الدروس
 function getAllScenarios() {
@@ -1273,6 +1322,7 @@ function renderScenarios() {
 function openScenario(id) {
   const s = getAllScenarios().find(x => x.id === id);
   if (!s) return;
+  currentOpenedScenario = s;
   if (!doneSteps[id]) doneSteps[id] = new Set();
   document.getElementById('stepsModalTitle').textContent = s.icon + ' ' + s.title;
   renderScenarioContent(s);
@@ -1349,6 +1399,45 @@ function closeStepsModal(e) {
 function closeStepsModalDirect() {
   document.getElementById('stepsModal').style.display = 'none';
   document.body.style.overflow = '';
+}
+
+async function shareDataFallback(data, successMessage = 'تم نسخ الرابط') {
+  try {
+    if (navigator.share) {
+      await navigator.share(data);
+      return;
+    }
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(data.url);
+    alert(successMessage);
+  } catch (_) {
+    // no-op
+  }
+}
+
+async function shareStepsPage() {
+  await shareDataFallback({
+    title: 'Kali Academy | خطوات التنفيذ',
+    text: 'اطلع على خطوات التنفيذ العملية في Kali Academy',
+    url: window.location.href,
+  }, 'تم نسخ رابط صفحة الخطوات');
+}
+
+async function shareScenario() {
+  if (!currentOpenedScenario) return;
+
+  const shareUrl = `${window.location.origin}${window.location.pathname}?lesson=${currentOpenedScenario.id}`;
+  await shareDataFallback({
+    title: `Kali Academy | ${currentOpenedScenario.title}`,
+    text: `اطلع على هذا السيناريو العملي: ${currentOpenedScenario.title}`,
+    url: shareUrl,
+  }, 'تم نسخ رابط السيناريو');
 }
 
 document.addEventListener('keydown', function(e) {

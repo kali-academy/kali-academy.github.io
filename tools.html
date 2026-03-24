@@ -198,6 +198,39 @@
 #tool-notif { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); opacity: 0; background: rgba(255,102,0,0.95); color: #fff; padding: 10px 24px; border-radius: 30px; font-family: 'Cairo', sans-serif; font-size: 0.85rem; z-index: 9999; transition: all 0.3s; pointer-events: none; white-space: nowrap; }
 #tool-notif.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+.tools-share-btn, .tool-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,102,0,0.35);
+  background: rgba(255,102,0,0.1);
+  color: #ff9944;
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tools-share-btn:hover, .tool-share-btn:hover { background: rgba(255,102,0,0.2); }
+
+@media (max-width: 768px) {
+  .tools-wrapper { padding: 0 0.8rem 2rem; }
+  .tools-hero { padding: 2rem 0.9rem 1.6rem; }
+  .tools-cats { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.8rem; }
+  .tool-cat-btn { flex: 0 0 auto; }
+  .tools-toolbar { gap: 0.5rem; }
+  .tools-count { width: 100%; text-align: center; }
+  .tools-sort { width: 100%; }
+  .tool-modal-hdr { padding: 1rem; }
+  .tool-modal-title { min-width: 0; }
+  .tool-modal-title h2 { font-size: 1rem; }
+  .tool-modal-body { padding: 1rem; }
+  .modal-cmd { flex-direction: column; align-items: flex-start; }
+  .copy-modal-btn { width: 100%; text-align: center; }
+  .tools-share-btn, .tool-share-btn { width: 100%; justify-content: center; }
+}
+
 @media (max-width: 640px) {
   .tools-grid { grid-template-columns: 1fr; }
   .tool-modal-hdr { flex-wrap: wrap; }
@@ -222,8 +255,8 @@
     <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
     <li><a href="tools.html" class="nav-link active"><i class="fas fa-tools"></i> الأدوات</a></li>
-    
-  </ul><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
+  </ul>
+  <div class="header-status"><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
 <div class="mobile-menu">
@@ -245,6 +278,14 @@
       <input type="text" id="toolSearch" placeholder="ابحث عن أداة... (Nmap, Metasploit, Burp Suite...)" oninput="filterTools()">
       <i class="fas fa-search sicon"></i>
     </div>
+    <button
+      type="button"
+      class="tools-share-btn"
+      onclick="shareToolsPage()"
+    >
+      <i class="fas fa-share-alt"></i>
+      مشاركة صفحة الأدوات
+    </button>
   </div>
 
   <!-- CATEGORY FILTER -->
@@ -292,6 +333,10 @@
         <h2 id="mName"></h2>
         <p id="mShort"></p>
       </div>
+      <button class="tool-share-btn" onclick="shareCurrentTool()">
+        <i class="fas fa-share-alt"></i>
+        مشاركة الأداة
+      </button>
       <button class="tool-modal-close" onclick="closeToolModalDirect()">✕</button>
     </div>
     <div class="tool-modal-body" id="mBody"></div>
@@ -2519,6 +2564,45 @@ function searchRelated(name) {
   document.querySelectorAll('.tool-cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('[data-cat="all"]').classList.add('active');
   renderTools();
+}
+
+async function shareDataFallback(data, successMessage) {
+  try {
+    if (navigator.share) {
+      await navigator.share(data);
+      return;
+    }
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(data.url);
+    showToolNotif(successMessage || '✅ تم نسخ الرابط');
+  } catch (_) {
+    // no-op
+  }
+}
+
+async function shareToolsPage() {
+  await shareDataFallback({
+    title: 'Kali Academy | دليل الأدوات',
+    text: 'اطلع على دليل الأدوات في Kali Academy',
+    url: window.location.href,
+  }, '✅ تم نسخ رابط صفحة الأدوات');
+}
+
+async function shareCurrentTool() {
+  if (!currentToolData) return;
+
+  const shareUrl = `${window.location.origin}${window.location.pathname}?q=${encodeURIComponent(currentToolData.name)}`;
+  await shareDataFallback({
+    title: `Kali Academy | ${currentToolData.name}`,
+    text: `تعرف على أداة ${currentToolData.name} واستخداماتها العملية في Kali Academy`,
+    url: shareUrl,
+  }, '✅ تم نسخ رابط الأداة');
 }
 
 function copyCmd(text, btn) {

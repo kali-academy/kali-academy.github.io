@@ -56,6 +56,59 @@ function showNotification(message, type = 'success') {
   setTimeout(() => notif.classList.remove('show'), 2500);
 }
 
+// ===== SHARE =====
+async function kaliShare({ title, text, url }) {
+  const shareData = {
+    title: title || document.title,
+    text: text || 'تعرف على Kali Academy لتعلم الأمن السيبراني',
+    url: url || window.location.href,
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+      showNotification('✅ تمت المشاركة بنجاح');
+      return true;
+    }
+  } catch (err) {
+    if (err && err.name === 'AbortError') {
+      return false;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(shareData.url);
+    showNotification('✅ تم نسخ الرابط للمشاركة');
+    return true;
+  } catch (_) {
+    const ta = document.createElement('textarea');
+    ta.value = shareData.url;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showNotification('✅ تم نسخ الرابط للمشاركة');
+    return true;
+  }
+}
+
+function bindShareButtons() {
+  document.addEventListener('click', async (event) => {
+    const btn = event.target.closest('[data-share-button]');
+    if (!btn) return;
+
+    event.preventDefault();
+
+    const title = btn.getAttribute('data-share-title') || document.title;
+    const text = btn.getAttribute('data-share-text') || 'تعرف على Kali Academy لتعلم الأمن السيبراني';
+    const url = btn.getAttribute('data-share-url') || window.location.href;
+
+    await kaliShare({ title, text, url });
+  });
+}
+
+window.kaliShare = kaliShare;
+
 // ===== COUNTER ANIMATION =====
 function animateCounters() {
   document.querySelectorAll('[data-count]').forEach(el => {
@@ -132,6 +185,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
+  bindShareButtons();
+
   // Start counter animation if stats are in view
   const statsSection = document.querySelector('.stats-section');
   if (statsSection) {
