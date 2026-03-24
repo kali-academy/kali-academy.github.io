@@ -1,7 +1,7 @@
 // ===== KALI LINUX LEARNING PLATFORM - MAIN JS =====
 
 const LANG_STORAGE_KEY = 'kali_lang';
-let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || document.documentElement.lang || 'ar';
+let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || document.documentElement.lang || 'en';
 
 const I18N_STRINGS = {
   ar: {
@@ -15,7 +15,22 @@ const I18N_STRINGS = {
     shareSuccess: '✅ تمت مشاركة الرابط بنجاح',
     shareFallback: '✅ تم نسخ الرابط للحافظة',
     copyCommandSuccess: '✅ تم نسخ الأمر!',
-    systemOnline: 'SYSTEM ONLINE'
+    systemOnline: 'SYSTEM ONLINE',
+    tutorialCountLabel: 'درس تعليمي',
+    tutorialDesc: 'دروس شاملة خطوة بخطوة لتعلم أدوات Kali Linux والأمن السيبراني — من المبتدئ حتى الاحتراف',
+    tutorialSearch: 'ابحث في الدروس...',
+    tabAll: 'الكل',
+    tabBeginner: 'مبتدئ',
+    tabIntermediate: 'متوسط',
+    tabAdvanced: 'متقدم',
+    tabScanning: 'المسح',
+    tabExploitation: 'الاستغلال',
+    tabWireless: 'WiFi',
+    tabWeb: 'ويب',
+    tabForensics: 'جنائي',
+    tabPrivEsc: 'صلاحيات',
+    noLessons: 'لا توجد دروس مطابقة',
+    tryDifferentSearch: 'جرّب كلمات بحث مختلفة أو غيّر الفلتر'
   },
   en: {
     navHome: 'Home',
@@ -28,7 +43,22 @@ const I18N_STRINGS = {
     shareSuccess: '✅ Link shared successfully',
     shareFallback: '✅ Link copied to clipboard',
     copyCommandSuccess: '✅ Command copied!',
-    systemOnline: 'SYSTEM ONLINE'
+    systemOnline: 'SYSTEM ONLINE',
+    tutorialCountLabel: 'Tutorials',
+    tutorialDesc: 'Comprehensive step-by-step tutorials for Kali Linux and cybersecurity tools from beginner to advanced.',
+    tutorialSearch: 'Search tutorials...',
+    tabAll: 'All',
+    tabBeginner: 'Beginner',
+    tabIntermediate: 'Intermediate',
+    tabAdvanced: 'Advanced',
+    tabScanning: 'Scanning',
+    tabExploitation: 'Exploitation',
+    tabWireless: 'Wireless',
+    tabWeb: 'Web',
+    tabForensics: 'Forensics',
+    tabPrivEsc: 'Privilege Escalation',
+    noLessons: 'No matching lessons',
+    tryDifferentSearch: 'Try a different keyword or filter'
   }
 };
 
@@ -37,7 +67,7 @@ function t(key, fallback = '') {
 }
 
 function applyI18n(lang) {
-  currentLang = lang === 'en' ? 'en' : 'ar';
+  currentLang = lang === 'ar' ? 'ar' : 'en';
   document.documentElement.lang = currentLang;
   document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
   document.body.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Kali Academy | تعلم كالي لينكس والأمن السيبراني بالعربي</title>
+<title>Kali Academy | Learn Kali Linux and Cybersecurity</title>
 
-<meta name="description" content="Kali Academy منصة عربية متخصصة في تعلم Kali Linux والأمن السيبراني خطوة بخطوة. شروحات احترافية، 500+ أمر، أدوات اختبار الاختراق، ودروس عملية للمبتدئين والمحترفين.">
+<meta name="description" content="Kali Academy is a practical learning platform for Kali Linux and cybersecurity with step-by-step tutorials, 500+ commands, penetration testing tools, and hands-on training paths.">
 
 <meta name="author" content="Kali Academy">
 <meta name="robots" content="index, follow">
@@ -15,8 +15,8 @@
 
 <link rel="icon" type="image/png" href="images/logo.png">
 
-<meta property="og:title" content="Kali Academy - تعلم كالي لينكس والأمن السيبراني">
-<meta property="og:description" content="تعلم Kali Linux واختبار الاختراق والأمن السيبراني بالعربي مع شرح عملي وأدوات احترافية.">
+<meta property="og:title" content="Kali Academy - Learn Kali Linux and Cybersecurity">
+<meta property="og:description" content="Learn Kali Linux, penetration testing, and cybersecurity with practical walkthroughs and professional tools.">
 <meta property="og:image" content="https://kali-academy.github.io/images/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kali-academy.github.io/">
@@ -553,12 +553,12 @@ let HOME_STATS = {
 };
 
 function formatNum(num) {
-  const lang = window.kaliGetCurrentLang ? window.kaliGetCurrentLang() : 'ar';
+  const lang = window.kaliGetCurrentLang ? window.kaliGetCurrentLang() : 'en';
   return Number(num).toLocaleString(lang === 'ar' ? 'ar-EG' : 'en-US');
 }
 
 function applyHomeTranslations() {
-  const lang = window.kaliGetCurrentLang ? window.kaliGetCurrentLang() : 'ar';
+  const lang = window.kaliGetCurrentLang ? window.kaliGetCurrentLang() : 'en';
 
   const text = {
     ar: {
