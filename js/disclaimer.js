@@ -1,26 +1,11 @@
 /* =====================================================
    KaliAcademy - Disclaimer Popup
-   يظهر عند أول زيارة أو بعد 30 يوم من القبول
+   يظهر عند كل دخول للموقع (إجباري)
    ===================================================== */
 (function () {
   'use strict';
 
   const STORAGE_KEY = 'kali_disc_accepted';
-  const EXPIRY_DAYS = 30;
-
-  function needsDisclaimer() {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return true;
-      const { ts } = JSON.parse(saved);
-      const daysSince = (Date.now() - ts) / 86400000;
-      return daysSince > EXPIRY_DAYS;
-    } catch {
-      return true;
-    }
-  }
-
-  if (!needsDisclaimer()) return;
 
   /* -------- Styles -------- */
   const style = document.createElement('style');

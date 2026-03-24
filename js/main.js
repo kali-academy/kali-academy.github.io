@@ -1,117 +1,117 @@
 // ===== KALI LINUX LEARNING PLATFORM - MAIN JS =====
 
-const LANGUAGE_STORAGE_KEY = 'site_language';
-const DEFAULT_LANGUAGE = 'ar';
+const LANG_STORAGE_KEY = 'kali_lang';
+let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || document.documentElement.lang || 'ar';
 
-const NAV_TRANSLATIONS = {
+const I18N_STRINGS = {
   ar: {
-    'index.html': 'الرئيسية',
-    'commands.html': 'الأوامر',
-    'tutorials.html': 'الدروس',
-    'steps.html': 'خطوات التنفيذ',
-    'tools.html': 'الأدوات',
-    'disclaimer-owner.html': 'إخلاء المسؤولية'
+    navHome: 'الرئيسية',
+    navCommands: 'الأوامر',
+    navTutorials: 'الدروس',
+    navSteps: 'خطوات التنفيذ',
+    navTools: 'الأدوات',
+    languageBtn: 'EN',
+    shareSite: 'مشاركة الموقع',
+    shareSuccess: '✅ تمت مشاركة الرابط بنجاح',
+    shareFallback: '✅ تم نسخ الرابط للحافظة',
+    copyCommandSuccess: '✅ تم نسخ الأمر!',
+    systemOnline: 'SYSTEM ONLINE'
   },
   en: {
-    'index.html': 'Home',
-    'commands.html': 'Commands',
-    'tutorials.html': 'Tutorials',
-    'steps.html': 'Execution Steps',
-    'tools.html': 'Tools',
-    'disclaimer-owner.html': 'Disclaimer'
+    navHome: 'Home',
+    navCommands: 'Commands',
+    navTutorials: 'Tutorials',
+    navSteps: 'Execution Steps',
+    navTools: 'Tools',
+    languageBtn: 'AR',
+    shareSite: 'Share Site',
+    shareSuccess: '✅ Link shared successfully',
+    shareFallback: '✅ Link copied to clipboard',
+    copyCommandSuccess: '✅ Command copied!',
+    systemOnline: 'SYSTEM ONLINE'
   }
 };
 
-function getSavedLanguage() {
-  const lang = localStorage.getItem(LANGUAGE_STORAGE_KEY);
-  return (lang === 'en' || lang === 'ar') ? lang : DEFAULT_LANGUAGE;
+function t(key, fallback = '') {
+  return (I18N_STRINGS[currentLang] && I18N_STRINGS[currentLang][key]) || fallback || key;
 }
 
-function applyCommonLanguage(lang) {
-  const isArabic = lang === 'ar';
+function applyI18n(lang) {
+  currentLang = lang === 'en' ? 'en' : 'ar';
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+  document.body.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+  document.body.classList.toggle('lang-en', currentLang === 'en');
 
-  document.documentElement.lang = lang;
-  document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
-  document.body.classList.toggle('lang-en', !isArabic);
-
-  document.querySelectorAll('.nav-link, .mobile-nav-link').forEach((link) => {
-    const hrefRaw = link.getAttribute('href') || '';
-    const page = hrefRaw.split('?')[0];
-    const translatedLabel = NAV_TRANSLATIONS[lang][page];
-    if (!translatedLabel) return;
-
-    const icon = link.querySelector('i');
-    if (icon) {
-      link.innerHTML = `${icon.outerHTML} ${translatedLabel}`;
-    } else {
-      link.textContent = translatedLabel;
-    }
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (!key) return;
+    const text = t(key, el.textContent);
+    el.textContent = text;
   });
 
-  const statusSpan = document.querySelector('.header-status span');
-  if (statusSpan) {
-    statusSpan.textContent = isArabic ? 'النظام يعمل' : 'SYSTEM ONLINE';
-  }
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (!key) return;
+    el.setAttribute('placeholder', t(key, el.getAttribute('placeholder') || ''));
+  });
 
-  const langBtn = document.getElementById('lang-toggle-btn');
-  if (langBtn) {
-    langBtn.textContent = isArabic ? 'EN' : 'AR';
-    langBtn.setAttribute('aria-label', isArabic ? 'Switch to English' : 'التحويل إلى العربية');
-  }
+  document.querySelectorAll('[data-i18n-title]').forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    if (!key) return;
+    el.setAttribute('title', t(key, el.getAttribute('title') || ''));
+  });
 
-  const mobileLangBtn = document.getElementById('mobile-lang-toggle-btn');
-  if (mobileLangBtn) {
-    mobileLangBtn.textContent = isArabic ? 'English' : 'العربية';
-  }
+  const langBtn = document.getElementById('langToggleBtn');
+  if (langBtn) langBtn.textContent = t('languageBtn', 'EN');
 
-  window.dispatchEvent(new CustomEvent('siteLanguageChanged', { detail: { lang } }));
+  localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+  document.dispatchEvent(new CustomEvent('kali:langChanged', { detail: { lang: currentLang } }));
 }
 
-function setSiteLanguage(lang) {
-  if (lang !== 'ar' && lang !== 'en') return;
-  localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
-  applyCommonLanguage(lang);
+function toggleLanguage() {
+  applyI18n(currentLang === 'ar' ? 'en' : 'ar');
 }
 
 function createLanguageToggle() {
   const header = document.querySelector('.site-header');
-  if (header && !document.getElementById('lang-toggle-btn')) {
-    const btn = document.createElement('button');
-    btn.id = 'lang-toggle-btn';
-    btn.className = 'lang-toggle-btn';
-    btn.type = 'button';
-    btn.textContent = 'EN';
-    btn.addEventListener('click', () => {
-      const next = getSavedLanguage() === 'ar' ? 'en' : 'ar';
-      setSiteLanguage(next);
-    });
+  if (!header || document.getElementById('langToggleBtn')) return;
 
-    const hamburger = header.querySelector('.hamburger');
-    if (hamburger) {
-      header.insertBefore(btn, hamburger);
-    } else {
-      header.appendChild(btn);
-    }
-  }
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.id = 'langToggleBtn';
+  btn.className = 'lang-toggle-btn';
+  btn.setAttribute('aria-label', 'Language Toggle');
+  btn.textContent = t('languageBtn', 'EN');
+  btn.addEventListener('click', toggleLanguage);
 
-  const mobileMenu = document.querySelector('.mobile-menu');
-  if (mobileMenu && !document.getElementById('mobile-lang-toggle-btn')) {
-    const mobileBtn = document.createElement('button');
-    mobileBtn.id = 'mobile-lang-toggle-btn';
-    mobileBtn.className = 'mobile-lang-toggle-btn';
-    mobileBtn.type = 'button';
-    mobileBtn.textContent = 'English';
-    mobileBtn.addEventListener('click', () => {
-      const next = getSavedLanguage() === 'ar' ? 'en' : 'ar';
-      setSiteLanguage(next);
-      mobileMenu.classList.remove('open');
-    });
-    mobileMenu.appendChild(mobileBtn);
-  }
+  const status = header.querySelector('.header-status');
+  if (status) status.insertAdjacentElement('afterend', btn);
+  else header.appendChild(btn);
 }
 
-window.setSiteLanguage = setSiteLanguage;
-window.getCurrentSiteLanguage = getSavedLanguage;
+window.kaliGetCurrentLang = function () {
+  return currentLang;
+};
+
+window.kaliT = function (key, fallback = '') {
+  return t(key, fallback);
+};
+
+window.kaliShare = async function ({ title = 'Kali Academy', text = 'Kali Academy', url = window.location.href } = {}) {
+  try {
+    if (navigator.share) {
+      await navigator.share({ title, text, url });
+      showNotification(t('shareSuccess', '✅ تمت مشاركة الرابط بنجاح'));
+      return true;
+    }
+    await navigator.clipboard.writeText(url);
+    showNotification(t('shareFallback', '✅ تم نسخ الرابط للحافظة'));
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 // ===== HAMBURGER MENU =====
 const hamburger = document.querySelector('.hamburger');
@@ -131,7 +131,7 @@ if (hamburger && mobileMenu) {
 function setActiveNav() {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
-    const href = (link.getAttribute('href') || '').split('?')[0];
+    const href = link.getAttribute('href');
     if (href === currentPage || (currentPage === '' && href === 'index.html')) {
       link.classList.add('active');
     } else {
@@ -143,10 +143,8 @@ setActiveNav();
 
 // ===== COPY TO CLIPBOARD =====
 function copyToClipboard(text) {
-  const copiedMsg = getSavedLanguage() === 'en' ? '✅ Command copied!' : '✅ تم نسخ الأمر!';
-
   navigator.clipboard.writeText(text).then(() => {
-    showNotification(copiedMsg);
+    showNotification(t('copyCommandSuccess', '✅ تم نسخ الأمر!'));
   }).catch(() => {
     const ta = document.createElement('textarea');
     ta.value = text;
@@ -154,7 +152,7 @@ function copyToClipboard(text) {
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    showNotification(copiedMsg);
+    showNotification(t('copyCommandSuccess', '✅ تم نسخ الأمر!'));
   });
 }
 
@@ -185,7 +183,8 @@ function animateCounters() {
         current = target;
         clearInterval(timer);
       }
-      el.textContent = Math.floor(current).toLocaleString() + suffix;
+      const locale = currentLang === 'ar' ? 'ar-EG' : 'en-US';
+      el.textContent = Math.floor(current).toLocaleString(locale) + suffix;
     }, 16);
   });
 }
@@ -248,7 +247,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 // ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
   createLanguageToggle();
-  applyCommonLanguage(getSavedLanguage());
+  applyI18n(currentLang);
 
   // Start counter animation if stats are in view
   const statsSection = document.querySelector('.stats-section');
