@@ -4,12 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>خطوات التنفيذ - KaliAcademy | سيناريوهات اختبار الاختراق خطوة بخطوة</title>
-<meta name="description" content="100+ سيناريو عملي لاختبار الاختراق خطوة بخطوة. من الاستطلاع حتى إعداد التقارير. تتبع تقدمك وانسخ الأوامر مباشرة.">
+<meta name="description" content="سيناريوهات تنفيذ عملية لاختبار الاختراق خطوة بخطوة. من الاستطلاع حتى إعداد التقارير مع أوامر جاهزة وقياس تقدمك.">
 <meta name="keywords" content="خطوات اختبار الاختراق, سيناريو Pentest, تطبيقي Kali Linux, خطوات عملية بالعربي">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:title" content="خطوات التنفيذ - KaliAcademy">
 <meta property="og:description" content="سيناريوهات عملية مفصلة لاختبار الاختراق خطوة بخطوة">
-<meta property="og:image" content="images/logo.png">
+<meta property="og:image" content="https://kali-academy.github.io/images/logo.png">
+<meta property="og:image:alt" content="Kali Academy Steps">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="Kali Academy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="خطوات التنفيذ - KaliAcademy">
+<meta name="twitter:description" content="سيناريوهات تنفيذ عملية مع خطوات واضحة وأوامر قابلة للنسخ">
+<meta name="twitter:image" content="https://kali-academy.github.io/images/logo.png">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="canonical" href="https://kali-academy.github.io/steps.html">
 <link rel="stylesheet" href="css/style.css">
@@ -30,6 +37,20 @@
 .scenario-header { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; }
 .scenario-icon { width: 54px; height: 54px; border-radius: 14px; background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
 .scenario-info h3 { font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0 0 4px; }
+.scenario-id-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  border-radius: 20px;
+  border: 1px solid rgba(0,200,255,0.3);
+  background: rgba(0,200,255,0.08);
+  color: #0cf;
+  font-size: 0.72rem;
+  font-family: 'Share Tech Mono', monospace;
+  padding: 2px 10px;
+  margin-bottom: 6px;
+}
 .scenario-info p { color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.5; }
 .scenario-meta { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 1.2rem 0.8rem; }
 .scenario-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; font-family: 'Share Tech Mono', monospace; }
@@ -1270,8 +1291,12 @@ let currentOpenedScenario = null;
 // دمج السيناريوهات مع خطوات الدروس
 function getAllScenarios() {
   const lessonStepsData = window.LESSON_STEPS || [];
-  // دمج: السيناريوهات الأساسية أولاً ثم خطوات الدروس
-  return [...SCENARIOS, ...lessonStepsData];
+  // دمج: السيناريوهات الأساسية + خطوات الدروس مع ترتيب رقمي
+  return [...SCENARIOS, ...lessonStepsData].sort((a, b) => {
+    const aid = Number(a && a.id ? a.id : 0);
+    const bid = Number(b && b.id ? b.id : 0);
+    return aid - bid;
+  });
 }
 
 function filterScenarios(diff, btn) {
@@ -1300,7 +1325,7 @@ function renderScenarios() {
   }
   
   const cntEl = document.getElementById('scenarios-count');
-  if (cntEl) cntEl.textContent = list.length;
+  if (cntEl) cntEl.textContent = list.length.toLocaleString('ar');
   
   if (list.length === 0) {
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted);">لا توجد سيناريوهات لهذا الفلتر</div>';
@@ -1315,6 +1340,7 @@ function renderScenarios() {
       <div class="scenario-header">
         <div class="scenario-icon">${s.icon}</div>
         <div class="scenario-info">
+          <span class="scenario-id-badge">سيناريو #${s.id}</span>
           <h3>${s.title}</h3>
           <p>${s.desc}</p>
         </div>

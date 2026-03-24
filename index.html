@@ -6,10 +6,11 @@
 
 <title>Kali Academy | تعلم كالي لينكس والأمن السيبراني بالعربي</title>
 
-<meta name="description" content="Kali Academy منصة عربية متخصصة في تعلم Kali Linux والأمن السيبراني خطوة بخطوة. شروحات احترافية، 500+ أمر، أدوات اختبار الاختراق، ودروس عملية للمبتدئين والمحترفين.">
+<meta name="description" content="Kali Academy منصة عربية متخصصة في تعلم Kali Linux والأمن السيبراني خطوة بخطوة. شروحات احترافية، 500+ أمر موثق، 100 درس تعليمي، أدوات عملية، وسيناريوهات تنفيذ واقعية.">
+<meta name="keywords" content="Kali Linux, الأمن السيبراني, اختبار الاختراق, دروس كالي لينكس بالعربي, أوامر لينكس, أدوات الهاكر الأخلاقي">
 
 <meta name="author" content="Kali Academy">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
 
 <link rel="canonical" href="https://kali-academy.github.io/">
 
@@ -18,16 +19,50 @@
 <meta property="og:title" content="Kali Academy - تعلم كالي لينكس والأمن السيبراني">
 <meta property="og:description" content="تعلم Kali Linux واختبار الاختراق والأمن السيبراني بالعربي مع شرح عملي وأدوات احترافية.">
 <meta property="og:image" content="https://kali-academy.github.io/images/logo.png">
+<meta property="og:image:alt" content="شعار Kali Academy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kali-academy.github.io/">
+<meta property="og:site_name" content="Kali Academy">
+<meta property="og:locale" content="ar_AR">
 
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kali Academy | تعلم كالي لينكس والأمن السيبراني بالعربي">
+<meta name="twitter:description" content="تعلم الأمن السيبراني عمليًا: 500+ أمر موثق، 100 درس، وخطوات تنفيذية واضحة.">
+<meta name="twitter:image" content="https://kali-academy.github.io/images/logo.png">
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/enhanced.css">
 <link rel="stylesheet" href="css/cyber-theme.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "EducationalOrganization",
+      "name": "Kali Academy",
+      "url": "https://kali-academy.github.io/",
+      "logo": "https://kali-academy.github.io/images/logo.png",
+      "description": "منصة عربية لتعلم Kali Linux والأمن السيبراني خطوة بخطوة.",
+      "sameAs": [
+        "https://kali-academy.github.io/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "name": "Kali Academy",
+      "url": "https://kali-academy.github.io/",
+      "inLanguage": "ar",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://kali-academy.github.io/commands.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body class="grid-bg">
 
@@ -54,6 +89,18 @@
     <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
+    <li>
+      <a
+        href="#"
+        class="nav-link"
+        data-share-button
+        data-share-title="Kali Academy"
+        data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني"
+        onclick="return false;"
+      >
+        <i class="fas fa-share-alt"></i> مشاركة
+      </a>
+    </li>
 
   </ul>
   
@@ -74,6 +121,7 @@
   <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  <a href="#" class="nav-link mobile-nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
 
 <a href="disclaimer-owner.html" class="nav-link mobile-nav-link" style="color:#ff9966;"><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</a>
 </div>
@@ -96,9 +144,9 @@
     
     <p class="hero-desc">
       منصة تعليمية شاملة لتعلم نظام كالي لينكس والأمن السيبراني — تشمل أكثر من
-      <strong id="hero-count-commands" style="color: var(--primary);">0</strong> أمر موثق،
-      <strong id="hero-count-lessons" style="color: var(--primary);">0</strong> درس،
-      و<strong id="hero-count-tools" style="color: var(--primary);">0</strong> أداة،
+      <strong id="hero-count-commands" style="color: var(--primary);">500</strong> أمر موثق،
+      <strong id="hero-count-lessons" style="color: var(--primary);">100</strong> درس،
+      و<strong id="hero-count-tools" style="color: var(--primary);">100</strong> أداة،
       مع شروحات تفصيلية، خطوات تطبيقية، ودروس تفاعلية لكل المستويات.
     </p>
     
@@ -115,15 +163,6 @@
         <i class="fas fa-list-ol"></i>
         خطوات التنفيذ
       </a>
-      <button
-        class="btn btn-secondary"
-        data-share-button
-        data-share-title="Kali Academy"
-        data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني"
-      >
-        <i class="fas fa-share-alt"></i>
-        مشاركة الموقع
-      </button>
     </div>
     
     <!-- TERMINAL DEMO -->
@@ -226,17 +265,17 @@
     <div class="stats-grid">
       <div class="stat-card">
         <span class="stat-icon">💻</span>
-        <span id="stat-commands" class="stat-number" data-count="0" data-suffix="">0</span>
+        <span id="stat-commands" class="stat-number" data-count="500" data-suffix="">500</span>
         <span class="stat-label">أمر موثق</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">📚</span>
-        <span id="stat-lessons" class="stat-number" data-count="0" data-suffix="">0</span>
+        <span id="stat-lessons" class="stat-number" data-count="100" data-suffix="">100</span>
         <span class="stat-label">درس تعليمي</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">🔧</span>
-        <span id="stat-tools" class="stat-number" data-count="0" data-suffix="">0</span>
+        <span id="stat-tools" class="stat-number" data-count="100" data-suffix="">100</span>
         <span class="stat-label">أداة مشروحة</span>
       </div>
       <div class="stat-card">
@@ -586,7 +625,7 @@ function countUniqueCommands() {
   return names.size;
 }
 
-function getLessonsData() {
+async function getLessonsData() {
   const lessonIds = new Set();
   const tracks = new Set();
 
@@ -599,12 +638,14 @@ function getLessonsData() {
     if (lesson && lesson.cat) tracks.add(String(lesson.cat).trim());
   });
 
-  // الدروس الأساسية (1-10) موجودة داخل tutorials.html
-  const totalLessons = lessonIds.size + 10;
-
   (window.LESSON_STEPS || []).forEach(stepLesson => {
     if (stepLesson && stepLesson.type) tracks.add(String(stepLesson.type).trim());
   });
+
+  const lessonsFromData = lessonIds.size + 10;
+  const lessonsFromPage = await countByRegexFromPage('tutorials.html', /\bid\s*:\s*(\d+)\b/g);
+  const normalizedLessons = lessonsFromPage || lessonsFromData || 100;
+  const totalLessons = normalizedLessons >= 100 ? 100 : normalizedLessons;
 
   return {
     totalLessons,
@@ -645,7 +686,7 @@ function updateHeroCounts({ commands, lessons, tools }) {
 
 async function calcRealStats() {
   const commandsCount = countUniqueCommands();
-  const { totalLessons, tracksCount } = getLessonsData();
+  const { totalLessons, tracksCount } = await getLessonsData();
 
   const [toolsCount, scenariosCount] = await Promise.all([
     countByRegexFromPage('tools.html', /\bid\s*:\s*(\d+)\b/g),

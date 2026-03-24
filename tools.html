@@ -3,13 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل الأدوات - KaliAcademy | 100 أداة أمن سيبراني</title>
-<meta name="description" content="دليل شامل لأكثر من 100 أداة Kali Linux بشرح عربي. Nmap، Metasploit، Burp Suite، Wireshark، Aircrack، Hashcat وغيرها مع أمثلة واستخدامات.">
+<title>دليل الأدوات - KaliAcademy | أدوات الأمن السيبراني</title>
+<meta name="description" content="دليل شامل لأدوات Kali Linux بشرح عربي عملي. Nmap، Metasploit، Burp Suite، Wireshark، Aircrack، Hashcat وغيرها مع أمثلة استخدام واضحة.">
 <meta name="keywords" content="أدوات Kali Linux, أدوات الاختراق, Nmap, Metasploit, Burp Suite, Wireshark, أدوات أمن سيبراني">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large">
 <meta property="og:title" content="دليل أدوات Kali Linux - KaliAcademy">
-<meta property="og:description" content="100 أداة أمن سيبراني بشرح عربي شامل">
-<meta property="og:image" content="images/logo.png">
+<meta property="og:description" content="دليل أدوات الأمن السيبراني بشرح عربي شامل">
+<meta property="og:image" content="https://kali-academy.github.io/images/logo.png">
+<meta property="og:image:alt" content="Kali Academy Tools Guide">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="Kali Academy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="دليل الأدوات - KaliAcademy">
+<meta name="twitter:description" content="استعرض أدوات Kali Linux بشرح عربي عملي وأوامر جاهزة">
+<meta name="twitter:image" content="https://kali-academy.github.io/images/logo.png">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="canonical" href="https://kali-academy.github.io/tools.html">
 <link rel="stylesheet" href="css/style.css">
@@ -94,6 +101,21 @@
   font-size: 1.6rem; border: 1px solid rgba(255,255,255,0.1);
 }
 .tool-info { flex: 1; min-width: 0; }
+.tool-id-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 62px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,102,0,0.35);
+  background: rgba(255,102,0,0.1);
+  color: #ff9944;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  margin-bottom: 5px;
+}
 .tool-name { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #fff; margin: 0 0 4px; }
 .tool-short { color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.5; font-family: 'Cairo', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -2434,7 +2456,7 @@ function renderTools() {
   const filtered = getFiltered();
   const grid = document.getElementById('toolsGrid');
   const noTools = document.getElementById('noTools');
-  document.getElementById('shown-count').textContent = filtered.length;
+  document.getElementById('shown-count').textContent = filtered.length.toLocaleString('ar');
 
   if (filtered.length === 0) {
     grid.innerHTML = '';
@@ -2454,6 +2476,7 @@ function renderTools() {
         <div class="tool-card-top">
           <div class="tool-logo" style="background:${t.color}">${t.icon}</div>
           <div class="tool-info">
+            <span class="tool-id-badge">أداة #${t.id}</span>
             <div class="tool-name">${t.name}</div>
             <div class="tool-short">${t.short}</div>
           </div>
@@ -2652,8 +2675,8 @@ const urlSearch = urlParams.get('q');
 if (urlSearch) { searchTerm = urlSearch; const si = document.getElementById('toolSearch'); if(si) si.value = urlSearch; }
 
 // Init
-document.getElementById('total-count').textContent = TOOLS.length;
-document.getElementById('tools-total-badge').textContent = TOOLS.length;
+document.getElementById('total-count').textContent = TOOLS.length.toLocaleString('ar');
+document.getElementById('tools-total-badge').textContent = TOOLS.length.toLocaleString('ar');
 renderTools();
 </script>
 </body>
