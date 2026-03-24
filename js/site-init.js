@@ -1,16 +1,37 @@
 // ============================================================
-// SITE INIT - تحسينات الموقع الشاملة
-// - شعار كبير وواضح
+// SITE INIT - تحسينات الموقع الأساسية
+// - تحسين الشعار
 // - تنقل سريع بين الصفحات
-// - إخفاء رابط تسجيل الدخول
+// - إخفاء رابط التسجيل من القائمة
+// - تثبيت اللغة العربية وإزالة أي تبديل لغة
 // ============================================================
 
 (function () {
+  'use strict';
 
-  /* ── 1. CSS للشعار الكبير والتنقل السريع ── */
+  // تثبيت اللغة العربية فقط
+  function applyArabicOnly() {
+    document.documentElement.lang = 'ar';
+    document.documentElement.dir = 'rtl';
+    document.body.setAttribute('dir', 'rtl');
+    document.body.classList.remove('lang-en');
+    try {
+      localStorage.setItem('kali_lang', 'ar');
+    } catch (_) { /* ignore */ }
+  }
+
+  // توافق مع أي سكربتات تعتمد على هذه الدوال
+  window.kaliGetCurrentLang = function () {
+    return 'ar';
+  };
+
+  window.kaliSetLanguage = function () {
+    applyArabicOnly();
+  };
+
+  // تحسينات CSS عامة
   const css = document.createElement('style');
   css.textContent = `
-    /* ======= LOGO ENHANCED ======= */
     .site-header .logo,
     header .logo { gap: 12px !important; }
 
@@ -39,6 +60,7 @@
       filter: drop-shadow(0 0 10px rgba(0,255,65,0.5)) drop-shadow(0 0 20px rgba(0,255,65,0.25)) !important;
       transition: filter 0.3s ease !important;
     }
+
     .site-header .logo:hover .logo-icon img,
     header .logo:hover img {
       filter: drop-shadow(0 0 14px rgba(0,255,65,0.8)) drop-shadow(0 0 28px rgba(0,255,65,0.4)) !important;
@@ -49,27 +71,22 @@
       letter-spacing: 2px !important;
       font-weight: 900 !important;
     }
+
     .logo-sub {
       font-size: 0.65rem !important;
       letter-spacing: 1.5px !important;
       opacity: 0.75 !important;
     }
 
-    /* ======= PAGE TRANSITION ======= */
     body { transition: opacity 0.18s ease !important; }
     body.page-leaving { opacity: 0 !important; }
 
-    /* ======= NAV ACTIVE GLOW ======= */
     .nav-link.active, .nav-link:hover {
       transition: all 0.2s ease !important;
     }
 
-    /* ======= HEADER HEIGHT ======= */
-    .site-header {
-      min-height: 68px !important;
-    }
+    .site-header { min-height: 68px !important; }
 
-    /* ======= MOBILE LOGO ======= */
     @media (max-width: 768px) {
       .site-header .logo .logo-icon img,
       header .logo .logo-icon img,
@@ -86,7 +103,6 @@
       .logo-text { font-size: 1rem !important; }
     }
 
-    /* ======= PRELOAD INDICATOR ======= */
     #page-loader {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -97,6 +113,7 @@
       z-index: 999999;
       transform-origin: left;
     }
+
     @keyframes loaderBar {
       0%   { transform: scaleX(0); opacity: 1; }
       80%  { transform: scaleX(0.9); opacity: 1; }
@@ -105,13 +122,14 @@
   `;
   document.head.appendChild(css);
 
-  /* ── 2. إخفاء رابط تسجيل الدخول من الناف ── */
+  // إخفاء روابط التسجيل
   function removeRegisterLinks() {
     const selectors = [
       'a[href="register.html"]',
       'a[href*="register"]',
-      '#navUserLink',
+      '#navUserLink'
     ];
+
     selectors.forEach(sel => {
       document.querySelectorAll(sel).forEach(el => {
         const li = el.closest('li');
@@ -121,9 +139,8 @@
     });
   }
 
-  /* ── 3. تنقل سريع بين الصفحات ── */
+  // التنقل السريع
   function fastNav() {
-    // preload الصفحات عند hover
     const preloaded = new Set();
 
     function preloadPage(href) {
@@ -135,25 +152,22 @@
       document.head.appendChild(link);
     }
 
-    // fade transition عند النقر على الروابط الداخلية
     document.addEventListener('click', function (e) {
       const a = e.target.closest('a');
       if (!a) return;
       const href = a.getAttribute('href');
       if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || a.target === '_blank') return;
+
       if (href.endsWith('.html') || href === '/') {
         e.preventDefault();
-        // أضف loader bar
         const loader = document.createElement('div');
         loader.id = 'page-loader';
         document.body.appendChild(loader);
-        // fade out
         document.body.classList.add('page-leaving');
         setTimeout(() => { window.location.href = href; }, 170);
       }
     }, true);
 
-    // preload عند hover
     document.addEventListener('mouseover', function (e) {
       const a = e.target.closest('a');
       if (!a) return;
@@ -162,15 +176,15 @@
     });
   }
 
-  /* ── 4. تشغيل كل شيء ── */
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      removeRegisterLinks();
-      fastNav();
-    });
-  } else {
+  function init() {
+    applyArabicOnly();
     removeRegisterLinks();
     fastNav();
   }
 
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
