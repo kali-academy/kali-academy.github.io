@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Commands Database - KaliAcademy | 500+ Kali Linux Commands</title>
-<meta name="description" content="A comprehensive database of 500+ Kali Linux commands organized by category with fast search, command examples, and one-click copy.">
+<title>قاعدة الأوامر - KaliAcademy | 500+ أمر Kali Linux</title>
+<meta name="description" content="قاعدة بيانات شاملة لأكثر من 500 أمر Kali Linux مصنفة بالفئات: شبكات، اختراق، جنائي، تشفير، ويب. بحث سريع ونسخ بنقرة واحدة.">
 <meta name="keywords" content="Kali Linux أوامر, أوامر الشبكة, Nmap, Metasploit, Hydra, Burp Suite, أوامر اختبار الاختراق بالعربي">
 <meta name="robots" content="index, follow">
-<meta property="og:title" content="Kali Linux Commands Database - 500+ Commands">
-<meta property="og:description" content="A large practical database of Kali Linux commands for cybersecurity learners.">
+<meta property="og:title" content="قاعدة أوامر Kali Linux - 500+ أمر">
+<meta property="og:description" content="أكبر قاعدة بيانات أوامر Kali Linux باللغة العربية">
 <meta property="og:image" content="images/logo.png">
-<link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
-<link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
-<link rel="apple-touch-icon" href="images/logo.png">
-<link rel="shortcut icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" href="images/logo.png">
 <link rel="canonical" href="https://kali-academy.github.io/commands.html">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/enhanced.css">
@@ -302,10 +299,6 @@
 <script src="js/commands-db-part11.js"></script>
 <script src="js/commands-db-part12.js"></script>
 <script src="js/commands-db-part13.js"></script>
-<script src="js/commands-db-part14.js"></script>
-<script src="js/commands-db-part15.js"></script>
-<script src="js/commands-db-part16.js"></script>
-<script src="js/commands-db-part17.js"></script>
 <script src="js/commands-data.js"></script>
 <script>
 // =============================================
@@ -364,9 +357,7 @@ function buildDB() {
   [...(window.CMD_PART1||[]), ...(window.CMD_PART2||[]), ...(window.CMD_PART3||[]),
    ...(window.CMD_PART4||[]), ...(window.CMD_PART5||[]), ...(window.CMD_PART6||[]),
    ...(window.CMD_PART7||[]), ...(window.CMD_PART8||[]), ...(window.CMD_PART9||[]),
-   ...(window.CMD_PART10||[]), ...(window.CMD_PART11||[]), ...(window.CMD_PART12||[]),
-   ...(window.CMD_PART13||[]), ...(window.CMD_PART14||[]), ...(window.CMD_PART15||[]),
-   ...(window.CMD_PART16||[]), ...(window.CMD_PART17||[])].forEach(c => {
+   ...(window.CMD_PART10||[]), ...(window.CMD_PART11||[]), ...(window.CMD_PART12||[]), ...(window.CMD_PART13||[])].forEach(c => {
     seen.add(c.name.toLowerCase());
     allCmds.push({...c, _detailed: true});
   });
