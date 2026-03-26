@@ -35,6 +35,55 @@
 <link rel="stylesheet" href="css/cyber-theme.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.articles-spotlight-card {
+  max-width: 1100px;
+  margin: 50px auto;
+  background: linear-gradient(135deg, rgba(0,255,65,0.08), rgba(0,0,0,0.82));
+  border: 1px solid rgba(0,255,65,0.3);
+  border-radius: 18px;
+  padding: 45px;
+  box-shadow: 0 0 40px rgba(0,255,65,0.2);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  animation: spotlightIn 0.8s ease both;
+}
+.articles-spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(0,255,65,0.2), transparent 70%);
+  transform: rotate(25deg);
+}
+.article-main-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 34px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, #00ff41, #00cc33);
+  color: #031106;
+  font-weight: 800;
+  border-radius: 10px;
+  text-decoration: none;
+  font-family: 'Share Tech Mono', monospace;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0,255,65,0.35);
+}
+.article-main-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 28px rgba(0,255,65,0.65);
+}
+@keyframes spotlightIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -84,15 +133,22 @@
   </a>
   
   <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> <span data-i18n="navHome">الرئيسية</span></a></li>
-    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> <span data-i18n="navCommands">الأوامر</span></a></li>
-    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> <span data-i18n="navTutorials">الدروس</span></a></li>
-    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">خطوات التنفيذ</span></a></li>
-    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
-    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
+    <li><a href="index.html" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
+    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> مقالات</a></li>
     <li>
-      <a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;">
-        <i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span>
+      <a
+        href="#"
+        class="nav-link"
+        data-share-button
+        data-share-title="Kali Academy"
+        data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني"
+        onclick="return false;"
+      >
+        <i class="fas fa-share-alt"></i> مشاركة
       </a>
     </li>
 
@@ -110,13 +166,13 @@
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu">
-  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> <span data-i18n="navHome">الرئيسية</span></a>
-  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> <span data-i18n="navCommands">الأوامر</span></a>
-  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> <span data-i18n="navTutorials">الدروس</span></a>
-  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">خطوات التنفيذ</span></a>
-  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a>
-  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a>
-  <a href="#" class="nav-link mobile-nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة الموقع</span></a>
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> مقالات</a>
+  <a href="#" class="nav-link mobile-nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
 
 <a href="disclaimer-owner.html" class="nav-link mobile-nav-link" style="color:#ff9966;"><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</a>
 </div>
@@ -178,80 +234,28 @@
       </div>
     </div>
   </section>
-<!-- FEATURED ARTICLE CARD -->
+<!-- ARTICLES SPOTLIGHT -->
 <section class="section" style="padding-top:0;">
-  <div class="featured-guide-card" style="
-    max-width:1100px;
-    margin:50px auto;
-    background:linear-gradient(135deg, rgba(0,255,65,0.08), rgba(0,0,0,0.8));
-    border:1px solid rgba(0,255,65,0.35);
-    border-radius:18px;
-    padding:45px;
-    box-shadow:0 0 40px rgba(0,255,65,0.2);
-    position:relative;
-    overflow:hidden;
-    text-align:center;
-  ">
-
-    <div style="
-      position:absolute;
-      top:-50px;
-      right:-50px;
-      width:200px;
-      height:200px;
-      background:radial-gradient(circle, rgba(0,255,65,0.2), transparent 70%);
-      transform:rotate(25deg);
-    "></div>
-
-    <span style="
-      display:inline-block;
-      color:#00ff41;
-      font-size:14px;
-      letter-spacing:3px;
-      font-family:'Share Tech Mono', monospace;
-      margin-bottom:15px;
-    ">
-      🔥 FEATURED GUIDE 2026
+  <div class="articles-spotlight-card">
+    <span style="display:inline-block;color:#00ff41;font-size:14px;letter-spacing:3px;font-family:'Share Tech Mono', monospace;margin-bottom:15px;">
+      ✍️ مقالات Kali Academy
     </span>
 
-    <h2 style="
-      font-family:'Orbitron', sans-serif;
-      font-size:2rem;
-      margin:15px 0;
-      color:#ffffff;
-    ">
-      🚀 تعلم Kali Linux من الصفر إلى الاحتراف
+    <h2 style="font-family:'Orbitron', sans-serif;font-size:2rem;margin:15px 0;color:#ffffff;">
+      أول مقال: كيف تبدأ في تعلم الأمن السيبراني
     </h2>
 
-    <p style="
-      color:#ccc;
-      max-width:750px;
-      margin:0 auto 30px;
-      line-height:1.9;
-      font-size:1rem;
-    ">
-      دليل احترافي شامل لتعلم Kali Linux والأمن السيبراني خطوة بخطوة،
-      يشمل التثبيت، أهم الأوامر، أدوات الاختراق الأخلاقي،
-      وخطة احتراف عملية لمدة 90 يوم.
+    <p style="color:#ccc;max-width:760px;margin:0 auto 24px;line-height:1.9;font-size:1rem;">
+      دليل عملي مرتب للمبتدئين يشرح لك خارطة طريق واضحة للبدء في الأمن السيبراني: المهارات الأساسية،
+      الأدوات، خطة تعلم أسبوعية، وكيف تبني مختبرك بطريقة آمنة وقانونية.
     </p>
 
-    <a href="learn-kali-linux-2026.html" class="featured-guide-link" style="
-      display:inline-block;
-      padding:14px 35px;
-      background:linear-gradient(90deg,#00ff41,#00cc33);
-      color:#000;
-      font-weight:bold;
-      border-radius:10px;
-      text-decoration:none;
-      font-family:'Share Tech Mono', monospace;
-      transition:0.3s;
-      box-shadow:0 0 20px rgba(0,255,65,0.4);
-    "
-    onmouseover="this.style.boxShadow='0 0 30px rgba(0,255,65,0.8)'"
-    onmouseout="this.style.boxShadow='0 0 20px rgba(0,255,65,0.4)'">
-      📖 اقرأ الدليل الكامل الآن
-    </a>
-
+    <div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;">
+      <a href="articles.html" class="article-main-btn"><i class="fas fa-newspaper"></i> صفحة مقالات</a>
+      <a href="learn-kali-linux-2026.html" class="article-main-btn" style="background:linear-gradient(90deg,#0cf,#00b8d9);color:#00151d;box-shadow:0 0 20px rgba(0,200,255,0.35);">
+        <i class="fas fa-book-open"></i> اقرأ المقال الأول
+      </a>
+    </div>
   </div>
 </section>
   
@@ -538,7 +542,6 @@
         <li><a href="tutorials.html">الدروس</a></li>
         <li><a href="steps.html">خطوات التنفيذ</a></li>
         <li><a href="tools.html">الأدوات</a></li>
-        <li><a href="articles.html">المقالات</a></li>
         <li><a href="disclaimer-owner.html" style="color:#ff6060;">⚠️ إخلاء المسؤولية</a></li>
       </ul>
     </div>

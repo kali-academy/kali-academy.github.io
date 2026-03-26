@@ -3,85 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>تعلم كالي لينكس للمبتدئين 2026 | دليل شامل للأمن السيبراني خطوة بخطوة</title>
-
-<meta name="description" content="دليل شامل لتعلم Kali Linux للمبتدئين 2026 مع شرح عملي للأوامر وأدوات الأمن السيبراني وخطة تعلم احترافية بطريقة قانونية وآمنة.">
-
-<meta name="keywords" content="تعلم كالي لينكس, Kali Linux بالعربي, الأمن السيبراني, اختبار الاختراق, أوامر كالي لينكس, Ethical Hacking">
-
+<title>كيف تبدأ في تعلم الأمن السيبراني | KaliAcademy</title>
+<meta name="description" content="مقال عملي يشرح كيف تبدأ في تعلم الأمن السيبراني خطوة بخطوة للمبتدئين مع خطة واضحة وأدوات أساسية.">
+<meta name="keywords" content="كيف تبدأ في تعلم الأمن السيبراني, تعلم أمن المعلومات, خارطة طريق الأمن السيبراني, Kali Linux للمبتدئين">
 <meta name="author" content="Kali Academy">
-
 <link rel="canonical" href="https://kali-academy.github.io/learn-kali-linux-2026.html">
-
-<!-- Open Graph -->
-<meta property="og:title" content="تعلم كالي لينكس للمبتدئين 2026">
-<meta property="og:description" content="ابدأ رحلتك في الأمن السيبراني مع دليل شامل لتعلم Kali Linux خطوة بخطوة.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://kali-academy.github.io/learn-kali-linux-2026.html">
-
-<!-- Structured Data FAQ -->
-<script type="application/ld+json">
-{
-"@context": "https://schema.org",
-"@type": "FAQPage",
-"mainEntity": [{
-"@type": "Question",
-"name": "هل كالي لينكس قانوني؟",
-"acceptedAnswer": {
-"@type": "Answer",
-"text": "نعم النظام قانوني بالكامل، لكن استخدام الأدوات بدون إذن رسمي قد يكون غير قانوني."
+<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhanced.css">
+<link rel="stylesheet" href="css/cyber-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.article-layout { max-width: 950px; margin: 0 auto; padding: calc(var(--header-height) + 2rem) 1.2rem 3rem; }
+.article-head {
+  text-align: center;
+  padding: 2rem 1rem 1.8rem;
+  border: 1px solid rgba(0,255,65,.2);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(0,255,65,.08), rgba(0,0,0,.42));
+  margin-bottom: 1.4rem;
+  animation: fadeInUp .7s ease both;
 }
-},
-{
-"@type": "Question",
-"name": "كم أحتاج وقت لأصبح محترفًا؟",
-"acceptedAnswer": {
-"@type": "Answer",
-"text": "من 6 أشهر إلى سنة مع تدريب مستمر."
+.article-head h1 { margin: .6rem 0 .8rem; color: #fff; font-family: 'Cairo', sans-serif; font-size: clamp(1.4rem, 4vw, 2.1rem); }
+.article-head p { color: var(--text-secondary); line-height: 1.9; margin: 0 auto; max-width: 760px; }
+.article-content {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: rgba(0,0,0,.45);
+  box-shadow: 0 0 24px rgba(0,255,65,.1);
 }
-}]
+.article-content h2 { color: #aefdc9; margin: 1.4rem 0 .7rem; font-size: 1.15rem; }
+.article-content p,
+.article-content li { color: #d2dad6; line-height: 1.95; }
+.article-content ul { margin: .4rem 0 0; }
+.roadmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: .8rem; margin-top: .7rem; }
+.roadmap-step {
+  border: 1px solid rgba(0,200,255,.25);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(0,200,255,.12), rgba(0,255,65,.08));
+  padding: .8rem;
+  animation: fadeInUp .5s ease both;
 }
-</script>
-
+.roadmap-step b { color: #9be8ff; }
+.article-cta { text-align: center; margin-top: 1.6rem; }
+.article-cta a {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 22px; border-radius: 10px;
+  text-decoration: none; font-weight: 700;
+  border: 1px solid rgba(0,255,65,.35);
+  background: rgba(0,255,65,.14); color: #c4ffd6;
+}
+.article-cta a:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(0,255,65,.25); }
+</style>
 </head>
+<body class="grid-bg">
+<script src="js/disclaimer.js"></script>
+<script src="js/social-bar.js"></script>
+<script src="js/site-init.js"></script>
+<canvas id="matrix-canvas"></canvas>
 
-<body>
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="images/logo.png" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div><span class="logo-text">KALI ACADEMY</span><span class="logo-sub">CYBER SECURITY LEARNING</span></div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
+    <li><a href="articles.html" class="nav-link active"><i class="fas fa-newspaper"></i> مقالات</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</header>
 
-<h1>🚀 تعلم كالي لينكس للمبتدئين 2026 – الدليل الاحترافي الشامل</h1>
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link active"><i class="fas fa-newspaper"></i> مقالات</a>
+</div>
 
-<p><strong>Kali Linux</strong> هو أحد أقوى أنظمة التشغيل المستخدمة في مجال الأمن السيبراني 🔐. في هذا الدليل ستتعلم الأساسيات والأوامر المهمة وخطة احتراف عملية.</p>
+<main class="article-layout">
+  <section class="article-head">
+    <div class="search-count-badge"><i class="fas fa-seedling"></i> مقال للمبتدئين</div>
+    <h1>كيف تبدأ في تعلم الأمن السيبراني</h1>
+    <p>
+      البداية الصحيحة في الأمن السيبراني ليست في كثرة الأدوات، بل في ترتيب التعلم.
+      هذا المقال يقدم لك طريقًا عمليًا واضحًا من الصفر حتى أول مستوى احترافي.
+    </p>
+  </section>
 
-<h2>💻 ما هو Kali Linux؟</h2>
-<p>هو نظام تشغيل مبني على Debian يحتوي على مئات الأدوات المتخصصة في اختبار الاختراق وتحليل الثغرات الأمنية.</p>
+  <article class="article-content">
+    <h2>1) ابدأ بالأساسيات قبل أدوات الاختراق</h2>
+    <p>تعلم Linux، الشبكات، ومبادئ الويب أولًا. هذه الأساسيات هي التي تجعلك تفهم الثغرات بدل حفظ أوامر فقط.</p>
 
-<h2>⚖️ هل استخدامه قانوني؟</h2>
-<p>النظام قانوني 100% ✅، لكن يجب استخدامه فقط في بيئة اختبار تملكها أو لديك تصريح رسمي لاختبارها.</p>
+    <h2>2) جهّز بيئة تدريب آمنة</h2>
+    <ul>
+      <li>ثبّت Kali Linux على VirtualBox أو VMware.</li>
+      <li>استخدم مختبرات قانونية مثل DVWA وTryHackMe وHack The Box.</li>
+      <li>لا تختبر أي نظام بدون إذن رسمي.</li>
+    </ul>
 
-<h2>🛠 أهم أوامر كالي لينكس</h2>
-<ul>
-<li><code>ls</code> – عرض الملفات</li>
-<li><code>cd</code> – التنقل بين المجلدات</li>
-<li><code>ifconfig</code> – عرض إعدادات الشبكة</li>
-<li><code>nmap</code> – فحص المنافذ</li>
-</ul>
+    <h2>3) خطة تعلم أسبوعية مقترحة (12 أسبوع)</h2>
+    <div class="roadmap-grid">
+      <div class="roadmap-step"><b>الأسابيع 1-4:</b> Linux + Networking + سطر الأوامر.</div>
+      <div class="roadmap-step"><b>الأسابيع 5-8:</b> Nmap + أساسيات Web Security + Burp Suite.</div>
+      <div class="roadmap-step"><b>الأسابيع 9-12:</b> سيناريوهات عملية + كتابة تقارير + CTF بسيط.</div>
+    </div>
 
-<h2>🎯 خطة احتراف خلال 90 يوم</h2>
-<p>الشهر الأول: أساسيات لينكس</p>
-<p>الشهر الثاني: الشبكات والبروتوكولات</p>
-<p>الشهر الثالث: تطبيق عملي في مختبر آمن</p>
+    <h2>4) أدوات البداية التي تحتاجها فعلاً</h2>
+    <ul>
+      <li><code>nmap</code> للاستطلاع.</li>
+      <li><code>burpsuite</code> لاختبار تطبيقات الويب.</li>
+      <li><code>wireshark</code> لتحليل الشبكة.</li>
+      <li><code>gobuster</code> لاكتشاف المسارات المخفية.</li>
+    </ul>
 
-<h2>❓ الأسئلة الشائعة</h2>
+    <h2>5) ركّز على التطبيق والتوثيق</h2>
+    <p>كل ما تتعلمه طبقه مباشرة في مختبرك ثم اكتب ملاحظاتك ونتائجك. هذا يبني عقلية احترافية أسرع من المشاهدة فقط.</p>
 
-<h3>هل أحتاج جهاز قوي؟</h3>
-<p>8GB RAM كافية لتشغيله في بيئة افتراضية.</p>
+    <div class="article-cta">
+      <a href="articles.html"><i class="fas fa-arrow-right"></i> الرجوع إلى صفحة مقالات</a>
+    </div>
+  </article>
+</main>
 
-<h3>هل يمكن تثبيته كنظام أساسي؟</h3>
-<p>نعم، لكن يفضل استخدامه كنظام مخصص للاختبارات.</p>
+<footer class="site-footer">
+  <div class="footer-bottom" style="max-width:950px;margin:0 auto;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;color:var(--text-muted);">
+    ⚠️ للأغراض التعليمية فقط | © 2026 Kali Academy
+  </div>
+</footer>
 
-<hr>
-
-<p><strong>ابدأ اليوم 🚀 وطور مهاراتك في الأمن السيبراني بطريقة قانونية واحترافية.</strong></p>
-
+<script src="js/matrix.js"></script>
+<script>
+  document.querySelector('.hamburger')?.addEventListener('click', () => {
+    document.querySelector('.mobile-menu')?.classList.toggle('open');
+  });
+</script>
 </body>
 </html>

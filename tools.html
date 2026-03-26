@@ -87,32 +87,16 @@
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden; cursor: pointer;
   transition: all 0.3s; position: relative;
+  animation: toolCardIn 0.45s ease both;
+  animation-delay: calc(var(--idx, 0) * 36ms);
 }
 .tool-card:hover {
-  border-color: #ff6600; transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(255,102,0,0.12);
+  border-color: #ff6600; transform: translateY(-6px);
+  box-shadow: 0 10px 34px rgba(255,102,0,0.16);
 }
-.card-num-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0 16px 0 14px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 900;
-  z-index: 2;
-  pointer-events: none;
-}
-.tool-card .card-num-badge {
-  background: linear-gradient(135deg, rgba(255,102,0,0.22), rgba(255,0,128,0.14));
-  border-bottom: 1px solid rgba(255,102,0,0.3);
-  border-left: 1px solid rgba(255,102,0,0.3);
-  color: #ffb070;
+@keyframes toolCardIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.986); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 .tool-card-top {
   padding: 1.2rem; display: flex; align-items: flex-start; gap: 0.9rem;
@@ -121,9 +105,29 @@
   width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.6rem; border: 1px solid rgba(255,255,255,0.1);
+  animation: toolLogoPulse 3s ease-in-out infinite;
+}
+@keyframes toolLogoPulse {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px) scale(1.03); }
 }
 .tool-info { flex: 1; min-width: 0; }
-
+.tool-id-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 78px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,102,0,0.4);
+  background: linear-gradient(135deg, rgba(255,102,0,0.2), rgba(255,0,128,0.1));
+  color: #ffc38f;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.68rem;
+  margin-bottom: 5px;
+  box-shadow: 0 0 12px rgba(255,102,0,0.12);
+}
 .tool-name { font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700; color: #fff; margin: 0 0 4px; }
 .tool-short { color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.5; font-family: 'Cairo', sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -306,12 +310,12 @@
     <div><span class="logo-text">KALI ACADEMY</span><span class="logo-sub">CYBER SECURITY LEARNING</span></div>
   </a>
   <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> <span data-i18n="navHome">الرئيسية</span></a></li>
-    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> <span data-i18n="navCommands">الأوامر</span></a></li>
-    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> <span data-i18n="navTutorials">الدروس</span></a></li>
-    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">خطوات التنفيذ</span></a></li>
-    <li><a href="tools.html" class="nav-link active"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
-    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
+    <li><a href="tools.html" class="nav-link active"><i class="fas fa-tools"></i> الأدوات</a></li>
+    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> مقالات</a></li>
   </ul>
   <div class="header-status"><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
   <div class="hamburger"><span></span><span></span><span></span></div>
@@ -322,7 +326,7 @@
   <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
   <a href="tools.html" class="nav-link mobile-nav-link active"><i class="fas fa-tools"></i> الأدوات</a>
-  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> مقالات</a>
   
 </div>
   <!-- HERO -->
@@ -2514,11 +2518,11 @@ function renderTools() {
     }).join('');
 
     return `
-      <div class="tool-card" onclick="openTool(${t.id})">
-        <span class="card-num-badge">${index + 1}</span>
+      <div class="tool-card" style="--idx:${index};" onclick="openTool(${t.id})">
         <div class="tool-card-top">
           <div class="tool-logo" style="background:${t.color}">${t.icon}</div>
           <div class="tool-info">
+            <span class="tool-id-badge">أداة ${String(t.id).padStart(3, '0')}</span>
             <div class="tool-name">${t.name}</div>
             <div class="tool-short">${t.short}</div>
           </div>

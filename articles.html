@@ -3,32 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>المقالات - KaliAcademy | مدونة تعلم الأمن السيبراني</title>
-<meta name="description" content="مقالات وخرائط طريق لتعلم الأمن السيبراني من KaliAcademy.">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="المقالات - KaliAcademy">
-<meta property="og:description" content="مقالات عملية وخرائط طريق لتعلم الأمن السيبراني.">
-<meta property="og:image" content="images/logo.png">
+<title>مقالات - KaliAcademy</title>
+<meta name="description" content="مقالات KaliAcademy التعليمية في الأمن السيبراني. ابدأ بالمقال الأول: كيف تبدأ في تعلم الأمن السيبراني.">
 <link rel="icon" type="image/png" href="images/logo.png">
-<link rel="canonical" href="https://kali-academy.github.io/articles.html">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/enhanced.css">
 <link rel="stylesheet" href="css/cyber-theme.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-.articles-wrapper { max-width: 1300px; margin: 0 auto; padding: 0 1.5rem 4rem; }
-.articles-hero { padding: 3rem 2rem 2rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(0,255,65,0.06), transparent); }
-.articles-hero h1 { font-family: 'Cairo', sans-serif; font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 0.7rem; }
-.articles-hero p { color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.8; font-family: 'Cairo', sans-serif; }
-.article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
-.article-card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--bg-card); transition: .25s; text-decoration: none; color: inherit; }
-.article-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,255,65,.12); }
-.article-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-.article-card-body { padding: 1rem 1.1rem 1.2rem; }
-.article-card-body h2 { font-size: 1rem; margin: 0 0 .6rem; line-height: 1.7; font-family: 'Cairo', sans-serif; }
-.article-card-body p { color: var(--text-muted); font-size: .9rem; line-height: 1.75; margin: 0 0 .9rem; font-family: 'Cairo', sans-serif; }
-.article-meta { display: flex; justify-content: space-between; font-size: .78rem; color: var(--text-muted); font-family: 'Cairo', sans-serif; }
+.articles-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 1.2rem 3rem; }
+.articles-hero {
+  padding: 3rem 1.5rem 2.4rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(0,255,65,0.07), transparent);
+  animation: fadeInUp .7s ease both;
+}
+.articles-hero h1 { margin: .4rem 0; color: #fff; font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem, 4vw, 2.4rem); }
+.articles-hero p { color: var(--text-secondary); max-width: 760px; margin: .8rem auto 0; line-height: 1.9; }
+.article-card {
+  margin: 2rem auto 0;
+  border-radius: 18px;
+  border: 1px solid rgba(0,255,65,.28);
+  background: linear-gradient(135deg, rgba(0,255,65,.08), rgba(0,0,0,.7));
+  padding: 2rem;
+  max-width: 900px;
+  box-shadow: 0 0 30px rgba(0,255,65,.14);
+  animation: articleIn .6s ease both;
+}
+.article-card .badge { display: inline-flex; align-items: center; gap: 8px; color: #9affb8; border: 1px solid rgba(0,255,65,.32); background: rgba(0,255,65,.1); border-radius: 999px; padding: 5px 12px; font-size: .78rem; }
+.article-card h2 { margin: 1rem 0 .8rem; color: #fff; font-size: 1.5rem; font-family: 'Cairo', sans-serif; }
+.article-card p { color: #c8d2cf; line-height: 1.9; margin: 0 0 1.2rem; }
+.article-btn-wrap { display: flex; justify-content: center; align-items: center; margin-top: 1.4rem; }
+.article-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-width: 260px; text-align: center;
+  border-radius: 10px; padding: 12px 20px;
+  border: 1px solid rgba(0,200,255,.35);
+  background: linear-gradient(135deg, rgba(0,200,255,.25), rgba(0,255,65,.18));
+  color: #dffbff; text-decoration: none; font-weight: 700;
+  transition: all .25s ease;
+}
+.article-btn:hover { transform: translateY(-3px); box-shadow: 0 0 24px rgba(0,200,255,.35); }
+@keyframes articleIn { from { opacity:0; transform: translateY(16px) scale(.985); } to { opacity:1; transform: translateY(0) scale(1); } }
 </style>
 </head>
 <body class="grid-bg">
@@ -48,7 +66,7 @@
     <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
-    <li><a href="articles.html" class="nav-link active"><i class="fas fa-newspaper"></i> المقالات</a></li>
+    <li><a href="articles.html" class="nav-link active"><i class="fas fa-newspaper"></i> مقالات</a></li>
   </ul>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
@@ -59,37 +77,42 @@
   <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
-  <a href="articles.html" class="nav-link mobile-nav-link active"><i class="fas fa-newspaper"></i> المقالات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link active"><i class="fas fa-newspaper"></i> مقالات</a>
 </div>
 
-<div class="articles-wrapper">
-  <section class="articles-hero">
-    <h1>المقالات وخرائط الطريق</h1>
-    <p>مقالات عملية في الأمن السيبراني، خرائط طريق للمبتدئين، وإرشادات مختارة من فريق KaliAcademy.</p>
-  </section>
+<div class="main-wrapper">
+  <div class="articles-wrapper">
+    <section class="articles-hero">
+      <div class="search-count-badge" style="margin-bottom:0.8rem;"><i class="fas fa-newspaper"></i> 1 مقال متاح حالياً</div>
+      <h1>مقالات <span style="color:var(--primary);">KaliAcademy</span></h1>
+      <p>محتوى عربي عملي مرتب للبدء والتدرج في الأمن السيبراني. كل مقال يركز على خطوات واضحة قابلة للتطبيق.</p>
+    </section>
 
-  <section class="article-grid">
-    <a class="article-card" href="article-roadmap-cybersecurity-2026.html">
-      <img src="images/logo.png" alt="Cybersecurity Roadmap">
-      <div class="article-card-body">
-        <h2>كيف تبدأ في تعلم الأمن السيبراني من الصفر في 2026؟ 🔐</h2>
-        <p>خريطة طريق كاملة للمبتدئين تشمل الشبكات، لينكس، Kali Linux، التدريب العملي، والشهادات.</p>
-        <div class="article-meta">
-          <span>بقلم KALI ACADEMY</span>
-          <span>2026</span>
-        </div>
+    <article class="article-card">
+      <span class="badge"><i class="fas fa-star"></i> المقال الأول</span>
+      <h2>كيف تبدأ في تعلم الأمن السيبراني</h2>
+      <p>
+        إذا كنت مبتدئًا وتبحث عن بداية صحيحة، هذا المقال يعطيك خارطة طريق واضحة: ما الذي تتعلمه أولًا،
+        وكيف تتجنب التشتت، وما الأدوات الأساسية التي تحتاجها لبناء أساس قوي في الأمن السيبراني.
+      </p>
+      <div class="article-btn-wrap">
+        <a href="learn-kali-linux-2026.html" class="article-btn"><i class="fas fa-arrow-left"></i> الانتقال إلى المقال</a>
       </div>
-    </a>
-  </section>
+    </article>
+  </div>
 </div>
 
 <footer class="site-footer">
   <div class="footer-bottom" style="max-width:1200px;margin:0 auto;text-align:center;padding:1.5rem 2rem;font-size:0.8rem;color:var(--text-muted);">
-    ⚠️ لأغراض تعليمية فقط | © 2026 Kali Academy
+    ⚠️ للأغراض التعليمية فقط | © 2026 Kali Academy
   </div>
 </footer>
 
 <script src="js/matrix.js"></script>
-<script src="js/main.js"></script>
+<script>
+  document.querySelector('.hamburger')?.addEventListener('click', () => {
+    document.querySelector('.mobile-menu')?.classList.toggle('open');
+  });
+</script>
 </body>
 </html>
