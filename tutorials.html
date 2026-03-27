@@ -80,16 +80,32 @@
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden; cursor: pointer;
   transition: all 0.3s; position: relative;
-  animation: lessonCardIn 0.45s ease both;
-  animation-delay: calc(var(--idx, 0) * 40ms);
 }
 .lesson-card:hover {
-  border-color: var(--primary); transform: translateY(-6px);
-  box-shadow: 0 10px 36px rgba(0,255,65,0.14);
+  border-color: var(--primary); transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0,255,65,0.1);
 }
-@keyframes lessonCardIn {
-  from { opacity: 0; transform: translateY(14px) scale(0.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.card-num-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 16px 0 14px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 900;
+  z-index: 2;
+  pointer-events: none;
+}
+.lesson-card .card-num-badge {
+  background: linear-gradient(135deg, rgba(0,255,65,0.2), rgba(0,200,255,0.12));
+  border-bottom: 1px solid rgba(0,255,65,0.3);
+  border-left: 1px solid rgba(0,255,65,0.3);
+  color: #9effbf;
 }
 .lesson-card-top {
   padding: 1.2rem 1.2rem 0.8rem;
@@ -123,28 +139,9 @@
   width: 50px; height: 50px; border-radius: 12px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 1.5rem; border: 1px solid rgba(255,255,255,0.1);
-  animation: iconFloat 3s ease-in-out infinite;
-}
-@keyframes iconFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
 }
 .lesson-meta { flex: 1; }
-.lesson-id-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 72px;
-  height: 24px;
-  border-radius: 20px;
-  border: 1px solid rgba(0,255,65,0.35);
-  background: linear-gradient(135deg, rgba(0,255,65,0.16), rgba(0,200,255,0.08));
-  color: #aaffc1;
-  font-size: 0.7rem;
-  font-family: 'Share Tech Mono', monospace;
-  margin-bottom: 6px;
-  box-shadow: 0 0 10px rgba(0,255,65,0.14);
-}
+
 .lesson-meta h3 {
   font-family: 'Cairo', sans-serif; font-weight: 700; font-size: 0.95rem;
   color: var(--text-primary); margin: 0 0 4px;
@@ -286,23 +283,23 @@
     <div><span class="logo-text">KALI ACADEMY</span><span class="logo-sub">CYBER SECURITY LEARNING</span></div>
   </a>
   <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
-    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
-    <li><a href="tutorials.html" class="nav-link active"><i class="fas fa-book-open"></i> الدروس</a></li>
-    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
-    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
-    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> مقالات</a></li>
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> <span data-i18n="navHome">الرئيسية</span></a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> <span data-i18n="navCommands">الأوامر</span></a></li>
+    <li><a href="tutorials.html" class="nav-link active"><i class="fas fa-book-open"></i> <span data-i18n="navTutorials">الدروس</span></a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">خطوات التنفيذ</span></a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
+    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
     
   </ul>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
 <div class="mobile-menu">
-  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
-  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
-  <a href="tutorials.html" class="nav-link mobile-nav-link active"><i class="fas fa-book-open"></i> الدروس</a>
-  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
-  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
-  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> مقالات</a>
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> <span data-i18n="navHome">الرئيسية</span></a>
+  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> <span data-i18n="navCommands">الأوامر</span></a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link active"><i class="fas fa-book-open"></i> <span data-i18n="navTutorials">الدروس</span></a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">خطوات التنفيذ</span></a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a>
+  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a>
   
 </div>
   <!-- HERO -->
@@ -1627,11 +1624,11 @@ function renderLessons() {
   noRes.style.display = 'none';
   renderLessonResumeBar();
   grid.innerHTML = filtered.map((t, index) => `
-    <div class="lesson-card" style="--idx:${index};" onclick="openLesson(${t.id})">
+    <div class="lesson-card" onclick="openLesson(${t.id})">
+      <span class="card-num-badge">${index + 1}</span>
       <div class="lesson-card-top">
         <div class="lesson-icon" style="background:rgba(0,255,65,0.08);border-color:rgba(0,255,65,0.2);">${t.icon}</div>
         <div class="lesson-meta">
-          <span class="lesson-id-badge">درس ${String(t.id).padStart(3, '0')}</span>
           <h3>${t.title}</h3>
           <p>${t.desc}</p>
         </div>
@@ -1786,21 +1783,6 @@ function setFilter(filter, el) {
   renderLessons();
 }
 
-function resolvePreferredTutorialFilter() {
-  const skill = typeof window.kaliGetSkillLevel === 'function' ? window.kaliGetSkillLevel() : null;
-  if (!skill) return null;
-  if (skill === 'unknown') return 'beginner';
-  if (skill === 'beginner' || skill === 'intermediate' || skill === 'advanced') return skill;
-  return null;
-}
-
-function applyTutorialSkillFilter(level) {
-  const target = level || resolvePreferredTutorialFilter();
-  if (!target) return;
-  const btn = Array.from(document.querySelectorAll('.tut-tab')).find(tab => (tab.getAttribute('onclick') || '').includes(`'${target}'`));
-  setFilter(target, btn || null);
-}
-
 function filterTutorials() {
   searchQ = document.getElementById('tutSearch').value;
   renderLessons();
@@ -1808,14 +1790,7 @@ function filterTutorials() {
 
 // INIT
 renderLessons();
-applyTutorialSkillFilter();
 renderLessonResumeBar();
-
-document.addEventListener('kali:skillChanged', (event) => {
-  const nextLevel = event?.detail?.level === 'unknown' ? 'beginner' : event?.detail?.level;
-  applyTutorialSkillFilter(nextLevel);
-});
-
 document.querySelector('.hamburger')?.addEventListener('click',()=>{
   document.querySelector('.mobile-menu')?.classList.toggle('open');
 });

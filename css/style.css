@@ -45,34 +45,6 @@ body {
   min-height: 100vh;
 }
 
-img,
-video,
-svg {
-  max-width: 100%;
-  height: auto;
-}
-
-a,
-button,
-input,
-select,
-textarea {
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .25s ease, color .25s ease;
-}
-
-button:hover,
-a:hover {
-  transform: translateY(-1px);
-}
-
-.lessons-grid,
-.tools-grid,
-.scenarios-grid,
-.cmds-grid {
-  content-visibility: auto;
-  contain-intrinsic-size: 800px;
-}
-
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-dark); }
@@ -155,11 +127,6 @@ a:hover {
   padding: 0 2rem;
   gap: 2rem;
   box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
-  animation: headerDrop .5s ease both;
-}
-@keyframes headerDrop {
-  from { opacity: 0; transform: translateY(-14px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .site-header::after {
@@ -266,8 +233,7 @@ a:hover {
   text-shadow: 0 0 10px var(--primary-glow);
 }
 
-.nav-link i { font-size: 1rem; transition: transform .25s ease; }
-.nav-link:hover i, .nav-link.active i { transform: translateY(-2px) scale(1.06); }
+.nav-link i { font-size: 1rem; }
 
 .header-status {
   display: flex;
@@ -422,8 +388,6 @@ a:hover {
   position: relative;
   overflow: hidden;
 }
-.btn i { transition: transform .25s ease; }
-.btn:hover i { transform: translateX(-3px); }
 
 .btn::before {
   content: '';
@@ -599,11 +563,7 @@ a:hover {
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  animation: fadeInUp .65s ease both;
 }
-.feature-card:nth-child(2) { animation-delay: .08s; }
-.feature-card:nth-child(3) { animation-delay: .16s; }
-.feature-card:nth-child(4) { animation-delay: .24s; }
 
 .feature-card::before {
   content: '';

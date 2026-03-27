@@ -32,30 +32,34 @@
 .steps-hero h1 span { color: #0cf; }
 .steps-hero p { color: var(--text-secondary); font-size: 0.95rem; max-width: 600px; margin: 0.8rem auto 0; line-height: 1.7; }
 .scenarios-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
-.scenario-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.3s; position: relative; animation: scenarioCardIn 0.45s ease both; animation-delay: calc(var(--idx, 0) * 42ms); }
-.scenario-card:hover { border-color: #0cf; transform: translateY(-6px); box-shadow: 0 10px 34px rgba(0,200,255,0.16); }
-@keyframes scenarioCardIn {
-  from { opacity: 0; transform: translateY(14px) scale(0.986); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+.scenario-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.3s; position: relative; }
+.scenario-card:hover { border-color: #0cf; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(0,200,255,0.12); }
+.card-num-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 16px 0 14px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 900;
+  z-index: 2;
+  pointer-events: none;
+}
+.scenario-card .card-num-badge {
+  background: linear-gradient(135deg, rgba(0,200,255,0.22), rgba(0,255,65,0.14));
+  border-bottom: 1px solid rgba(0,200,255,0.3);
+  border-left: 1px solid rgba(0,200,255,0.3);
+  color: #8ddfff;
 }
 .scenario-header { padding: 1.2rem; display: flex; align-items: center; gap: 1rem; }
 .scenario-icon { width: 54px; height: 54px; border-radius: 14px; background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
 .scenario-info h3 { font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0 0 4px; }
-.scenario-id-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 78px;
-  border-radius: 20px;
-  border: 1px solid rgba(0,200,255,0.38);
-  background: linear-gradient(135deg, rgba(0,200,255,0.18), rgba(0,255,65,0.08));
-  color: #8defff;
-  font-size: 0.72rem;
-  font-family: 'Share Tech Mono', monospace;
-  padding: 2px 10px;
-  margin-bottom: 6px;
-  box-shadow: 0 0 12px rgba(0,200,255,0.14);
-}
+
 .scenario-info p { color: var(--text-muted); font-size: 0.8rem; margin: 0; line-height: 1.5; }
 .scenario-meta { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 1.2rem 0.8rem; }
 .scenario-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; font-family: 'Share Tech Mono', monospace; }
@@ -160,6 +164,7 @@
   .steps-wrapper { padding: 0 0.8rem 2rem; }
   .steps-hero { padding: 2rem 0.8rem 1.6rem; }
   .scenarios-grid { grid-template-columns: 1fr; gap: 0.9rem; }
+  .card-num-badge { width: 38px; height: 38px; font-size: 0.78rem; }
   .scenario-header { padding: 1rem; }
   .scenario-meta { padding: 0 1rem 0.7rem; }
   .steps-modal { margin-top: 0.2rem; border-radius: 14px; }
@@ -194,7 +199,7 @@
     <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
     <li><a href="steps.html" class="nav-link active"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
-    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> مقالات</a></li>
+    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> المقالات</a></li>
     
   </ul>
   <div class="hamburger"><span></span><span></span><span></span></div>
@@ -205,12 +210,12 @@
   <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
   <a href="steps.html" class="nav-link mobile-nav-link active"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
-  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> مقالات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
   
 </div>
   <div class="steps-hero">
     <div class="search-count-badge" style="margin-bottom:0.8rem;">
-      <i class="fas fa-list-ol"></i> <span id="scenarios-count">5</span> سيناريو تطبيقي
+      <i class="fas fa-list-ol"></i> <span id="scenarios-count">0</span> سيناريو تطبيقي
     </div>
     <h1>خطوات <span>التنفيذ</span></h1>
     <p>سيناريوهات اختبار اختراق كاملة خطوة بخطوة — من الاستطلاع حتى التقرير. تتبع تقدمك وانسخ الأوامر مباشرة.</p>
@@ -1359,22 +1364,6 @@ function filterByType(type, btn) {
   renderScenarios();
 }
 
-function resolvePreferredScenarioDifficulty(level) {
-  const skill = level || (typeof window.kaliGetSkillLevel === 'function' ? window.kaliGetSkillLevel() : null);
-  if (!skill) return null;
-  if (skill === 'beginner' || skill === 'unknown') return 'easy';
-  if (skill === 'intermediate') return 'medium';
-  if (skill === 'advanced') return 'hard';
-  return null;
-}
-
-function applyScenarioSkillFilter(level) {
-  const diff = resolvePreferredScenarioDifficulty(level);
-  if (!diff) return;
-  const btn = document.querySelector(`.scenario-filter-btn[data-diff="${diff}"]`);
-  if (btn) filterScenarios(diff, btn);
-}
-
 function renderScenarios() {
   const grid = document.getElementById('scenariosGrid');
   let list = getAllScenarios();
@@ -1399,11 +1388,11 @@ function renderScenarios() {
     const diffClass = s.difficulty === 'easy' ? 'badge-easy' : s.difficulty === 'medium' ? 'badge-medium' : 'badge-hard';
     const doneCount = doneSteps[s.id] ? doneSteps[s.id].size : 0;
     return `
-    <div class="scenario-card" style="--idx:${index};" onclick="openScenario(${s.id})">
+    <div class="scenario-card" onclick="openScenario(${s.id})">
+      <span class="card-num-badge">${index + 1}</span>
       <div class="scenario-header">
         <div class="scenario-icon">${s.icon}</div>
         <div class="scenario-info">
-          <span class="scenario-id-badge">سيناريو ${String(s.id).padStart(3, '0')}</span>
           <h3>${s.title}</h3>
           <p>${s.desc}</p>
         </div>
@@ -1634,11 +1623,6 @@ function showLessonFromTutorials(lessonId) {
 }
 
 renderScenarios();
-applyScenarioSkillFilter();
-
-document.addEventListener('kali:skillChanged', (event) => {
-  applyScenarioSkillFilter(event?.detail?.level || null);
-});
 </script>
 </body>
 </html>

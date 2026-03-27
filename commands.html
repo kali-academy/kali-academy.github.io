@@ -179,13 +179,9 @@
     <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
-    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> مقالات</a></li>
+    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> المقالات</a></li>
     
-  </ul>
-  <div class="header-status">
-    <div class="status-dot"></div>
-    <span><span id="hdr-count">0</span> CMD</span>
-  </div>
+  </ul><div class="status-dot"></div><span id="hdr-count">...</span> CMD</div>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
 <div class="mobile-menu">
@@ -194,7 +190,7 @@
   <a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a>
   <a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> خطوات التنفيذ</a>
   <a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a>
-  <a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> مقالات</a>
+  <a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
   
 </div>
 <!-- HERO -->
@@ -442,21 +438,6 @@ function setLevel(lv, el) {
   });
   if(el) el.classList.add(`active-${lv}`);
   renderPage();
-}
-
-function getPreferredLevel() {
-  const skill = typeof window.kaliGetSkillLevel === 'function' ? window.kaliGetSkillLevel() : null;
-  if (!skill) return null;
-  if (skill === 'unknown') return 'beginner';
-  if (skill === 'beginner' || skill === 'intermediate' || skill === 'advanced') return skill;
-  return null;
-}
-
-function applySkillPreference() {
-  const preferred = getPreferredLevel();
-  if (!preferred) return;
-  const btn = document.querySelector(`.level-btn[data-lv="${preferred}"]`);
-  if (btn) setLevel(preferred, btn);
 }
 
 function getFiltered() {
@@ -715,14 +696,6 @@ if(urlCat) {
   }, 100);
 }
 renderPage();
-applySkillPreference();
-
-document.addEventListener('kali:skillChanged', (event) => {
-  const nextLevel = event?.detail?.level === 'unknown' ? 'beginner' : event?.detail?.level;
-  if (!nextLevel) return;
-  const btn = document.querySelector(`.level-btn[data-lv="${nextLevel}"]`);
-  if (btn) setLevel(nextLevel, btn);
-});
 
 // Hamburger
 document.querySelector('.hamburger')?.addEventListener('click', () => {
