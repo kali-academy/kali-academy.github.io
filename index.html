@@ -195,9 +195,9 @@
     
     <p class="hero-desc">
       منصة تعليمية شاملة لتعلم نظام كالي لينكس والأمن السيبراني — تشمل أكثر من
-      <strong id="hero-count-commands" style="color: var(--primary);">500</strong> أمر موثق،
+      <strong id="hero-count-commands" style="color: var(--primary);">3500</strong> أمر موثق،
       <strong id="hero-count-lessons" style="color: var(--primary);">100</strong> درس،
-      و<strong id="hero-count-tools" style="color: var(--primary);">100</strong> أداة،
+      و<strong id="hero-count-tools" style="color: var(--primary);">500</strong> أداة،
       مع شروحات تفصيلية، خطوات تطبيقية، ودروس تفاعلية لكل المستويات.
     </p>
     
@@ -252,7 +252,7 @@
 
     <div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;">
       <a href="articles.html" class="article-main-btn"><i class="fas fa-newspaper"></i> صفحة مقالات</a>
-      <a href="learn-kali-linux-2026.html" class="article-main-btn" style="background:linear-gradient(90deg,#0cf,#00b8d9);color:#00151d;box-shadow:0 0 20px rgba(0,200,255,0.35);">
+      <a href="article-roadmap-cybersecurity-2026.html" class="article-main-btn" style="background:linear-gradient(90deg,#0cf,#00b8d9);color:#00151d;box-shadow:0 0 20px rgba(0,200,255,0.35);">
         <i class="fas fa-book-open"></i> اقرأ المقال الأول
       </a>
     </div>
@@ -264,7 +264,7 @@
     <div class="stats-grid">
       <div class="stat-card">
         <span class="stat-icon">💻</span>
-        <span id="stat-commands" class="stat-number" data-count="500" data-suffix="">500</span>
+        <span id="stat-commands" class="stat-number" data-count="3500" data-suffix="">3500</span>
         <span class="stat-label">أمر موثق</span>
       </div>
       <div class="stat-card">
@@ -274,17 +274,17 @@
       </div>
       <div class="stat-card">
         <span class="stat-icon">🔧</span>
-        <span id="stat-tools" class="stat-number" data-count="100" data-suffix="">100</span>
+        <span id="stat-tools" class="stat-number" data-count="500" data-suffix="">500</span>
         <span class="stat-label">أداة مشروحة</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">🎯</span>
-        <span id="stat-scenarios" class="stat-number" data-count="0" data-suffix="">0</span>
+        <span id="stat-scenarios" class="stat-number" data-count="5" data-suffix="">5</span>
         <span class="stat-label">سيناريو تطبيقي</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">🏆</span>
-        <span id="stat-tracks" class="stat-number" data-count="0" data-suffix="">0</span>
+        <span id="stat-tracks" class="stat-number" data-count="10" data-suffix="">10</span>
         <span class="stat-label">مسار تعليمي</span>
       </div>
     </div>
@@ -599,7 +599,7 @@
 <script>
 // ── حساب الأرقام الحقيقية ──
 function countUniqueCommands() {
-  const TARGET_COUNT = 500;
+  const TARGET_COUNT = Number.POSITIVE_INFINITY;
   const names = new Set();
 
   const partKeys = Object.keys(window)
@@ -610,7 +610,7 @@ function countUniqueCommands() {
     for (const command of window[key]) {
       if (!command || !command.name) continue;
       names.add(String(command.name).trim().toLowerCase());
-      if (names.size >= TARGET_COUNT) return TARGET_COUNT;
+      if (names.size >= TARGET_COUNT) return names.size;
     }
   }
 
@@ -695,7 +695,7 @@ async function calcRealStats() {
   const finalStats = {
     commands: commandsCount,
     lessons: totalLessons,
-    tools: toolsCount || 100,
+    tools: toolsCount || 500,
     scenarios: scenariosCount || (window.LESSON_STEPS || []).length,
     tracks: tracksCount,
   };

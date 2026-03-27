@@ -1786,6 +1786,21 @@ function setFilter(filter, el) {
   renderLessons();
 }
 
+function resolvePreferredTutorialFilter() {
+  const skill = typeof window.kaliGetSkillLevel === 'function' ? window.kaliGetSkillLevel() : null;
+  if (!skill) return null;
+  if (skill === 'unknown') return 'beginner';
+  if (skill === 'beginner' || skill === 'intermediate' || skill === 'advanced') return skill;
+  return null;
+}
+
+function applyTutorialSkillFilter(level) {
+  const target = level || resolvePreferredTutorialFilter();
+  if (!target) return;
+  const btn = Array.from(document.querySelectorAll('.tut-tab')).find(tab => (tab.getAttribute('onclick') || '').includes(`'${target}'`));
+  setFilter(target, btn || null);
+}
+
 function filterTutorials() {
   searchQ = document.getElementById('tutSearch').value;
   renderLessons();
@@ -1793,7 +1808,14 @@ function filterTutorials() {
 
 // INIT
 renderLessons();
+applyTutorialSkillFilter();
 renderLessonResumeBar();
+
+document.addEventListener('kali:skillChanged', (event) => {
+  const nextLevel = event?.detail?.level === 'unknown' ? 'beginner' : event?.detail?.level;
+  applyTutorialSkillFilter(nextLevel);
+});
+
 document.querySelector('.hamburger')?.addEventListener('click',()=>{
   document.querySelector('.mobile-menu')?.classList.toggle('open');
 });

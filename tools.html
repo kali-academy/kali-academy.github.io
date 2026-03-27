@@ -2446,18 +2446,47 @@ let activeCat = 'all';
 let searchTerm = '';
 let sortMode = 'default';
 let currentToolData = null;
+let activeSkillLevel = 'all';
 const RECENT_TOOLS_KEY = 'kaliacademy_recent_tools_v1';
+const SKILL_TAG_MAP = {
+  beginner: new Set(['linux', 'network', 'scanning', 'recon', 'web']),
+  intermediate: new Set(['linux', 'network', 'scanning', 'recon', 'web', 'wireless', 'password', 'forensics', 'ctf']),
+  advanced: null,
+  all: null,
+};
+
+function applyToolsSkillPreference(level) {
+  const skill = level || (typeof window.kaliGetSkillLevel === 'function' ? window.kaliGetSkillLevel() : null);
+  if (!skill) {
+    activeSkillLevel = 'all';
+    return;
+  }
+  if (skill === 'unknown') {
+    activeSkillLevel = 'beginner';
+    return;
+  }
+  activeSkillLevel = ['beginner', 'intermediate', 'advanced'].includes(skill) ? skill : 'all';
+}
+
+function matchSkillForTool(tool) {
+  const allowedTags = SKILL_TAG_MAP[activeSkillLevel];
+  if (!allowedTags) return true;
+  const tags = Array.isArray(tool.tags) ? tool.tags : [];
+  if (!tags.length) return true;
+  return tags.some(tag => allowedTags.has(tag));
+}
 
 function getFiltered() {
   return TOOLS.filter(t => {
     const matchCat = activeCat === 'all' || t.cat === activeCat || (t.tags && t.tags.includes(activeCat));
+    const matchSkill = matchSkillForTool(t);
     const q = searchTerm.toLowerCase();
     const matchSearch = !q ||
       t.name.toLowerCase().includes(q) ||
       t.short.toLowerCase().includes(q) ||
       (t.desc && t.desc.toLowerCase().includes(q)) ||
       (t.tags && t.tags.some(tag => tag.includes(q)));
-    return matchCat && matchSearch;
+    return matchCat && matchSkill && matchSearch;
   }).sort((a,b) => {
     if (sortMode === 'name') return a.name.localeCompare(b.name);
     if (sortMode === 'cat') return a.cat.localeCompare(b.cat);
@@ -2758,10 +2787,16 @@ const urlSearch = urlParams.get('q');
 if (urlSearch) { searchTerm = urlSearch; const si = document.getElementById('toolSearch'); if(si) si.value = urlSearch; }
 
 // Init
+applyToolsSkillPreference();
 document.getElementById('total-count').textContent = TOOLS.length.toLocaleString('ar');
 document.getElementById('tools-total-badge').textContent = TOOLS.length.toLocaleString('ar');
 renderTools();
 renderRecentTools();
+
+document.addEventListener('kali:skillChanged', (event) => {
+  applyToolsSkillPreference(event?.detail?.level || null);
+  renderTools();
+});
 </script>
 </body>
 </html>

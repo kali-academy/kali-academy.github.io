@@ -45,6 +45,34 @@ body {
   min-height: 100vh;
 }
 
+img,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background-color .25s ease, color .25s ease;
+}
+
+button:hover,
+a:hover {
+  transform: translateY(-1px);
+}
+
+.lessons-grid,
+.tools-grid,
+.scenarios-grid,
+.cmds-grid {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-dark); }

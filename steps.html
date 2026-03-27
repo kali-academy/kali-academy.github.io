@@ -1359,6 +1359,22 @@ function filterByType(type, btn) {
   renderScenarios();
 }
 
+function resolvePreferredScenarioDifficulty(level) {
+  const skill = level || (typeof window.kaliGetSkillLevel === 'function' ? window.kaliGetSkillLevel() : null);
+  if (!skill) return null;
+  if (skill === 'beginner' || skill === 'unknown') return 'easy';
+  if (skill === 'intermediate') return 'medium';
+  if (skill === 'advanced') return 'hard';
+  return null;
+}
+
+function applyScenarioSkillFilter(level) {
+  const diff = resolvePreferredScenarioDifficulty(level);
+  if (!diff) return;
+  const btn = document.querySelector(`.scenario-filter-btn[data-diff="${diff}"]`);
+  if (btn) filterScenarios(diff, btn);
+}
+
 function renderScenarios() {
   const grid = document.getElementById('scenariosGrid');
   let list = getAllScenarios();
@@ -1618,6 +1634,11 @@ function showLessonFromTutorials(lessonId) {
 }
 
 renderScenarios();
+applyScenarioSkillFilter();
+
+document.addEventListener('kali:skillChanged', (event) => {
+  applyScenarioSkillFilter(event?.detail?.level || null);
+});
 </script>
 </body>
 </html>
