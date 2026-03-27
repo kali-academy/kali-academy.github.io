@@ -309,6 +309,51 @@ const css = document.createElement('style');
     .reveal-on-scroll { opacity: 0; transform: translateY(18px) scale(.99); transition: opacity .55s ease, transform .55s ease; }
     .reveal-on-scroll.in-view { opacity: 1; transform: translateY(0) scale(1); }
 
+    .limited-offer-banner {
+      position: sticky;
+      top: calc(var(--header-height) + 42px);
+      z-index: 950;
+      margin: 0 auto 1rem;
+      width: min(1200px, calc(100% - 1rem));
+      border: 1px solid rgba(255, 200, 0, 0.45);
+      border-radius: 12px;
+      background: linear-gradient(90deg, rgba(255, 200, 0, 0.16), rgba(255, 85, 0, 0.15));
+      color: #ffe8b0;
+      box-shadow: 0 6px 24px rgba(255, 120, 0, 0.25);
+      padding: .62rem .9rem;
+      font-family: 'Cairo', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem;
+      animation: offerPulse 1.8s ease-in-out infinite;
+    }
+    .limited-offer-banner strong { color: #fff4d6; }
+    .limited-offer-banner .offer-text { font-size: .9rem; line-height: 1.6; }
+    .limited-offer-banner .offer-close {
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-radius: 8px;
+      padding: .25rem .55rem;
+      cursor: pointer;
+      font-size: .8rem;
+    }
+    .limited-offer-banner .offer-close:hover { background: rgba(255, 255, 255, 0.22); }
+    @keyframes offerPulse {
+      0%, 100% { box-shadow: 0 6px 24px rgba(255, 120, 0, 0.25); }
+      50% { box-shadow: 0 8px 30px rgba(255, 160, 0, 0.42); }
+    }
+
+    @media (max-width: 768px) {
+      .limited-offer-banner {
+        top: calc(var(--header-height) + 38px);
+        border-radius: 10px;
+        padding: .55rem .65rem;
+      }
+      .limited-offer-banner .offer-text { font-size: .8rem; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .reveal-on-scroll, .kali-skill-overlay, .kali-skill-card, .feature-card, .tool-card, .lesson-card, .scenario-card {
         animation: none !important;
@@ -520,6 +565,30 @@ const css = document.createElement('style');
     refreshSkillChip();
   }
 
+  function initLimitedOfferBanner() {
+    const OFFER_KEY = 'kali_offer_banner_closed';
+    try {
+      if (sessionStorage.getItem(OFFER_KEY) === '1') return;
+    } catch (_) {}
+
+    if (document.getElementById('limitedOfferBanner')) return;
+    const banner = document.createElement('div');
+    banner.id = 'limitedOfferBanner';
+    banner.className = 'limited-offer-banner';
+    banner.innerHTML = `
+      <div class="offer-text">🎁 <strong>الموقع مجاني لفترة محدودة</strong> — ابدأ التعلم الآن واستفد من كل الدروس، الأدوات، وخطوات التنفيذ قبل انتهاء العرض.</div>
+      <button type="button" class="offer-close" aria-label="إغلاق التنبيه">إغلاق</button>
+    `;
+
+    banner.querySelector('.offer-close')?.addEventListener('click', () => {
+      banner.remove();
+      try { sessionStorage.setItem(OFFER_KEY, '1'); } catch (_) {}
+    });
+
+    const host = document.querySelector('.main-wrapper') || document.body;
+    host.insertAdjacentElement('afterbegin', banner);
+  }
+
   function initScrollReveal() {
     if ('IntersectionObserver' in window === false) return;
     const selector = '.hero, .section, .stats-section, .feature-card, .stat-card, .lesson-card, .scenario-card, .tool-card, .cmd-card, .articles-spotlight-card, .article-card';
@@ -600,6 +669,7 @@ const css = document.createElement('style');
     injectPerformanceHints();
     fastNav();
     initSkillSystem();
+    initLimitedOfferBanner();
     optimizeImages();
     initScrollReveal();
   }

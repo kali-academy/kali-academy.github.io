@@ -197,7 +197,7 @@
       منصة تعليمية شاملة لتعلم نظام كالي لينكس والأمن السيبراني — تشمل أكثر من
       <strong id="hero-count-commands" style="color: var(--primary);">3500</strong> أمر موثق،
       <strong id="hero-count-lessons" style="color: var(--primary);">100</strong> درس،
-      و<strong id="hero-count-tools" style="color: var(--primary);">500</strong> أداة،
+      و<strong id="hero-count-tools" style="color: var(--primary);">100</strong> أداة،
       مع شروحات تفصيلية، خطوات تطبيقية، ودروس تفاعلية لكل المستويات.
     </p>
     
@@ -242,18 +242,21 @@
     </span>
 
     <h2 style="font-family:'Orbitron', sans-serif;font-size:2rem;margin:15px 0;color:#ffffff;">
-      أول مقال: كيف تبدأ في تعلم الأمن السيبراني
+      مكتبة مقالات احترافية: البداية + مسار SOC
     </h2>
 
     <p style="color:#ccc;max-width:760px;margin:0 auto 24px;line-height:1.9;font-size:1rem;">
-      دليل عملي مرتب للمبتدئين يشرح لك خارطة طريق واضحة للبدء في الأمن السيبراني: المهارات الأساسية،
-      الأدوات، خطة تعلم أسبوعية، وكيف تبني مختبرك بطريقة آمنة وقانونية.
+      الآن لديك مقالان كاملان: الأول لبداية قوية من الصفر، والثاني احترافي لمسار SOC والتحليل الدفاعي
+      مع خطة تنفيذ واقعية تساعدك على بناء مهارة قابلة للتوظيف.
     </p>
 
     <div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;">
       <a href="articles.html" class="article-main-btn"><i class="fas fa-newspaper"></i> صفحة مقالات</a>
       <a href="article-roadmap-cybersecurity-2026.html" class="article-main-btn" style="background:linear-gradient(90deg,#0cf,#00b8d9);color:#00151d;box-shadow:0 0 20px rgba(0,200,255,0.35);">
         <i class="fas fa-book-open"></i> اقرأ المقال الأول
+      </a>
+      <a href="article-soc-blue-team-roadmap-2026.html" class="article-main-btn" style="background:linear-gradient(90deg,#ff9f1a,#ff6f00);color:#1a0b00;box-shadow:0 0 20px rgba(255,140,0,0.35);">
+        <i class="fas fa-user-shield"></i> اقرأ المقال الثاني
       </a>
     </div>
   </div>
@@ -274,7 +277,7 @@
       </div>
       <div class="stat-card">
         <span class="stat-icon">🔧</span>
-        <span id="stat-tools" class="stat-number" data-count="500" data-suffix="">500</span>
+        <span id="stat-tools" class="stat-number" data-count="100" data-suffix="">100</span>
         <span class="stat-label">أداة مشروحة</span>
       </div>
       <div class="stat-card">
@@ -695,7 +698,7 @@ async function calcRealStats() {
   const finalStats = {
     commands: commandsCount,
     lessons: totalLessons,
-    tools: toolsCount || 500,
+    tools: toolsCount || 100,
     scenarios: scenariosCount || (window.LESSON_STEPS || []).length,
     tracks: tracksCount,
   };
