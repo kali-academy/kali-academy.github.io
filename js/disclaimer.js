@@ -1,26 +1,22 @@
 /* =====================================================
    KaliAcademy - Disclaimer Popup
-   يظهر عند أول زيارة أو بعد 30 يوم من القبول
+   يظهر دائماً عند كل زيارة جديدة للموقع
    ===================================================== */
 (function () {
   'use strict';
 
-  const STORAGE_KEY = 'kali_disc_accepted';
-  const EXPIRY_DAYS = 30;
+  const SESSION_KEY = 'kali_disc_session';
 
-  function needsDisclaimer() {
+  // يظهر دائماً لكل زيارة جديدة — فقط يُخفى أثناء نفس الجلسة (التاب)
+  function alreadyAcceptedThisSession() {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (!saved) return true;
-      const { ts } = JSON.parse(saved);
-      const daysSince = (Date.now() - ts) / 86400000;
-      return daysSince > EXPIRY_DAYS;
+      return sessionStorage.getItem(SESSION_KEY) === '1';
     } catch {
-      return true;
+      return false;
     }
   }
 
-  if (!needsDisclaimer()) return;
+  if (alreadyAcceptedThisSession()) return;
 
   /* -------- Styles -------- */
   const style = document.createElement('style');
@@ -246,7 +242,7 @@
     const cb = document.getElementById('disc-checkbox');
     if (!cb.checked) return;
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ts: Date.now(), accepted: true }));
+      sessionStorage.setItem(SESSION_KEY, '1');
     } catch (e) { /* ignore */ }
     const overlay = document.getElementById('kali-disc-overlay');
     overlay.style.animation = 'disc-fadein .3s ease reverse forwards';
