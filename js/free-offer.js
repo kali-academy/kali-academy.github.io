@@ -1,6 +1,6 @@
 // ============================================================
-// FREE OFFER BANNER - تنبيه أن الموقع مجاني لفترة محدودة
-// يظهر بعد قبول إخلاء المسؤولية
+// FREE OFFER BADGE - تنبيه أن الموقع مجاني لفترة محدودة
+// شارة صغيرة أنيقة في الأسفل لا تزعج الزوار
 // ============================================================
 
 (function() {
@@ -13,263 +13,200 @@
 
   const style = document.createElement('style');
   style.textContent = `
-    /* ====== FREE OFFER FLOATING BANNER ====== */
-    #kali-free-offer {
+    /* ====== FREE OFFER FLOATING BADGE ====== */
+    #kali-free-badge {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 9998;
-      max-width: 380px;
-      width: calc(100% - 48px);
-      border-radius: 18px;
-      overflow: hidden;
+      bottom: 20px;
+      left: 20px;
+      z-index: 9500;
+      max-width: 300px;
+      background: linear-gradient(135deg, #020b14 0%, #0a1e36 100%);
+      border: 1px solid rgba(0,255,65,0.3);
+      border-radius: 16px;
+      padding: 14px 16px;
       font-family: 'Cairo', sans-serif;
-      animation: freeOfferSlideIn 0.6s cubic-bezier(0.16,1,0.3,1) 2s both;
-      box-shadow: 0 10px 50px rgba(0,255,65,0.2), 0 0 0 1px rgba(0,255,65,0.15);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(0,255,65,0.08);
+      animation: freeBadgeIn 0.6s cubic-bezier(0.34,1.56,0.64,1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
-    @keyframes freeOfferSlideIn {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+    @keyframes freeBadgeIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.9); }
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
-    @keyframes freeOfferSlideOut {
+    @keyframes freeBadgeOut {
       from { opacity: 1; transform: translateY(0) scale(1); }
-      to { opacity: 0; transform: translateY(30px) scale(0.9); }
+      to { opacity: 0; transform: translateY(20px) scale(0.85); }
     }
 
-    #kali-free-offer .fo-glow {
+    /* خط متوهج علوي */
+    #kali-free-badge::before {
+      content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0,255,65,0.08), rgba(0,200,255,0.05), rgba(255,200,0,0.03));
-      pointer-events: none;
+      top: 0; left: 20px; right: 20px;
+      height: 2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, #00ff41, #ffc800, #00ff41, transparent);
+      animation: badgeGlow 3s linear infinite;
+      background-size: 200% 100%;
     }
-
-    #kali-free-offer .fo-border-anim {
-      position: absolute;
-      inset: -1px;
-      border-radius: 18px;
-      background: linear-gradient(90deg, #00ff41, #0cf, #ffcc00, #00ff41);
-      background-size: 300% 100%;
-      animation: freeBorderShift 4s linear infinite;
-      z-index: -1;
-    }
-    @keyframes freeBorderShift {
+    @keyframes badgeGlow {
       0% { background-position: 0% 0; }
-      100% { background-position: 300% 0; }
+      100% { background-position: 200% 0; }
     }
 
-    #kali-free-offer .fo-inner {
-      position: relative;
-      background: linear-gradient(145deg, #0a1a2e, #041628, #020b14);
-      border-radius: 17px;
-      padding: 20px;
-      margin: 1.5px;
-    }
-
-    #kali-free-offer .fo-close {
+    #kali-free-badge .fb-close {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,50,50,0.08);
-      color: rgba(255,255,255,0.4);
-      font-size: 0.72rem;
+      top: 6px;
+      left: 8px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.25);
       cursor: pointer;
+      font-size: 0.7rem;
+      padding: 3px 6px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      line-height: 1;
+    }
+    #kali-free-badge .fb-close:hover {
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,50,50,0.15);
+    }
+
+    #kali-free-badge .fb-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(0,255,65,0.7);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    #kali-free-badge .fb-tag .fb-dot {
+      width: 6px;
+      height: 6px;
+      background: #00ff41;
+      border-radius: 50%;
+      animation: fbDotPulse 2s ease-in-out infinite;
+      box-shadow: 0 0 6px rgba(0,255,65,0.6);
+    }
+    @keyframes fbDotPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    #kali-free-badge .fb-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+    #kali-free-badge .fb-title .fb-green {
+      color: #00ff41;
+    }
+
+    #kali-free-badge .fb-timer {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      color: rgba(255,200,0,0.75);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #kali-free-badge .fb-cta {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
-      z-index: 2;
-    }
-    #kali-free-offer .fo-close:hover {
-      background: rgba(255,50,50,0.2);
-      color: #ff6666;
-      border-color: rgba(255,50,50,0.3);
-    }
-
-    #kali-free-offer .fo-tag {
-      display: inline-flex;
-      align-items: center;
       gap: 6px;
-      background: linear-gradient(135deg, rgba(255,200,0,0.15), rgba(255,150,0,0.08));
-      border: 1px solid rgba(255,200,0,0.3);
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #ffcc00;
-      font-family: 'Share Tech Mono', monospace;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      animation: tagPulse 2s ease-in-out infinite;
-    }
-    @keyframes tagPulse {
-      0%, 100% { box-shadow: 0 0 8px rgba(255,200,0,0.15); }
-      50% { box-shadow: 0 0 18px rgba(255,200,0,0.3); }
-    }
-
-    #kali-free-offer .fo-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      color: #fff;
-      margin: 0 0 8px;
-      line-height: 1.6;
-    }
-    #kali-free-offer .fo-title .fo-highlight {
-      background: linear-gradient(135deg, #00ff41, #0cf);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    #kali-free-offer .fo-desc {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.6);
-      line-height: 1.7;
-      margin: 0 0 16px;
-    }
-
-    #kali-free-offer .fo-features {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-    #kali-free-offer .fo-feat {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: rgba(0,255,65,0.06);
-      border: 1px solid rgba(0,255,65,0.15);
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 0.7rem;
-      color: rgba(0,255,65,0.8);
-    }
-
-    #kali-free-offer .fo-cta {
-      display: block;
       width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
+      padding: 8px 14px;
+      border-radius: 10px;
       background: linear-gradient(135deg, #00ff41, #00cc33);
       color: #000;
-      font-family: 'Cairo', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.8rem;
       font-weight: 800;
-      cursor: pointer;
-      transition: all 0.3s;
-      text-align: center;
       text-decoration: none;
+      font-family: 'Cairo', sans-serif;
+      transition: all 0.25s;
+      border: none;
+      cursor: pointer;
     }
-    #kali-free-offer .fo-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0,255,65,0.35);
-    }
-
-    #kali-free-offer .fo-timer {
-      text-align: center;
-      margin-top: 10px;
-      font-size: 0.72rem;
-      color: rgba(255,200,0,0.7);
-      font-family: 'Share Tech Mono', monospace;
+    #kali-free-badge .fb-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(0,255,65,0.4);
+      background: linear-gradient(135deg, #33ff66, #00ff41);
     }
 
     @media (max-width: 480px) {
-      #kali-free-offer {
+      #kali-free-badge {
         bottom: 12px;
+        left: 12px;
         right: 12px;
-        max-width: calc(100% - 24px);
-        width: calc(100% - 24px);
-      }
-      #kali-free-offer .fo-inner {
-        padding: 16px;
+        max-width: none;
       }
     }
   `;
   document.head.appendChild(style);
 
-  function showBanner() {
-    const banner = document.createElement('div');
-    banner.id = 'kali-free-offer';
-    banner.innerHTML = `
-      <div class="fo-border-anim"></div>
-      <div class="fo-inner">
-        <div class="fo-glow"></div>
-        <button class="fo-close" onclick="closeFreeBanner()" title="إغلاق">&#10005;</button>
-
-        <div class="fo-tag">&#9889; LIMITED FREE ACCESS</div>
-
-        <h3 class="fo-title">
-          المنصة <span class="fo-highlight">مجانية بالكامل</span> لفترة محدودة!
-        </h3>
-
-        <p class="fo-desc">
-          استغل الفرصة الآن واستفد من جميع المحتويات والدروس والأدوات مجاناً قبل إطلاق الاشتراكات المدفوعة.
-        </p>
-
-        <div class="fo-features">
-          <span class="fo-feat">&#10003; 500+ أمر</span>
-          <span class="fo-feat">&#10003; 100 درس</span>
-          <span class="fo-feat">&#10003; 100 أداة</span>
-          <span class="fo-feat">&#10003; خطوات تنفيذ</span>
-          <span class="fo-feat">&#10003; بدون تسجيل</span>
-        </div>
-
-        <a href="tutorials.html" class="fo-cta">
-          &#128640; ابدأ التعلم مجاناً الآن
-        </a>
-
-        <div class="fo-timer" id="free-offer-timer"></div>
-      </div>
+  function showBadge() {
+    const badge = document.createElement('div');
+    badge.id = 'kali-free-badge';
+    badge.innerHTML = `
+      <button class="fb-close" onclick="closeFreeBadge()" title="\u0625\u063a\u0644\u0627\u0642">&#10005;</button>
+      <div class="fb-tag"><span class="fb-dot"></span> FREE ACCESS</div>
+      <div class="fb-title">\u0627\u0644\u0645\u0646\u0635\u0629 <span class="fb-green">\u0645\u062c\u0627\u0646\u064a\u0629</span> \u0644\u0641\u062a\u0631\u0629 \u0645\u062d\u062f\u0648\u062f\u0629!</div>
+      <div class="fb-timer" id="free-badge-timer"></div>
+      <a href="tutorials.html" class="fb-cta"><i class="fas fa-rocket" style="font-size:0.75rem;"></i> \u0627\u0628\u062f\u0623 \u0627\u0644\u0622\u0646 \u0645\u062c\u0627\u0646\u0627\u064b</a>
     `;
-    document.body.appendChild(banner);
+    document.body.appendChild(badge);
 
-    // عدّاد تنازلي وهمي ينتهي بنهاية الشهر الحالي
+    // عدّاد تنازلي
     function updateTimer() {
-      const now = new Date();
-      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
-      const diff = endOfMonth - now;
+      var now = new Date();
+      var endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+      var diff = endOfMonth - now;
       if (diff <= 0) return;
 
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-      const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+      var days = Math.floor(diff / (1000*60*60*24));
+      var hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
 
-      const el = document.getElementById('free-offer-timer');
+      var el = document.getElementById('free-badge-timer');
       if (el) {
-        el.textContent = '\u23F3 ينتهي العرض خلال: ' + days + ' يوم ' + hours + ' ساعة ' + mins + ' دقيقة';
+        el.textContent = '\u23F3 \u064A\u0646\u062A\u0647\u064A \u062E\u0644\u0627\u0644 ' + days + ' \u064A\u0648\u0645 \u0648 ' + hours + ' \u0633\u0627\u0639\u0629';
       }
     }
     updateTimer();
     setInterval(updateTimer, 60000);
   }
 
-  window.closeFreeBanner = function() {
-    const el = document.getElementById('kali-free-offer');
+  window.closeFreeBadge = function() {
+    var el = document.getElementById('kali-free-badge');
     if (el) {
-      el.style.animation = 'freeOfferSlideOut 0.3s ease forwards';
-      setTimeout(() => el.remove(), 300);
+      el.style.animation = 'freeBadgeOut 0.3s ease forwards';
+      setTimeout(function() { el.remove(); }, 300);
     }
     sessionStorage.setItem(SESSION_KEY, '1');
   };
 
   // تأخير الظهور حتى يقبل المستخدم إخلاء المسؤولية
   function waitAndShow() {
-    const check = setInterval(() => {
+    var check = setInterval(function() {
       if (!document.getElementById('kali-disc-overlay')) {
         clearInterval(check);
-        setTimeout(showBanner, 1500);
+        setTimeout(showBadge, 1500);
       }
     }, 500);
-    // fallback: show after 30s regardless
-    setTimeout(() => {
+    // fallback بعد 30 ثانية
+    setTimeout(function() {
       clearInterval(check);
-      if (!document.getElementById('kali-free-offer')) {
-        showBanner();
+      if (!document.getElementById('kali-free-badge')) {
+        showBadge();
       }
     }, 30000);
   }

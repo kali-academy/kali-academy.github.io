@@ -179,90 +179,114 @@
       </div>
     </div>
   </section>
-<!-- FEATURED ARTICLE CARD -->
-<section class="section" style="padding-top:0;">
-  <div class="featured-guide-card" style="
-    max-width:1100px;
-    margin:50px auto;
-    background:linear-gradient(135deg, rgba(0,255,65,0.08), rgba(0,0,0,0.8));
-    border:1px solid rgba(0,255,65,0.35);
-    border-radius:18px;
-    padding:45px;
-    box-shadow:0 0 40px rgba(0,255,65,0.2);
-    position:relative;
-    overflow:hidden;
-    text-align:center;
+
+  <!-- ARTICLES MARQUEE BAR -->
+  <div class="articles-bar" style="
+    max-width: 1200px;
+    margin: 24px auto 0;
+    padding: 0 1.5rem;
   ">
-
     <div style="
-      position:absolute;
-      top:-50px;
-      right:-50px;
-      width:200px;
-      height:200px;
-      background:radial-gradient(circle, rgba(0,255,65,0.2), transparent 70%);
-      transform:rotate(25deg);
-    "></div>
-
-    <span style="
-      display:inline-block;
-      color:#00ff41;
-      font-size:14px;
-      letter-spacing:3px;
-      font-family:'Share Tech Mono', monospace;
-      margin-bottom:15px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(90deg, rgba(0,255,65,0.04), rgba(4,22,40,0.9), rgba(255,100,0,0.04));
+      border: 1px solid rgba(0,255,65,0.15);
+      border-radius: 12px;
+      padding: 10px 18px;
+      overflow: hidden;
     ">
-      🔥 FEATURED GUIDE 2026
-    </span>
+      <span style="
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.6rem;
+        color: #00ff41;
+        letter-spacing: 2px;
+        white-space: nowrap;
+        padding: 3px 10px;
+        border: 1px solid rgba(0,255,65,0.3);
+        border-radius: 6px;
+        background: rgba(0,255,65,0.08);
+        flex-shrink: 0;
+      "><i class="fas fa-newspaper" style="margin-left:4px;"></i> ARTICLES</span>
 
-    <h2 style="
-      font-family:'Orbitron', sans-serif;
-      font-size:2rem;
-      margin:15px 0;
-      color:#ffffff;
-    ">
-      🚀 تعلم Kali Linux من الصفر إلى الاحتراف
-    </h2>
+      <div style="
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+        min-width: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      ">
+        <a href="article-roadmap-cybersecurity-2026.html" style="
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 14px;
+          border-radius: 8px;
+          background: rgba(0,255,65,0.06);
+          border: 1px solid rgba(0,255,65,0.18);
+          text-decoration: none;
+          white-space: nowrap;
+          transition: all 0.25s;
+          flex-shrink: 0;
+        " onmouseover="this.style.borderColor='rgba(0,255,65,0.5)';this.style.background='rgba(0,255,65,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(0,255,65,0.18)';this.style.background='rgba(0,255,65,0.06)';this.style.transform='none'">
+          <i class="fas fa-shield-alt" style="color:#00ff41;font-size:0.8rem;"></i>
+          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">كيف تبدأ في تعلم الأمن السيبراني</span>
+          <i class="fas fa-arrow-left" style="color:rgba(0,255,65,0.4);font-size:0.7rem;"></i>
+        </a>
 
-    <p style="
-      color:#ccc;
-      max-width:750px;
-      margin:0 auto 30px;
-      line-height:1.9;
-      font-size:1rem;
-    ">
-      دليل احترافي شامل لتعلم Kali Linux والأمن السيبراني خطوة بخطوة،
-      يشمل التثبيت، أهم الأوامر، أدوات الاختراق الأخلاقي،
-      وخطة احتراف عملية لمدة 90 يوم.
-    </p>
+        <a href="article-soc-blue-team-roadmap-2026.html" style="
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 14px;
+          border-radius: 8px;
+          background: rgba(0,170,255,0.06);
+          border: 1px solid rgba(0,170,255,0.18);
+          text-decoration: none;
+          white-space: nowrap;
+          transition: all 0.25s;
+          flex-shrink: 0;
+        " onmouseover="this.style.borderColor='rgba(0,170,255,0.5)';this.style.background='rgba(0,170,255,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(0,170,255,0.18)';this.style.background='rgba(0,170,255,0.06)';this.style.transform='none'">
+          <i class="fas fa-user-shield" style="color:#00aaff;font-size:0.8rem;"></i>
+          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">كيف تصبح محلل SOC محترف</span>
+          <i class="fas fa-arrow-left" style="color:rgba(0,170,255,0.4);font-size:0.7rem;"></i>
+        </a>
 
-    <a href="article-roadmap-cybersecurity-2026.html" class="featured-guide-link" style="
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:16px 40px;
-      background:linear-gradient(135deg,#00ff41,#00cc33,#00aa28);
-      color:#000;
-      font-weight:800;
-      border-radius:14px;
-      text-decoration:none;
-      font-family:'Cairo', sans-serif;
-      font-size:1.05rem;
-      transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-      box-shadow:0 0 20px rgba(0,255,65,0.4), 0 4px 15px rgba(0,0,0,0.3);
-      position:relative;
-      overflow:hidden;
-      letter-spacing:0.5px;
-    "
-    onmouseover="this.style.boxShadow='0 0 35px rgba(0,255,65,0.7), 0 8px 25px rgba(0,0,0,0.4)';this.style.transform='translateY(-3px) scale(1.03)'"
-    onmouseout="this.style.boxShadow='0 0 20px rgba(0,255,65,0.4), 0 4px 15px rgba(0,0,0,0.3)';this.style.transform='none'">
-      <i class="fas fa-shield-alt" style="font-size:1.1rem;"></i>
-      كيف تبدأ في تعلم الأمن السيبراني
-      <i class="fas fa-arrow-left" style="font-size:0.85rem;"></i>
-    </a>
+        <a href="article-top-10-ethical-hacking-tools-2026.html" style="
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 14px;
+          border-radius: 8px;
+          background: rgba(255,100,0,0.06);
+          border: 1px solid rgba(255,100,0,0.18);
+          text-decoration: none;
+          white-space: nowrap;
+          transition: all 0.25s;
+          flex-shrink: 0;
+        " onmouseover="this.style.borderColor='rgba(255,100,0,0.5)';this.style.background='rgba(255,100,0,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(255,100,0,0.18)';this.style.background='rgba(255,100,0,0.06)';this.style.transform='none'">
+          <i class="fas fa-tools" style="color:#ff6600;font-size:0.8rem;"></i>
+          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">أفضل 10 أدوات للهاكر الأخلاقي</span>
+          <i class="fas fa-arrow-left" style="color:rgba(255,100,0,0.4);font-size:0.7rem;"></i>
+        </a>
+      </div>
 
+      <a href="articles.html" style="
+        font-family: 'Cairo', sans-serif;
+        font-size: 0.72rem;
+        color: rgba(255,255,255,0.4);
+        text-decoration: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        transition: color 0.2s;
+      " onmouseover="this.style.color='rgba(0,255,65,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+        الكل <i class="fas fa-chevron-left" style="font-size:0.6rem;"></i>
+      </a>
+    </div>
   </div>
-</section>
   
   <!-- STATS -->
   <section class="stats-section">

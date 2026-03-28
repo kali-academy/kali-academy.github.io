@@ -51,4 +51,18 @@
 <changefreq>monthly</changefreq>
 </url>
 
+<url>
+<loc>https://kali-academy.github.io/article-soc-blue-team-roadmap-2026.html</loc>
+<lastmod>2026-03-27</lastmod>
+<priority>0.7</priority>
+<changefreq>monthly</changefreq>
+</url>
+
+<url>
+<loc>https://kali-academy.github.io/article-top-10-ethical-hacking-tools-2026.html</loc>
+<lastmod>2026-03-28</lastmod>
+<priority>0.7</priority>
+<changefreq>monthly</changefreq>
+</url>
+
 </urlset>

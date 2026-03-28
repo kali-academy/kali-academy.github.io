@@ -21,14 +21,24 @@
 .articles-hero { padding: 3rem 2rem 2rem; text-align: center; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(0,255,65,0.06), transparent); }
 .articles-hero h1 { font-family: 'Cairo', sans-serif; font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 0.7rem; }
 .articles-hero p { color: var(--text-muted); max-width: 720px; margin: 0 auto; line-height: 1.8; font-family: 'Cairo', sans-serif; }
-.article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; margin-top: 2rem; }
-.article-card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--bg-card); transition: .25s; text-decoration: none; color: inherit; }
-.article-card:hover { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,255,65,.12); }
-.article-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-.article-card-body { padding: 1rem 1.1rem 1.2rem; }
-.article-card-body h2 { font-size: 1rem; margin: 0 0 .6rem; line-height: 1.7; font-family: 'Cairo', sans-serif; }
-.article-card-body p { color: var(--text-muted); font-size: .9rem; line-height: 1.75; margin: 0 0 .9rem; font-family: 'Cairo', sans-serif; }
-.article-meta { display: flex; justify-content: space-between; font-size: .78rem; color: var(--text-muted); font-family: 'Cairo', sans-serif; }
+.articles-hero .articles-count { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: rgba(0,255,65,0.6); background: rgba(0,255,65,0.06); border: 1px solid rgba(0,255,65,0.15); padding: 4px 14px; border-radius: 20px; }
+.article-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.article-card { border: 1px solid var(--border); border-radius: 16px; overflow: hidden; background: var(--bg-card); transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); text-decoration: none; color: inherit; position: relative; }
+.article-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.article-card.card-green:hover { border-color: #00ff41; box-shadow: 0 12px 32px rgba(0,255,65,0.12); }
+.article-card.card-blue:hover { border-color: #00aaff; box-shadow: 0 12px 32px rgba(0,170,255,0.12); }
+.article-card.card-orange:hover { border-color: #ff6600; box-shadow: 0 12px 32px rgba(255,100,0,0.12); }
+.article-card-thumb { width: 100%; height: 180px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.article-card-thumb .thumb-icon { font-size: 3rem; position: relative; z-index: 1; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3)); }
+.article-card-thumb .thumb-tag { position: absolute; top: 12px; right: 12px; font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; padding: 3px 10px; border-radius: 6px; z-index: 2; }
+.article-card-body { padding: 1.1rem 1.2rem 1.3rem; }
+.article-card-body h2 { font-size: 1.05rem; margin: 0 0 .5rem; line-height: 1.6; font-family: 'Cairo', sans-serif; font-weight: 700; color: #fff; }
+.article-card-body p { color: var(--text-muted); font-size: .85rem; line-height: 1.75; margin: 0 0 .9rem; font-family: 'Cairo', sans-serif; }
+.article-meta { display: flex; justify-content: space-between; align-items: center; font-size: .75rem; color: var(--text-muted); font-family: 'Cairo', sans-serif; padding-top: 0.7rem; border-top: 1px solid rgba(255,255,255,0.06); }
+.article-meta .read-more { font-weight: 700; transition: color 0.2s; }
+.card-green .read-more { color: #00ff41; }
+.card-blue .read-more { color: #00aaff; }
+.card-orange .read-more { color: #ff6600; }
 </style>
 </head>
 <body class="grid-bg">
@@ -67,17 +77,54 @@
   <section class="articles-hero">
     <h1>المقالات وخرائط الطريق</h1>
     <p>مقالات عملية في الأمن السيبراني، خرائط طريق للمبتدئين، وإرشادات مختارة من فريق KaliAcademy.</p>
+    <div class="articles-count"><i class="fas fa-file-alt"></i> 3 مقالات متاحة</div>
   </section>
 
   <section class="article-grid">
-    <a class="article-card" href="article-roadmap-cybersecurity-2026.html">
-      <img src="images/logo.png" alt="Cybersecurity Roadmap">
+    <!-- المقال الأول -->
+    <a class="article-card card-green" href="article-roadmap-cybersecurity-2026.html">
+      <div class="article-card-thumb" style="background: linear-gradient(135deg, #020b14, rgba(0,255,65,0.12));">
+        <span class="thumb-icon"><i class="fas fa-shield-alt" style="color:#00ff41;"></i></span>
+        <span class="thumb-tag" style="background: rgba(0,255,65,0.12); border: 1px solid rgba(0,255,65,0.3); color: #00ff41;">ROADMAP</span>
+      </div>
       <div class="article-card-body">
-        <h2>كيف تبدأ في تعلم الأمن السيبراني من الصفر في 2026؟ 🔐</h2>
+        <h2>كيف تبدأ في تعلم الأمن السيبراني من الصفر في 2026؟</h2>
         <p>خريطة طريق كاملة للمبتدئين تشمل الشبكات، لينكس، Kali Linux، التدريب العملي، والشهادات.</p>
         <div class="article-meta">
-          <span>بقلم KALI ACADEMY</span>
-          <span>2026</span>
+          <span><i class="fas fa-user-edit"></i> KALI ACADEMY</span>
+          <span class="read-more">اقرأ المقال <i class="fas fa-arrow-left"></i></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- المقال الثاني -->
+    <a class="article-card card-blue" href="article-soc-blue-team-roadmap-2026.html">
+      <div class="article-card-thumb" style="background: linear-gradient(135deg, #020b14, rgba(0,170,255,0.12));">
+        <span class="thumb-icon"><i class="fas fa-user-shield" style="color:#00aaff;"></i></span>
+        <span class="thumb-tag" style="background: rgba(0,170,255,0.12); border: 1px solid rgba(0,170,255,0.3); color: #00aaff;">BLUE TEAM</span>
+      </div>
+      <div class="article-card-body">
+        <h2>كيف تصبح محلل SOC محترف في 2026؟</h2>
+        <p>خطة تطبيقية واضحة لبناء مهارات المراقبة الأمنية والتحليل والاستجابة للحوادث خلال 90 يوم.</p>
+        <div class="article-meta">
+          <span><i class="fas fa-user-edit"></i> KALI ACADEMY</span>
+          <span class="read-more">اقرأ المقال <i class="fas fa-arrow-left"></i></span>
+        </div>
+      </div>
+    </a>
+
+    <!-- المقال الثالث -->
+    <a class="article-card card-orange" href="article-top-10-ethical-hacking-tools-2026.html">
+      <div class="article-card-thumb" style="background: linear-gradient(135deg, #020b14, rgba(255,100,0,0.12));">
+        <span class="thumb-icon"><i class="fas fa-tools" style="color:#ff6600;"></i></span>
+        <span class="thumb-tag" style="background: rgba(255,100,0,0.12); border: 1px solid rgba(255,100,0,0.3); color: #ff6600;">TOP 10 TOOLS</span>
+      </div>
+      <div class="article-card-body">
+        <h2>أفضل 10 أدوات للهاكر الأخلاقي في 2026</h2>
+        <p>دليل شامل لأقوى أدوات اختبار الاختراق: Nmap, Metasploit, Burp Suite, Wireshark وغيرها مع شرح عملي.</p>
+        <div class="article-meta">
+          <span><i class="fas fa-user-edit"></i> KALI ACADEMY</span>
+          <span class="read-more">اقرأ المقال <i class="fas fa-arrow-left"></i></span>
         </div>
       </div>
     </a>
