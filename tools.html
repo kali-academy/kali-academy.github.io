@@ -217,10 +217,7 @@
 
 /* Install block */
 .install-box { background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2); border-radius: 10px; padding: 1rem; }
-.install-cmd-row { display: flex; align-items: center; gap: 0.6rem; margin: 4px 0; }
-.install-cmd { font-family: 'Share Tech Mono', monospace; color: #00ff41; font-size: 0.85rem; flex: 1; }
-.copy-install-btn { flex-shrink: 0; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.3); color: #00ff41; padding: 2px 8px; border-radius: 5px; cursor: pointer; font-size: 0.7rem; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 3px; }
-.copy-install-btn:hover { background: rgba(0,255,65,0.25); }
+.install-cmd { font-family: 'Share Tech Mono', monospace; color: #00ff41; font-size: 0.85rem; margin: 4px 0; }
 
 /* Tips/Warnings */
 .modal-tip { background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2); border-right: 3px solid #00ff41; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 0.6rem; color: #88ffaa; font-size: 0.82rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
@@ -2579,7 +2576,7 @@ function openTool(id) {
     html += `<div class="modal-section">
       <div class="modal-section-title"><i class="fas fa-download"></i> التثبيت</div>
       <div class="install-box">
-        ${t.install.split('\n').map(line => `<div class="install-cmd-row"><button class="copy-install-btn" onclick="copyCmd('${escJ(line)}',this)"><i class='fas fa-copy'></i> نسخ</button><span class="install-cmd">${escH(line)}</span></div>`).join('')}
+        ${t.install.split('\n').map(line => `<div class="install-cmd">${escH(line)}</div>`).join('')}
       </div>
     </div>`;
   }
@@ -2590,11 +2587,11 @@ function openTool(id) {
       <div class="modal-section-title"><i class="fas fa-terminal"></i> أوامر أساسية</div>
       ${t.commands.map(c => `
         <div class="modal-cmd">
-          <button class="copy-modal-btn" onclick="copyCmd('${escJ(c.cmd)}',this)">نسخ</button>
           <div style="flex:1;overflow:hidden;">
             <code>${escH(c.cmd)}</code>
             ${c.note ? `<span class="mc-note"># ${escH(c.note)}</span>` : ''}
           </div>
+          <button class="copy-modal-btn" onclick="copyCmd('${escJ(c.cmd)}',this)">نسخ</button>
         </div>
       `).join('')}
     </div>`;

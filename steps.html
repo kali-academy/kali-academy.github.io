@@ -1456,10 +1456,10 @@ function renderScenarioContent(s) {
       const enc = encodeURIComponent(c.cmd);
       const displayCmd = c.cmd.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
       html += '<div class="step-cmd-block">';
-      html += '<button class="step-copy-btn" onclick="stepCopy(this,\'' + enc + '\')">📋 نسخ</button>';
       html += '<div style="flex:1;"><code>' + displayCmd + '</code>';
       if (c.note) html += '<div class="cmd-note">⟵ ' + c.note + '</div>';
       html += '</div>';
+      html += '<button class="step-copy-btn" onclick="stepCopy(this,\'' + enc + '\')">📋 نسخ</button>';
       html += '</div>';
     });
     

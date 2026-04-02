@@ -550,11 +550,11 @@ function buildCard(cmd, idx) {
         return `
         <div class="example-row">
           <div class="example-code-line">
+            <span class="ex-prompt">┌──(root㉿kali)-[~]<br>└─$</span>
+            <span class="ex-cmd-text">${esc(cmdText)}</span>
             <button class="ex-copy-btn" onclick="copyCmd('${escJ(cmdText)}');event.stopPropagation()">
               <i class="fas fa-copy"></i> نسخ
             </button>
-            <span class="ex-prompt">┌──(root㉿kali)-[~]<br>└─$</span>
-            <span class="ex-cmd-text" style="flex:1;">${esc(cmdText)}</span>
           </div>
           ${descText ? `<div class="ex-desc-line">${esc(descText)}</div>` : ''}
         </div>`;
