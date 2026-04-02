@@ -207,12 +207,13 @@
 .modal-cmd {
   background: #060d12; border: 1px solid #1a2a1a; border-right: 3px solid #ff6600;
   border-radius: 8px; padding: 0.7rem 1rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem;
   margin-bottom: 0.6rem;
+  flex-wrap: wrap;
 }
-.modal-cmd code { font-family: 'Share Tech Mono', monospace; font-size: 0.84rem; color: #ff9944; white-space: pre; overflow-x: auto; flex: 1; }
+.modal-cmd code { font-family: 'Share Tech Mono', monospace; font-size: 0.84rem; color: #ff9944; white-space: pre-wrap; overflow-wrap: anywhere; flex: 1; min-width: 0; display: block; }
 .modal-cmd .mc-note { display: block; color: var(--text-muted); font-size: 0.74rem; margin-top: 3px; font-family: 'Cairo', sans-serif; white-space: normal; }
-.copy-modal-btn { flex-shrink: 0; background: rgba(255,102,0,0.1); border: 1px solid rgba(255,102,0,0.3); color: #ff6600; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: all 0.2s; white-space: nowrap; }
+.copy-modal-btn { flex-shrink: 0; background: rgba(255,102,0,0.1); border: 1px solid rgba(255,102,0,0.3); color: #ff6600; padding: 3px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: all 0.2s; white-space: nowrap; align-self: flex-start; }
 .copy-modal-btn:hover { background: rgba(255,102,0,0.25); }
 
 /* Install block */
@@ -1668,7 +1669,7 @@ const TOOLS = [
   tips: ['💡 Suricata أسرع من Snort للشبكات عالية السرعة', '💡 Emerging Threats يوفر Rules مجانية محدّثة يومياً'],
   related: ['Zeek', 'Wazuh', 'Security Onion', 'pfSense'],
 },
-,
+
 // ===== NEW TOOLS 56-85 =====
 {
   id: 56, name: 'Evil-WinRM', icon: '🦂', color: 'rgba(255,50,50,0.12)',
@@ -2503,6 +2504,18 @@ const TAG_LABELS = {
   linux: { cls: 'tag-linux', label: 'لينكس' },
 };
 
+function resolveToolById(id) {
+  const numId = Number(id);
+  return TOOLS.find(x => x.id === numId) || TOOLS.find(x => String(x.id) === String(id));
+}
+
+function splitToolCommandLines(commandText) {
+  return String(commandText || '')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+}
+
 function renderTools() {
   const filtered = getFiltered();
   const grid = document.getElementById('toolsGrid');
@@ -2523,7 +2536,7 @@ function renderTools() {
     }).join('');
 
     return `
-      <div class="tool-card" onclick="openTool(${t.id})">
+      <div class="tool-card" data-tool-id="${t.id}" role="button" tabindex="0" aria-label="فتح ${t.name}">
         <span class="card-num-badge">${index + 1}</span>
         <div class="tool-card-top">
           <div class="tool-logo" style="background:${t.color}">${t.icon}</div>
@@ -2543,7 +2556,7 @@ function renderTools() {
 }
 
 function openTool(id) {
-  const t = TOOLS.find(x => x.id === id);
+  const t = resolveToolById(id);
   if (!t) return;
   currentToolData = t;
   trackRecentTool(id);
@@ -2585,15 +2598,19 @@ function openTool(id) {
   if (t.commands && t.commands.length) {
     html += `<div class="modal-section">
       <div class="modal-section-title"><i class="fas fa-terminal"></i> أوامر أساسية</div>
-      ${t.commands.map(c => `
-        <div class="modal-cmd">
-          <div style="flex:1;overflow:hidden;">
-            <code>${escH(c.cmd)}</code>
-            ${c.note ? `<span class="mc-note"># ${escH(c.note)}</span>` : ''}
+      ${t.commands.map(c => {
+        const cmdLines = splitToolCommandLines(c.cmd);
+        const safeLines = cmdLines.length ? cmdLines : [''];
+        return safeLines.map((line, lineIndex) => `
+          <div class="modal-cmd">
+            <div style="flex:1;overflow:hidden;min-width:0;">
+              <code>${escH(line)}</code>
+              ${(c.note && lineIndex === safeLines.length - 1) ? `<span class="mc-note"># ${escH(c.note)}</span>` : ''}
+            </div>
+            <button class="copy-modal-btn" onclick="copyCmd('${escJ(line)}',this)">نسخ</button>
           </div>
-          <button class="copy-modal-btn" onclick="copyCmd('${escJ(c.cmd)}',this)">نسخ</button>
-        </div>
-      `).join('')}
+        `).join('');
+      }).join('')}
     </div>`;
   }
 
@@ -2739,6 +2756,14 @@ function escJ(s) { return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").re
 // Keyboard ESC
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeToolModalDirect();
+
+  const activeCard = document.activeElement && document.activeElement.closest
+    ? document.activeElement.closest('.tool-card')
+    : null;
+  if (activeCard && (e.key === 'Enter' || e.key === ' ')) {
+    e.preventDefault();
+    openTool(activeCard.dataset.toolId);
+  }
 });
 
 // Hamburger menu
@@ -2749,6 +2774,15 @@ document.addEventListener('DOMContentLoaded', () => {
     h.classList.toggle('active');
     m.classList.toggle('active');
   });
+
+  const toolsGrid = document.getElementById('toolsGrid');
+  if (toolsGrid) {
+    toolsGrid.addEventListener('click', (event) => {
+      const card = event.target.closest('.tool-card');
+      if (!card) return;
+      openTool(card.dataset.toolId);
+    });
+  }
 });
 
 // URL params

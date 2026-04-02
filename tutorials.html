@@ -241,17 +241,27 @@
 .tut-step-content p {
   color: var(--text-secondary); font-size: 0.85rem; margin: 0 0 8px; line-height: 1.7;
 }
+.tut-step-cmd-stack { display: flex; flex-direction: column; gap: 6px; }
 .tut-step-cmd {
   background: #0a0f1a; border: 1px solid #1a2a1a; border-right: 3px solid var(--primary);
-  border-radius: 8px; padding: 0.6rem 0.9rem;
+  border-radius: 8px; padding: 0.55rem 0.8rem;
   font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: #00ff41;
-  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
-  overflow-x: auto; white-space: nowrap;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem;
+}
+.tut-step-cmd pre {
+  margin: 0;
+  font-family: 'Share Tech Mono', monospace;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  flex: 1;
+  min-width: 0;
 }
 .tut-step-cmd .tut-copy {
-  flex-shrink: 0; background: rgba(0,255,65,0.1); border: none;
+  flex-shrink: 0; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.2);
   color: var(--primary); padding: 2px 8px; border-radius: 4px;
   cursor: pointer; font-size: 0.75rem; transition: all 0.2s;
+  align-self: flex-start;
 }
 .tut-step-cmd .tut-copy:hover { background: rgba(0,255,65,0.25); }
 .tut-step-actions { margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
@@ -1659,6 +1669,24 @@ function renderLessons() {
   `).join('');
 }
 
+function splitLessonCommands(rawCmd) {
+  return String(rawCmd || '')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+}
+
+function renderLessonCommandBlocks(commandText) {
+  const lines = splitLessonCommands(commandText);
+  const safeLines = lines.length ? lines : [''];
+  return `<div class="tut-step-cmd-stack">${safeLines.map(line => `
+    <div class="tut-step-cmd">
+      <pre>${line}</pre>
+      <button class="tut-copy" onclick="tutCopy(this,'${encodeURIComponent(line)}')">📋</button>
+    </div>
+  `).join('')}</div>`;
+}
+
 function openLesson(id) {
   const t = TUTORIALS.find(x => x.id === id);
   if(!t) return;
@@ -1684,10 +1712,7 @@ function openLesson(id) {
         <div class="tut-step-content">
           <h4>${s.title}</h4>
           <p>${s.text}</p>
-          <div class="tut-step-cmd">
-            <pre style="margin:0;font-family:'Share Tech Mono',monospace;overflow-x:auto;">${s.cmd}</pre>
-            <button class="tut-copy" onclick="tutCopy(this,'${encodeURIComponent(s.cmd)}')">📋</button>
-          </div>
+          ${renderLessonCommandBlocks(s.cmd)}
           <div class="tut-step-actions">
             <button class="tut-share" onclick="shareLessonStep(${t.id}, ${i + 1})"><i class="fas fa-share-alt"></i> مشاركة الخطوة</button>
           </div>

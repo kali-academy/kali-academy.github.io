@@ -99,9 +99,9 @@
 .cmd-syntax-section { margin-bottom: 1.5rem; }
 .section-label { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; color: var(--primary); letter-spacing: 3px; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 6px; }
 .section-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,255,65,0.3), transparent); }
-.syntax-box { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,255,65,0.25); border-radius: 10px; padding: 1rem 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.syntax-code { font-family: 'Share Tech Mono', monospace; font-size: 0.92rem; color: #0ff; direction: ltr; flex: 1; word-break: break-all; }
-.copy-all-btn { padding: 5px 12px; background: rgba(0,255,65,0.12); border: 1px solid rgba(0,255,65,0.25); border-radius: 6px; color: var(--primary); cursor: pointer; font-size: 0.75rem; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
+.syntax-box { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,255,65,0.25); border-radius: 10px; padding: 1rem 1.2rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; }
+.syntax-code { font-family: 'Share Tech Mono', monospace; font-size: 0.92rem; color: #0ff; direction: ltr; flex: 1; min-width: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.copy-all-btn { padding: 5px 12px; background: rgba(0,255,65,0.12); border: 1px solid rgba(0,255,65,0.25); border-radius: 6px; color: var(--primary); cursor: pointer; font-size: 0.75rem; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 4px; flex-shrink: 0; align-self: flex-start; }
 .copy-all-btn:hover { background: rgba(0,255,65,0.25); }
 
 /* Options */
@@ -115,10 +115,10 @@
 .cmd-examples-section { margin-bottom: 1.5rem; }
 .example-row { background: rgba(0,0,0,0.45); border: 1px solid rgba(0,255,65,0.12); border-radius: 10px; margin-bottom: 0.6rem; overflow: hidden; transition: border-color 0.2s; }
 .example-row:hover { border-color: rgba(0,255,65,0.3); }
-.example-code-line { display: flex; align-items: center; padding: 0.75rem 1rem; gap: 0.8rem; direction: ltr; }
+.example-code-line { display: flex; align-items: flex-start; padding: 0.75rem 1rem; gap: 0.8rem; direction: ltr; flex-wrap: wrap; }
 .ex-prompt { color: var(--primary); font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; flex-shrink: 0; }
-.ex-cmd-text { font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: #e8ffe0; flex: 1; word-break: break-all; }
-.ex-copy-btn { padding: 4px 10px; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.2); border-radius: 5px; color: var(--primary); cursor: pointer; font-size: 0.72rem; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; display: flex; align-items: center; gap: 4px; }
+.ex-cmd-text { font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: #e8ffe0; flex: 1; min-width: 0; overflow-wrap: anywhere; white-space: pre-wrap; }
+.ex-copy-btn { padding: 4px 10px; background: rgba(0,255,65,0.1); border: 1px solid rgba(0,255,65,0.2); border-radius: 5px; color: var(--primary); cursor: pointer; font-size: 0.72rem; white-space: nowrap; transition: all 0.2s; flex-shrink: 0; display: flex; align-items: center; gap: 4px; align-self: flex-start; }
 .ex-copy-btn:hover { background: rgba(0,255,65,0.25); box-shadow: 0 0 8px var(--primary-glow); }
 .ex-desc-line { padding: 0.5rem 1rem 0.7rem 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid rgba(0,255,65,0.08); direction: rtl; }
 .ex-desc-line::before { content: '▶ '; color: var(--secondary); font-size: 0.7rem; }
@@ -517,6 +517,13 @@ function loadMoreCmds() {
   document.getElementById('loadMoreWrap').scrollIntoView({behavior:'smooth', block:'center'});
 }
 
+function splitCommandLines(text) {
+  return String(text || '')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+}
+
 function buildCard(cmd, idx) {
   const catMeta = CAT_META[cmd.cat]||{label:cmd.cat,icon:'📌'};
   const lvlMeta = LVL_META[cmd.level]||{label:cmd.level,cls:'tag-beginner'};
@@ -547,15 +554,17 @@ function buildCard(cmd, idx) {
       ${cmd.examples.map(ex => {
         const cmdText = typeof ex === 'string' ? ex : (ex.cmd||ex||'');
         const descText = typeof ex === 'object' ? (ex.desc||'') : '';
+        const cmdLines = splitCommandLines(cmdText);
         return `
         <div class="example-row">
+          ${(cmdLines.length ? cmdLines : ['']).map(line => `
           <div class="example-code-line">
             <span class="ex-prompt">┌──(root㉿kali)-[~]<br>└─$</span>
-            <span class="ex-cmd-text">${esc(cmdText)}</span>
-            <button class="ex-copy-btn" onclick="copyCmd('${escJ(cmdText)}');event.stopPropagation()">
+            <span class="ex-cmd-text">${esc(line)}</span>
+            <button class="ex-copy-btn" onclick="copyCmd('${escJ(line)}');event.stopPropagation()">
               <i class="fas fa-copy"></i> نسخ
             </button>
-          </div>
+          </div>`).join('')}
           ${descText ? `<div class="ex-desc-line">${esc(descText)}</div>` : ''}
         </div>`;
       }).join('')}

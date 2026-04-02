@@ -9,6 +9,8 @@
 <link rel="icon" type="image/png" href="images/logo.png">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/enhanced.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -36,6 +38,8 @@
   background:var(--bg-card); border:1px solid var(--border);
   border-radius:16px; padding:2rem; margin-bottom:1.5rem;
   transition:border-color .3s;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 520px;
 }
 .disc-card:hover{ border-color:rgba(0,255,65,.25); }
 .disc-card-header { display:flex; align-items:center; gap:14px; margin-bottom:1.2rem; }
@@ -102,8 +106,8 @@
 </style>
 </head>
 <body>
-<script src="js/social-bar.js"></script>
-<script src="js/site-init.js"></script>
+<script src="js/social-bar.js" defer></script>
+<script src="js/site-init.js" defer></script>
 
 <header class="site-header">
   <div class="header-inner">
@@ -331,7 +335,7 @@
   </div>
 </footer>
 
-<script src="js/matrix.js"></script>
+<script src="js/matrix.js" defer></script>
 <script>
 document.querySelector('.hamburger')?.addEventListener('click',()=>{
   document.querySelector('.mobile-menu')?.classList.toggle('open');

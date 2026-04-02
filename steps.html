@@ -113,10 +113,10 @@
 .step-title { font-family: 'Cairo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 6px 0 6px; }
 .step-desc { color: var(--text-secondary); font-size: 0.84rem; line-height: 1.7; margin-bottom: 10px; }
 .step-commands { display: flex; flex-direction: column; gap: 6px; }
-.step-cmd-block { background: #060d12; border: 1px solid #1a2a1a; border-right: 3px solid #0cf; border-radius: 8px; padding: 0.7rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-.step-cmd-block code { font-family: 'Share Tech Mono', monospace; font-size: 0.84rem; color: #0cf; white-space: pre; overflow-x: auto; flex: 1; }
+.step-cmd-block { background: #060d12; border: 1px solid #1a2a1a; border-right: 3px solid #0cf; border-radius: 8px; padding: 0.7rem 1rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+.step-cmd-block code { font-family: 'Share Tech Mono', monospace; font-size: 0.84rem; color: #0cf; white-space: pre-wrap; overflow-wrap: anywhere; flex: 1; min-width: 0; display: block; }
 .step-cmd-block .cmd-note { color: var(--text-muted); font-size: 0.75rem; margin-top: 3px; font-family: 'Cairo', sans-serif; }
-.step-copy-btn { flex-shrink: 0; background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.2); color: #0cf; padding: 3px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: all 0.2s; white-space: nowrap; }
+.step-copy-btn { flex-shrink: 0; background: rgba(0,200,255,0.1); border: 1px solid rgba(0,200,255,0.2); color: #0cf; padding: 3px 8px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; transition: all 0.2s; white-space: nowrap; align-self: flex-start; }
 .step-copy-btn:hover { background: rgba(0,200,255,0.25); }
 .step-warning { background: rgba(255,80,0,0.07); border: 1px solid rgba(255,80,0,0.25); border-right: 3px solid #ff8800; border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 6px; color: #ffaa66; font-size: 0.8rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
 .step-tip { background: rgba(0,255,65,0.05); border: 1px solid rgba(0,255,65,0.2); border-right: 3px solid #00ff41; border-radius: 8px; padding: 0.6rem 0.9rem; margin-top: 6px; color: #88ffaa; font-size: 0.8rem; font-family: 'Cairo', sans-serif; line-height: 1.6; }
@@ -1430,6 +1430,13 @@ function openScenario(id) {
   document.body.style.overflow = 'hidden';
 }
 
+function splitCommandLines(commandText) {
+  return String(commandText || '')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+}
+
 function renderScenarioContent(s) {
   const done = doneSteps[s.id] || new Set();
   const pct = Math.round((done.size / s.steps.length) * 100);
@@ -1453,14 +1460,19 @@ function renderScenarioContent(s) {
     html += '<div class="step-commands">';
     
     step.commands.forEach(function(c) {
-      const enc = encodeURIComponent(c.cmd);
-      const displayCmd = c.cmd.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
-      html += '<div class="step-cmd-block">';
-      html += '<div style="flex:1;"><code>' + displayCmd + '</code>';
-      if (c.note) html += '<div class="cmd-note">⟵ ' + c.note + '</div>';
-      html += '</div>';
-      html += '<button class="step-copy-btn" onclick="stepCopy(this,\'' + enc + '\')">📋 نسخ</button>';
-      html += '</div>';
+      const cmdLines = splitCommandLines(c.cmd);
+      const safeLines = cmdLines.length ? cmdLines : [''];
+
+      safeLines.forEach(function(line, lineIndex) {
+        const enc = encodeURIComponent(line);
+        const displayCmd = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        html += '<div class="step-cmd-block">';
+        html += '<div style="flex:1;min-width:0;"><code>' + displayCmd + '</code>';
+        if (c.note && lineIndex === safeLines.length - 1) html += '<div class="cmd-note">⟵ ' + c.note + '</div>';
+        html += '</div>';
+        html += '<button class="step-copy-btn" onclick="stepCopy(this,\'' + enc + '\')">📋 نسخ</button>';
+        html += '</div>';
+      });
     });
     
     html += '</div>';
