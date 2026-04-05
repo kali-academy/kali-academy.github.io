@@ -9,8 +9,8 @@
 <meta name="keywords" content="خطوات اختبار الاختراق, سيناريو Pentest, تطبيقي Kali Linux, خطوات عملية بالعربي">
 <meta name="author" content="Kali Academy">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta property="og:title" content="السيناريوهات التطبيقية - KaliAcademy | 115+ سيناريو عملي">
-<meta property="og:description" content="115+ سيناريو عملي مفصل لاختبار الاختراق خطوة بخطوة مع أوامر جاهزة">
+<meta property="og:title" content="السيناريوهات التطبيقية - KaliAcademy | 120+ سيناريو عملي">
+<meta property="og:description" content="120+ سيناريو عملي مفصل لاختبار الاختراق خطوة بخطوة مع أوامر جاهزة">
 <meta property="og:image" content="https://kali-academy.github.io/images/logo-brand.svg">
 <meta property="og:image:alt" content="Kali Academy Applied Scenarios">
 <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
 <meta property="og:locale" content="ar_AR">
 <meta property="og:site_name" content="Kali Academy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="السيناريوهات التطبيقية - KaliAcademy | 115+ سيناريو">
+<meta name="twitter:title" content="السيناريوهات التطبيقية - KaliAcademy | 120+ سيناريو">
 <meta name="twitter:description" content="سيناريوهات تنفيذ عملية مع خطوات واضحة وأوامر قابلة للنسخ">
 <meta name="twitter:image" content="https://kali-academy.github.io/images/logo-brand.svg">
 <link rel="icon" type="image/svg+xml" href="images/logo-brand.svg">
@@ -29,7 +29,7 @@
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "السيناريوهات التطبيقية - KaliAcademy",
-  "description": "115+ سيناريو عملي مفصل لاختبار الاختراق خطوة بخطوة مع أوامر جاهزة وقياس التقدم",
+  "description": "120+ سيناريو عملي مفصل لاختبار الاختراق خطوة بخطوة مع أوامر جاهزة وقياس التقدم",
   "url": "https://kali-academy.github.io/steps.html",
   "inLanguage": "ar",
   "isPartOf": {
@@ -1400,6 +1400,267 @@ const SCENARIOS = [
     }
   ]
 },
+
+{
+  id: 67,
+  icon: '🏥',
+  title: 'اختبار أمان بيئة مستشفى رقمية (HIPAA-like)',
+  desc: 'سيناريو متقدم لاختبار نظام سجلات مرضى مع واجهات API وأجهزة متصلة مع التركيز على حماية البيانات الحساسة.',
+  difficulty: 'hard',
+  type: 'Defense',
+  time: '120-210 دقيقة',
+  steps: [
+    {
+      title: 'جرد الأصول والخدمات الحرجة',
+      desc: 'ابدأ بحصر الأنظمة: بوابة المرضى، API السجلات، خادم الصور الطبية، ولوحات الإدارة الداخلية.',
+      commands: [
+        { cmd: 'nmap -sV -sC -p 22,80,443,8443,3306 10.20.10.0/24 -oA hospital-assets', note: 'مسح أولي للخدمات الحرجة' },
+        { cmd: 'whatweb https://portal.hospital.local', note: 'تحديد التقنيات والإصدارات' }
+      ],
+      tip: 'أي نظام يتعامل مع PHI يجب اعتباره High Criticality.'
+    },
+    {
+      title: 'اختبار التحكم بالوصول في API المرضى (IDOR/BOLA)',
+      desc: 'اختبر إمكانية الوصول إلى بيانات مرضى آخرين عبر تغيير معرفات الموارد في API.',
+      commands: [
+        { cmd: 'curl -H "Authorization: Bearer DOCTOR_TOKEN" https://api.hospital.local/v1/patients/1021', note: 'طلب شرعي للطبيب' },
+        { cmd: 'curl -H "Authorization: Bearer DOCTOR_TOKEN" https://api.hospital.local/v1/patients/1099', note: 'اختبار الوصول غير المصرح به' }
+      ],
+      warning: 'يجب استخدام بيانات وهمية في بيئات التدريب فقط.'
+    },
+    {
+      title: 'تدقيق التسجيل والمراقبة (Audit Trail)',
+      desc: 'تحقق أن كل وصول وتعديل على سجلات المرضى يتم تسجيله مع هوية المستخدم والوقت.',
+      commands: [
+        { cmd: 'journalctl -u api-gateway --since "1 hour ago" | grep -Ei "patient|record|update"', note: 'مراجعة أحداث الوصول والتعديل' },
+        { cmd: 'grep -R "DELETE /v1/patients" /var/log/nginx/ -n', note: 'البحث عن عمليات حذف حساسة' }
+      ]
+    },
+    {
+      title: 'اختبار التشفير أثناء النقل وعند التخزين',
+      desc: 'تأكد من TLS قوي ومنع البروتوكولات القديمة وفحص تشفير قواعد البيانات والنسخ الاحتياطية.',
+      commands: [
+        { cmd: 'sslscan portal.hospital.local:443', note: 'تقييم إعدادات TLS' },
+        { cmd: 'testssl.sh --fast api.hospital.local', note: 'فحص سريع لبروتوكولات التشفير' }
+      ]
+    },
+    {
+      title: 'خطة علاج الثغرات والتحقق بعد الإصلاح',
+      desc: 'بعد اكتشاف الثغرات، نفّذ إعادة اختبار مركزة للتأكد من غلق مسار الاستغلال بالكامل.',
+      commands: [
+        { cmd: 'cat > hospital-remediation.md << EOF\n- Enforce object-level authorization in patient API\n- Enable immutable audit logs\n- Disable TLS 1.0/1.1\n- Implement token scope per role\nEOF', note: 'توثيق خطة المعالجة' },
+        { cmd: 'nuclei -u https://portal.hospital.local -tags misconfig,cve -o hospital-retest.txt', note: 'إعادة اختبار بعد الإصلاح' }
+      ]
+    }
+  ]
+},
+{
+  id: 68,
+  icon: '💳',
+  title: 'محاكاة اختراق منصة دفع إلكتروني (PCI Focus)',
+  desc: 'سيناريو Red Team متقدم لاختبار ضوابط الدفع والـ API والـ webhooks مع حماية بيانات البطاقات.',
+  difficulty: 'hard',
+  type: 'Web App',
+  time: '150-240 دقيقة',
+  steps: [
+    {
+      title: 'Mapping شامل لتدفق الدفع',
+      desc: 'حدد أين تمر البيانات الحساسة: frontend checkout، payment API، webhook worker، وقاعدة البيانات.',
+      commands: [
+        { cmd: 'katana -u https://pay.target.local -d 3 -jc -o endpoints.txt', note: 'استخراج جميع endpoints المرتبطة بالدفع' },
+        { cmd: 'grep -Ei "pay|checkout|webhook|token" endpoints.txt', note: 'تحديد مسارات الدفع الحرجة' }
+      ]
+    },
+    {
+      title: 'اختبار tampering على قيمة الطلب والعملة',
+      desc: 'اعترض request الدفع وغيّر amount/currency/order_id لاكتشاف ضعف التحقق جهة الخادم.',
+      commands: [
+        { cmd: 'curl -X POST https://api.target.local/v1/pay -H "Authorization: Bearer USER_TOKEN" -H "Content-Type: application/json" -d "{\\"order_id\\":\\"A112\\",\\"amount\\":1,\\"currency\\":\\"USD\\"}"', note: 'اختبار تغيير قيمة الدفع' },
+        { cmd: 'curl -X POST https://api.target.local/v1/pay -H "Authorization: Bearer USER_TOKEN" -H "Content-Type: application/json" -d "{\\"order_id\\":\\"A112\\",\\"amount\\":9999,\\"currency\\":\\"USD\\"}"', note: 'مقارنة سلوك الخادم' }
+      ]
+    },
+    {
+      title: 'فحص webhook signature validation',
+      desc: 'تحقق أن بوابة الدفع تتحقق من توقيع webhook قبل تحديث حالة الطلب.',
+      commands: [
+        { cmd: 'curl -X POST https://pay.target.local/webhooks/payment -H "Content-Type: application/json" -d "{\\"event\\":\\"payment.success\\",\\"order_id\\":\\"A112\\"}"', note: 'Webhook بدون توقيع لا يجب قبوله' },
+        { cmd: 'grep -Ei "signature|hmac|verify" -R ./payment-service -n', note: 'مراجعة الكود للتحقق من صحة التوقيع' }
+      ],
+      warning: 'قبول webhook غير موقع = Fraud مباشر.'
+    },
+    {
+      title: 'اختبار أسرار البطاقات في اللوغات والـ tracing',
+      desc: 'تأكد أن PAN/CVV لا يظهران في السجلات أو tracing systems.',
+      commands: [
+        { cmd: 'grep -R "4111\|cvv\|card_number" /var/log -n', note: 'بحث عن تسريب بيانات بطاقات' },
+        { cmd: 'jq ".events[] | select(.message|test(\\"card|cvv\\";\\"i\\"))" traces.json', note: 'تحليل tracing logs' }
+      ]
+    },
+    {
+      title: 'Hardening + Retest',
+      desc: 'طبّق tokenization، إخفاء البيانات الحساسة، وربط كل عملية دفع بمستخدم واحد وسياق جلسة واضح.',
+      commands: [
+        { cmd: 'trivy config ./infra -o payment-hardening.txt', note: 'فحص تهيئة البنية' },
+        { cmd: 'nuclei -l endpoints.txt -tags exposure,misconfig -o payment-retest.txt', note: 'إعادة فحص نقاط الدفع' }
+      ]
+    }
+  ]
+},
+{
+  id: 69,
+  icon: '🏭',
+  title: 'تقييم أمني لشبكة صناعية OT/ICS',
+  desc: 'سيناريو متقدم لفحص بيئة صناعية (SCADA/PLC) بدون التأثير على التشغيل مع تركيز عالٍ على السلامة.',
+  difficulty: 'hard',
+  type: 'Network',
+  time: '140-220 دقيقة',
+  steps: [
+    {
+      title: 'Passive Discovery أولاً',
+      desc: 'في OT يجب البدء بجمع سلبي لتجنّب توقف العمليات الصناعية.',
+      commands: [
+        { cmd: 'tcpdump -i eth1 -w ot_passive_capture.pcap', note: 'التقاط المرور الصناعي بدون إرسال حزم نشطة' },
+        { cmd: 'tshark -r ot_passive_capture.pcap -Y "modbus || dnp3 || s7comm"', note: 'تصفية بروتوكولات ICS' }
+      ],
+      warning: 'تجنب active scan على PLC أثناء الإنتاج.'
+    },
+    {
+      title: 'تحديد الأصول الصناعية وبروتوكولاتها',
+      desc: 'افصل بين HMI وPLC وEngineering workstation وحدد كل بروتوكول واتجاه الحركة.',
+      commands: [
+        { cmd: 'arp -an > ot_arp_map.txt', note: 'خريطة أولية لعناوين الشبكة' },
+        { cmd: 'python3 ics_parser.py --pcap ot_passive_capture.pcap --out ot_assets.csv', note: 'استخراج الأصول الصناعية من PCAP' }
+      ]
+    },
+    {
+      title: 'اختبار segmentation بين IT وOT',
+      desc: 'تحقق أن الأنظمة المكتبية لا تصل مباشرة إلى PLC أو HMI الحرجة.',
+      commands: [
+        { cmd: 'nmap -sT -p 102,502,20000 10.40.0.0/24 --max-rate 50 -oN ot-segmentation.txt', note: 'اختبار خفيف للمنافذ الصناعية' },
+        { cmd: 'hping3 -S -p 502 -c 3 10.40.0.15', note: 'تحقق محدود لاتصال Modbus' }
+      ]
+    },
+    {
+      title: 'التأكد من الضبط الآمن للأجهزة الهندسية',
+      desc: 'افحص كلمات المرور الافتراضية، منافذ الإدارة، وغياب MFA على محطات الهندسة.',
+      commands: [
+        { cmd: 'netexec smb 10.40.0.0/24 -u engineer -p passwords.txt --continue-on-success', note: 'تدقيق كلمات مرور حسابات الهندسة' },
+        { cmd: 'nuclei -u http://10.40.0.22 -tags default-login,misconfig', note: 'فحص واجهات الإدارة' }
+      ]
+    },
+    {
+      title: 'خطة حماية OT قصيرة وطويلة المدى',
+      desc: 'قدّم خارطة تنفيذية: شبكة معزولة، jump server، مراقبة ICS، وإدارة تغييرات صارمة.',
+      commands: [
+        { cmd: 'cat > ot-hardening-plan.md << EOF\n1) Enforce IT/OT firewall allow-list\n2) Deploy passive OT IDS\n3) Remove default credentials\n4) Implement engineering jump host + MFA\nEOF', note: 'إخراج عملي لفريق التشغيل' }
+      ]
+    }
+  ]
+},
+{
+  id: 70,
+  icon: '☁️',
+  title: 'اختبار أمان بيئة Kubernetes Production',
+  desc: 'سيناريو عملي متقدم لفحص K8s: RBAC، Secrets، Images، Network Policies، وسلاسل التوريد.',
+  difficulty: 'hard',
+  type: 'Defense',
+  time: '130-210 دقيقة',
+  steps: [
+    {
+      title: 'Baseline سريع للبنية',
+      desc: 'اجمع معلومات cluster، namespaces، وservice accounts قبل أي اختبار.',
+      commands: [
+        { cmd: 'kubectl get nodes -o wide && kubectl get ns', note: 'صورة أولية للكلستر' },
+        { cmd: 'kubectl get sa -A', note: 'مراجعة حسابات الخدمة' }
+      ]
+    },
+    {
+      title: 'تقييم RBAC وصلاحيات مفرطة',
+      desc: 'اكتشف الحسابات التي تملك cluster-admin أو صلاحيات أوسع من المطلوب.',
+      commands: [
+        { cmd: 'kubectl auth can-i --list --as=system:serviceaccount:default:default', note: 'مصفوفة صلاحيات حساب الخدمة الافتراضي' },
+        { cmd: 'kubectl get clusterrolebindings -A | grep -Ei "cluster-admin|admin"', note: 'حصر الربط عالي الخطورة' }
+      ]
+    },
+    {
+      title: 'فحص إعدادات الكلستر مقابل CIS',
+      desc: 'تشغيل kube-bench للتأكد من ضبط control plane والعُقد بشكل آمن.',
+      commands: [
+        { cmd: 'sudo ./kube-bench run --targets master,node,etcd', note: 'فحص CIS شامل' },
+        { cmd: 'sudo ./kube-bench run --json > kube-bench-prod.json', note: 'حفظ نتائج قابلة للمعالجة' }
+      ]
+    },
+    {
+      title: 'تقييم الصور وSecrets وتسرب البيانات',
+      desc: 'افحص الصور بحثاً عن CVEs وتأكد أن secrets غير مكشوفة داخل env vars أو Git.',
+      commands: [
+        { cmd: 'trivy image registry.local/payment:latest --severity HIGH,CRITICAL', note: 'فحص ثغرات صورة حرجة' },
+        { cmd: 'kubectl get secrets -A -o json | jq ".items[] | {ns:.metadata.namespace,name:.metadata.name,type:.type}"', note: 'جرد الـ secrets في الكلستر' }
+      ]
+    },
+    {
+      title: 'تنفيذ إجراءات hardening ثم retest',
+      desc: 'بعد الإصلاح، أعد الاختبار للتأكد من هبوط مستوى المخاطر فعلياً.',
+      commands: [
+        { cmd: 'kubectl apply -f network-policies/', note: 'تفعيل network segmentation بين الخدمات' },
+        { cmd: 'kubescape scan framework nsa --submit=false', note: 'إعادة فحص بعد تطبيق الضوابط' }
+      ]
+    }
+  ]
+},
+{
+  id: 71,
+  icon: '🧬',
+  title: 'Incident Response: احتواء هجوم Ransomware',
+  desc: 'سيناريو Blue Team متقدم للاستجابة لحادث فدية: كشف، احتواء، تحليل أدلة، تعافٍ، وتحسينات منع التكرار.',
+  difficulty: 'hard',
+  type: 'Forensics',
+  time: '160-260 دقيقة',
+  steps: [
+    {
+      title: 'الكشف الأولي وتأكيد الحادث',
+      desc: 'اجمع مؤشرات الاختراق (IOCs) بسرعة: امتدادات ملفات مشفرة، نشاط عمليات مشبوهة، اتصالات C2.',
+      commands: [
+        { cmd: 'sudo osqueryi "SELECT name,path,cmdline FROM processes WHERE name LIKE \"%encrypt%\" OR name LIKE \"%locker%\";"', note: 'رصد عمليات مشبوهة' },
+        { cmd: 'sudo grep -R "\\.locked\\|\\.encrypted\\|ransom" /home -n | head', note: 'تحديد ملفات متأثرة' }
+      ]
+    },
+    {
+      title: 'الاحتواء الفوري (Containment)',
+      desc: 'اعزل الأجهزة المصابة لمنع الانتشار الجانبي وتعطيل الحسابات المخترقة مؤقتاً.',
+      commands: [
+        { cmd: 'sudo iptables -A OUTPUT -d 0.0.0.0/0 -j DROP', note: 'عزل الجهاز المصاب عن الشبكة' },
+        { cmd: 'netexec smb 192.168.1.0/24 -u SOC_ADMIN -p "StrongPass!" -x "net user compromised /active:no"', note: 'تعطيل حساب مشكوك فيه' }
+      ],
+      warning: 'لا تعِد تشغيل الجهاز قبل أخذ صورة جنائية إذا أمكن.'
+    },
+    {
+      title: 'جمع الأدلة والتحليل الجنائي',
+      desc: 'اسحب الذاكرة، اللوغات، والملفات التنفيذية المشبوهة للتحليل دون إتلاف السلسلة الجنائية.',
+      commands: [
+        { cmd: 'sudo volatility3 -f memory.raw windows.pslist', note: 'تحليل العمليات من memory dump' },
+        { cmd: 'sudo yara -r ransomware_rules.yar /mnt/suspect_disk > yara_hits.txt', note: 'فحص مؤشرات العائلة الخبيثة' }
+      ]
+    },
+    {
+      title: 'الاستعادة الآمنة والتحقق',
+      desc: 'استرجع من نسخ احتياطية نظيفة، وفعّل scan شامل قبل إعادة الأنظمة للخدمة.',
+      commands: [
+        { cmd: 'restic restore latest --target /srv/recovery', note: 'استعادة النسخة الاحتياطية' },
+        { cmd: 'clamscan -r /srv/recovery --bell -i', note: 'فحص الاستعادة قبل الإرجاع للإنتاج' }
+      ]
+    },
+    {
+      title: 'Post-Incident Hardening',
+      desc: 'أغلق سبب الاختراق وأضف ضوابط تمنع تكرار الحادث.',
+      commands: [
+        { cmd: 'cat > ir-lessons-learned.md << EOF\n- Enforce MFA for admin accounts\n- Block macros by policy\n- EDR isolation playbook tested monthly\n- Immutable offline backups\nEOF', note: 'توثيق التحسينات بعد الحادث' },
+        { cmd: 'sigma convert -t splunk ransomware_rules.yml > splunk_ransomware_search.spl', note: 'تحويل قواعد الكشف إلى SIEM' }
+      ]
+    }
+  ]
+},
+
 ];
 
 // ============================================================

