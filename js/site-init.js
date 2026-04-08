@@ -190,12 +190,13 @@ const css = document.createElement('style');
     }
 
     body {
-      transition: opacity 0.15s ease !important;
+      opacity: 1 !important;
+      transition: none !important;
     }
 
-    body.page-leaving { opacity: 0 !important; }
-    body.page-entering { opacity: 0; }
-    body.page-ready { opacity: 1; transition: opacity 0.15s ease; }
+    body.page-leaving { opacity: 1 !important; }
+    body.page-entering { opacity: 1 !important; }
+    body.page-ready { opacity: 1 !important; }
 
     .nav-link.active,
     .nav-link:hover {
@@ -257,19 +258,18 @@ const css = document.createElement('style');
     });
   }
 
-  // التنقل السريع
+  // التنقل السريع - prefetch only, no interception
   function fastNav() {
-    const preloaded = new Set();
-    const sameOrigin = window.location.origin;
+    var preloaded = new Set();
+    var sameOrigin = window.location.origin;
 
     function shouldHandleLink(a) {
       if (!a) return false;
-      const href = a.getAttribute('href');
+      var href = a.getAttribute('href');
       if (!href) return false;
       if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
       if (a.target === '_blank' || a.hasAttribute('download')) return false;
       if (a.getAttribute('rel') === 'external') return false;
-      if (a.dataset.noFastNav === 'true') return false;
       return /\.html($|[?#])/.test(href) || href === '/';
     }
 
@@ -282,77 +282,54 @@ const css = document.createElement('style');
     }
 
     function preloadPage(href) {
-      const abs = toAbsolute(href);
+      var abs = toAbsolute(href);
       if (!abs || abs.origin !== sameOrigin) return;
-
-      const cacheKey = abs.href;
+      var cacheKey = abs.href;
       if (preloaded.has(cacheKey)) return;
       preloaded.add(cacheKey);
-
-      const link = document.createElement('link');
+      var link = document.createElement('link');
       link.rel = 'prefetch';
       link.href = abs.href;
       link.as = 'document';
       document.head.appendChild(link);
     }
 
-    function navigateFast(href) {
-      const abs = toAbsolute(href);
-      if (!abs) return;
-
-      if (abs.href === window.location.href) return;
-
-      if (!document.getElementById('page-loader')) {
-        const loader = document.createElement('div');
-        loader.id = 'page-loader';
-        document.body.appendChild(loader);
-      }
-
-      document.body.classList.add('page-leaving');
-
-      // Navigate after lightweight transition
-      setTimeout(function () {
-        window.location.assign(abs.href);
-      }, 70);
-    }
-
-    // prefetch فقط عند نية المستخدم (hover/touch) لتقليل الحمل
+    // prefetch only on hover/touch - do NOT intercept clicks
     document.addEventListener('pointerenter', function (e) {
-      const a = e.target.closest('a[href]');
+      var a = e.target.closest('a[href]');
       if (!shouldHandleLink(a)) return;
       preloadPage(a.getAttribute('href'));
     }, true);
 
     document.addEventListener('touchstart', function (e) {
-      const a = e.target.closest('a[href]');
+      var a = e.target.closest('a[href]');
       if (!shouldHandleLink(a)) return;
       preloadPage(a.getAttribute('href'));
     }, { passive: true, capture: true });
-
-    document.addEventListener('click', function (e) {
-      const a = e.target.closest('a[href]');
-      if (!shouldHandleLink(a)) return;
-
-      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) {
-        return;
-      }
-
-      e.preventDefault();
-      navigateFast(a.getAttribute('href'));
-    }, true);
   }
 
   // Fix: Remove page-leaving class on page show (handles bfcache restoration)
   window.addEventListener('pageshow', function (e) {
-    document.body.classList.remove('page-leaving');
-    // Remove the loader if it exists from a previous navigation
+    document.body.classList.remove('page-leaving', 'page-entering');
+    document.body.classList.add('page-ready');
+    document.body.style.opacity = '1';
     var loader = document.getElementById('page-loader');
     if (loader) loader.remove();
   });
 
+  // Also ensure visibility on visibilitychange
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+      document.body.classList.remove('page-leaving', 'page-entering');
+      document.body.style.opacity = '1';
+    }
+  });
+
   // Fix: Ensure body is always visible when the page first becomes interactive
   function ensureBodyVisible() {
-    document.body.classList.remove('page-leaving');
+    document.body.classList.remove('page-leaving', 'page-entering');
+    document.body.classList.add('page-ready');
+    document.body.style.opacity = '1';
     var loader = document.getElementById('page-loader');
     if (loader) loader.remove();
   }

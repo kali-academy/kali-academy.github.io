@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#020b14">
+<title>Terminal | Kali Academy - محاكي الطرفية التفاعلي</title>
+<meta name="description" content="محاكي طرفية Kali Linux تفاعلي - تدرب على تنفيذ أوامر لينكس والأمن السيبراني مباشرة من المتصفح.">
+<meta name="keywords" content="Kali Linux Terminal, محاكي طرفية, أوامر لينكس, تدريب أمن سيبراني">
+<link rel="icon" type="image/svg+xml" href="images/logo-brand.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/enhanced.css">
+<link rel="stylesheet" href="css/cyber-theme.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===== TERMINAL PAGE STYLES ===== */
+.terminal-page-wrapper {
+  padding-top: var(--header-height, 70px);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminal-hero {
+  text-align: center;
+  padding: 2rem 1.5rem 1rem;
+}
+
+.terminal-hero h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.terminal-hero h1 .hl { color: #00ff41; }
+
+.terminal-hero p {
+  color: rgba(150,200,165,0.55);
+  font-size: 0.9rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.terminal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+  width: 100%;
+  margin: 1rem auto 2rem;
+  padding: 0 1.5rem;
+}
+
+.terminal-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0a0a0a;
+  border: 1px solid rgba(0,255,65,0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0,255,65,0.08), 0 20px 60px rgba(0,0,0,0.5);
+  min-height: 500px;
+  max-height: calc(100vh - 250px);
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(0,255,65,0.04);
+  border-bottom: 1px solid rgba(0,255,65,0.12);
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.terminal-titlebar-btns {
+  display: flex;
+  gap: 7px;
+}
+
+.terminal-titlebar-btns span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.tb-close { background: #ff5f56; }
+.tb-min { background: #ffbd2e; }
+.tb-max { background: #27c93f; }
+
+.terminal-titlebar-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+  color: rgba(0,255,65,0.5);
+  letter-spacing: 1px;
+}
+
+.terminal-titlebar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.terminal-titlebar-actions button {
+  background: rgba(0,255,65,0.08);
+  border: 1px solid rgba(0,255,65,0.15);
+  color: rgba(0,255,65,0.6);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.terminal-titlebar-actions button:hover {
+  background: rgba(0,255,65,0.15);
+  color: #00ff41;
+  border-color: rgba(0,255,65,0.4);
+}
+
+.terminal-output-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #c8ffc8;
+  direction: ltr;
+  text-align: left;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,255,65,0.3) transparent;
+}
+
+.terminal-output-area::-webkit-scrollbar { width: 5px; }
+.terminal-output-area::-webkit-scrollbar-track { background: transparent; }
+.terminal-output-area::-webkit-scrollbar-thumb { background: rgba(0,255,65,0.3); border-radius: 3px; }
+
+.terminal-output-area .line { margin-bottom: 2px; white-space: pre-wrap; word-break: break-all; }
+.terminal-output-area .line-prompt { color: #00ff41; }
+.terminal-output-area .line-cmd { color: #0ff; }
+.terminal-output-area .line-output { color: #c8ffc8; }
+.terminal-output-area .line-error { color: #ff5555; }
+.terminal-output-area .line-info { color: #ffcc00; }
+.terminal-output-area .line-success { color: #00ff41; }
+.terminal-output-area .line-comment { color: rgba(150,200,165,0.4); font-style: italic; }
+.terminal-output-area .line-table { color: #c8ffc8; }
+.terminal-output-area .line-header { color: #0ff; font-weight: bold; }
+.terminal-output-area .line-separator { color: rgba(0,255,65,0.3); }
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  background: rgba(0,255,65,0.02);
+  border-top: 1px solid rgba(0,255,65,0.08);
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.terminal-input-prompt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.88rem;
+  color: #00ff41;
+  white-space: nowrap;
+  direction: ltr;
+  user-select: none;
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #0ff;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.88rem;
+  direction: ltr;
+  text-align: left;
+  caret-color: #00ff41;
+}
+
+.terminal-input::placeholder {
+  color: rgba(0,255,65,0.2);
+}
+
+/* Toolbar below terminal */
+.terminal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0.8rem 0;
+  flex-wrap: wrap;
+}
+
+.toolbar-left, .toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(0,255,65,0.06);
+  border: 1px solid rgba(0,255,65,0.18);
+  border-radius: 8px;
+  color: rgba(0,255,65,0.7);
+  font-family: 'Cairo', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.toolbar-btn:hover {
+  background: rgba(0,255,65,0.12);
+  border-color: rgba(0,255,65,0.4);
+  color: #00ff41;
+}
+
+.toolbar-btn i { font-size: 0.72rem; }
+
+.terminal-info-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.7rem;
+  color: rgba(0,255,65,0.4);
+  letter-spacing: 1px;
+}
+
+/* Quick commands panel */
+.quick-commands {
+  margin-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.quick-commands-title {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(0,255,65,0.5);
+  letter-spacing: 2px;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.quick-commands-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-cmd {
+  padding: 5px 14px;
+  background: rgba(4,22,40,0.8);
+  border: 1px solid rgba(0,255,65,0.12);
+  border-radius: 6px;
+  color: rgba(0,255,65,0.6);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  direction: ltr;
+}
+
+.quick-cmd:hover {
+  background: rgba(0,255,65,0.1);
+  border-color: rgba(0,255,65,0.4);
+  color: #00ff41;
+}
+
+/* ASCII Art styling */
+.ascii-art {
+  color: #00ff41;
+  font-size: 0.7rem;
+  line-height: 1.15;
+  margin-bottom: 4px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .terminal-window {
+    min-height: 400px;
+    max-height: calc(100vh - 200px);
+  }
+  .terminal-output-area { font-size: 0.78rem; padding: 12px; }
+  .terminal-input { font-size: 0.78rem; }
+  .terminal-input-prompt { font-size: 0.78rem; }
+  .terminal-hero { padding: 1.5rem 1rem 0.5rem; }
+  .terminal-container { padding: 0 0.8rem; }
+  .quick-commands-grid { gap: 6px; }
+  .quick-cmd { font-size: 0.72rem; padding: 4px 10px; }
+}
+</style>
+</head>
+<body class="grid-bg">
+<canvas id="matrix-canvas"></canvas>
+<script defer src="js/disclaimer.js"></script>
+<script defer src="js/social-bar.js"></script>
+<script defer src="js/free-offer.js"></script>
+<script defer src="js/site-init.js"></script>
+
+<!-- HEADER -->
+<header class="site-header">
+  <a href="index.html" class="logo">
+    <div class="logo-icon"><img src="images/logo-brand.svg" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div>
+      <span class="logo-text">KALI ACADEMY</span>
+      <span class="logo-sub">CYBER SECURITY LEARNING</span>
+    </div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> <span>الرئيسية</span></a></li>
+    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> <span>الأوامر</span></a></li>
+    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> <span>الدروس</span></a></li>
+    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span>السيناريوهات التطبيقية</span></a></li>
+    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> <span>الأدوات</span></a></li>
+    <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span>المقالات</span></a></li>
+    <li><a href="terminal.html" class="nav-link active" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
+  </ul>
+  <div class="header-status">
+    <div class="status-dot"></div>
+    <span>SYSTEM ONLINE</span>
+  </div>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu">
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
+  <a href="terminal.html" class="nav-link mobile-nav-link active" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
+</div>
+
+<!-- MAIN -->
+<div class="terminal-page-wrapper">
+  <div class="terminal-hero">
+    <h1><i class="fas fa-terminal" style="color:#00ff41;margin-left:8px;"></i> <span class="hl">Kali</span> Terminal Emulator</h1>
+    <p>محاكي طرفية تفاعلي - تدرب على تنفيذ أوامر Kali Linux مباشرة من المتصفح</p>
+  </div>
+
+  <div class="terminal-container">
+    <div class="terminal-window" id="terminalWindow">
+      <div class="terminal-titlebar">
+        <div class="terminal-titlebar-btns">
+          <span class="tb-close"></span>
+          <span class="tb-min"></span>
+          <span class="tb-max"></span>
+        </div>
+        <div class="terminal-titlebar-title">root@kali:~</div>
+        <div class="terminal-titlebar-actions">
+          <button onclick="termClear()" title="مسح الطرفية"><i class="fas fa-eraser"></i> Clear</button>
+          <button onclick="termFullscreen()" title="ملء الشاشة"><i class="fas fa-expand"></i></button>
+        </div>
+      </div>
+      <div class="terminal-output-area" id="termOutput"></div>
+      <div class="terminal-input-line">
+        <span class="terminal-input-prompt" id="termPrompt">root@kali:~#</span>
+        <input type="text" class="terminal-input" id="termInput" placeholder="Type a command..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="terminal-toolbar">
+      <div class="toolbar-left">
+        <button class="toolbar-btn" onclick="termClear()"><i class="fas fa-eraser"></i> مسح</button>
+        <button class="toolbar-btn" onclick="showHelp()"><i class="fas fa-question-circle"></i> مساعدة</button>
+        <button class="toolbar-btn" onclick="exportTerminal()"><i class="fas fa-download"></i> تصدير</button>
+        <a href="commands.html" class="toolbar-btn"><i class="fas fa-book"></i> قاعدة الأوامر</a>
+      </div>
+      <div class="toolbar-right">
+        <span class="terminal-info-badge" id="cmdCount">COMMANDS: 0</span>
+        <span class="terminal-info-badge">SESSION: <span id="sessionTime">00:00</span></span>
+      </div>
+    </div>
+
+    <div class="quick-commands">
+      <div class="quick-commands-title">QUICK COMMANDS</div>
+      <div class="quick-commands-grid" id="quickCmdsGrid">
+        <span class="quick-cmd" onclick="runQuickCmd('help')">help</span>
+        <span class="quick-cmd" onclick="runQuickCmd('whoami')">whoami</span>
+        <span class="quick-cmd" onclick="runQuickCmd('uname -a')">uname -a</span>
+        <span class="quick-cmd" onclick="runQuickCmd('ls -la')">ls -la</span>
+        <span class="quick-cmd" onclick="runQuickCmd('pwd')">pwd</span>
+        <span class="quick-cmd" onclick="runQuickCmd('id')">id</span>
+        <span class="quick-cmd" onclick="runQuickCmd('ifconfig')">ifconfig</span>
+        <span class="quick-cmd" onclick="runQuickCmd('cat /etc/passwd')">cat /etc/passwd</span>
+        <span class="quick-cmd" onclick="runQuickCmd('ps aux')">ps aux</span>
+        <span class="quick-cmd" onclick="runQuickCmd('netstat -tlnp')">netstat -tlnp</span>
+        <span class="quick-cmd" onclick="runQuickCmd('nmap --help')">nmap --help</span>
+        <span class="quick-cmd" onclick="runQuickCmd('msfconsole')">msfconsole</span>
+        <span class="quick-cmd" onclick="runQuickCmd('hydra')">hydra</span>
+        <span class="quick-cmd" onclick="runQuickCmd('sqlmap --help')">sqlmap --help</span>
+        <span class="quick-cmd" onclick="runQuickCmd('aircrack-ng')">aircrack-ng</span>
+        <span class="quick-cmd" onclick="runQuickCmd('john --help')">john --help</span>
+        <span class="quick-cmd" onclick="runQuickCmd('nikto -h')">nikto -h</span>
+        <span class="quick-cmd" onclick="runQuickCmd('gobuster')">gobuster</span>
+        <span class="quick-cmd" onclick="runQuickCmd('hashcat --help')">hashcat --help</span>
+        <span class="quick-cmd" onclick="runQuickCmd('neofetch')">neofetch</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">KALI ACADEMY</div>
+      <p class="footer-tagline">منصتك الشاملة لتعلم الأمن السيبراني واختبار الاختراق باستخدام كالي لينكس.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">روابط سريعة</div>
+      <ul class="footer-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="commands.html">قاعدة الأوامر</a></li>
+        <li><a href="tutorials.html">الدروس</a></li>
+        <li><a href="tools.html">الأدوات</a></li>
+        <li><a href="terminal.html">Terminal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&#9888;&#65039; هذا الموقع للأغراض التعليمية فقط. استخدم المعرفة بمسؤولية وبطريقة قانونية وأخلاقية.</span>
+    <br><br>
+    <span>&copy; 2026 Kali Academy</span>
+  </div>
+</footer>
+
+<script defer src="js/matrix.js"></script>
+<script defer src="js/main.js"></script>
+<script>
+// ====================================================================
+// KALI ACADEMY - Interactive Terminal Emulator
+// ====================================================================
+(function() {
+  'use strict';
+
+  var output = document.getElementById('termOutput');
+  var input = document.getElementById('termInput');
+  var promptEl = document.getElementById('termPrompt');
+
+  var commandHistory = [];
+  var historyIndex = -1;
+  var commandCount = 0;
+  var sessionStart = Date.now();
+  var currentDir = '~';
+  var currentUser = 'root';
+  var hostname = 'kali';
+  var env = {
+    HOME: '/root',
+    USER: 'root',
+    SHELL: '/bin/bash',
+    PATH: '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+    TERM: 'xterm-256color',
+    LANG: 'en_US.UTF-8',
+    PWD: '/root',
+    LOGNAME: 'root',
+    HOSTNAME: 'kali',
+    EDITOR: 'nano'
+  };
+
+  // Filesystem simulation
+  var filesystem = {
+    '/': { type: 'dir', children: ['root', 'home', 'etc', 'var', 'usr', 'tmp', 'opt', 'bin', 'sbin', 'dev', 'proc', 'sys', 'boot', 'mnt', 'media'] },
+    '/root': { type: 'dir', children: ['.bashrc', '.bash_history', 'Desktop', 'Documents', 'Downloads', 'tools', 'scripts', 'wordlists', '.ssh'] },
+    '/root/Desktop': { type: 'dir', children: ['targets.txt', 'notes.md'] },
+    '/root/Documents': { type: 'dir', children: ['report.pdf', 'pentest-checklist.md'] },
+    '/root/Downloads': { type: 'dir', children: [] },
+    '/root/tools': { type: 'dir', children: ['exploit.py', 'scanner.sh', 'recon.py', 'payload.rb'] },
+    '/root/scripts': { type: 'dir', children: ['automate.sh', 'enum.py', 'cleanup.sh'] },
+    '/root/wordlists': { type: 'dir', children: ['rockyou.txt', 'common.txt', 'dirb-big.txt'] },
+    '/root/.ssh': { type: 'dir', children: ['id_rsa', 'id_rsa.pub', 'known_hosts', 'authorized_keys'] },
+    '/home': { type: 'dir', children: ['user'] },
+    '/home/user': { type: 'dir', children: ['Desktop', 'Documents'] },
+    '/etc': { type: 'dir', children: ['passwd', 'shadow', 'hosts', 'hostname', 'resolv.conf', 'network', 'ssh', 'apache2', 'nginx', 'cron.d'] },
+    '/var': { type: 'dir', children: ['log', 'www', 'lib', 'run', 'tmp'] },
+    '/var/log': { type: 'dir', children: ['syslog', 'auth.log', 'kern.log', 'apache2', 'nginx'] },
+    '/usr': { type: 'dir', children: ['bin', 'sbin', 'lib', 'share', 'local', 'include'] },
+    '/usr/share': { type: 'dir', children: ['wordlists', 'nmap', 'metasploit-framework', 'exploitdb', 'seclists'] },
+    '/usr/share/wordlists': { type: 'dir', children: ['rockyou.txt', 'dirbuster', 'fasttrack.txt', 'fern-wifi'] },
+    '/tmp': { type: 'dir', children: [] },
+    '/opt': { type: 'dir', children: ['metasploit', 'burpsuite', 'ghidra'] },
+    '/bin': { type: 'dir', children: ['bash', 'sh', 'ls', 'cat', 'grep', 'find', 'chmod', 'chown', 'mv', 'cp', 'rm'] },
+    '/sbin': { type: 'dir', children: ['iptables', 'ifconfig', 'route', 'fdisk'] },
+    '/dev': { type: 'dir', children: ['null', 'zero', 'random', 'urandom', 'sda', 'sda1'] },
+    '/proc': { type: 'dir', children: ['1', '2', 'cpuinfo', 'meminfo', 'version', 'net'] },
+    '/sys': { type: 'dir', children: ['class', 'devices', 'kernel', 'module'] },
+    '/boot': { type: 'dir', children: ['vmlinuz', 'initrd.img', 'grub'] },
+    '/mnt': { type: 'dir', children: [] },
+    '/media': { type: 'dir', children: [] }
+  };
+
+  var fileContents = {
+    '/root/.bashrc': '# ~/.bashrc: executed by bash(1) for non-login shells.\nexport PS1=\'\\[\\e[1;32m\\]\\u@\\h\\[\\e[0m\\]:\\[\\e[1;34m\\]\\w\\[\\e[0m\\]\\$ \'\nalias ll=\'ls -la\'\nalias la=\'ls -A\'\nalias update=\'apt update && apt upgrade -y\'\nalias cls=\'clear\'',
+    '/root/.bash_history': 'nmap -sV 192.168.1.0/24\nmsfconsole\nhydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.50\nsqlmap -u "http://target.com/page?id=1" --dbs\nnikto -h http://target.com\ngobuster dir -u http://target.com -w /usr/share/wordlists/dirb-big.txt',
+    '/root/Desktop/targets.txt': '# Target List - Pentest Lab\n192.168.1.10  - Web Server (Apache)\n192.168.1.20  - FTP Server\n192.168.1.30  - SSH Server\n192.168.1.40  - Database Server (MySQL)\n192.168.1.50  - Windows DC\n10.10.10.1    - Router/Gateway',
+    '/root/Desktop/notes.md': '# Pentest Notes\n\n## Discovered Vulnerabilities\n- SQL Injection on login page\n- XSS stored in comment section\n- Default credentials on FTP\n- Outdated Apache version (CVE-2024-xxxx)\n\n## Next Steps\n1. Escalate privileges on web server\n2. Pivot to internal network\n3. Extract database credentials',
+    '/root/tools/exploit.py': '#!/usr/bin/env python3\n# Custom Exploit Script\nimport socket\nimport sys\n\ndef exploit(target, port):\n    print(f"[*] Connecting to {target}:{port}")\n    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)\n    s.connect((target, port))\n    payload = b"A" * 1024 + b"\\x90" * 16 + shellcode\n    s.send(payload)\n    print("[+] Payload sent!")\n\nif __name__ == "__main__":\n    exploit(sys.argv[1], int(sys.argv[2]))',
+    '/etc/passwd': 'root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\nsystemd-network:x:100:102:systemd Network Management:/run/systemd:/usr/sbin/nologin\nsshd:x:101:65534::/run/sshd:/usr/sbin/nologin\nuser:x:1000:1000:Kali User:/home/user:/bin/bash\npostgres:x:116:120:PostgreSQL administrator:/var/lib/postgresql:/bin/bash\nmysql:x:117:121:MySQL Server:/var/lib/mysql:/bin/false',
+    '/etc/shadow': 'root:$6$rounds=656000$salt$hash...:19500:0:99999:7:::\ndaemon:*:19500:0:99999:7:::\nbin:*:19500:0:99999:7:::\nsys:*:19500:0:99999:7:::\nuser:$6$rounds=656000$salt2$hash2...:19500:0:99999:7:::',
+    '/etc/hosts': '127.0.0.1\tlocalhost\n127.0.1.1\tkali\n192.168.1.10\ttarget-web\n192.168.1.20\ttarget-ftp\n192.168.1.50\ttarget-dc\n\n# The following lines are desirable for IPv6 capable hosts\n::1     localhost ip6-localhost ip6-loopback\nff02::1 ip6-allnodes\nff02::2 ip6-allrouters',
+    '/etc/hostname': 'kali',
+    '/etc/resolv.conf': 'nameserver 8.8.8.8\nnameserver 8.8.4.4\nsearch localdomain',
+    '/proc/version': 'Linux version 6.6.15-amd64 (devel@kali.org) (gcc-13 (Debian 13.2.0-13) 13.2.0, GNU ld (GNU Binutils for Debian) 2.42) #1 SMP PREEMPT_DYNAMIC Kali 6.6.15-2kali1 (2024-06-14)',
+    '/proc/cpuinfo': 'processor\t: 0\nvendor_id\t: GenuineIntel\ncpu family\t: 6\nmodel\t\t: 158\nmodel name\t: Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz\nstepping\t: 10\ncpu MHz\t\t: 3700.000\ncache size\t: 12288 KB\ncpu cores\t: 6\nbogomips\t: 7392.00',
+    '/proc/meminfo': 'MemTotal:       16384000 kB\nMemFree:         8234560 kB\nMemAvailable:   12456780 kB\nBuffers:          567890 kB\nCached:          3456789 kB\nSwapTotal:       4194304 kB\nSwapFree:        4194304 kB'
+  };
+
+  function resolvePath(p) {
+    if (!p) return env.PWD;
+    if (p === '~' || p === '$HOME') return env.HOME;
+    if (p.startsWith('~/')) return env.HOME + p.slice(1);
+    if (p.startsWith('/')) return p;
+    var base = env.PWD === '/' ? '' : env.PWD;
+    var parts = (base + '/' + p).split('/').filter(Boolean);
+    var resolved = [];
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i] === '..') resolved.pop();
+      else if (parts[i] !== '.') resolved.push(parts[i]);
+    }
+    return '/' + resolved.join('/') || '/';
+  }
+
+  function getPrompt() {
+    var dir = env.PWD === env.HOME ? '~' : env.PWD;
+    return currentUser + '@' + hostname + ':' + dir + '#';
+  }
+
+  function updatePrompt() {
+    promptEl.textContent = getPrompt() + ' ';
+    document.querySelector('.terminal-titlebar-title').textContent = currentUser + '@' + hostname + ':' + (env.PWD === env.HOME ? '~' : env.PWD);
+  }
+
+  function addLine(text, cls) {
+    var div = document.createElement('div');
+    div.className = 'line ' + (cls || 'line-output');
+    div.textContent = text;
+    output.appendChild(div);
+  }
+
+  function addHTML(html, cls) {
+    var div = document.createElement('div');
+    div.className = 'line ' + (cls || 'line-output');
+    div.innerHTML = html;
+    output.appendChild(div);
+  }
+
+  function addCommandLine(cmd) {
+    addHTML('<span class="line-prompt">' + escapeHtml(getPrompt()) + '</span> <span class="line-cmd">' + escapeHtml(cmd) + '</span>');
+  }
+
+  function escapeHtml(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function scrollToBottom() {
+    output.scrollTop = output.scrollHeight;
+  }
+
+  // === COMMAND HANDLERS ===
+  var commands = {};
+
+  commands.help = function() {
+    addLine('');
+    addLine('=== Kali Academy Terminal - Available Commands ===', 'line-header');
+    addLine('');
+    var cmds = [
+      ['help', 'Show this help message'],
+      ['clear / cls', 'Clear terminal screen'],
+      ['whoami', 'Show current user'],
+      ['id', 'Show user ID information'],
+      ['hostname', 'Show system hostname'],
+      ['uname [-a]', 'Show system information'],
+      ['pwd', 'Print working directory'],
+      ['cd <dir>', 'Change directory'],
+      ['ls [-la] [dir]', 'List directory contents'],
+      ['cat <file>', 'Display file contents'],
+      ['echo <text>', 'Print text to terminal'],
+      ['date', 'Show current date/time'],
+      ['uptime', 'Show system uptime'],
+      ['env / printenv', 'Show environment variables'],
+      ['export VAR=val', 'Set environment variable'],
+      ['history', 'Show command history'],
+      ['ping <host>', 'Simulate ping to host'],
+      ['ifconfig / ip a', 'Show network interfaces'],
+      ['netstat -tlnp', 'Show network connections'],
+      ['ps aux', 'Show running processes'],
+      ['top', 'Show system resource usage'],
+      ['free -h', 'Show memory usage'],
+      ['df -h', 'Show disk usage'],
+      ['nmap [options] <target>', 'Network scanner simulation'],
+      ['nmap --help', 'Show nmap help'],
+      ['msfconsole', 'Start Metasploit simulation'],
+      ['hydra', 'Show Hydra help'],
+      ['sqlmap --help', 'Show SQLMap help'],
+      ['nikto -h', 'Show Nikto help'],
+      ['gobuster', 'Show Gobuster help'],
+      ['john --help', 'Show John the Ripper help'],
+      ['hashcat --help', 'Show Hashcat help'],
+      ['aircrack-ng', 'Show Aircrack-ng help'],
+      ['curl <url>', 'Simulate HTTP request'],
+      ['wget <url>', 'Simulate file download'],
+      ['whois <domain>', 'Simulate WHOIS lookup'],
+      ['dig <domain>', 'Simulate DNS lookup'],
+      ['ssh <user@host>', 'Simulate SSH connection'],
+      ['grep <pattern> <file>', 'Search for pattern in file'],
+      ['find <path> -name <p>', 'Find files simulation'],
+      ['chmod / chown', 'File permission commands'],
+      ['mkdir / touch / rm', 'File management commands'],
+      ['man <command>', 'Show manual for command'],
+      ['neofetch', 'Show system info with ASCII art'],
+      ['banner <text>', 'Display ASCII art banner'],
+    ];
+    for (var i = 0; i < cmds.length; i++) {
+      addHTML('  <span style="color:#0ff;min-width:220px;display:inline-block;">' + escapeHtml(cmds[i][0]) + '</span> <span style="color:rgba(200,255,215,0.55);">' + escapeHtml(cmds[i][1]) + '</span>');
+    }
+    addLine('');
+    addLine('Tip: Use UP/DOWN arrows to navigate command history', 'line-info');
+    addLine('Tip: Type "about" for info about this terminal', 'line-info');
+  };
+
+  commands.about = function() {
+    addLine('');
+    addLine('Kali Academy Terminal Emulator v1.0', 'line-header');
+    addLine('A browser-based Kali Linux terminal simulator for learning.', 'line-info');
+    addLine('This is a simulation - no actual system commands are executed.', 'line-info');
+    addLine('Perfect for practicing command syntax and learning tools.', 'line-info');
+    addLine('Visit https://kali-academy.github.io for more resources.', 'line-success');
+    addLine('');
+  };
+
+  commands.clear = commands.cls = function() {
+    output.innerHTML = '';
+  };
+
+  commands.whoami = function() { addLine(currentUser); };
+  commands.hostname = function() { addLine(hostname); };
+  commands.pwd = function() { addLine(env.PWD); };
+
+  commands.id = function() {
+    addLine('uid=0(root) gid=0(root) groups=0(root),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users)');
+  };
+
+  commands.uname = function(args) {
+    if (args.includes('-a') || args.includes('--all')) {
+      addLine('Linux kali 6.6.15-amd64 #1 SMP PREEMPT_DYNAMIC Kali 6.6.15-2kali1 (2024-06-14) x86_64 GNU/Linux');
+    } else if (args.includes('-r')) {
+      addLine('6.6.15-amd64');
+    } else if (args.includes('-n')) {
+      addLine('kali');
+    } else {
+      addLine('Linux');
+    }
+  };
+
+  commands.date = function() {
+    addLine(new Date().toString());
+  };
+
+  commands.uptime = function() {
+    var h = Math.floor(Math.random() * 24);
+    var m = Math.floor(Math.random() * 60);
+    addLine(' ' + new Date().toLocaleTimeString() + ' up ' + Math.floor(Math.random()*30+1) + ' days, ' + h + ':' + (m<10?'0':'') + m + ',  1 user,  load average: 0.' + Math.floor(Math.random()*50+10) + ', 0.' + Math.floor(Math.random()*40+5) + ', 0.' + Math.floor(Math.random()*30+5));
+  };
+
+  commands.echo = function(args) {
+    var text = args.join(' ');
+    // Handle $VAR
+    text = text.replace(/\$(\w+)/g, function(_, v) { return env[v] || ''; });
+    // Remove quotes
+    text = text.replace(/^["']|["']$/g, '');
+    addLine(text);
+  };
+
+  commands.env = commands.printenv = function() {
+    var keys = Object.keys(env).sort();
+    for (var i = 0; i < keys.length; i++) {
+      addLine(keys[i] + '=' + env[keys[i]]);
+    }
+  };
+
+  commands.export = function(args) {
+    var pair = args.join(' ');
+    var eq = pair.indexOf('=');
+    if (eq > 0) {
+      var k = pair.slice(0, eq).trim();
+      var v = pair.slice(eq+1).trim().replace(/^["']|["']$/g, '');
+      env[k] = v;
+      addLine('export ' + k + '=' + v, 'line-success');
+    } else {
+      addLine('Usage: export KEY=value', 'line-error');
+    }
+  };
+
+  commands.cd = function(args) {
+    var target = args[0] || '~';
+    var resolved = resolvePath(target);
+    if (filesystem[resolved] && filesystem[resolved].type === 'dir') {
+      env.PWD = resolved;
+      updatePrompt();
+    } else if (resolved === '/root' || resolved.startsWith('/root')) {
+      env.PWD = resolved;
+      updatePrompt();
+    } else {
+      addLine('bash: cd: ' + target + ': No such file or directory', 'line-error');
+    }
+  };
+
+  commands.ls = function(args) {
+    var showAll = false, showLong = false, targetPath = null;
+    for (var i = 0; i < args.length; i++) {
+      if (args[i].includes('a')) showAll = true;
+      if (args[i].includes('l')) showLong = true;
+      if (!args[i].startsWith('-')) targetPath = args[i];
+    }
+    var resolved = resolvePath(targetPath || '.');
+    var dir = filesystem[resolved];
+    if (!dir || dir.type !== 'dir') {
+      addLine('ls: cannot access \'' + (targetPath || '.') + '\': No such file or directory', 'line-error');
+      return;
+    }
+    var items = dir.children.slice();
+    if (showAll) items = ['.', '..'].concat(items);
+
+    if (showLong) {
+      addLine('total ' + (items.length * 4));
+      for (var j = 0; j < items.length; j++) {
+        var name = items[j];
+        var childPath = (resolved === '/' ? '' : resolved) + '/' + name;
+        var isDir = filesystem[childPath] && filesystem[childPath].type === 'dir';
+        if (name === '.' || name === '..') isDir = true;
+        if (name.startsWith('.') && !showAll) continue;
+        var perm = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+        var size = isDir ? '4096' : (Math.floor(Math.random()*9000+100) + '');
+        var dateStr = 'Apr  ' + (Math.floor(Math.random()*28+1)) + ' ' + (Math.floor(Math.random()*24)) + ':' + (Math.floor(Math.random()*60)<10?'0':'') + Math.floor(Math.random()*60);
+        var color = isDir ? 'color:#5555ff;font-weight:bold;' : (name.endsWith('.sh') || name.endsWith('.py') || name.endsWith('.rb') ? 'color:#00ff41;' : '');
+        addHTML(perm + '  1 root root ' + size.padStart(6) + ' ' + dateStr + '  <span style="' + color + '">' + escapeHtml(name) + (isDir ? '/' : '') + '</span>');
+      }
+    } else {
+      var line = '';
+      for (var k = 0; k < items.length; k++) {
+        if (items[k].startsWith('.') && !showAll) continue;
+        var cp = (resolved === '/' ? '' : resolved) + '/' + items[k];
+        var id = filesystem[cp] && filesystem[cp].type === 'dir';
+        if (items[k] === '.' || items[k] === '..') id = true;
+        var c = id ? 'color:#5555ff;font-weight:bold;' : (items[k].endsWith('.sh') || items[k].endsWith('.py') ? 'color:#00ff41;' : '');
+        line += '<span style="' + c + 'margin-right:16px;display:inline-block;">' + escapeHtml(items[k]) + (id ? '/' : '') + '</span>';
+      }
+      addHTML(line);
+    }
+  };
+
+  commands.cat = function(args) {
+    if (!args.length) { addLine('cat: missing operand', 'line-error'); return; }
+    var resolved = resolvePath(args[0]);
+    if (fileContents[resolved]) {
+      var lines = fileContents[resolved].split('\n');
+      for (var i = 0; i < lines.length; i++) addLine(lines[i]);
+    } else if (filesystem[resolved] && filesystem[resolved].type === 'dir') {
+      addLine('cat: ' + args[0] + ': Is a directory', 'line-error');
+    } else {
+      addLine('cat: ' + args[0] + ': No such file or directory', 'line-error');
+    }
+  };
+
+  commands.history = function() {
+    for (var i = 0; i < commandHistory.length; i++) {
+      addLine('  ' + (i+1) + '  ' + commandHistory[i]);
+    }
+  };
+
+  commands.ping = function(args) {
+    if (!args.length) { addLine('ping: usage: ping [-c count] host', 'line-error'); return; }
+    var host = args[args.length - 1];
+    addLine('PING ' + host + ' (' + (host.match(/^\d/) ? host : '93.184.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255)) + ') 56(84) bytes of data.');
+    for (var i = 0; i < 4; i++) {
+      var ms = (Math.random() * 50 + 10).toFixed(1);
+      addLine('64 bytes from ' + host + ': icmp_seq=' + (i+1) + ' ttl=64 time=' + ms + ' ms');
+    }
+    addLine('');
+    addLine('--- ' + host + ' ping statistics ---');
+    addLine('4 packets transmitted, 4 received, 0% packet loss, time 3006ms');
+    addLine('rtt min/avg/max/mdev = 10.1/25.3/48.2/12.4 ms');
+  };
+
+  commands.ifconfig = function() {
+    addLine('eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500');
+    addLine('        inet 192.168.1.100  netmask 255.255.255.0  broadcast 192.168.1.255');
+    addLine('        inet6 fe80::a00:27ff:fe8e:1234  prefixlen 64  scopeid 0x20<link>');
+    addLine('        ether 08:00:27:8e:12:34  txqueuelen 1000  (Ethernet)');
+    addLine('        RX packets 15234  bytes 12345678 (11.7 MiB)');
+    addLine('        TX packets 9876  bytes 876543 (856.0 KiB)');
+    addLine('');
+    addLine('lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536');
+    addLine('        inet 127.0.0.1  netmask 255.0.0.0');
+    addLine('        inet6 ::1  prefixlen 128  scopeid 0x10<host>');
+    addLine('        loop  txqueuelen 1000  (Local Loopback)');
+    addLine('');
+    addLine('wlan0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500');
+    addLine('        inet 192.168.1.101  netmask 255.255.255.0  broadcast 192.168.1.255');
+    addLine('        ether aa:bb:cc:dd:ee:ff  txqueuelen 1000  (Ethernet)');
+  };
+
+  commands.ip = function(args) {
+    if (args[0] === 'a' || args[0] === 'addr') {
+      commands.ifconfig();
+    } else {
+      addLine('Usage: ip [addr|route|link|neigh]', 'line-info');
+    }
+  };
+
+  commands.netstat = function() {
+    addLine('Active Internet connections (only servers)');
+    addLine('Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name');
+    addLine('tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1234/sshd');
+    addLine('tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      5678/apache2');
+    addLine('tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      5678/apache2');
+    addLine('tcp        0      0 127.0.0.1:5432          0.0.0.0:*               LISTEN      9012/postgres');
+    addLine('tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      3456/mysqld');
+    addLine('tcp6       0      0 :::22                   :::*                    LISTEN      1234/sshd');
+  };
+
+  commands.ps = function() {
+    addLine('USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND');
+    addLine('root           1  0.0  0.1 169436 12340 ?        Ss   10:00   0:02 /sbin/init');
+    addLine('root         234  0.0  0.0  25688  3456 ?        Ss   10:00   0:00 /usr/sbin/cron -f');
+    addLine('root         456  0.0  0.1  72296  8765 ?        Ss   10:00   0:00 /usr/sbin/sshd -D');
+    addLine('root         789  0.0  0.2 274632 23456 ?        Ss   10:00   0:01 /usr/sbin/apache2 -k start');
+    addLine('www-data     790  0.0  0.1 275432 12345 ?        S    10:00   0:00 /usr/sbin/apache2 -k start');
+    addLine('postgres    1012  0.0  0.3 214568 34567 ?        Ss   10:01   0:00 /usr/lib/postgresql/15/bin/postgres');
+    addLine('root        1234  0.0  0.0  12345  2345 ?        S    10:02   0:00 /usr/sbin/NetworkManager');
+    addLine('root        5678  0.2  0.4 456789 45678 pts/0    S+   10:05   0:05 msfconsole');
+    addLine('root        9999  0.0  0.0   8536  3456 pts/1    R+   ' + new Date().toLocaleTimeString().slice(0,5) + '   0:00 ps aux');
+  };
+
+  commands.top = function() {
+    addLine('top - ' + new Date().toLocaleTimeString() + ' up 5 days, 12:34,  1 user,  load average: 0.35, 0.22, 0.18', 'line-header');
+    addLine('Tasks: 156 total,   1 running, 155 sleeping,   0 stopped,   0 zombie');
+    addLine('%Cpu(s):  5.2 us,  1.8 sy,  0.0 ni, 92.1 id,  0.8 wa,  0.0 hi,  0.1 si');
+    addLine('MiB Mem:  16000.0 total,   8234.5 free,   4567.8 used,   3197.7 buff/cache');
+    addLine('MiB Swap:  4096.0 total,   4096.0 free,      0.0 used.  12456.7 avail Mem');
+    addLine('');
+    addLine('    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND', 'line-header');
+    addLine('   5678 root      20   0  456789  45678  12345 S   2.3   0.4   0:05.23 msfconsole');
+    addLine('    789 root      20   0  274632  23456   8765 S   0.7   0.2   0:01.56 apache2');
+    addLine('   1012 postgres  20   0  214568  34567  12345 S   0.3   0.3   0:00.89 postgres');
+    addLine('      1 root      20   0  169436  12340   8765 S   0.0   0.1   0:02.34 systemd');
+    addLine('');
+    addLine('(simulated output - press q to exit in real terminal)', 'line-comment');
+  };
+
+  commands.free = function() {
+    addLine('               total        used        free      shared  buff/cache   available');
+    addLine('Mem:           15Gi       4.5Gi       8.0Gi       256Mi       3.1Gi        12Gi');
+    addLine('Swap:         4.0Gi          0B       4.0Gi');
+  };
+
+  commands.df = function() {
+    addLine('Filesystem      Size  Used Avail Use% Mounted on');
+    addLine('/dev/sda1        50G   18G   30G  38% /');
+    addLine('tmpfs           7.8G     0  7.8G   0% /dev/shm');
+    addLine('tmpfs           3.2G  9.6M  3.2G   1% /run');
+    addLine('/dev/sda2       200G   45G  145G  24% /home');
+    addLine('tmpfs           7.8G   80K  7.8G   1% /tmp');
+  };
+
+  commands.nmap = function(args) {
+    if (!args.length || args[0] === '--help' || args[0] === '-h') {
+      addLine('Nmap 7.94SVN ( https://nmap.org )', 'line-header');
+      addLine('Usage: nmap [Scan Type(s)] [Options] {target specification}');
+      addLine('');
+      addLine('SCAN TECHNIQUES:', 'line-info');
+      addLine('  -sS/sT/sA/sW/sM: TCP SYN/Connect()/ACK/Window/Maimon scans');
+      addLine('  -sU: UDP Scan');
+      addLine('  -sV: Probe open ports to determine service/version info');
+      addLine('  -sC: Script scan (equivalent to --script=default)');
+      addLine('  -O:  Enable OS detection');
+      addLine('  -A:  Enable OS detection, version detection, script scanning');
+      addLine('');
+      addLine('PORT SPECIFICATION:', 'line-info');
+      addLine('  -p <port ranges>: Only scan specified ports');
+      addLine('  -p-: Scan all 65535 ports');
+      addLine('  --top-ports <number>: Scan most common ports');
+      addLine('');
+      addLine('OUTPUT:', 'line-info');
+      addLine('  -oN/-oX/-oG <file>: Output normal/XML/grepable');
+      addLine('  -v: Increase verbosity level');
+      addLine('');
+      addLine('EXAMPLES:', 'line-info');
+      addLine('  nmap -sV -p 1-1000 192.168.1.1');
+      addLine('  nmap -A -T4 scanme.nmap.org');
+      addLine('  nmap -sS -sV -O 10.10.10.1');
+      return;
+    }
+    var target = args[args.length - 1];
+    addLine('Starting Nmap 7.94SVN ( https://nmap.org ) at ' + new Date().toLocaleString(), 'line-info');
+    addLine('Nmap scan report for ' + target);
+    addLine('Host is up (0.0' + Math.floor(Math.random()*90+10) + 's latency).');
+    addLine('');
+    addLine('PORT      STATE    SERVICE      VERSION', 'line-header');
+    addLine('22/tcp    open     ssh          OpenSSH 8.9p1 Debian 3+deb12u1', 'line-success');
+    addLine('80/tcp    open     http         Apache httpd 2.4.57', 'line-success');
+    addLine('443/tcp   open     ssl/http     Apache httpd 2.4.57', 'line-success');
+    addLine('3306/tcp  open     mysql        MySQL 8.0.35', 'line-success');
+    addLine('5432/tcp  filtered postgresql', 'line-info');
+    addLine('8080/tcp  open     http-proxy   Squid http proxy 5.7', 'line-success');
+    addLine('');
+    addLine('Nmap done: 1 IP address (1 host up) scanned in ' + (Math.random()*10+2).toFixed(2) + ' seconds');
+  };
+
+  commands.msfconsole = function() {
+    addLine('', 'line-output');
+    addLine('                                                  ', 'ascii-art');
+    addLine('     ,           ,', 'ascii-art');
+    addLine('    /             \\', 'ascii-art');
+    addLine('   ((__---,,,---__))     Metasploit Framework', 'ascii-art');
+    addLine('      (--(o)-(o)--)      Version: 6.4.2-dev', 'ascii-art');
+    addLine('      (  (  /\\  )  )     https://metasploit.com', 'ascii-art');
+    addLine('       (  \\/ \\/  )', 'ascii-art');
+    addLine('        (  /\\/\\  )', 'ascii-art');
+    addLine('         \\/    \\/', 'ascii-art');
+    addLine('');
+    addLine('       =[ metasploit v6.4.2-dev                          ]', 'line-success');
+    addLine('+ -- --=[ 2397 exploits - 1235 auxiliary - 422 post       ]', 'line-info');
+    addLine('+ -- --=[ 1391 payloads - 46 encoders - 11 nops          ]', 'line-info');
+    addLine('+ -- --=[ 9 evasion                                       ]', 'line-info');
+    addLine('');
+    addLine('msf6 > (simulation mode - type commands normally)', 'line-comment');
+  };
+
+  commands.hydra = function() {
+    addLine('Hydra v9.5 (c) 2023 by van Hauser/THC & David Maciejak', 'line-header');
+    addLine('');
+    addLine('Usage: hydra [OPTIONS] target service', 'line-info');
+    addLine('Options:');
+    addLine('  -l LOGIN    Single login name');
+    addLine('  -L FILE     Login name list');
+    addLine('  -p PASS     Single password');
+    addLine('  -P FILE     Password list');
+    addLine('  -t TASKS    Number of parallel connections (default: 16)');
+    addLine('  -s PORT     Target port');
+    addLine('  -f          Stop after first found pair');
+    addLine('  -v          Verbose output');
+    addLine('');
+    addLine('Examples:', 'line-info');
+    addLine('  hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.50');
+    addLine('  hydra -L users.txt -P pass.txt 192.168.1.50 http-post-form "/login:user=^USER^&pass=^PASS^:F=failed"');
+  };
+
+  commands.sqlmap = function() {
+    addLine('        ___', 'ascii-art');
+    addLine('       __H__', 'ascii-art');
+    addLine(' ___ ___[)]_____ ___ ___  {1.8.2#stable}', 'ascii-art');
+    addLine('|_ -| . ["]     | .\'| . |', 'ascii-art');
+    addLine('|___|_  [.]_|_|_|__,|  _|', 'ascii-art');
+    addLine('      |_|V...       |_|   https://sqlmap.org', 'ascii-art');
+    addLine('');
+    addLine('Usage: sqlmap [options]', 'line-info');
+    addLine('');
+    addLine('Options:', 'line-info');
+    addLine('  -u URL           Target URL');
+    addLine('  --dbs            Enumerate databases');
+    addLine('  --tables         Enumerate tables');
+    addLine('  --dump           Dump table entries');
+    addLine('  --forms          Automatically test forms');
+    addLine('  --batch          Non-interactive mode');
+    addLine('  --level=LEVEL    Level of tests (1-5)');
+    addLine('  --risk=RISK      Risk of tests (1-3)');
+    addLine('');
+    addLine('Example: sqlmap -u "http://target.com/page?id=1" --dbs --batch', 'line-info');
+  };
+
+  commands.nikto = function() {
+    addLine('Nikto v2.5.0', 'line-header');
+    addLine('Usage: nikto [options]');
+    addLine('  -h <host>      Target host');
+    addLine('  -p <port>      Target port (default 80)');
+    addLine('  -ssl           Force SSL mode');
+    addLine('  -o <file>      Output file');
+    addLine('  -Format <fmt>  Output format (htm,csv,txt,xml)');
+    addLine('  -Tuning <x>    Scan tuning');
+    addLine('');
+    addLine('Example: nikto -h http://target.com -o report.html -Format htm', 'line-info');
+  };
+
+  commands.gobuster = function() {
+    addLine('Gobuster v3.6', 'line-header');
+    addLine('Usage: gobuster [command] [flags]');
+    addLine('');
+    addLine('Commands:', 'line-info');
+    addLine('  dir     Directory/file enumeration');
+    addLine('  dns     DNS subdomain enumeration');
+    addLine('  vhost   Virtual host enumeration');
+    addLine('  fuzz    Fuzzing mode');
+    addLine('');
+    addLine('Dir Flags:', 'line-info');
+    addLine('  -u <url>        Target URL');
+    addLine('  -w <wordlist>   Path to wordlist');
+    addLine('  -t <threads>    Number of threads');
+    addLine('  -x <ext>        File extensions to search');
+    addLine('');
+    addLine('Example: gobuster dir -u http://target.com -w /usr/share/wordlists/dirb-big.txt -t 50', 'line-info');
+  };
+
+  commands.john = function() {
+    addLine('John the Ripper 1.9.0-jumbo-1+bleeding', 'line-header');
+    addLine('Usage: john [OPTIONS] [PASSWORD-FILES]');
+    addLine('  --wordlist=FILE     Wordlist mode');
+    addLine('  --rules             Enable word mangling rules');
+    addLine('  --incremental       Incremental mode');
+    addLine('  --format=FORMAT     Force hash format');
+    addLine('  --show              Show cracked passwords');
+    addLine('  --pot=FILE          Pot file to use');
+    addLine('');
+    addLine('Example: john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt', 'line-info');
+  };
+
+  commands.hashcat = function() {
+    addLine('hashcat v6.2.6', 'line-header');
+    addLine('Usage: hashcat [options] hashfile [dictionary|mask]');
+    addLine('  -m <num>      Hash type');
+    addLine('  -a <num>      Attack mode (0=dict, 1=combi, 3=brute-force)');
+    addLine('  -o <file>     Output file');
+    addLine('  --show        Show cracked hashes');
+    addLine('');
+    addLine('Common hash types:', 'line-info');
+    addLine('  0    = MD5');
+    addLine('  100  = SHA1');
+    addLine('  1400 = SHA-256');
+    addLine('  1800 = sha512crypt');
+    addLine('  3200 = bcrypt');
+    addLine('');
+    addLine('Example: hashcat -m 0 -a 0 hashes.txt /usr/share/wordlists/rockyou.txt', 'line-info');
+  };
+
+  commands['aircrack-ng'] = function() {
+    addLine('Aircrack-ng 1.7', 'line-header');
+    addLine('Usage: aircrack-ng [options] <capture file(s)>');
+    addLine('');
+    addLine('Suite includes:', 'line-info');
+    addLine('  aircrack-ng   - WEP/WPA key cracker');
+    addLine('  airmon-ng     - Monitor mode enabler');
+    addLine('  airodump-ng   - Packet capture tool');
+    addLine('  aireplay-ng   - Packet injection tool');
+    addLine('  airbase-ng    - Fake AP tool');
+    addLine('');
+    addLine('Example workflow:', 'line-info');
+    addLine('  airmon-ng start wlan0');
+    addLine('  airodump-ng wlan0mon');
+    addLine('  airodump-ng -c 6 --bssid AA:BB:CC:DD:EE:FF -w capture wlan0mon');
+    addLine('  aircrack-ng -w /usr/share/wordlists/rockyou.txt capture-01.cap');
+  };
+
+  commands.curl = function(args) {
+    if (!args.length) { addLine('curl: try \'curl --help\' for more info', 'line-error'); return; }
+    var url = args[args.length - 1];
+    addLine('  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current');
+    addLine('                                 Dload  Upload   Total   Spent    Left  Speed');
+    addLine('100  1256  100  1256    0     0  12560      0 --:--:-- --:--:-- --:--:-- 12560');
+    addLine('');
+    addLine('<!DOCTYPE html>', 'line-output');
+    addLine('<html><head><title>200 OK</title></head>', 'line-output');
+    addLine('<body><h1>Welcome to ' + escapeHtml(url) + '</h1></body></html>', 'line-output');
+  };
+
+  commands.wget = function(args) {
+    if (!args.length) { addLine('wget: missing URL', 'line-error'); return; }
+    var url = args[args.length - 1];
+    var fname = url.split('/').pop() || 'index.html';
+    addLine('--' + new Date().toISOString() + '--  ' + url);
+    addLine('Resolving ' + url.replace(/https?:\/\//, '').split('/')[0] + '... 93.184.216.34');
+    addLine('Connecting... connected.');
+    addLine('HTTP request sent, awaiting response... 200 OK');
+    addLine('Length: 12345 (12K) [text/html]');
+    addLine('Saving to: \'' + fname + '\'');
+    addLine('');
+    addLine(fname + '      100%[==================>]  12.05K  --.-KB/s    in 0.001s');
+    addLine('');
+    addLine(new Date().toISOString() + ' - \'' + fname + '\' saved [12345/12345]', 'line-success');
+  };
+
+  commands.whois = function(args) {
+    if (!args.length) { addLine('Usage: whois domain', 'line-error'); return; }
+    var domain = args[0];
+    addLine('Domain Name: ' + domain.toUpperCase());
+    addLine('Registry Domain ID: 1234567890_DOMAIN');
+    addLine('Registrar WHOIS Server: whois.registrar.com');
+    addLine('Registrar URL: http://www.registrar.com');
+    addLine('Updated Date: 2024-01-15T12:00:00Z');
+    addLine('Creation Date: 2020-06-01T00:00:00Z');
+    addLine('Registrar: Example Registrar, Inc.');
+    addLine('Name Server: NS1.EXAMPLE.COM');
+    addLine('Name Server: NS2.EXAMPLE.COM');
+    addLine('DNSSEC: unsigned');
+  };
+
+  commands.dig = function(args) {
+    if (!args.length) { addLine('Usage: dig domain', 'line-error'); return; }
+    var domain = args[0];
+    addLine('; <<>> DiG 9.18.18-0ubuntu0.22.04.2-Ubuntu <<>> ' + domain);
+    addLine(';; global options: +cmd');
+    addLine(';; Got answer:');
+    addLine(';; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: ' + Math.floor(Math.random()*65535));
+    addLine('');
+    addLine(';; ANSWER SECTION:', 'line-info');
+    addLine(domain + '.        300  IN  A     93.184.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255));
+    addLine(domain + '.        300  IN  AAAA  2606:2800:220:1:248:1893:25c8:1946');
+    addLine('');
+    addLine(';; Query time: ' + Math.floor(Math.random()*50+5) + ' msec');
+    addLine(';; SERVER: 8.8.8.8#53(8.8.8.8)');
+    addLine(';; WHEN: ' + new Date().toString());
+  };
+
+  commands.ssh = function(args) {
+    if (!args.length) { addLine('usage: ssh [-p port] user@hostname', 'line-error'); return; }
+    addLine('The authenticity of host \'' + args[0] + '\' can\'t be established.');
+    addLine('ED25519 key fingerprint is SHA256:' + btoa(Math.random().toString()).slice(0,43) + '.');
+    addLine('Are you sure you want to continue connecting (yes/no)?');
+    addLine('(simulation - connection not established)', 'line-comment');
+  };
+
+  commands.grep = function(args) {
+    if (args.length < 2) { addLine('Usage: grep [OPTION] PATTERN [FILE]', 'line-error'); return; }
+    addLine('(grep simulation - in real terminal, this searches file contents)', 'line-comment');
+    addLine('Match found: example output for pattern "' + args[0] + '"', 'line-success');
+  };
+
+  commands.find = function(args) {
+    if (args.length < 1) { addLine('Usage: find [path] [expression]', 'line-error'); return; }
+    addLine('./file1.txt');
+    addLine('./subdir/file2.conf');
+    addLine('./scripts/automate.sh');
+    addLine('(find simulation)', 'line-comment');
+  };
+
+  commands.chmod = function(args) {
+    if (args.length < 2) { addLine('Usage: chmod [mode] file', 'line-error'); return; }
+    addLine('(permissions updated)', 'line-success');
+  };
+
+  commands.chown = function(args) {
+    if (args.length < 2) { addLine('Usage: chown [owner:group] file', 'line-error'); return; }
+    addLine('(ownership updated)', 'line-success');
+  };
+
+  commands.mkdir = function(args) {
+    if (!args.length) { addLine('mkdir: missing operand', 'line-error'); return; }
+    addLine('(directory created: ' + args[0] + ')', 'line-success');
+  };
+
+  commands.touch = function(args) {
+    if (!args.length) { addLine('touch: missing file operand', 'line-error'); return; }
+    addLine('(file created: ' + args[0] + ')', 'line-success');
+  };
+
+  commands.rm = function(args) {
+    if (!args.length) { addLine('rm: missing operand', 'line-error'); return; }
+    addLine('(removed: ' + args.join(', ') + ')', 'line-success');
+  };
+
+  commands.man = function(args) {
+    if (!args.length) { addLine('What manual page do you want?', 'line-error'); return; }
+    var cmd = args[0];
+    addLine(cmd.toUpperCase() + '(1)                User Commands                ' + cmd.toUpperCase() + '(1)', 'line-header');
+    addLine('');
+    addLine('NAME', 'line-info');
+    addLine('       ' + cmd + ' - ' + (commands[cmd] ? 'available in this terminal' : 'standard Linux command'));
+    addLine('');
+    addLine('DESCRIPTION', 'line-info');
+    addLine('       Type "' + cmd + ' --help" for usage information.');
+    addLine('       Visit Kali Academy commands page for detailed documentation.');
+    addLine('');
+    addLine('SEE ALSO', 'line-info');
+    addLine('       https://kali-academy.github.io/commands.html');
+  };
+
+  commands.neofetch = function() {
+    var lines = [
+      '        ..............            root@kali',
+      '       ..            ..           ----------',
+      '     ..    ........    ..         OS: Kali GNU/Linux Rolling x86_64',
+      '   ..    ..........    ..         Host: KaliAcademy Virtual Lab',
+      '  ..    ............    ..        Kernel: 6.6.15-amd64',
+      '  ..   ..............   ..        Uptime: 5 days, 12 hours',
+      '  ..   ..............   ..        Packages: 3456 (dpkg)',
+      '  ..    ............    ..        Shell: bash 5.2.15',
+      '   ..    ..........    ..         Terminal: KaliAcademy Web Terminal',
+      '     ..    ........    ..         CPU: Intel i7-8700K (6) @ 3.700GHz',
+      '       ..            ..           GPU: VMware SVGA II Adapter',
+      '        ..............            Memory: 4567MiB / 16000MiB',
+    ];
+    for (var i = 0; i < lines.length; i++) {
+      if (i < 2) addHTML('<span style="color:#5555ff;">' + escapeHtml(lines[i]) + '</span>');
+      else addHTML('<span style="color:#5555ff;">' + escapeHtml(lines[i].slice(0, 32)) + '</span>' + escapeHtml(lines[i].slice(32)));
+    }
+  };
+
+  commands.banner = function(args) {
+    var text = args.join(' ').toUpperCase() || 'KALI';
+    addLine('');
+    addLine(' _  __     _     _      ___     ', 'ascii-art');
+    addLine('| |/ /    / \\   | |    |_ _|    ' + text, 'ascii-art');
+    addLine('| \' /    / _ \\  | |     | |     ', 'ascii-art');
+    addLine('| . \\   / ___ \\ | |___  | |     ', 'ascii-art');
+    addLine('|_|\\_\\ /_/   \\_\\|_____||___|    ', 'ascii-art');
+    addLine('', 'ascii-art');
+    addLine('                                 ACADEMY', 'ascii-art');
+    addLine('');
+  };
+
+  // ===== WELCOME MESSAGE =====
+  function showWelcome() {
+    addHTML('<span class="ascii-art" style="color:#00ff41;">  _  __     _ _      _                _</span>');
+    addHTML('<span class="ascii-art" style="color:#00ff41;"> | |/ /__ _| (_)    / \\   ___ __ _ __| | ___ _ __ ___  _   _</span>');
+    addHTML('<span class="ascii-art" style="color:#00ff41;"> | \' // _` | | |   / _ \\ / __/ _` / _` |/ _ \\ \'_ ` _ \\| | | |</span>');
+    addHTML('<span class="ascii-art" style="color:#00ff41;"> | . \\ (_| | | |  / ___ \\ (_| (_| \\__,_|  __/ | | | | | |_| |</span>');
+    addHTML('<span class="ascii-art" style="color:#00ff41;"> |_|\\_\\__,_|_|_| /_/   \\_\\___\\__,_|\\__,_|\\___|_| |_| |_|\\__, |</span>');
+    addHTML('<span class="ascii-art" style="color:#00ff41;">                                                        |___/</span>');
+    addLine('');
+    addLine('Welcome to Kali Academy Interactive Terminal Emulator', 'line-header');
+    addLine('Version 1.0 | Type "help" for available commands', 'line-info');
+    addLine('This is a simulation for learning purposes - no real commands are executed.', 'line-comment');
+    addLine('');
+  }
+
+  // ===== PROCESS COMMAND =====
+  function processCommand(cmd) {
+    cmd = cmd.trim();
+    if (!cmd) return;
+
+    commandHistory.push(cmd);
+    historyIndex = commandHistory.length;
+    commandCount++;
+    document.getElementById('cmdCount').textContent = 'COMMANDS: ' + commandCount;
+
+    addCommandLine(cmd);
+
+    // Parse command
+    var parts = cmd.split(/\s+/);
+    var name = parts[0].toLowerCase();
+    var args = parts.slice(1);
+
+    // Aliases
+    if (name === 'll') { name = 'ls'; args = ['-la']; }
+    if (name === 'la') { name = 'ls'; args = ['-A']; }
+    if (name === 'cls') { name = 'clear'; }
+
+    // Handle pipe (just show first command output)
+    if (cmd.includes('|')) {
+      var firstCmd = cmd.split('|')[0].trim();
+      parts = firstCmd.split(/\s+/);
+      name = parts[0].toLowerCase();
+      args = parts.slice(1);
+    }
+
+    if (commands[name]) {
+      commands[name](args);
+    } else if (name === 'exit' || name === 'logout') {
+      addLine('logout', 'line-info');
+      addLine('Session ended. Refresh to start a new session.', 'line-comment');
+    } else if (name === 'su' || name === 'sudo') {
+      addLine('Already running as root!', 'line-info');
+    } else if (name === 'apt' || name === 'apt-get') {
+      addLine('Reading package lists... Done', 'line-output');
+      addLine('(package manager simulation)', 'line-comment');
+    } else if (name === 'python' || name === 'python3') {
+      addLine('Python 3.11.6 (default, Oct  3 2023, 00:00:00)');
+      addLine('[GCC 13.2.0] on linux');
+      addLine('Type "help", "copyright", "credits" or "license" for more info.');
+      addLine('>>> (simulation - interactive Python not available)', 'line-comment');
+    } else if (name === 'service' || name === 'systemctl') {
+      addLine('(service management simulation)', 'line-comment');
+      if (args.length >= 2) addLine(args[args.length-1] + ' ' + args[0], 'line-success');
+    } else if (name === 'wireshark') {
+      addLine('Wireshark 4.2.0 (v4.2.0-0-g54eedfc63953)', 'line-header');
+      addLine('(GUI application - use tshark for CLI)', 'line-comment');
+    } else if (name === 'tshark') {
+      addLine('TShark (Wireshark) 4.2.0', 'line-header');
+      addLine('Usage: tshark [options] ...', 'line-info');
+    } else if (name === 'burpsuite') {
+      addLine('Burp Suite Professional v2024.3', 'line-header');
+      addLine('(GUI application - cannot run in terminal)', 'line-comment');
+    } else {
+      addLine('bash: ' + name + ': command not found', 'line-error');
+      addLine('Type "help" to see available commands', 'line-comment');
+    }
+
+    scrollToBottom();
+  }
+
+  // ===== EVENT LISTENERS =====
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      processCommand(input.value);
+      input.value = '';
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (historyIndex > 0) {
+        historyIndex--;
+        input.value = commandHistory[historyIndex];
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        input.value = commandHistory[historyIndex];
+      } else {
+        historyIndex = commandHistory.length;
+        input.value = '';
+      }
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      // Simple tab completion
+      var val = input.value.trim();
+      if (val) {
+        var matches = Object.keys(commands).filter(function(c) { return c.startsWith(val); });
+        if (matches.length === 1) {
+          input.value = matches[0] + ' ';
+        } else if (matches.length > 1) {
+          addCommandLine(val);
+          addLine(matches.join('  '), 'line-info');
+          scrollToBottom();
+        }
+      }
+    } else if (e.key === 'l' && e.ctrlKey) {
+      e.preventDefault();
+      commands.clear();
+    } else if (e.key === 'c' && e.ctrlKey) {
+      e.preventDefault();
+      addCommandLine(input.value + '^C');
+      input.value = '';
+    }
+  });
+
+  // Click on terminal focuses input
+  document.getElementById('terminalWindow').addEventListener('click', function(e) {
+    if (e.target.tagName !== 'BUTTON' && !e.target.closest('.terminal-titlebar-actions')) {
+      input.focus();
+    }
+  });
+
+  // Session timer
+  setInterval(function() {
+    var elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+    var m = Math.floor(elapsed / 60);
+    var s = elapsed % 60;
+    document.getElementById('sessionTime').textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }, 1000);
+
+  // Globals
+  window.termClear = function() { commands.clear(); input.focus(); };
+
+  window.termFullscreen = function() {
+    var el = document.getElementById('terminalWindow');
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      el.requestFullscreen().catch(function(){});
+    }
+  };
+
+  window.showHelp = function() { commands.help(); scrollToBottom(); input.focus(); };
+
+  window.exportTerminal = function() {
+    var lines = output.querySelectorAll('.line');
+    var text = '';
+    for (var i = 0; i < lines.length; i++) {
+      text += lines[i].textContent + '\n';
+    }
+    var blob = new Blob([text], { type: 'text/plain' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'kali-terminal-session-' + new Date().toISOString().slice(0,10) + '.txt';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  window.runQuickCmd = function(cmd) {
+    input.value = cmd;
+    processCommand(cmd);
+    input.value = '';
+    input.focus();
+  };
+
+  // Initialize
+  showWelcome();
+  updatePrompt();
+  input.focus();
+})();
+</script>
+</body>
+</html>
