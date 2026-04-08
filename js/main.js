@@ -243,38 +243,40 @@ window.kaliShare = kaliShare;
 
 // ===== COUNTER ANIMATION =====
 function animateCounters() {
-  document.querySelectorAll('[data-count]').forEach(el => {
-    const target = parseInt(el.getAttribute('data-count'));
-    const suffix = el.getAttribute('data-suffix') || '';
-    const duration = 2000;
-    const step = target / (duration / 16);
-    let current = 0;
-    const timer = setInterval(() => {
-      current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
+  document.querySelectorAll('[data-count]').forEach(function(el) {
+    var target = parseInt(el.getAttribute('data-count')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (target <= 0) { el.textContent = '0' + suffix; return; }
+    var duration = 1500;
+    var startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(eased * target);
+      el.textContent = current.toLocaleString() + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target.toLocaleString() + suffix;
       }
-      el.textContent = Math.floor(current).toLocaleString() + suffix;
-    }, 16);
+    }
+    requestAnimationFrame(step);
   });
 }
 
 // ===== INTERSECTION OBSERVER =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
     if (entry.isIntersecting) {
-      entry.target.style.animationPlayState = 'running';
       entry.target.classList.add('visible');
-      if (entry.target.hasAttribute('data-count')) {
-        animateCounters();
-      }
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
     }
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.stat-card, .feature-card, .tutorial-card').forEach(el => {
-  el.style.animationPlayState = 'paused';
+document.querySelectorAll('.feature-card, .tutorial-card').forEach(function(el) {
   observer.observe(el);
 });
 
@@ -316,26 +318,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // ===== INITIALIZE =====
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   createLanguageToggle();
   applyI18n(currentLang);
   bindShareButtons();
 
-  // Start counter animation if stats are in view
-  const statsSection = document.querySelector('.stats-section');
-  if (statsSection) {
-    const statsObserver = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        animateCounters();
-        statsObserver.disconnect();
-      }
-    });
-    statsObserver.observe(statsSection);
-  }
-  
-  // Add fade-in animation to cards
-  document.querySelectorAll('.feature-card, .category-card').forEach((card, i) => {
-    card.style.animationDelay = `${i * 0.1}s`;
-    card.classList.add('fade-in-up');
-  });
+  // Ensure body is always visible
+  document.body.style.opacity = '1';
+  document.body.classList.remove('page-leaving', 'page-entering');
 });

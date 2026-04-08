@@ -93,7 +93,7 @@
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
     <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
-    <li><a href="register.html" class="nav-link" style="color:var(--primary);border:1px solid rgba(0,255,65,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-user-circle"></i> <span>حسابي</span></a></li>
+    <li><a href="terminal.html" class="nav-link" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
     <li>
       <a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;">
         <i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span>
@@ -120,7 +120,7 @@
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a>
   <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a>
-  <a href="register.html" class="nav-link mobile-nav-link" style="color:var(--primary);"><i class="fas fa-user-circle"></i> حسابي / تسجيل</a>
+  <a href="terminal.html" class="nav-link mobile-nav-link" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
   <a href="#" class="nav-link mobile-nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة الموقع</span></a>
 
 <a href="disclaimer-owner.html" class="nav-link mobile-nav-link" style="color:#ff9966;"><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</a>
@@ -344,7 +344,7 @@
       </div>
       <div class="stat-card">
         <span class="stat-icon">🔧</span>
-        <span id="stat-tools" class="stat-number" data-count="100" data-suffix="">100</span>
+        <span id="stat-tools" class="stat-number" data-count="500" data-suffix="">500</span>
         <span class="stat-label">أداة مشروحة</span>
       </div>
       <div class="stat-card">
@@ -354,7 +354,7 @@
       </div>
       <div class="stat-card">
         <span class="stat-icon">🏆</span>
-        <span id="stat-tracks" class="stat-number" data-count="0" data-suffix="">0</span>
+        <span id="stat-tracks" class="stat-number" data-count="12" data-suffix="">12</span>
         <span class="stat-label">مسار تعليمي</span>
       </div>
     </div>
@@ -613,8 +613,7 @@
         <li><a href="steps.html">السيناريوهات التطبيقية</a></li>
         <li><a href="tools.html">الأدوات</a></li>
         <li><a href="articles.html">المقالات</a></li>
-        <li><a href="register.html">👤 إنشاء حساب</a></li>
-        <li><a href="profile.html">📊 ملفي الشخصي</a></li>
+        <li><a href="terminal.html" style="color:#0ff;">💻 Terminal</a></li>
         <li><a href="disclaimer-owner.html" style="color:#ff6060;">⚠️ إخلاء المسؤولية</a></li>
       </ul>
     </div>
@@ -648,24 +647,6 @@
 <script defer src="js/matrix.js"></script>
 <script defer src="js/main.js"></script>
 <script>
-function updateStatElement(id, value) {
-  const element = document.getElementById(id);
-  if (!element) return;
-  element.setAttribute('data-count', String(value));
-  element.setAttribute('data-suffix', '');
-  element.textContent = Number(value).toLocaleString('ar');
-}
-
-function updateHeroCounts(stats) {
-  const heroCommands = document.getElementById('hero-count-commands');
-  const heroLessons = document.getElementById('hero-count-lessons');
-  const heroTools = document.getElementById('hero-count-tools');
-
-  if (heroCommands) heroCommands.textContent = stats.commands.toLocaleString('ar');
-  if (heroLessons) heroLessons.textContent = stats.lessons.toLocaleString('ar');
-  if (heroTools) heroTools.textContent = stats.tools.toLocaleString('ar');
-}
-
 const HOMEPAGE_STATS = {
   commands: 500,
   lessons: 100,
@@ -674,7 +655,57 @@ const HOMEPAGE_STATS = {
   tracks: 12
 };
 
-window.addEventListener('load', () => {
+function updateStatElement(id, value) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  element.setAttribute('data-count', String(value));
+  element.setAttribute('data-suffix', '');
+  element.textContent = Number(value).toLocaleString();
+}
+
+function updateHeroCounts(stats) {
+  var heroCommands = document.getElementById('hero-count-commands');
+  var heroLessons = document.getElementById('hero-count-lessons');
+  var heroTools = document.getElementById('hero-count-tools');
+  if (heroCommands) heroCommands.textContent = Number(stats.commands).toLocaleString();
+  if (heroLessons) heroLessons.textContent = Number(stats.lessons).toLocaleString();
+  if (heroTools) heroTools.textContent = Number(stats.tools).toLocaleString();
+}
+
+function animateStatsCounters() {
+  document.querySelectorAll('.stat-number[data-count]').forEach(function(el) {
+    var target = parseInt(el.getAttribute('data-count')) || 0;
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (target <= 0) { el.textContent = '0' + suffix; return; }
+    var duration = 1500;
+    var startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var current = Math.floor(eased * target);
+      el.textContent = current.toLocaleString() + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target.toLocaleString() + suffix;
+      }
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+// Initialize stats immediately and on load
+(function initStats() {
+  updateStatElement('stat-commands', HOMEPAGE_STATS.commands);
+  updateStatElement('stat-lessons', HOMEPAGE_STATS.lessons);
+  updateStatElement('stat-tools', HOMEPAGE_STATS.tools);
+  updateStatElement('stat-scenarios', HOMEPAGE_STATS.scenarios);
+  updateStatElement('stat-tracks', HOMEPAGE_STATS.tracks);
+  updateHeroCounts(HOMEPAGE_STATS);
+})();
+
+window.addEventListener('load', function() {
   updateStatElement('stat-commands', HOMEPAGE_STATS.commands);
   updateStatElement('stat-lessons', HOMEPAGE_STATS.lessons);
   updateStatElement('stat-tools', HOMEPAGE_STATS.tools);
@@ -682,8 +713,18 @@ window.addEventListener('load', () => {
   updateStatElement('stat-tracks', HOMEPAGE_STATS.tracks);
   updateHeroCounts(HOMEPAGE_STATS);
 
-  if (typeof animateCounters === 'function') {
-    requestAnimationFrame(() => animateCounters());
+  // Animate counters when stats section is visible
+  var statsSection = document.querySelector('.stats-section');
+  if (statsSection && 'IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) {
+        animateStatsCounters();
+        obs.disconnect();
+      }
+    }, { threshold: 0.2 });
+    obs.observe(statsSection);
+  } else {
+    animateStatsCounters();
   }
 });
 
