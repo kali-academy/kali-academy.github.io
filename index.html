@@ -647,11 +647,11 @@
 <script defer src="js/matrix.js"></script>
 <script defer src="js/main.js"></script>
 <script>
-const HOMEPAGE_STATS = {
-  commands: 500,
-  lessons: 100,
-  tools: 500,
-  scenarios: 71,
+var HOMEPAGE_STATS = {
+  commands: 0,
+  lessons: 0,
+  tools: 0,
+  scenarios: 0,
   tracks: 12
 };
 
@@ -695,25 +695,46 @@ function animateStatsCounters() {
   });
 }
 
-// Initialize stats immediately and on load
+function applyStats(s) {
+  updateStatElement('stat-commands', s.commands);
+  updateStatElement('stat-lessons', s.lessons);
+  updateStatElement('stat-tools', s.tools);
+  updateStatElement('stat-scenarios', s.scenarios);
+  updateStatElement('stat-tracks', s.tracks);
+  updateHeroCounts(s);
+}
+
+function loadDynamicStats() {
+  Promise.all([
+    fetch('tutorials.html').then(function(r){return r.text()}).then(function(t){
+      var m = t.match(/\bid:\s*\d+,\s*title:/g); return m ? m.length : 101;
+    }).catch(function(){return 101}),
+    fetch('tools.html').then(function(r){return r.text()}).then(function(t){
+      var m = t.match(/\bid:\s*\d+,\s*name:/g); return m ? m.length : 106;
+    }).catch(function(){return 106}),
+    fetch('steps.html').then(function(r){return r.text()}).then(function(t){
+      var m = t.match(/\bid:\s*\d+,[\s\S]*?title:/g); return m ? m.length : 71;
+    }).catch(function(){return 71})
+  ]).then(function(counts) {
+    HOMEPAGE_STATS.lessons = counts[0];
+    HOMEPAGE_STATS.tools = counts[1];
+    HOMEPAGE_STATS.scenarios = counts[2];
+    HOMEPAGE_STATS.commands = 500;
+    applyStats(HOMEPAGE_STATS);
+    try { localStorage.setItem('kali_stats', JSON.stringify(HOMEPAGE_STATS)); } catch(e){}
+  }).catch(function(){ applyStats(HOMEPAGE_STATS); });
+}
+
 (function initStats() {
-  updateStatElement('stat-commands', HOMEPAGE_STATS.commands);
-  updateStatElement('stat-lessons', HOMEPAGE_STATS.lessons);
-  updateStatElement('stat-tools', HOMEPAGE_STATS.tools);
-  updateStatElement('stat-scenarios', HOMEPAGE_STATS.scenarios);
-  updateStatElement('stat-tracks', HOMEPAGE_STATS.tracks);
-  updateHeroCounts(HOMEPAGE_STATS);
+  try {
+    var cached = JSON.parse(localStorage.getItem('kali_stats'));
+    if (cached && cached.lessons > 0) HOMEPAGE_STATS = cached;
+  } catch(e) {}
+  applyStats(HOMEPAGE_STATS);
 })();
 
 window.addEventListener('load', function() {
-  updateStatElement('stat-commands', HOMEPAGE_STATS.commands);
-  updateStatElement('stat-lessons', HOMEPAGE_STATS.lessons);
-  updateStatElement('stat-tools', HOMEPAGE_STATS.tools);
-  updateStatElement('stat-scenarios', HOMEPAGE_STATS.scenarios);
-  updateStatElement('stat-tracks', HOMEPAGE_STATS.tracks);
-  updateHeroCounts(HOMEPAGE_STATS);
-
-  // Animate counters when stats section is visible
+  loadDynamicStats();
   var statsSection = document.querySelector('.stats-section');
   if (statsSection && 'IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function(entries) {
