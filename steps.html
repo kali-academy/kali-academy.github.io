@@ -236,8 +236,10 @@
     <li><a href="steps.html" class="nav-link active"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
     <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> المقالات</a></li>
-    
+    <li><a href="terminal.html" class="nav-link" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
+    <li><a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span></a></li>
   </ul>
+  <div class="header-status"><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
 <div class="mobile-menu">
@@ -247,7 +249,8 @@
   <a href="steps.html" class="nav-link mobile-nav-link active"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
   <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
-  
+  <a href="terminal.html" class="nav-link mobile-nav-link" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
+  <a href="#" class="nav-link mobile-nav-link" data-share-button onclick="return false;"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
 </div>
   <div class="steps-hero">
     <div class="search-count-badge" style="margin-bottom:0.8rem;">
@@ -1944,8 +1947,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const h = document.querySelector('.hamburger');
   const m = document.querySelector('.mobile-menu');
   if (h && m) h.addEventListener('click', function() {
-    h.classList.toggle('active');
-    m.classList.toggle('active');
+    m.classList.toggle('open');
   });
   
   // دعم URL parameter ?lesson=ID للوصول المباشر
@@ -1992,13 +1994,15 @@ function showLessonFromTutorials(lessonId) {
 }
 
 function initScenariosPage() {
+  var cntEl = document.getElementById('scenarios-count');
+  if (cntEl) cntEl.textContent = getAllScenarios().length.toLocaleString('ar');
   renderScenarios();
 }
 
-if ('requestIdleCallback' in window) {
-  requestIdleCallback(initScenariosPage, { timeout: 800 });
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initScenariosPage);
 } else {
-  setTimeout(initScenariosPage, 120);
+  initScenariosPage();
 }
 </script>
 </body>

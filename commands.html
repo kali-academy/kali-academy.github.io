@@ -53,10 +53,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="grid-bg">
-<script src="js/disclaimer.js"></script>
-<script src="js/social-bar.js"></script>
-<script src="js/free-offer.js"></script>
-<script src="js/site-init.js"></script>
+<script defer src="js/disclaimer.js"></script>
+<script defer src="js/social-bar.js"></script>
+<script defer src="js/free-offer.js"></script>
+<script defer src="js/site-init.js"></script>
 <style>
 /* ===== PAGE SPECIFIC STYLES ===== */
 .cmd-page-wrapper { max-width: 1500px; margin: 0 auto; padding: 0 1.5rem 3rem; }
@@ -215,18 +215,21 @@
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
     <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> المقالات</a></li>
-    
-  </ul><div class="status-dot"></div><span id="hdr-count">...</span> CMD</div>
+    <li><a href="terminal.html" class="nav-link" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
+    <li><a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span></a></li>
+  </ul>
+  <div class="header-status"><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
 <div class="mobile-menu">
-  <a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
-  <a href="commands.html" class="nav-link active"><i class="fas fa-terminal"></i> الأوامر</a>
-  <a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a>
-  <a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a>
-  <a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a>
-  <a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
-  
+  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+  <a href="commands.html" class="nav-link mobile-nav-link active"><i class="fas fa-terminal"></i> الأوامر</a>
+  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
+  <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a>
+  <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> الأدوات</a>
+  <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
+  <a href="terminal.html" class="nav-link mobile-nav-link" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
+  <a href="#" class="nav-link mobile-nav-link" data-share-button onclick="return false;"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
 </div>
 <!-- HERO -->
 <div class="cmd-hero">
@@ -455,7 +458,8 @@ function updateStats() {
   document.getElementById('st-int').textContent = int;
   document.getElementById('st-adv').textContent = adv;
   document.getElementById('totalBadge').textContent = allCmds.length.toLocaleString();
-  document.getElementById('hdr-count').textContent = allCmds.length.toLocaleString();
+  var hdrCount = document.getElementById('hdr-count');
+  if (hdrCount) hdrCount.textContent = allCmds.length.toLocaleString();
 }
 
 function setCat(cat, el) {

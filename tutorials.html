@@ -336,8 +336,10 @@
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
     <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
-    
+    <li><a href="terminal.html" class="nav-link" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
+    <li><a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span></a></li>
   </ul>
+  <div class="header-status"><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
   <div class="hamburger"><span></span><span></span><span></span></div>
 </header>
 <div class="mobile-menu">
@@ -347,12 +349,13 @@
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a>
   <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a>
-  
+  <a href="terminal.html" class="nav-link mobile-nav-link" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
+  <a href="#" class="nav-link mobile-nav-link" data-share-button onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة الموقع</span></a>
 </div>
   <!-- HERO -->
   <div class="tut-hero">
     <div class="search-count-badge" style="margin-bottom:0.8rem;">
-      <i class="fas fa-book-open"></i> <span id="total-badge">100</span> درس تعليمي
+      <i class="fas fa-book-open"></i> <span id="total-badge">0</span> درس تعليمي
     </div>
     <h1 class="tut-hero-title">الدروس <span>التعليمية</span></h1>
     <p class="tut-hero-desc">
@@ -1640,6 +1643,18 @@ const TUTORIALS = [
     { title:'Network Policies وSecurity', text:'فحص Network Policies وتحديد الـ Misconfigurations.', cmd:'# فحص Network Policies:\nkubectl get networkpolicies --all-namespaces\n# إذا لم توجد Policies: كل Pod يتكلم مع كل Pod!\n# فحص بـ kube-bench:\ndocker run --rm -v $(pwd):/host aquasec/kube-bench:latest\n# فحص بـ kube-hunter:\ndocker run --rm --network host aquasec/kube-hunter\n# Trivy لفحص الـ Cluster:\ntrivy k8s --report summary cluster', cmdDesc:'فحص Network Policies وإعدادات الأمان' },
     { title:'Supply Chain Security', text:'أمان سلسلة التوريد: التحقق من صحة Images وفحص الـ Registries.', cmd:'# فحص Image بـ Trivy:\ntrivy image --severity HIGH,CRITICAL nginx:latest\ntrivy image --severity CRITICAL myapp:1.0\n# Signing بـ cosign:\ncosign sign --key cosign.key myapp:1.0\ncosign verify --key cosign.pub myapp:1.0\n# فحص Dockerfile:\n# https://hadolint.github.io\nhadolint Dockerfile\n# Falco لـ Runtime Security:\ndocker run --rm -it --privileged falcosecurity/falco:latest', cmdDesc:'فحص أمان سلسلة التوريد' }
   ]
+},
+{
+  id:101, title:'Zphisher - التصيد الاحتيالي (Phishing)', icon:'🎣', level:'beginner', cat:'exploitation',
+  tags:['Zphisher','Phishing','الهندسة الاجتماعية','Social Engineering','تصيد'],
+  desc:'تعلم كيفية استخدام أداة Zphisher لمحاكاة هجمات التصيد الاحتيالي في بيئة تعليمية — فهم كيف يعمل الـ Phishing لحماية نفسك منه.',
+  steps:[
+    { title:'ما هو Zphisher؟', text:'Zphisher هي أداة مفتوحة المصدر لإنشاء صفحات تصيد احتيالي (Phishing) تحاكي مواقع مشهورة مثل Facebook وGoogle وInstagram. الهدف التعليمي: فهم كيف يعمل الـ Phishing لتتمكن من حماية نفسك ومؤسستك.', cmd:'# معلومات عن Zphisher:\n# المطور: htr-tech\n# اللغة: Bash\n# يدعم 30+ موقع للتصيد\n# ⚠️ تحذير: للأغراض التعليمية فقط!', cmdDesc:'معلومات أساسية عن الأداة', note:'⚠️ استخدام هذه الأداة ضد أي شخص بدون إذنه يُعتبر جريمة قانونية.' },
+    { title:'تثبيت Zphisher', text:'الأداة بسيطة التثبيت — فقط استنسخ المستودع من GitHub.', cmd:'sudo apt update\nsudo apt install -y git php curl\ngit clone https://github.com/htr-tech/zphisher.git\ncd zphisher\nchmod +x zphisher.sh', cmdDesc:'تثبيت Zphisher على Kali Linux' },
+    { title:'تشغيل Zphisher', text:'عند تشغيل الأداة ستظهر قائمة بالمواقع المتاحة للتصيد. اختر الموقع المطلوب ثم نوع التصيد.', cmd:'cd zphisher\nbash zphisher.sh\n# ستظهر قائمة بالمواقع:\n# [01] Facebook [02] Instagram\n# [03] Google [04] Microsoft\n# اختر رقم الموقع المطلوب', cmdDesc:'تشغيل الأداة واختيار الهدف' },
+    { title:'اختيار طريقة التوصيل', text:'بعد اختيار الموقع، اختر Localhost للتجربة المحلية أو Cloudflared لرابط خارجي مؤقت.', cmd:'# [1] Localhost (للاختبار المحلي)\n# [2] Cloudflared (رابط خارجي مؤقت)\n# [3] Ngrok (يتطلب حساب)\n# للتجربة المحلية اختر 1\n# الرابط: http://127.0.0.1:8080', cmdDesc:'اختيار طريقة الوصول' },
+    { title:'كيف تحمي نفسك من Phishing', text:'الآن بعد فهمك لآلية الـ Phishing: تحقق دائماً من الـ URL، لا تنقر على روابط مشبوهة، فعّل 2FA، استخدم مدير كلمات مرور.', cmd:'# كشف صفحات Phishing:\n# 1. تحقق من URL:\n#    ❌ faceb00k.com\n#    ✅ facebook.com\n# 2. فحص SSL Certificate:\nopenssl s_client -connect suspicious-site.com:443 | grep subject\n# 3. فحص باستخدام VirusTotal', cmdDesc:'طرق الحماية من التصيد', note:'91% من الهجمات تبدأ بـ Phishing!' }
+  ]
 }
 ];
 
@@ -1852,14 +1867,16 @@ function filterTutorials() {
 
 // INIT (deferred to improve first paint)
 function initTutorialsPage() {
+  var totalBadge = document.getElementById('total-badge');
+  if (totalBadge) totalBadge.textContent = TUTORIALS.length.toLocaleString('ar');
   renderLessons();
   renderLessonResumeBar();
 }
 
-if ('requestIdleCallback' in window) {
-  requestIdleCallback(initTutorialsPage, { timeout: 800 });
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTutorialsPage);
 } else {
-  setTimeout(initTutorialsPage, 120);
+  initTutorialsPage();
 }
 document.querySelector('.hamburger')?.addEventListener('click',()=>{
   document.querySelector('.mobile-menu')?.classList.toggle('open');

@@ -349,6 +349,8 @@
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a></li>
     <li><a href="tools.html" class="nav-link active"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
     <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
+    <li><a href="terminal.html" class="nav-link" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
+    <li><a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span></a></li>
   </ul>
   <div class="header-status"><div class="status-dot"></div><span>SYSTEM ONLINE</span></div>
   <div class="hamburger"><span></span><span></span><span></span></div>
@@ -360,7 +362,8 @@
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a>
   <a href="tools.html" class="nav-link mobile-nav-link active"><i class="fas fa-tools"></i> الأدوات</a>
   <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> المقالات</a>
-  
+  <a href="terminal.html" class="nav-link mobile-nav-link" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
+  <a href="#" class="nav-link mobile-nav-link" data-share-button onclick="return false;"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
 </div>
   <!-- HERO -->
   <div class="tools-hero">
@@ -2574,6 +2577,28 @@ const TOOLS = [
   related: ['NetExec', 'BloodHound', 'impacket'],
 },
 
+,
+{
+  id: 1006,
+  name: 'Zphisher',
+  icon: '🎣',
+  color: 'linear-gradient(135deg,#ff6b6b,#ee5a24)',
+  short: 'أداة تصيد احتيالي تعليمية لمحاكاة هجمات Phishing',
+  cat: 'social',
+  tags: ['social','phishing','recon','social engineering'],
+  desc: `Zphisher أداة مفتوحة المصدر بلغة Bash لإنشاء صفحات تصيد احتيالي تحاكي أشهر المواقع. تدعم 30+ قالب وطرق توصيل متعددة. مخصصة للأغراض التعليمية لفهم كيف يعمل التصيد.`,
+  features: ['30+ قالب تصيد جاهز','طرق توصيل: Localhost, Cloudflared, Ngrok','واجهة سطر أوامر بسيطة','تعمل على Kali Linux, Parrot OS, Termux','جمع بيانات اعتماد تلقائي'],
+  install: 'sudo apt update && sudo apt install -y git php curl\ngit clone https://github.com/htr-tech/zphisher.git\ncd zphisher && chmod +x zphisher.sh',
+  version: 'bash zphisher.sh --version',
+  commands: [
+    { cmd: 'bash zphisher.sh', note: 'تشغيل الأداة وعرض القائمة الرئيسية' },
+    { cmd: '# اختيار Facebook (01) → Localhost (1)', note: 'إنشاء صفحة تصيد محلياً' },
+    { cmd: 'cat auth/usernames.dat', note: 'عرض بيانات الاعتماد المجمعة' }
+  ],
+  tips: ['⚠️ للأغراض التعليمية فقط — أي استخدام ضد أشخاص حقيقيين يُعد جريمة','💡 استخدم Localhost للتجربة المحلية','🛡️ الهدف: فهم آلية Phishing لحماية مؤسستك'],
+  related: ['SET (Social-Engineer Toolkit)', 'Gophish', 'King Phisher', 'BlackEye'],
+}
+
 ]; // END OF TOOLS DATABASE
 
 // ============================================================
@@ -2907,8 +2932,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const h = document.querySelector('.hamburger');
   const m = document.querySelector('.mobile-menu');
   if (h && m) h.addEventListener('click', () => {
-    h.classList.toggle('active');
-    m.classList.toggle('active');
+    m.classList.toggle('open');
   });
 
   const toolsGrid = document.getElementById('toolsGrid');
@@ -2941,10 +2965,10 @@ function initToolsPage() {
   renderRecentTools();
 }
 
-if ('requestIdleCallback' in window) {
-  requestIdleCallback(initToolsPage, { timeout: 800 });
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initToolsPage);
 } else {
-  setTimeout(initToolsPage, 120);
+  initToolsPage();
 }
 </script>
 </body>
