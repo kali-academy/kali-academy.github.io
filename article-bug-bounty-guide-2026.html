@@ -1,328 +1,115 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل Bug Bounty للمبتدئين 2026 | كيف تبدأ وتكسب منه | KaliAcademy</title>
-<meta name="description" content="دليل شامل لبدء رحلتك في Bug Bounty 2026 - اكتشف الثغرات واكسب مكافآت مالية بطريقة قانونية وأخلاقية مع KaliAcademy.">
-<meta name="keywords" content="Bug Bounty, مكافآت الثغرات, Bug Bounty عربي, اكتشاف الثغرات, HackerOne, Bugcrowd, Ethical Hacking, اختبار الاختراق">
-<meta name="author" content="Kali Academy">
-<link rel="canonical" href="https://kali-academy.github.io/article-bug-bounty-guide-2026.html">
-<link rel="icon" type="image/svg+xml" href="images/logo-brand.svg">
-<meta property="og:title" content="دليل Bug Bounty للمبتدئين 2026 | KaliAcademy">
-<meta property="og:description" content="كيف تبدأ في Bug Bounty وتكسب مكافآت مالية بطريقة قانونية - دليل شامل بالعربي.">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://kali-academy.github.io/article-bug-bounty-guide-2026.html">
-<meta property="og:image" content="https://kali-academy.github.io/images/logo-brand.svg">
-<meta property="og:image:alt" content="Kali Academy Bug Bounty Guide">
-<meta property="og:locale" content="ar_AR">
-<meta property="og:site_name" content="Kali Academy">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="دليل Bug Bounty للمبتدئين 2026 | KaliAcademy">
-<meta name="twitter:description" content="كيف تبدأ في Bug Bounty وتكسب مكافآت مالية - دليل شامل بالعربي">
-<meta name="twitter:image" content="https://kali-academy.github.io/images/logo-brand.svg">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "دليل Bug Bounty للمبتدئين 2026",
-  "description": "دليل شامل لبدء رحلتك في Bug Bounty 2026 - اكتشف الثغرات واكسب مكافآت مالية بطريقة قانونية وأخلاقية.",
-  "author": {"@type": "Organization", "name": "Kali Academy", "url": "https://kali-academy.github.io/"},
-  "publisher": {"@type": "Organization", "name": "Kali Academy", "logo": {"@type": "ImageObject", "url": "https://kali-academy.github.io/images/logo-brand.svg"}},
-  "url": "https://kali-academy.github.io/article-bug-bounty-guide-2026.html",
-  "inLanguage": "ar",
-  "datePublished": "2026-03-29",
-  "dateModified": "2026-04-03",
-  "mainEntityOfPage": {"@type": "WebPage", "@id": "https://kali-academy.github.io/article-bug-bounty-guide-2026.html"}
+/* ============================================================
+   TUTORIALS PAGE LOGIC - KaliAcademy
+   ============================================================ */
+
+let activeFilter = 'all';
+let searchQ = '';
+
+function renderLessons() {
+  const grid = document.getElementById('lessonsGrid');
+  const noRes = document.getElementById('noResults');
+  const q = searchQ.toLowerCase();
+  let filtered = TUTORIALS.filter(t => {
+    const matchFilter = activeFilter === 'all' || t.level === activeFilter || t.cat === activeFilter;
+    const matchSearch = !q || t.title.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.tags.some(tag => tag.toLowerCase().includes(q));
+    return matchFilter && matchSearch;
+  });
+  document.getElementById('total-badge').textContent = filtered.length;
+  if(filtered.length === 0) {
+    grid.innerHTML = '';
+    noRes.style.display = 'block';
+    return;
+  }
+  noRes.style.display = 'none';
+  grid.innerHTML = filtered.map(t => `
+    <div class="lesson-card" onclick="openLesson(${t.id})">
+      <div class="lesson-card-top">
+        <div class="lesson-icon" style="background:rgba(0,255,65,0.08);border-color:rgba(0,255,65,0.2);">${t.icon}</div>
+        <div class="lesson-meta">
+          <h3>${t.title}</h3>
+          <p>${t.desc}</p>
+        </div>
+      </div>
+      <div class="lesson-tags">
+        <span class="lesson-tag ${t.level==='beginner'?'tag-beg':t.level==='intermediate'?'tag-int':'tag-adv'}">${t.level==='beginner'?'مبتدئ':t.level==='intermediate'?'متوسط':'متقدم'}</span>
+        ${t.tags.slice(0,2).map(tag=>`<span class="lesson-tag tag-cat">${tag}</span>`).join('')}
+      </div>
+      <div class="lesson-footer">
+        <span class="lesson-steps"><i class="fas fa-list-ol" style="margin-left:4px;color:var(--primary);"></i>${t.steps.length} خطوات</span>
+        <span class="lesson-arrow"><i class="fas fa-arrow-left"></i></span>
+      </div>
+    </div>
+  `).join('');
 }
-</script>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/enhanced.css">
-<link rel="stylesheet" href="css/cyber-theme.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-.article-page { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-.article-header { padding: 2rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
-.article-category { display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 20px; background: rgba(255,100,0,0.1); border: 1px solid rgba(255,100,0,0.3); color: #ff6600; font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 1rem; }
-.article-title { font-family: 'Cairo', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 1rem; }
-.article-title span { color: #ff6600; }
-.article-meta { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; color: var(--text-muted); font-family: 'Cairo', sans-serif; font-size: 0.82rem; }
-.article-meta i { color: #ff6600; margin-left: 4px; }
-.article-hero-box { background: linear-gradient(135deg, rgba(255,100,0,0.08), rgba(4,22,40,0.9)); border: 1px solid rgba(255,100,0,0.2); border-radius: 16px; padding: 2rem; margin-bottom: 2.5rem; text-align: center; }
-.article-hero-icon { font-size: 4rem; margin-bottom: 1rem; }
-.article-hero-desc { font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.7); line-height: 1.8; }
-.article-body h2 { font-family: 'Cairo', sans-serif; font-size: 1.4rem; font-weight: 800; color: #fff; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid rgba(255,100,0,0.3); display: flex; align-items: center; gap: 8px; }
-.article-body h2 .h-icon { color: #ff6600; }
-.article-body h3 { font-family: 'Cairo', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--primary); margin: 1.5rem 0 0.7rem; }
-.article-body p { font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.8); line-height: 1.9; margin-bottom: 1rem; font-size: 0.95rem; }
-.article-body ul, .article-body ol { padding-right: 1.5rem; margin-bottom: 1rem; }
-.article-body li { font-family: 'Cairo', sans-serif; color: rgba(255,255,255,0.75); line-height: 2; font-size: 0.93rem; margin-bottom: 0.3rem; }
-.highlight-box { background: rgba(255,100,0,0.06); border: 1px solid rgba(255,100,0,0.2); border-right: 4px solid #ff6600; border-radius: 8px; padding: 1rem 1.3rem; margin: 1.2rem 0; }
-.highlight-box.green { background: rgba(0,255,65,0.05); border-color: rgba(0,255,65,0.2); border-right-color: var(--primary); }
-.highlight-box.blue { background: rgba(0,170,255,0.05); border-color: rgba(0,170,255,0.2); border-right-color: #00aaff; }
-.platform-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.3rem; margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 14px; transition: border-color 0.25s; }
-.platform-card:hover { border-color: rgba(255,100,0,0.4); }
-.platform-icon { font-size: 2rem; flex-shrink: 0; }
-.platform-info h4 { font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
-.platform-info p { font-family: 'Cairo', sans-serif; font-size: 0.83rem; color: var(--text-muted); margin: 0; line-height: 1.6; }
-.platform-info .platform-url { color: #ff6600; font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; margin-top: 0.3rem; display: block; }
-.tip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.2rem 0; }
-.tip-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 1rem; text-align: center; }
-.tip-card .t-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-.tip-card h4 { font-family: 'Cairo', sans-serif; font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
-.tip-card p { font-family: 'Cairo', sans-serif; font-size: 0.78rem; color: var(--text-muted); margin: 0; }
-.step-list { counter-reset: steps; list-style: none; padding: 0; }
-.step-list li { counter-increment: steps; display: flex; align-items: flex-start; gap: 14px; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.step-list li:last-child { border-bottom: none; }
-.step-list li::before { content: counter(steps); font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700; color: #ff6600; flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255,100,0,0.4); display: flex; align-items: center; justify-content: center; }
-.step-list li div { font-family: 'Cairo', sans-serif; }
-.step-list li div strong { color: #fff; display: block; margin-bottom: 0.2rem; }
-.step-list li div span { color: var(--text-muted); font-size: 0.85rem; }
-.article-cta { background: linear-gradient(135deg, rgba(255,100,0,0.1), rgba(4,22,40,0.95)); border: 1px solid rgba(255,100,0,0.3); border-radius: 16px; padding: 2rem; text-align: center; margin-top: 3rem; }
-.article-cta h3 { font-family: 'Cairo', sans-serif; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.7rem; }
-.article-cta p { color: var(--text-muted); font-family: 'Cairo', sans-serif; margin-bottom: 1.3rem; }
-.related-articles { margin-top: 3rem; }
-.related-title { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; color: var(--primary); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px; }
-.related-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
-.related-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 12px; transition: all 0.25s; }
-.related-card:hover { border-color: rgba(0,255,65,0.4); transform: translateY(-2px); }
-.related-card .r-icon { font-size: 1.8rem; flex-shrink: 0; }
-.related-card h4 { font-family: 'Cairo', sans-serif; font-size: 0.85rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; line-height: 1.4; }
-.related-card span { font-family: 'Cairo', sans-serif; font-size: 0.72rem; color: var(--primary); }
-</style>
-</head>
-<body class="grid-bg">
-<canvas id="matrix-canvas"></canvas>
-<script src="js/disclaimer.js"></script>
-<script src="js/social-bar.js"></script>
-<script src="js/free-offer.js"></script>
-<script src="js/site-init.js"></script>
 
-<header class="site-header">
-  <a href="index.html" class="logo">
-    <div class="logo-icon"><img src="images/logo-brand.svg" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
-    <div><span class="logo-text">KALI ACADEMY</span><span class="logo-sub">CYBER SECURITY LEARNING</span></div>
-  </a>
-  <ul class="nav-menu">
-    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a></li>
-    <li><a href="commands.html" class="nav-link"><i class="fas fa-terminal"></i> الأوامر</a></li>
-    <li><a href="tutorials.html" class="nav-link"><i class="fas fa-book-open"></i> الدروس</a></li>
-    <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> السيناريوهات التطبيقية</a></li>
-    <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> الأدوات</a></li>
-    <li><a href="articles.html" class="nav-link active"><i class="fas fa-newspaper"></i> المقالات</a></li>
-  </ul>
-  <div class="hamburger"><span></span><span></span><span></span></div>
-</header>
-<div class="mobile-menu">
-  <a href="index.html" class="nav-link mobile-nav-link"><i class="fas fa-home"></i> الرئيسية</a>
-  <a href="commands.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> الأوامر</a>
-  <a href="tutorials.html" class="nav-link mobile-nav-link"><i class="fas fa-book-open"></i> الدروس</a>
-  <a href="articles.html" class="nav-link mobile-nav-link active"><i class="fas fa-newspaper"></i> المقالات</a>
-</div>
-
-<div class="main-wrapper" style="padding-top: var(--header-height);">
-<div class="article-page">
-
-  <div class="article-header">
-    <div class="article-category"><i class="fas fa-bug"></i> BUG BOUNTY</div>
-    <h1 class="article-title">دليل <span>Bug Bounty</span> الشامل للمبتدئين 2026</h1>
-    <div class="article-meta">
-      <span><i class="fas fa-user-edit"></i> KALI ACADEMY</span>
-      <span><i class="fas fa-calendar"></i> مارس 2026</span>
-      <span><i class="fas fa-clock"></i> 12 دقيقة قراءة</span>
-      <span><i class="fas fa-eye"></i> 4,200+ قراءة</span>
-    </div>
-  </div>
-
-  <div class="article-hero-box">
-    <div class="article-hero-icon">🐛💰</div>
-    <div class="article-hero-desc">
-      <strong style="color:#ff6600;">Bug Bounty</strong> هو برنامج تكافئ فيه الشركات الباحثين الأمنيين على اكتشاف ثغراتها وإبلاغها. يمكن كسب مئات الآلاف من الدولارات سنوياً بطريقة قانونية تماماً!
-    </div>
-  </div>
-
-  <div class="article-body">
-
-    <h2><span class="h-icon">🤔</span> ما هو Bug Bounty؟</h2>
-    <p>برامج Bug Bounty هي مبادرات تطلقها الشركات والمنظمات لتشجيع الباحثين الأمنيين على اكتشاف الثغرات الأمنية في أنظمتها وتطبيقاتها، مقابل مكافآت مالية. هذا المجال أصبح واحداً من أسرع المجالات نمواً في الأمن السيبراني.</p>
-
-    <div class="highlight-box green">
-      <strong style="color:var(--primary);">💡 لماذا Bug Bounty؟</strong><br>
-      يمكن لباحث ماهر كسب من <strong>$100</strong> إلى <strong>$500,000+</strong> مقابل ثغرة واحدة! كما أنه مجال مفتوح لأي شخص لديه المهارات المناسبة.
-    </div>
-
-    <h2><span class="h-icon">🏆</span> أشهر منصات Bug Bounty</h2>
-    <div class="platform-card">
-      <div class="platform-icon">🎯</div>
-      <div class="platform-info">
-        <h4>HackerOne</h4>
-        <p>أكبر منصة Bug Bounty عالمياً. تضم شركات مثل Google, Apple, US Department of Defense. مدفوعات تجاوزت $300M لأكثر من مليون باحث.</p>
-        <span class="platform-url">hackerone.com</span>
-      </div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-icon">🔍</div>
-      <div class="platform-info">
-        <h4>Bugcrowd</h4>
-        <p>منصة رائدة تركز على التنوع في المتخصصين الأمنيين. تضم Nike, Atlassian, Tesla وغيرها. نموذج Crowdsourced Security مميز.</p>
-        <span class="platform-url">bugcrowd.com</span>
-      </div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-icon">💰</div>
-      <div class="platform-info">
-        <h4>Intigriti</h4>
-        <p>المنصة الأوروبية الرائدة. تتميز بعلاقة مباشرة بين الشركات والباحثين. دفعات سريعة ودعم قوي للمجتمع العربي.</p>
-        <span class="platform-url">intigriti.com</span>
-      </div>
-    </div>
-    <div class="platform-card">
-      <div class="platform-icon">🌐</div>
-      <div class="platform-info">
-        <h4>Synack</h4>
-        <p>منصة حصرية للباحثين الموثوقين. عمل مع وزارة الدفاع الأمريكية ومؤسسات مالية كبرى. مدفوعات أعلى بكثير من المنصات المفتوحة.</p>
-        <span class="platform-url">synack.com</span>
-      </div>
-    </div>
-
-    <h2><span class="h-icon">📋</span> خطوات البدء في Bug Bounty</h2>
-    <ul class="step-list">
-      <li>
-        <div>
-          <strong>بناء الأساس التقني</strong>
-          <span>تعلم HTML, JavaScript, HTTP, SQL، وأساسيات الشبكات. فهم كيف تعمل تطبيقات الويب أمر حتمي.</span>
+function openLesson(id) {
+  const t = TUTORIALS.find(x => x.id === id);
+  if(!t) return;
+  document.getElementById('modalTitle').textContent = t.icon + ' ' + t.title;
+  document.getElementById('modalBody').innerHTML = `
+    <p style="color:var(--text-secondary);font-family:'Cairo',sans-serif;font-size:0.9rem;margin-bottom:1.5rem;line-height:1.7;">${t.desc}</p>
+    ${t.steps.map((s,i)=>`
+      <div class="tut-step">
+        <div class="tut-step-num">${i+1}</div>
+        <div class="tut-step-content">
+          <h4>${s.title}</h4>
+          <p>${s.text}</p>
+          <div class="tut-step-cmd">
+            <pre style="margin:0;font-family:'Share Tech Mono',monospace;overflow-x:auto;">${s.cmd.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre>
+            <button class="tut-copy" onclick="tutCopy(this,'${encodeURIComponent(s.cmd)}')">📋</button>
+          </div>
+          <div style="color:var(--text-muted);font-size:0.78rem;margin-top:4px;font-family:'Cairo',sans-serif;">⟵ ${s.cmdDesc}</div>
+          ${s.note ? '<div class="tut-note">💡 ' + s.note + '</div>' : ''}
         </div>
-      </li>
-      <li>
-        <div>
-          <strong>تعلم OWASP Top 10</strong>
-          <span>XSS, SQLi, CSRF, SSRF, XXE, IDOR, Broken Auth, Security Misconfig, Insecure Deserialization, Vulnerable Components.</span>
-        </div>
-      </li>
-      <li>
-        <div>
-          <strong>التدريب على المنصات المجانية</strong>
-          <span>HackTheBox, TryHackMe, DVWA, WebGoat. ابدأ بالتطبيق العملي في بيئة آمنة قبل الاختبار الحقيقي.</span>
-        </div>
-      </li>
-      <li>
-        <div>
-          <strong>إنشاء حسابات على المنصات</strong>
-          <span>ابدأ بـ HackerOne أو Bugcrowd. اقرأ سياسات كل برنامج بعناية قبل البدء في الاختبار.</span>
-        </div>
-      </li>
-      <li>
-        <div>
-          <strong>اختر برامج مناسبة للمبتدئين</strong>
-          <span>ابحث عن البرامج ذات النطاق الواسع "Scope" وتلك التي تقبل الثغرات منخفضة ومتوسطة الخطورة.</span>
-        </div>
-      </li>
-      <li>
-        <div>
-          <strong>كتابة تقارير احترافية</strong>
-          <span>وثّق الثغرة بدقة: خطوات الإعادة، الأثر الأمني، لقطات الشاشة، PoC، التوصيات.</span>
-        </div>
-      </li>
-    </ul>
-
-    <h2><span class="h-icon">🛠️</span> الأدوات الأساسية للـ Bug Hunter</h2>
-    <div class="tip-grid">
-      <div class="tip-card">
-        <div class="t-icon">🕸️</div>
-        <h4>Burp Suite</h4>
-        <p>الأداة الأساسية لاعتراض وتحليل طلبات HTTP. إصدار Community مجاني.</p>
       </div>
-      <div class="tip-card">
-        <div class="t-icon">🗺️</div>
-        <h4>Nmap</h4>
-        <p>لاكتشاف المنافذ والخدمات المفتوحة على النطاق المستهدف.</p>
-      </div>
-      <div class="tip-card">
-        <div class="t-icon">🔗</div>
-        <h4>Amass / Subfinder</h4>
-        <p>لاستطلاع النطاقات الفرعية وتوسيع نطاق البحث.</p>
-      </div>
-      <div class="tip-card">
-        <div class="t-icon">💻</div>
-        <h4>ffuf / dirsearch</h4>
-        <p>لاكتشاف الملفات والمسارات المخفية في تطبيقات الويب.</p>
-      </div>
-      <div class="tip-card">
-        <div class="t-icon">🔍</div>
-        <h4>Nuclei</h4>
-        <p>أداة مسح سريعة تعتمد على قوالب لاكتشاف الثغرات الشائعة تلقائياً.</p>
-      </div>
-      <div class="tip-card">
-        <div class="t-icon">📋</div>
-        <h4>Shodan / Censys</h4>
-        <p>محركات بحث للأجهزة والخدمات المعرضة على الإنترنت.</p>
-      </div>
-    </div>
+    `).join('')}
+  `;
+  document.getElementById('tutModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
 
-    <h2><span class="h-icon">⚠️</span> قواعد القانونية والأخلاقية</h2>
-    <div class="highlight-box">
-      <strong style="color:#ff6600;">🚨 تحذير مهم:</strong><br>
-      اختبر <strong>فقط</strong> ما هو ضمن النطاق المحدد (In-Scope). لا تختبر أنظمة خارج البرنامج حتى لو بدت مرتبطة. لا تصل للبيانات الحساسة أكثر مما يلزم لإثبات الثغرة. لا تنشر الثغرة قبل الإصلاح.
-    </div>
-    <ul>
-      <li>اقرأ شروط كل برنامج بعناية قبل البدء</li>
-      <li>لا تؤثر على استمرارية الخدمة (No DoS)</li>
-      <li>اكتفِ بإثبات الثغرة (PoC) دون استغلالها أكثر من اللازم</li>
-      <li>أبلغ فوراً ولا تستغل الثغرة لأي غرض شخصي</li>
-      <li>احتفظ بجميع السجلات والأدلة لردود أفعال محتملة</li>
-    </ul>
+function closeTutModal(e) {
+  if(e.target === document.getElementById('tutModal')) closeTutModalDirect();
+}
+function closeTutModalDirect() {
+  document.getElementById('tutModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
 
-    <h2><span class="h-icon">💡</span> نصائح للنجاح</h2>
-    <div class="highlight-box blue">
-      <ul style="margin:0;padding-right:1.2rem;">
-        <li><strong>لا تنافس الأدوات الآلية:</strong> ركز على الثغرات المنطقية التي لا تجدها الأدوات.</li>
-        <li><strong>ابدأ بالنطاق الواسع:</strong> Scope كبير يعني فرص أكثر.</li>
-        <li><strong>اقرأ تقارير الآخرين:</strong> مستودعات HackerOne Disclosures كنز لا يقدر.</li>
-        <li><strong>خصص وقتاً لـ Recon:</strong> كلما عرفت الهدف أكثر، وجدت ثغرات أكثر.</li>
-        <li><strong>صبر وتعلم مستمر:</strong> الفشل جزء من الرحلة. كل رد Duplicate هو درس.</li>
-      </ul>
-    </div>
+function tutCopy(btn, encodedCmd) {
+  const cmd = decodeURIComponent(encodedCmd);
+  if(navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(cmd).then(()=>{ btn.textContent='✅'; setTimeout(()=>btn.textContent='📋',1500); });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = cmd;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent='✅';
+    setTimeout(()=>btn.textContent='📋',1500);
+  }
+}
 
-  </div>
+function setFilter(filter, el) {
+  activeFilter = filter;
+  document.querySelectorAll('.tut-tab').forEach(b=>b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderLessons();
+}
 
-  <div class="article-cta">
-    <h3>ابدأ رحلتك في Bug Bounty الآن 🚀</h3>
-    <p>تعلم الأدوات والتقنيات اللازمة مع KaliAcademy قبل الانطلاق في برامج Bug Bounty الحقيقية.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="tutorials.html" class="btn btn-primary" style="font-size:0.9rem;"><i class="fas fa-book-open"></i> ابدأ الدروس</a>
-      <a href="tools.html" class="btn btn-secondary" style="font-size:0.9rem;"><i class="fas fa-tools"></i> دليل الأدوات</a>
-    </div>
-  </div>
+function filterTutorials() {
+  searchQ = document.getElementById('tutSearch').value;
+  renderLessons();
+}
 
-  <div class="related-articles">
-    <div class="related-title"><i class="fas fa-link"></i> مقالات ذات صلة</div>
-    <div class="related-grid">
-      <a href="article-roadmap-cybersecurity-2026.html" class="related-card">
-        <span class="r-icon">🛡️</span>
-        <div><h4>خريطة طريق الأمن السيبراني 2026</h4><span>اقرأ المقال</span></div>
-      </a>
-      <a href="article-top-10-ethical-hacking-tools-2026.html" class="related-card">
-        <span class="r-icon">🔧</span>
-        <div><h4>أفضل 10 أدوات للهاكر الأخلاقي</h4><span>اقرأ المقال</span></div>
-      </a>
-      <a href="article-soc-blue-team-roadmap-2026.html" class="related-card">
-        <span class="r-icon">🛡️</span>
-        <div><h4>دليل SOC وBlue Team</h4><span>اقرأ المقال</span></div>
-      </a>
-    </div>
-  </div>
-
-</div>
-</div>
-
-<footer class="site-footer">
-  <div class="footer-bottom" style="max-width:1200px;margin:0 auto;text-align:center;padding:1.5rem;font-size:0.8rem;color:var(--text-muted);">
-    ⚠️ للأغراض التعليمية فقط | © 2026 Kali Academy
-  </div>
-</footer>
-<script src="js/matrix.js"></script>
-<script src="js/main.js"></script>
-</body>
-</html>
+// INIT
+document.addEventListener('DOMContentLoaded', function() {
+  renderLessons();
+  document.querySelector('.hamburger')?.addEventListener('click',()=>{
+    document.querySelector('.mobile-menu')?.classList.toggle('open');
+  });
+});
