@@ -707,14 +707,14 @@ function applyStats(s) {
 function loadDynamicStats() {
   Promise.all([
     fetch('tutorials.html').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/\bid:\s*\d+,\s*title:/g); return m ? m.length : 101;
-    }).catch(function(){return 101}),
+      var m = t.match(/\bid:\s*\d+,\s*title:/g); return m ? m.length : 111;
+    }).catch(function(){return 111}),
     fetch('tools.html').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/\bid:\s*\d+,\s*name:/g); return m ? m.length : 106;
-    }).catch(function(){return 106}),
+      var m = t.match(/\bname:\s*'/g); return m ? m.length : 116;
+    }).catch(function(){return 116}),
     fetch('steps.html').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/\bid:\s*\d+,[\s\S]*?title:/g); return m ? m.length : 71;
-    }).catch(function(){return 71})
+      var m = t.match(/\bid:\s*\d+,[\s\S]*?title:/g); return m ? m.length : 81;
+    }).catch(function(){return 81})
   ]).then(function(counts) {
     HOMEPAGE_STATS.lessons = counts[0];
     HOMEPAGE_STATS.tools = counts[1];
