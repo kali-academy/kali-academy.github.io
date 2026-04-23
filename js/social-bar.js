@@ -1,6 +1,5 @@
 // ============================================================
-// SOCIAL BAR - شريط التواصل الاجتماعي (محسّن)
-// يظهر تلقائياً في جميع صفحات الموقع بتصميم جذاب
+// SOCIAL BAR - شريط التواصل الاجتماعي
 // ============================================================
 
 (function() {
@@ -109,7 +108,7 @@
     .social-btn-fb::after {
       background: linear-gradient(135deg, rgba(24,119,242,0.12), transparent);
     }
-    .social-btn-fb:hover {
+.social-btn-fb:hover {
       background: linear-gradient(135deg, #1877f2, #0d5dbf);
       border-color: #1877f2;
       color: #fff;
@@ -133,47 +132,8 @@
       box-shadow: 0 6px 20px rgba(225,48,108,0.35), 0 0 0 3px rgba(225,48,108,0.1);
     }
 
-    .social-btn svg {
-      width: 15px;
-      height: 15px;
-      flex-shrink: 0;
-      filter: drop-shadow(0 0 2px currentColor);
-    }
-
-    .social-btn .follower-hint {
-      font-size: 0.62rem;
-      opacity: 0.8;
-      font-weight: 400;
-      margin-right: 2px;
-    }
-
-    .social-banner-right {
-      display: flex;
-      align-items: center;
-    }
-    .social-banner-close {
-      background: none;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.35);
-      cursor: pointer;
-      padding: 4px 8px;
-      font-size: 0.72rem;
-      line-height: 1;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
-    .social-banner-close:hover {
-      color: rgba(255,255,255,0.8);
-      background: rgba(255,50,50,0.15);
-      border-color: rgba(255,50,50,0.3);
-    }
-
-    /* تعديل الهيدر ليبدأ بعد الشريط */
     body.has-social-banner .site-header {
-      top: 44px !important;
-    }
-    body.has-social-banner {
-      padding-top: 44px;
+      top: 44px;
     }
 
     /* ====== FLOATING SIDE BUTTONS ====== */
@@ -278,9 +238,6 @@
       body.has-social-banner .site-header {
         top: 40px !important;
       }
-      body.has-social-banner {
-        padding-top: 40px;
-      }
     }
     @media (max-width: 400px) {
       .social-banner-center {
@@ -315,12 +272,13 @@
       </a>
     </div>
     <div class="social-banner-right">
-      <button class="social-banner-close" onclick="closeSocialBanner()" title="إغلاق">&#10005;</button>
     </div>
   `;
 
   // إضافة الشريط في بداية الـ body
   document.body.insertBefore(banner, document.body.firstChild);
+  
+  // فقط أضف padding للمحتوى وليس للجسم
   document.body.classList.add('has-social-banner');
 
   // أزرار جانبية عائمة

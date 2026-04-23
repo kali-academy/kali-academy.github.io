@@ -46,10 +46,8 @@
       "name": "Kali Academy",
       "url": "https://kali-academy.github.io/",
       "logo": "https://kali-academy.github.io/images/logo-brand.svg",
-      "description": "منصة عربية لتعلم Kali Linux والأمن السيبراني خطوة بخطوة.",
-      "sameAs": [
-        "https://kali-academy.github.io/"
-      ]
+      "description": "منصة عربية لتعلم Kali Linux والأمن السيبرانيخطوة بخطوة.",
+      "sameAs": ["https://kali-academy.github.io/"]
     },
     {
       "@type": "WebSite",
@@ -70,16 +68,16 @@
 
 <canvas id="matrix-canvas"></canvas>
 
-<!-- DISCLAIMER - يُحمّل أولاً -->
+<!-- DISCLAIMER -->
 <script defer src="js/disclaimer.js"></script>
-<script defer src="js/social-bar.js"></script>
 <script defer src="js/free-offer.js"></script>
 <script defer src="js/site-init.js"></script>
+<script defer src="js/social-bar.js"></script>
 
 <!-- HEADER -->
 <header class="site-header">
   <a href="index.html" class="logo">
-    <div class="logo-icon"><img src="images/logo-brand.svg" alt="Kali Academy Logo" style="width:44px;height:44px;object-fit:contain;"></div>
+    <div class="logo-icon"><img src="images/logo-brand.svg" alt="Kali Academy Logo" class="logo-img"></div>
     <div>
       <span class="logo-text">KALI ACADEMY</span>
       <span class="logo-sub">CYBER SECURITY LEARNING</span>
@@ -93,13 +91,12 @@
     <li><a href="steps.html" class="nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a></li>
     <li><a href="tools.html" class="nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a></li>
     <li><a href="articles.html" class="nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a></li>
-    <li><a href="terminal.html" class="nav-link" style="color:#0ff;border:1px solid rgba(0,255,255,0.3);border-radius:8px;padding:4px 12px;"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
+    <li><a href="terminal.html" class="nav-link nav-link-terminal"><i class="fas fa-terminal"></i> <span>Terminal</span></a></li>
     <li>
-      <a href="#" class="nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;">
-        <i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة</span>
+      <a href="#" class="nav-link nav-link-share" data-share-button>
+        <i class="fas fa-share-alt"></i>
       </a>
     </li>
-
   </ul>
   
   <div class="header-status">
@@ -120,14 +117,12 @@
   <a href="steps.html" class="nav-link mobile-nav-link"><i class="fas fa-list-ol"></i> <span data-i18n="navSteps">السيناريوهات التطبيقية</span></a>
   <a href="tools.html" class="nav-link mobile-nav-link"><i class="fas fa-tools"></i> <span data-i18n="navTools">الأدوات</span></a>
   <a href="articles.html" class="nav-link mobile-nav-link"><i class="fas fa-newspaper"></i> <span data-i18n="navArticles">المقالات</span></a>
-  <a href="terminal.html" class="nav-link mobile-nav-link" style="color:#0ff;"><i class="fas fa-terminal"></i> Terminal</a>
-  <a href="#" class="nav-link mobile-nav-link" data-share-button data-share-title="Kali Academy" data-share-text="تعرف على Kali Academy لتعلم الأمن السيبراني" onclick="return false;"><i class="fas fa-share-alt"></i> <span data-i18n="shareSite">مشاركة الموقع</span></a>
-
-<a href="disclaimer-owner.html" class="nav-link mobile-nav-link" style="color:#ff9966;"><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</a>
+  <a href="terminal.html" class="nav-link mobile-nav-link"><i class="fas fa-terminal"></i> Terminal</a>
+  <a href="#" class="nav-link mobile-nav-link nav-link-share" data-share-button><i class="fas fa-share-alt"></i></a>
+  <a href="disclaimer-owner.html" class="nav-link mobile-nav-link disclaimer-link"><i class="fas fa-exclamation-triangle"></i> إخلاء المسؤولية</a>
 </div>
 
 <!-- MAIN CONTENT -->
-
 <div class="main-wrapper">
 
   <!-- HERO -->
@@ -137,231 +132,68 @@
       KALI LINUX CYBERSECURITY ACADEMY
     </div>
     
-    <h1 class="hero-title">
-      <span class="title-line1">تعلّم الأمن السيبراني</span>
-      <span class="title-line2">KALI LINUX</span>
-      <span class="title-line3">من الصفر إلى الاحتراف</span>
-    </h1>
-    
-    <p class="hero-desc">
-      منصة تعليمية شاملة لتعلم نظام كالي لينكس والأمن السيبراني — تشمل أكثر من
-      <strong id="hero-count-commands" style="color: var(--primary);">500</strong> أمر موثق،
-      <strong id="hero-count-lessons" style="color: var(--primary);">100</strong> درس،
-      و<strong id="hero-count-tools" style="color: var(--primary);">500</strong> أداة،
-      مع شروحات تفصيلية، خطوات تطبيقية، ودروس تفاعلية لكل المستويات.
-    </p>
-    
-    <div class="hero-buttons">
-      <a href="commands.html" class="btn btn-primary">
-        <i class="fas fa-terminal"></i>
-        استكشف الأوامر
-      </a>
-      <a href="tutorials.html" class="btn btn-secondary">
-        <i class="fas fa-play-circle"></i>
-        ابدأ التعلم
-      </a>
-      <a href="steps.html" class="btn btn-accent">
-        <i class="fas fa-list-ol"></i>
-        السيناريوهات التطبيقية
-      </a>
-    </div>
-    
-    <!-- TERMINAL DEMO -->
-    <div class="terminal" style="max-width: 700px; margin: 3rem auto 0; animation: fadeInUp 0.8s ease 0.8s forwards; opacity: 0;">
-      <div class="terminal-header">
-        <div class="terminal-btn close"></div>
-        <div class="terminal-btn min"></div>
-        <div class="terminal-btn max"></div>
-        <span class="terminal-title">root@kali:~$</span>
-      </div>
-      <div class="terminal-body" id="demo-terminal">
-        <div class="terminal-line">
-          <span class="terminal-prompt">root@kali:~$</span>
-          <span class="terminal-cmd" id="typing-cmd"></span>
-          <span class="cursor" id="typing-cursor"></span>
-        </div>
-        <div id="terminal-output"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ARTICLES MARQUEE BAR -->
-  <div class="articles-bar" style="
-    max-width: 1200px;
-    margin: 24px auto 0;
-    padding: 0 1.5rem;
-  ">
-    <div style="
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(90deg, rgba(0,255,65,0.04), rgba(4,22,40,0.9), rgba(255,100,0,0.04));
-      border: 1px solid rgba(0,255,65,0.15);
-      border-radius: 12px;
-      padding: 10px 18px;
-      overflow: hidden;
-    ">
-      <span style="
-        font-family: 'Share Tech Mono', monospace;
-        font-size: 0.6rem;
-        color: #00ff41;
-        letter-spacing: 2px;
-        white-space: nowrap;
-        padding: 3px 10px;
-        border: 1px solid rgba(0,255,65,0.3);
-        border-radius: 6px;
-        background: rgba(0,255,65,0.08);
-        flex-shrink: 0;
-      "><i class="fas fa-newspaper" style="margin-left:4px;"></i> ARTICLES</span>
-
-      <div style="
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex: 1;
-        min-width: 0;
-        overflow-x: auto;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      ">
-        <a href="article-roadmap-cybersecurity-2026.html" style="
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 14px;
-          border-radius: 8px;
-          background: rgba(0,255,65,0.06);
-          border: 1px solid rgba(0,255,65,0.18);
-          text-decoration: none;
-          white-space: nowrap;
-          transition: all 0.25s;
-          flex-shrink: 0;
-        " onmouseover="this.style.borderColor='rgba(0,255,65,0.5)';this.style.background='rgba(0,255,65,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(0,255,65,0.18)';this.style.background='rgba(0,255,65,0.06)';this.style.transform='none'">
-          <i class="fas fa-shield-alt" style="color:#00ff41;font-size:0.8rem;"></i>
-          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">كيف تبدأ في تعلم الأمن السيبراني</span>
-          <i class="fas fa-arrow-left" style="color:rgba(0,255,65,0.4);font-size:0.7rem;"></i>
-        </a>
-
-        <a href="article-soc-blue-team-roadmap-2026.html" style="
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 14px;
-          border-radius: 8px;
-          background: rgba(0,170,255,0.06);
-          border: 1px solid rgba(0,170,255,0.18);
-          text-decoration: none;
-          white-space: nowrap;
-          transition: all 0.25s;
-          flex-shrink: 0;
-        " onmouseover="this.style.borderColor='rgba(0,170,255,0.5)';this.style.background='rgba(0,170,255,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(0,170,255,0.18)';this.style.background='rgba(0,170,255,0.06)';this.style.transform='none'">
-          <i class="fas fa-user-shield" style="color:#00aaff;font-size:0.8rem;"></i>
-          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">كيف تصبح محلل SOC محترف</span>
-          <i class="fas fa-arrow-left" style="color:rgba(0,170,255,0.4);font-size:0.7rem;"></i>
-        </a>
-
-        <a href="article-top-10-ethical-hacking-tools-2026.html" style="
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 14px;
-          border-radius: 8px;
-          background: rgba(255,100,0,0.06);
-          border: 1px solid rgba(255,100,0,0.18);
-          text-decoration: none;
-          white-space: nowrap;
-          transition: all 0.25s;
-          flex-shrink: 0;
-        " onmouseover="this.style.borderColor='rgba(255,100,0,0.5)';this.style.background='rgba(255,100,0,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(255,100,0,0.18)';this.style.background='rgba(255,100,0,0.06)';this.style.transform='none'">
-          <i class="fas fa-tools" style="color:#ff6600;font-size:0.8rem;"></i>
-          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">أفضل 10 أدوات للهاكر الأخلاقي</span>
-          <i class="fas fa-arrow-left" style="color:rgba(255,100,0,0.4);font-size:0.7rem;"></i>
-        </a>
-
-        <a href="article-bug-bounty-guide-2026.html" style="
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 14px;
-          border-radius: 8px;
-          background: rgba(255,100,0,0.06);
-          border: 1px solid rgba(255,100,0,0.18);
-          text-decoration: none;
-          white-space: nowrap;
-          transition: all 0.25s;
-          flex-shrink: 0;
-        " onmouseover="this.style.borderColor='rgba(255,100,0,0.5)';this.style.background='rgba(255,100,0,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(255,100,0,0.18)';this.style.background='rgba(255,100,0,0.06)';this.style.transform='none'">
-          <i class="fas fa-bug" style="color:#ff6600;font-size:0.8rem;"></i>
-          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">دليل Bug Bounty للمبتدئين</span>
-          <i class="fas fa-arrow-left" style="color:rgba(255,100,0,0.4);font-size:0.7rem;"></i>
-        </a>
-
-        <a href="article-ctf-guide-2026.html" style="
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 14px;
-          border-radius: 8px;
-          background: rgba(0,170,255,0.06);
-          border: 1px solid rgba(0,170,255,0.18);
-          text-decoration: none;
-          white-space: nowrap;
-          transition: all 0.25s;
-          flex-shrink: 0;
-        " onmouseover="this.style.borderColor='rgba(0,170,255,0.5)';this.style.background='rgba(0,170,255,0.12)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(0,170,255,0.18)';this.style.background='rgba(0,170,255,0.06)';this.style.transform='none'">
-          <i class="fas fa-flag" style="color:#00aaff;font-size:0.8rem;"></i>
-          <span style="font-family:'Cairo',sans-serif;font-size:0.82rem;font-weight:700;color:#fff;">دليل CTF للمبتدئين 2026</span>
-          <i class="fas fa-arrow-left" style="color:rgba(0,170,255,0.4);font-size:0.7rem;"></i>
-        </a>
-      </div>
-
-      <a href="articles.html" style="
-        font-family: 'Cairo', sans-serif;
-        font-size: 0.72rem;
-        color: rgba(255,255,255,0.4);
-        text-decoration: none;
-        white-space: nowrap;
-        flex-shrink: 0;
-        transition: color 0.2s;
-      " onmouseover="this.style.color='rgba(0,255,65,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
-        الكل <i class="fas fa-chevron-left" style="font-size:0.6rem;"></i>
-      </a>
-    </div>
+<h1 class="hero-title">تعلّم الأمن السيبراني مجاناً</h1>
+<p class="hero-subtitle">أكثر من 500 أمر موثق ومشروح | أكثر من 100 درس مشروح بالتفصيل | أكثر من 100 سيناريو تطبيقي | أكثر من 100 أداة مشروحة بالتفصيل</p>
+<p class="hero-desc">من الصفر إلى الاحتراف</p>
+<div class="hero-buttons">
+  <a href="commands.html" class="btn btn-primary">
+    <i class="fas fa-terminal"></i>
+    استكشف الأوامر
+  </a>
+  <a href="tutorials.html" class="btn btn-secondary">
+    <i class="fas fa-play-circle"></i>
+    ابدأ التعلم
+  </a>
+</div>
+<div class="terminal terminal-demo">
+  <div class="terminal-header">
+    <div class="terminal-btn close"></div>
+    <div class="terminal-btn min"></div>
+    <div class="terminal-btn max"></div>
+    <span class="terminal-title">root@kali:~$</span>
   </div>
-  
-  <!-- STATS -->
+  <div class="terminal-body" id="demo-terminal">
+    <div class="terminal-line">
+      <span class="terminal-prompt">root@kali:~$</span>
+      <span class="terminal-cmd" id="typing-cmd"></span>
+      <span class="cursor" id="typing-cursor"></span>
+    </div>
+    <div id="terminal-output"></div>
+  </div>
+</div>
+</section>
+
+<!-- STATS -->
   <section class="stats-section">
     <div class="stats-grid">
       <div class="stat-card">
         <span class="stat-icon">💻</span>
-        <span id="stat-commands" class="stat-number" data-count="500" data-suffix="">500</span>
+        <span id="stat-commands" class="stat-number" data-count="500">500</span>
         <span class="stat-label">أمر موثق</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">📚</span>
-        <span id="stat-lessons" class="stat-number" data-count="100" data-suffix="">100</span>
+        <span id="stat-lessons" class="stat-number" data-count="100">100</span>
         <span class="stat-label">درس تعليمي</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">🔧</span>
-        <span id="stat-tools" class="stat-number" data-count="500" data-suffix="">500</span>
+        <span id="stat-tools" class="stat-number" data-count="129">129</span>
         <span class="stat-label">أداة مشروحة</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">🎯</span>
-        <span id="stat-scenarios" class="stat-number" data-count="71" data-suffix="">71</span>
+        <span id="stat-scenarios" class="stat-number" data-count="121">121</span>
         <span class="stat-label">سيناريو تطبيقي</span>
       </div>
       <div class="stat-card">
         <span class="stat-icon">🏆</span>
-        <span id="stat-tracks" class="stat-number" data-count="12" data-suffix="">12</span>
+        <span id="stat-tracks" class="stat-number" data-count="12">12</span>
         <span class="stat-label">مسار تعليمي</span>
       </div>
     </div>
   </section>
 
-
-  
   <!-- FEATURES -->
   <section class="section">
     <div class="section-header">
@@ -416,7 +248,7 @@
   </section>
 
   <!-- CATEGORIES -->
-  <section class="section" style="padding-top: 0;">
+  <section class="section section-no-padding">
     <div class="section-header">
       <span class="section-tag">CATEGORIES</span>
       <h2 class="section-title">تصفح حسب <span class="highlight">الفئة</span></h2>
@@ -487,56 +319,56 @@
   </section>
 
   <!-- QUICK START -->
-  <section class="section" style="padding-top: 0;">
+  <section class="section section-no-padding">
     <div class="section-header">
       <span class="section-tag">QUICK START</span>
       <h2 class="section-title">ابدأ <span class="highlight">رحلتك</span> الآن</h2>
       <p class="section-desc">اختر مستواك وابدأ التعلم من الصفر حتى الاحتراف</p>
     </div>
     
-    <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-      <div class="feature-card" style="border-top: 3px solid var(--primary); cursor: pointer;" onclick="location.href='tutorials.html?level=beginner'">
+    <div class="features-grid section-grid-fix">
+      <a href="tutorials.html?level=beginner" class="feature-card feature-card-border-primary feature-card-hover">
         <div class="feature-icon" style="background: rgba(0,255,65,0.2);">🌱</div>
         <h3 class="feature-title">مبتدئ</h3>
         <p class="feature-desc">لم تجرب لينكس من قبل؟ ابدأ من هنا — تثبيت كالي، أوامر الأساسية، التنقل في الملفات.</p>
-        <div class="progress-bar" style="margin-top: 1rem;">
+        <div class="progress-bar progress-margin">
           <div class="progress-fill" style="width: 100%;"></div>
         </div>
-        <span style="font-size: 0.8rem; color: var(--primary); font-family: 'Share Tech Mono';">50 درس متاح</span>
-      </div>
+        <span class="feature-level-text feature-level-beginner">50 درس متاح</span>
+      </a>
       
-      <div class="feature-card" style="border-top: 3px solid var(--warning); cursor: pointer;" onclick="location.href='tutorials.html?level=intermediate'">
+      <a href="tutorials.html?level=intermediate" class="feature-card feature-card-border-warning feature-card-hover">
         <div class="feature-icon" style="background: rgba(255,204,0,0.2);">⚡</div>
         <h3 class="feature-title">متوسط</h3>
         <p class="feature-desc">تعرف على لينكس؟ تعلم Nmap, Metasploit, Burp Suite وأساسيات اختبار الاختراق.</p>
-        <div class="progress-bar" style="margin-top: 1rem;">
+        <div class="progress-bar progress-margin">
           <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--warning), #ff8800);"></div>
         </div>
-        <span style="font-size: 0.8rem; color: var(--warning); font-family: 'Share Tech Mono';">80 درس متاح</span>
-      </div>
+        <span class="feature-level-text feature-level-intermediate">80 درس متاح</span>
+      </a>
       
-      <div class="feature-card" style="border-top: 3px solid var(--accent); cursor: pointer;" onclick="location.href='tutorials.html?level=advanced'">
+      <a href="tutorials.html?level=advanced" class="feature-card feature-card-border-accent feature-card-hover">
         <div class="feature-icon" style="background: rgba(255,0,128,0.2);">💀</div>
         <h3 class="feature-title">متقدم</h3>
         <p class="feature-desc">للمحترفين — تطوير Exploits, تحليل البرمجيات الخبيثة, Bug Bounty, Red Team Operations.</p>
-        <div class="progress-bar" style="margin-top: 1rem;">
+        <div class="progress-bar progress-margin">
           <div class="progress-fill" style="width: 100%; background: linear-gradient(90deg, var(--accent), #cc0066);"></div>
         </div>
-        <span style="font-size: 0.8rem; color: var(--accent); font-family: 'Share Tech Mono';">70 درس متاح</span>
-      </div>
+        <span class="feature-level-text feature-level-advanced">70 درس متاح</span>
+      </a>
     </div>
   </section>
 
   <!-- FEATURED TUTORIALS -->
-  <section class="section" style="padding-top: 0;">
+  <section class="section section-no-padding">
     <div class="section-header">
       <span class="section-tag">FEATURED</span>
       <h2 class="section-title">أبرز <span class="highlight">الدروس</span></h2>
     </div>
     
     <div class="tutorial-grid">
-      <div class="tutorial-card" onclick="location.href='tutorials.html#nmap'">
-        <div class="tutorial-thumb" style="background: linear-gradient(135deg, #041628, rgba(0,255,65,0.15));">
+      <a href="tutorials.html#nmap" class="tutorial-card">
+        <div class="tutorial-thumb tutorial-thumb-nmap">
           <span>🗺️</span>
           <span class="tutorial-level level-beginner">مبتدئ</span>
         </div>
@@ -550,10 +382,10 @@
             <span class="badge badge-success">مجاني</span>
           </div>
         </div>
-      </div>
+      </a>
       
-      <div class="tutorial-card" onclick="location.href='tutorials.html#metasploit'">
-        <div class="tutorial-thumb" style="background: linear-gradient(135deg, #041628, rgba(255,0,128,0.15));">
+      <a href="tutorials.html#metasploit" class="tutorial-card">
+        <div class="tutorial-thumb tutorial-thumb-metasploit">
           <span>💥</span>
           <span class="tutorial-level level-intermediate">متوسط</span>
         </div>
@@ -567,10 +399,10 @@
             <span class="badge badge-warning">متوسط</span>
           </div>
         </div>
-      </div>
+      </a>
       
-      <div class="tutorial-card" onclick="location.href='tutorials.html#burpsuite'">
-        <div class="tutorial-thumb" style="background: linear-gradient(135deg, #041628, rgba(0,255,255,0.15));">
+      <a href="tutorials.html#burpsuite" class="tutorial-card">
+        <div class="tutorial-thumb tutorial-thumb-burp">
           <span>🕸️</span>
           <span class="tutorial-level level-intermediate">متوسط</span>
         </div>
@@ -584,10 +416,10 @@
             <span class="badge badge-warning">متوسط</span>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     
-    <div style="text-align: center; margin-top: 2rem;">
+    <div class="center-text">
       <a href="tutorials.html" class="btn btn-secondary">
         <i class="fas fa-book-open"></i>
         عرض جميع الدروس
@@ -613,8 +445,8 @@
         <li><a href="steps.html">السيناريوهات التطبيقية</a></li>
         <li><a href="tools.html">الأدوات</a></li>
         <li><a href="articles.html">المقالات</a></li>
-        <li><a href="terminal.html" style="color:#0ff;">💻 Terminal</a></li>
-        <li><a href="disclaimer-owner.html" style="color:#ff6060;">⚠️ إخلاء المسؤولية</a></li>
+        <li><a href="terminal.html" class="terminal-link">💻 Terminal</a></li>
+        <li><a href="disclaimer-owner.html" class="disclaimer-link">⚠️ إخلاء المسؤولية</a></li>
       </ul>
     </div>
     <div>
@@ -643,164 +475,189 @@
   </div>
 </footer>
 
-<!-- Optimized scripts -->
+<!-- Scripts -->
 <script defer src="js/matrix.js"></script>
 <script defer src="js/main.js"></script>
+<script defer src="js/lesson-steps.js"></script>
 <script>
-var HOMEPAGE_STATS = {
-  commands: 0,
-  lessons: 0,
-  tools: 0,
-  scenarios: 0,
-  tracks: 12
-};
+// ===== STATS SYSTEM - UNIFIED =====
+(function() {
+  'use strict';
 
-function updateStatElement(id, value) {
-  const element = document.getElementById(id);
-  if (!element) return;
-  element.setAttribute('data-count', String(value));
-  element.setAttribute('data-suffix', '');
-  element.textContent = Number(value).toLocaleString();
-}
+  // Default fallback values (only used if data fails to load)
+  var DEFAULTS = {
+    commands: 500,
+    lessons: 100,
+    tools: 129,
+    scenarios: 121,
+    tracks: 12
+  };
 
-function updateHeroCounts(stats) {
-  var heroCommands = document.getElementById('hero-count-commands');
-  var heroLessons = document.getElementById('hero-count-lessons');
-  var heroTools = document.getElementById('hero-count-tools');
-  if (heroCommands) heroCommands.textContent = Number(stats.commands).toLocaleString();
-  if (heroLessons) heroLessons.textContent = Number(stats.lessons).toLocaleString();
-  if (heroTools) heroTools.textContent = Number(stats.tools).toLocaleString();
-}
+  function getScenariosCount() {
+    var sc = window.SCENARIOS ? window.SCENARIOS.length : 0;
+    var ls = window.LESSON_STEPS ? window.LESSON_STEPS.length : 0;
+    return sc + ls || DEFAULTS.scenarios;
+  }
 
-function animateStatsCounters() {
-  document.querySelectorAll('.stat-number[data-count]').forEach(function(el) {
-    var target = parseInt(el.getAttribute('data-count')) || 0;
-    var suffix = el.getAttribute('data-suffix') || '';
-    if (target <= 0) { el.textContent = '0' + suffix; return; }
-    var duration = 1500;
-    var startTime = null;
-    function step(timestamp) {
-      if (!startTime) startTime = timestamp;
-      var progress = Math.min((timestamp - startTime) / duration, 1);
-      var eased = 1 - Math.pow(1 - progress, 3);
-      var current = Math.floor(eased * target);
-      el.textContent = current.toLocaleString() + suffix;
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        el.textContent = target.toLocaleString() + suffix;
+  function getLessonsCount() {
+    if (window.TUTORIALS_DB) return window.TUTORIALS_DB.length;
+    if (window.LESSON_STEPS) return window.LESSON_STEPS.length;
+    return DEFAULTS.lessons;
+  }
+
+  function getToolsCount() {
+    if (window.TOOLS_DB) return window.TOOLS_DB.length;
+    return DEFAULTS.tools;
+  }
+
+  function getCommandsCount() {
+    if (window.COMMANDS_DB) return window.COMMANDS_DB.length;
+    return DEFAULTS.commands;
+  }
+
+  function updateElement(id, value) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.setAttribute('data-count', String(value));
+    el.textContent = Number(value).toLocaleString();
+  }
+
+  function applyStats() {
+    updateElement('stat-commands', getCommandsCount());
+    updateElement('stat-lessons', getLessonsCount());
+    updateElement('stat-tools', getToolsCount());
+    updateElement('stat-scenarios', getScenariosCount());
+    updateElement('stat-tracks', DEFAULTS.tracks);
+
+    var heroCmds = document.getElementById('hero-count-commands');
+    var heroLess = document.getElementById('hero-count-lessons');
+    var heroTools = document.getElementById('hero-count-tools');
+    if (heroCmds) heroCmds.textContent = getCommandsCount().toLocaleString();
+    if (heroLess) heroLess.textContent = getLessonsCount().toLocaleString();
+    if (heroTools) heroTools.textContent = getToolsCount().toLocaleString();
+  }
+
+  function animateCounters() {
+    var elements = document.querySelectorAll('.stat-number[data-count]');
+    elements.forEach(function(el) {
+      var target = parseInt(el.getAttribute('data-count')) || 0;
+      if (target <= 0) return;
+      var duration = 1500;
+      var start = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var progress = Math.min((ts - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(eased * target);
+        el.textContent = current.toLocaleString();
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
       }
-    }
-    requestAnimationFrame(step);
+      requestAnimationFrame(step);
+    });
+  }
+
+  // Initialize - Use local data directly
+  applyStats();
+
+  // Animate on scroll
+  window.addEventListener('load', function() {
+    setTimeout(animateCounters, 100);
   });
-}
 
-function applyStats(s) {
-  updateStatElement('stat-commands', s.commands);
-  updateStatElement('stat-lessons', s.lessons);
-  updateStatElement('stat-tools', s.tools);
-  updateStatElement('stat-scenarios', s.scenarios);
-  updateStatElement('stat-tracks', s.tracks);
-  updateHeroCounts(s);
-}
-
-function loadDynamicStats() {
-  Promise.all([
-    fetch('tutorials.html').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/\bid:\s*\d+,\s*title:/g); return m ? m.length : 101;
-    }).catch(function(){return 101}),
-    fetch('tools.html').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/\bid:\s*\d+,\s*name:/g); return m ? m.length : 106;
-    }).catch(function(){return 106}),
-    fetch('steps.html').then(function(r){return r.text()}).then(function(t){
-      var m = t.match(/\bid:\s*\d+,[\s\S]*?title:/g); return m ? m.length : 71;
-    }).catch(function(){return 71})
-  ]).then(function(counts) {
-    HOMEPAGE_STATS.lessons = counts[0];
-    HOMEPAGE_STATS.tools = counts[1];
-    HOMEPAGE_STATS.scenarios = counts[2];
-    HOMEPAGE_STATS.commands = 500;
-    applyStats(HOMEPAGE_STATS);
-    try { localStorage.setItem('kali_stats', JSON.stringify(HOMEPAGE_STATS)); } catch(e){}
-  }).catch(function(){ applyStats(HOMEPAGE_STATS); });
-}
-
-(function initStats() {
-  try {
-    var cached = JSON.parse(localStorage.getItem('kali_stats'));
-    if (cached && cached.lessons > 0) HOMEPAGE_STATS = cached;
-  } catch(e) {}
-  applyStats(HOMEPAGE_STATS);
+  // Expose refresh function
+  window.kaliRefreshStats = applyStats;
 })();
 
-window.addEventListener('load', function() {
-  loadDynamicStats();
-  var statsSection = document.querySelector('.stats-section');
-  if (statsSection && 'IntersectionObserver' in window) {
-    var obs = new IntersectionObserver(function(entries) {
-      if (entries[0].isIntersecting) {
-        animateStatsCounters();
-        obs.disconnect();
-      }
-    }, { threshold: 0.2 });
-    obs.observe(statsSection);
-  } else {
-    animateStatsCounters();
-  }
-});
+// ===== TERMINAL DEMO =====
+(function() {
+  'use strict';
 
-// Terminal typing demo
-const commands = [
-  { cmd: 'nmap -sV -p 1-65535 192.168.1.0/24', delay: 800, output: 'Scanning 256 hosts... [████████████] 100%\n<span style="color:var(--primary)">Nmap scan report for 192.168.1.1\nPORT    STATE  SERVICE  VERSION\n22/tcp  open   ssh      OpenSSH 8.4\n80/tcp  open   http     Apache 2.4.51\n443/tcp open   ssl/http Apache 2.4.51</span>' },
-  { cmd: 'nikto -h http://target.example.com', delay: 1000, output: '<span style="color:var(--warning)">+ Server: Apache/2.4.51\n+ XSS: /search.php?q=[XSS_PAYLOAD]\n+ SQL: /login.php?user=admin--</span>' },
-  { cmd: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.50', delay: 800, output: '<span style="color:var(--primary)">[22][ssh] host: 192.168.1.50  login: admin  password: password123</span>' },
-];
-
-let cmdIndex = 0;
-let charIndex = 0;
-let typingTimer;
-
-function runTerminalDemo() {
-  const cmdEl = document.getElementById('typing-cmd');
-  const outputEl = document.getElementById('terminal-output');
-  const cursorEl = document.getElementById('typing-cursor');
-  if (!cmdEl) return;
-  
-  const current = commands[cmdIndex % commands.length];
-  const cmd = current.cmd;
-  
-  charIndex = 0;
-  cmdEl.textContent = '';
-  
-  function typeChar() {
-    if (charIndex < cmd.length) {
-      cmdEl.textContent += cmd[charIndex];
-      charIndex++;
-      typingTimer = setTimeout(typeChar, 50 + Math.random() * 30);
-    } else {
-      cursorEl.style.display = 'none';
-      setTimeout(() => {
-        const line = document.createElement('div');
-        line.innerHTML = `<div class="terminal-line" style="margin-top:4px;"><span class="terminal-output">${current.output}</span></div>`;
-        outputEl.appendChild(line);
-        if (outputEl.children.length > 3) {
-          outputEl.removeChild(outputEl.children[0]);
-        }
-        cmdIndex++;
-        setTimeout(() => {
-          cmdEl.textContent = '';
-          cursorEl.style.display = '';
-          charIndex = 0;
-          runTerminalDemo();
-        }, current.delay);
-      }, 500);
+  var commands = [
+    {
+      cmd: 'nmap -sV -p 1-65535 192.168.1.0/24',
+      delay: 800,
+      output: 'Scanning 256 hosts... [████████████] 100%\n<span style="color:var(--primary)">Nmap scan report for 192.168.1.1\nPORT    STATE  SERVICE  VERSION\n22/tcp  open   ssh      OpenSSH 8.4\n80/tcp  open   http     Apache 2.4.51\n443/tcp open   ssl/http Apache 2.4.51</span>'
+    },
+    {
+      cmd: 'nikto -h http://target.example.com',
+      delay: 1000,
+      output: '<span style="color:var(--warning)">+ Server: Apache/2.4.51\n+ XSS: /search.php?q=[XSS_PAYLOAD]\n+ SQL: /login.php?user=admin--</span>'
+    },
+    {
+      cmd: 'hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://192.168.1.50',
+      delay: 800,
+      output: '<span style="color:var(--primary)">[22][ssh] host: 192.168.1.50  login: admin  password: password123</span>'
     }
-  }
-  
-  typeChar();
-}
+  ];
 
-setTimeout(runTerminalDemo, 1500);
+  var cmdIndex = 0;
+  var charIndex = 0;
+  var typingTimer = null;
+  var timeoutTimer = null;
+
+  function escapeHtml(text) {
+    var div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  function runDemo() {
+    var cmdEl = document.getElementById('typing-cmd');
+    var outputEl = document.getElementById('terminal-output');
+    var cursorEl = document.getElementById('typing-cursor');
+    if (!cmdEl || !outputEl || !cursorEl) return;
+    
+    var current = commands[cmdIndex % commands.length];
+    var cmd = current.cmd;
+    
+    charIndex = 0;
+    cmdEl.textContent = '';
+    
+    function typeChar() {
+      if (charIndex < cmd.length) {
+        cmdEl.textContent += cmd.charAt(charIndex);
+        charIndex++;
+        typingTimer = setTimeout(typeChar, 50 + Math.random() * 30);
+      } else {
+        cursorEl.style.display = 'none';
+        timeoutTimer = setTimeout(function() {
+          var line = document.createElement('div');
+          line.className = 'terminal-line';
+          line.style.marginTop = '4px';
+          line.innerHTML = '<span class="terminal-output">' + current.output + '</span>';
+          outputEl.appendChild(line);
+          if (outputEl.children.length > 3) {
+            outputEl.removeChild(outputEl.children[0]);
+          }
+          cmdIndex++;
+          timeoutTimer = setTimeout(function() {
+            cmdEl.textContent = '';
+            cursorEl.style.display = '';
+            charIndex = 0;
+            runDemo();
+          }, current.delay);
+        }, 500);
+      }
+    }
+    
+    typeChar();
+  }
+
+  // Start demo after page load
+  setTimeout(runDemo, 1500);
+
+  // Cleanup on page hide
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      clearTimeout(typingTimer);
+      clearTimeout(timeoutTimer);
+    } else {
+      setTimeout(runDemo, 1500);
+    }
+  });
+})();
 </script>
 </body>
 </html>

@@ -59,6 +59,7 @@ body {
 
 /* ── HEADER ENHANCEMENT ── */
 .site-header {
+  z-index: 1000000;
   background: rgba(2, 11, 20, 0.98);
   backdrop-filter: blur(30px);
   border-bottom: 1px solid rgba(0, 255, 65, 0.2);

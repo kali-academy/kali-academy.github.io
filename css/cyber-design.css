@@ -51,7 +51,7 @@ body::after {
     rgba(0,0,0,0.03) 4px
   );
   pointer-events: none;
-  z-index: 9999;
+  z-index: 99;
 }
 
 /* ── TYPOGRAPHY ── */
@@ -137,11 +137,11 @@ h1,h2,h3 { font-family: var(--body); color: var(--c-text); }
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1000000;
   background: rgba(3,11,20,0.92);
   backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--c-border);
-  height: 64px;
+  height: 70px;
   display: flex;
   align-items: center;
 }
@@ -993,5 +993,5 @@ h1,h2,h3 { font-family: var(--body); color: var(--c-text); }
 .page-wrapper {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 1.5rem 4rem;
+  padding: calc(var(--header-height) + 10px) 1.5rem 4rem;
 }

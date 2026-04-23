@@ -17,7 +17,7 @@
   --text-primary: #e8f5e9;
   --text-secondary: rgba(200,255,215,.75);
   --text-muted: rgba(150,200,165,.55);
-  --header-height: 65px;
+  --header-height: 70px;
   --radius-lg: 18px;
   --radius-md: 12px;
   --shadow-green: 0 4px 20px rgba(0,255,65,.15);
@@ -34,6 +34,7 @@ body {
 
 /* ===== HEADER IMPROVEMENTS ===== */
 .site-header {
+  z-index: 1000000;
   height: var(--header-height);
   background: rgba(8,8,15,.97);
   border-bottom: 1px solid rgba(0,255,65,.15);
@@ -74,9 +75,10 @@ body {
 /* ===== HERO SECTION ===== */
 .hero {
   position: relative;
-  padding: calc(var(--header-height) + 4rem) 2rem 5rem;
+  margin-top: var(--header-height);
+  padding: calc(var(--header-height) + 3rem) 2rem 5rem;
   text-align: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .hero::before {
@@ -99,11 +101,7 @@ body {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
-.hero-title {
-  font-family: 'Orbitron', monospace;
-  line-height: 1.15;
-  margin-bottom: 1.2rem;
-}
+
 
 /* ===== CARDS ENHANCED ===== */
 .feature-card, .lesson-card, .tool-card, .scenario-card {
@@ -427,9 +425,11 @@ body {
 .text-warn { color: #ff8c00; }
 
 /* ===== PAGE WRAPPER ===== */
-.main-wrapper, .tut-wrapper, .steps-wrapper, .tools-wrapper, .cmd-wrapper {
+.main-wrapper, .tut-wrapper, .steps-wrapper, .tools-wrapper, .cmd-wrapper,
+.articles-wrapper, .terminal-page-wrapper, .cmd-page-wrapper,
+.legal-wrapper, .disc-wrapper {
   position: relative; z-index: 1;
-  padding-top: var(--header-height);
+  padding-top: calc(var(--header-height) + 10px);
   min-height: calc(100vh - 60px);
 }
 
